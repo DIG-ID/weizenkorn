@@ -64,5 +64,32 @@ $weizenkorn_buttons = array(
 			<?php endforeach; ?>
 		</div>
 
+		<h2>Button — Primary only</h2>
+
+		<?php
+		get_template_part(
+			'template-parts/components/button',
+			null,
+			array(
+				'title' => 'Button Design',
+				'url'   => '#',
+				'style' => 'primary',
+			)
+		);
+		?>
+
+Exemplo a partir do ACF "link":
+
+<?php
+$cta_button = get_field( 'cta_button' ); // campo ACF tipo "Link"
+
+if ( $cta_button ) {
+	get_template_part(
+		'template-parts/components/button',
+		null,
+		array_merge( $cta_button, array( 'style' => 'primary' ) )
+	);
+}
+?>
 	</div>
 </div>
