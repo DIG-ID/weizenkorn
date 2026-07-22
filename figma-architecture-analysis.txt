@@ -1,214 +1,490 @@
 ================================================================================
 ANÁLISE DE ARQUITECTURA — FIGMA "Design_Client-private-design"
-Página analisada: Hifi Wireframe_in process
+Página analisada: Hifi Wireframe_in process  (node 180:1514)
 Projecto: Weizenkorn (Stiftung Weizenkorn, Basel) — weizenkorn.ch
-Data: 2026-07-09 | Analisado por: Claude (a partir do Figma via MCP)
+Data: 2026-07-22 | Analisado por: Claude (Figma Dev Mode MCP + figma_tree.py)
 ================================================================================
 
-Páginas vistas em detalhe: Home, Products, Product Single, News, Events &
-Seminare, Open Positions. As restantes ~34 páginas desktop reutilizam os
-mesmos blocos (confirmado por análise de repetição dos frames — os grupos
-mais reutilizados aparecem em 19–25 páginas).
+NOTA DE VERSÃO
+  v2 (2026-07-22) — substitui a análise parcial de 2026-07-09 (que só viu 6
+  páginas em detalhe). Esta versão é baseada em evidência das 51 páginas/ecrãs
+  da página Hifi "in process" (dump completo dos metadados, 2993 nós de texto).
+  A cópia "Hifi Wireframe_in process DEVS" foi IGNORADA a pedido do Bruno (é uma
+  cópia sem as alterações novas). Correcções principais vs. v1: não existem
+  "Product Single" nem "Job Single" nesta página; o filtro (Open Positions) e o
+  vídeo (About Us) confirmam Isotope/Fancybox; contagens de repetição corrigidas.
+
+RESULTADO DAS SONDAS (fiabilidade da análise automática)
+  - Copy nos nomes das camadas de texto: 2992/2993 (100%) → nomeação de secções
+    por parsing é FIÁVEL, sem necessidade do caminho por screenshots.
+  - Agrupamento: 51 ecrãs → 35 agrupados (fronteiras dadas pelo designer) +
+    16 flat (segmentados pelo mapa vertical + confirmação por screenshot em
+    Home, Products, Open Positions).
 
 --------------------------------------------------------------------------------
 1. VISÃO GERAL
 --------------------------------------------------------------------------------
-- Site institucional multilingue (EN/DE/FR — confirma WPML do nosso stack).
-- ~40 templates desktop + versões mobile (393px) e tablet (834px).
-- Áreas: produtos artesanais (velas, brinquedos de madeira, living collection),
-  gastronomia/hotelaria (DASBREITEHOTEL, Rhyvage, Cantina e9, Bakery),
-  trabalho social (jobs apoiados, formação, coaching), organização
-  (About, Impact, News, Sponsoring, Contact) + legais (AGB, Data Policy,
-  Impressum, 404).
-- Design tokens confirmados na página "Design System" (2026-07-22, via MCP):
-  vermelho de marca #E30613 (CTAs, linhas, botões, ícones), preto/cinza-escuro
-  #252525 (footer, cards de local, texto), creme/cinza-claro #F8F3E9 (bandas
-  USP), branco #FFFFFF. Já aplicados em `_vars.sass` e `tailwind.config.js`
-  (`brand-red`/`brand-dark`/`brand-cream`).
-- Tipografia: **DM Sans** para tudo (títulos H1-H3, texto, botões) — pesos
-  Regular/Medium/SemiBold/Bold/Black conforme o nível. Já aplicado em
-  `_vars.sass`, `tailwind.config.js` e `functions.php`
-  (`WEIZENKORN_GOOGLE_FONTS_URL`). Nota: a página "Design System" tinha
-  também um estilo H1/H2 alternativo em "Inria Serif" itálico — decidido
-  ignorar como estilo antigo/não usado (confirmar se aparecer nas páginas
-  Hifi finais).
+- Site institucional multi-marca da fundação Weizenkorn. Multilingue EN/DE/FR
+  (language switcher "EN/DE/FR" em todas as páginas → confirma WPML do stack).
+  Conteúdo primário em alemão.
+- 51 ecrãs no Figma. Só 4 páginas têm variantes responsivas desenhadas — as
+  restantes são desktop, com o layout responsivo a derivar por breakpoint:
+    · Home              → desktop + tablet + mobile  (+ Home_menu = overlay)
+    · Products          → desktop + tablet + mobile
+    · Services          → desktop + tablet + mobile
+    · Gastronomie-Hotellerie → desktop + tablet + mobile
+  Breakpoints do design: mobile 393px · tablet 834px · desktop 1920px (container
+  útil ~1520px; cards a 1360/1440).
+- Áreas do site (as "Betriebe"/oficinas da fundação):
+    · PRODUTOS / Manufaktur: Products (landing), Kerzen, Holzspielwaren,
+      Living Collection, Xyloba, Holzmanufaktur (Custom Work), Corporate Gifts.
+    · SCHREINEREI (carpintaria) + sub-serviços: Schreinerei (landing),
+      Innenausbau, Möbel, Haustüren, Brandschutz, Für Architekten/Planer,
+      Dienstleistungen.
+    · KREATIVATELIER (atelier criativo / confecção).
+    · TREUHAND (Fiduciary services).
+    · GASTRONOMIA / HOTELARIA: Gastronomie-Hotellerie (landing), DASBREITEHOTEL,
+      Rhyvage, Cantina e9, Our Bakery, Events & Seminare.
+    · TRABALHO SOCIAL: Work & Training, Supported jobs, Supported Apprenticeships,
+      Open positions (listagem de vagas), For social offices & partners.
+    · INSTITUCIONAL: About Us, Organization, Impact, Sponsoring/Donation,
+      News (archive) + News Single, Contact, Services (overview).
+    · LEGAIS/SISTEMA: 404, ABG (=AGB), Data Policy, Impressum.
+
+- DESIGN TOKENS (confirmados via página "Design System" — já aplicados no tema):
+    · Cor: vermelho de marca #E30613 (CTAs, overlines, linhas, ícones, header de
+      cards de vaga), preto/cinza-escuro #252525 (texto, footer), creme #F8F3E9
+      (bandas USP), branco #FFFFFF.  → em `_vars.sass` e `tailwind.config.js`
+      (`brand-red` / `brand-dark` / `brand-cream`).
+    · Tipografia: DM Sans em tudo. get_variable_defs devolveu explicitamente
+      "Desktop/Text = DM Sans Regular 20/30, tracking +0.5". O ficheiro Figma
+      quase não usa variáveis de cor (só a fonte veio como token) — as cores
+      foram extraídas dos nós/screenshots e batem com o Design System.
+    · Já no tema: `_vars.sass`, `tailwind.config.js`, `functions.php`
+      (WEIZENKORN_GOOGLE_FONTS_URL).
 
 --------------------------------------------------------------------------------
 2. GLOBAIS (uma vez por site — template-parts/ + @subpackage Section)
 --------------------------------------------------------------------------------
-header-main.php
-  - Logo central, language switcher EN/DE/FR (WPML) à direita, hamburger
-    à esquerda. Existe frame "Sticky menu bar_desktop" → header sticky
-    (provavelmente aparece após scroll — GSAP/ScrollTrigger).
-footer-main.php
-  - Fundo escuro. Colunas: logo | contacto (morada, tel, email) | sitemap
-    (2 linhas de links) | newsletter (nome + email → Mailchimp for WP).
-  - Barra inferior: copyright + legais (Datenschutz, AGB, Impressum, Jobs).
-[MODULE] menu-overlay
-  - Frame "Home_menu_desktop" = menu fullscreen (hamburger). JS próprio.
+header-main.php   (topo em 41 páginas)
+  - Logo (Prancheta 1 2) + language switcher "EN/DE/FR" (WPML) + botão de menu.
+  - EM MIGRAÇÃO para componente: as páginas novas (Products, Services e todas as
+    variantes tablet/mobile) usam instâncias "navigation-desktop / -tablet /
+    -mobile". As páginas antigas ainda têm o header montado à mão. Implementar UM
+    header responsivo (o componente) e aplicar a todas.
+
+footer-main.php   (fundo em 33 páginas; variantes tablet/mobile)
+  - Bloco recorrente "Group 1000005669": mini-form newsletter (campos Name +
+    E-Mail → Mailchimp for WP) + morada "Stiftung Weizenkorn, Oetlingerstrasse 81,
+    CH-4057 Basel, +41 (0)61 686 91 31" + colunas de sitemap (Dienstleistungen,
+    Kontakt, Über uns) + redes sociais (Facebook/Twitter/Instagram) + barra legal
+    (Datenschutz · AGB · Jobs · Impressum · ©2026).
+  - Variantes tablet (Group 1000005737, ~840×880) e mobile (Group 1000005738,
+    ~400×1280) — mesma informação, empilhada.
+
+[MODULE] menu-overlay   (ecrã "Home_menu_desktop" 2327:848)
+  - Mega-menu fullscreen. Colunas: GASTRONOMIE und HOTELLERIE (Events & Seminare,
+    Bäckerei, Restaurant Cantina e9, Rhyvage — "venue list"), ARBEIT (Offene
+    Stellen mit IV, Zuweisende Stellen, Begleitete Ausbildungsplätze), Spenden /
+    Organisation / Einfluss (Impact), news, kontakt. Título+subtítulo por coluna.
+  - Comportamento JS próprio (abrir/fechar, animação) → GSAP (ou Alpine).
 
 --------------------------------------------------------------------------------
 3. SECÇÕES (template-parts/pages/... — @subpackage Section)
+   Nº de páginas = frequência real medida na repetição de frames.
 --------------------------------------------------------------------------------
-Identificadas e reutilizadas por quase todas as páginas (por ordem típica):
+page-hero            (~todas as páginas)
+  - Imagem/banda de topo + título (Group 1000005088: título grande + subtítulo)
+    + "icon 1" (indicador de scroll/espiga a ~y=1224). Componente novo
+    "page-hero-desktop/-tablet".
+  - Variantes: (a) hero de imagem grande dos interiores; (b) hero-card dividido
+    (Home) com "Breit aufgestellt. Tief verwurzelt."; (c) páginas legais sem hero
+    — só banda de título ("Impressum", "Datenschutzerklärung", "Disclaimer").
 
-hero.php                    — Home: 2 estados no Figma ("first moment" /
-                              "after a few seconds") → animação de entrada
-                              GSAP. Título + tagline + imagem + CTA.
-page-hero.php               — Interiores: imagem full-width OU banda escura
-                              com Subtitle + Title H1 (News). Variantes.
-intro-panel.php             — Painel com borda: título grande à esquerda +
-                              parágrafo à direita. Aparece em 25 páginas
-                              (o "Group 1000005088"). É o page-header
-                              standard dos interiores.
-divider-brand.php           — Ícone da marca (espiga) centrado — separador
-                              decorativo entre secções.
-usp-band.php                — Banda cinza "Das macht uns aus": 4 itens
-                              ícone+label (Qualität, Handarbeit, Sozial,
-                              Nachhaltig). Repetida em muitas páginas com
-                              títulos diferentes → título e itens via ACF.
-section-cards.php           — Grelha de cards com section-title + link(s)
-                              "alle ansehen": usada para produtos (5 cat.),
-                              dienstleistungen, standorte, news, etc.
-quote-slider.php            — [MODULE] Citação destacada + foto, setas
-                              laterais → Swiper.
-cta-form.php                — Banda vermelha com formulário (CF7): variantes
-                              contacto / encomenda / evento — campos mudam,
-                              padrão é o mesmo ("Noch Fragen?", "Order",
-                              "Event planen?").
-locations-grid.php          — Fotos grandes com legenda + cards escuros de
-                              descrição (hotel, restaurantes, bakery).
-map-section.php             — "Wo sie uns finden": Google Maps embed +
-                              morada (já temos google-maps.js no starter).
-discover-more.php           — "Entdecken Sie mehr": 3 cards imagem+label
-                              para navegação cruzada entre áreas do site.
-job-offers-grid.php         — Grelha de cards de vagas (ver CPT abaixo).
-skills-lists.php            — Painéis com listas bullet por área
-                              (Ausbildungen, Arbeitsstellen) — repeater ACF.
-contact-person.php          — Card de pessoa: foto + nome/cargo + contactos
-                              ("Dürfen wir weiterhelfen?").
-news-feature.php            — News: item pinned/destaque (texto + imagem +
-                              link "open").
-order-info-columns.php      — Product Single/Products: colunas de info de
-                              revenda/pontos de venda (Wiederverkäufer /
-                              Endkunde).
-related-products.php        — "You may also like": 3 cards com hover/painel
-                              de descrição.
+intro-panel          (19 páginas — bloco ~1520×320)
+  - Bloco de introdução com título grande + parágrafo (Group 1000005088 /
+    Group 1000005303 "Was uns wichtig ist"). É o "page-header" standard dos
+    interiores.
+
+usp-band             (10 páginas — bloco ~1920×440, fundo creme)
+  - "Das macht uns aus" com 3–4 itens ícone+label. O conjunto muda por contexto:
+    Nachhaltig/Sozial/Handarbeit/Swiss Made (produtos), Genussvoll/Herzlich/
+    Wirksam (gastronomia), Regional/Zuverlässig/Persönlich/Sozial (kreativatelier),
+    Sozial/Zuverlässig/Kompetent (services). → título + itens via ACF.
+
+section-cards        (grelhas de cards com cabeçalho de secção)
+  - Grelha genérica: overline + título + linha + cards + link "zu allen …".
+    Usada para gamas de produto (Home/Products), serviços, standorte, etc.
+  - Instâncias concretas viram secções próprias abaixo (product-range-cards,
+    locations-band, cross-links, news-cards).
+
+product-range-cards  (Products, Home — bloco ~1520×560)
+  - Cards das gamas: Kerzen, Holzspielwaren, Living Collection, Xyloba,
+    Holzmanufaktur (imagem + título + excerpt + seta → página da gama).
+
+quote-slider         [MODULE] (muitas páginas — bloco Group 1000005127)
+  - Citação destacada com borda vermelha + foto + nome/cargo + setas laterais
+    (David Zbinden, Daniel Schwob, Domagoj, Simone Nydegger, Sandra Bugmann…).
+  - Setas presentes → carrossel de 1 slide (Swiper).
+
+stories-references   [MODULE] (Kerzen, Living, Xyloba, Holzmanufaktur)
+  - "Geschichten & Referenzen": cards de referência + dots (ellipses 184/185/186)
+    → carrossel (Swiper).
+
+cta-form             (8–9 páginas — banda + formulário CF7)
+  - Banda de CTA com título variável ("Noch Fragen?", "Möchten Sie mehr wissen?",
+    "Dürfen wir Sie beraten?", "Bereit für den Wechsel?") + formulário (Your
+    Email / Your Phone Number / Senden). É Contact Form 7 → SECÇÃO, não module.
+    Variante em banda vermelha (Home/Products) e variante em bloco claro.
+
+faq-accordion        [MODULE] (6 páginas: Fiduciary, Kreativatelier, Schreinerei,
+                      Sponsoring, Supported jobs, Supported Apprenticeships)
+  - "FAQ" com pares pergunta/resposta que expandem → acordeão (JS/GSAP).
+
+offer-grid           (Schreinerei sub-serviços: Innenausbau, Möbel, Haustüren,
+                      Brandschutz, Für Architekten, Dienstleistungen)
+  - "Eine Auswahl aus unserem Angebot": grelha de cards de categoria/produto
+    (Tische, Schränke, Betten, Einbauschränke, Elektrofronten…). Um card com
+    texto expandido + lista de sub-itens.
+
+capabilities-grid    (Schreinerei, Holzmanufaktur — bloco ~1840×1800)
+  - Parque de máquinas/competências: Handmaschinen & Hilfsmittel, Beschriftung &
+    Druck, Oberflächentechniken, Schleifen, Leimen, Bohren…
+
+service-info-downloads (Schreinerei sub-serviços)
+  - "Service/Info/Downloads": Pflegeanleitungen, Holzdeklaration, Offene Stellen
+    (links + ficheiros).
+
+downloads            (For social offices — bloco ~1800×600)
+  - "Downloads & Unterlagen": lista de "Name of document" + descrição + ficheiro.
+
+process-steps        (Kreativatelier, Sponsoring, Supported jobs/apprenticeships,
+                      Corporate Gifts)
+  - Passos numerados ("Step 2/3/4", "Kennenlernen / Schnuppern / Gemeinsam
+    planen", "So entsteht Mehrwert").
+
+contact-person       (Organization, For social offices, Supported Apprenticeships)
+  - Card de pessoa: foto + nome/cargo + telefone/email ("Wir sind für Sie da",
+    "key people section", Patrizia Hofer, Regula Fluck).
+
+sales-points         (Products, Kerzen, Living, Xyloba)
+  - "Sie möchten bestellen?": pontos de venda / revenda (Als Wiederverkäufer /
+    Als Endkunde), plataformas externas (Pepperi, Socialstore, Werkladen,
+    Garten von Ehren). Sem checkout no tema — só info + links + form de inquiry.
+
+locations-band       (Home — "UNSERE STANDORTE")
+  - Cards dos locais de gastronomia (DASBREITEHOTEL, Rhyvage, Cantina e9,
+    Bäckerei) + "zu allen Betrieben".
+
+gastronomy-detail    (DASBREITEHOTEL, Rhyvage, Cantina e9, Our Bakery,
+                      Events & Seminare)
+  - Bloco de detalhe de local: descrição + CTA de reserva ("Jetzt buchen",
+    "Direktbucher profitieren", "Catering Anfragen") + horários (Öffnungszeiten)
+    + morada. Inclui [MODULE] map (ver abaixo).
+
+values-grid          (About Us — "Unsere Werte")
+  - 4 cards de valor com ícone (Gemeinsam mehr erreichen, Teilhabe als Grundlage,
+    Verlässliche Qualität, Vielfalt die stärkt).
+
+video-feature        [MODULE] (About Us — "WAS UNS BEWEGT. WAS WIR BEWEGEN.")
+  - "Weizenkorn entdecken": vídeo destacado → lightbox (Fancybox).
+
+jobs-listing         [MODULE] (Open positions)
+  - Cabeçalho "Aktuell offene Stellen" + controlo de VISTA (lista/grelha) +
+    FILTRO. Cards de vaga: header vermelho com categoria (Arbeitsstellen /
+    Ausbildungsplätze) + seta, Betrieb (ex. DASBREITEHOTEL), "Name of offer",
+    excerpt. → filtro client-side + toggle de vista (Isotope ou JS próprio).
+    (As 2 cópias de "Open positions" são estados do filtro/vista, não páginas.)
+
+job-teasers          (Home, Work & Training, Supported jobs, For social offices)
+  - Blocos de chamada às vagas: "Offene Stellen", "Begleitete Ausbildungsplätze",
+    "Infos für Zuweisende/soziale Einrichtungen" → link para Open positions.
+
+news-cards           (News archive, News Single "relacionadas", Home?)
+  - Cards de notícia: imagem + data (1. Juli 2026) + categoria (Creative
+    Workshop) + título + excerpt + "Mehr erfahren".
+
+donation-cta         (About Us, Sponsoring)
+  - Banda "SPENDEN / Spenden": apelo a doação + CTA.
+
+legal-content        (ABG, Data Policy, Impressum)
+  - Blocos de texto legal estruturado (Inhalt, Verweise und Links, Urheberrecht,
+    Datenschutz, Begriffsbestimmungen, Adresse/Kontakt/Redaktion).
 
 --------------------------------------------------------------------------------
 4. COMPONENTES (template-parts/components/ — @subpackage Component)
-   Reutilizáveis, recebem $args via get_template_part(), nunca get_field()
+   Reutilizáveis; recebem $args via get_template_part(..., null, $args);
+   NUNCA chamam get_field().
 --------------------------------------------------------------------------------
-section-title.php   — O MAIS repetido de todos: overline pequeno (ex.
-                      "PRODUKTE"), título H2 grande, linha horizontal
-                      (vermelha ou cinza), alinhamento esq/centro, link(s)
-                      opcionais com seta.
-                      $args: overline, title, tag (h1/h2), align, rule_color,
-                      links[]
-card-category.php   — Imagem + título + texto curto + seta. Usado em grelhas
-                      de produtos/serviços/standorte.
-                      $args: image_id, title, text, url, image_ratio
-card-news.php       — Imagem + DATE + título + excerpt. $args: post_id ou
-                      campos soltos.
-card-location.php   — Card escuro: logo/nome + descrição + link; e variante
-                      foto grande + label inferior.
-card-job.php        — Header vermelho (tipo de oferta + seta) + nome + texto.
-                      $args: type, title, excerpt, url
-card-info.php       — Card com borda: título + listas/texto (pontos de
-                      venda, painéis de skills). $args: title, content/items
-usp-item.php        — Ícone + label. $args: icon, label
-button.php          — Variantes: primário (vermelho, com seta), texto+seta
-                      (MEHR ERFAHREN ↓/→), submit. $args: label, url, style,
-                      icon, target
-arrow-link.php      — Link com seta → (aparece em todos os cards) — pode
-                      fundir-se em button.php como style 'arrow'.
-pagination.php      — "1/100 ... MORE →" nas listagens (News) — estilo
-                      próprio sobre the_posts_pagination ou load more.
+section-heading.php  — O mais repetido: overline vermelho (ex. "PRODUKTE") +
+                       título H2 + linha horizontal + link(s) com seta.
+                       $args: overline, title, tag(h1/h2), align, rule_color, links[]
+card-product-range.php — imagem + título + excerpt + seta → gama.
+                       $args: image_id, title, text, url
+card-cross-link.php  — imagem + título + link ("Das könnte Sie auch interessieren").
+                       $args: image_id, title, url
+card-venue.php       — card de local (gastronomia/standorte): imagem + nome +
+                       descrição + link. $args: image_id, title, text, url, variant
+card-job.php         — header vermelho (categoria + seta) + Betrieb + título +
+                       excerpt. $args: category, venue, title, excerpt, url
+card-news.php        — imagem + data + categoria + título + excerpt.
+                       $args: post_id (ou campos soltos)
+card-testimonial.php — foto + nome/cargo + citação. $args: image_id, name, role, quote
+usp-item.php         — ícone + label. $args: icon, label
+process-step.php     — número + título + texto. $args: step, title, text
+download-item.php    — título + descrição + ficheiro. $args: title, text, file
+faq-item.php         — pergunta + resposta (estado do acordeão). $args: q, a
+button.php           — variantes: primário vermelho c/ seta, texto+seta
+                       (MEHR ERFAHREN →/↓), submit. $args: label, url, style, icon, target
+overline.php         — pequeno label vermelho acima de títulos. $args: text
+divider-brand.php    — ícone da marca (espiga) centrado, separador decorativo.
 
 --------------------------------------------------------------------------------
 5. MODULES (JS em assets/js/ — @subpackage Module)
+   Só o que tem comportamento JS PRÓPRIO. CF7 é secção (JS do plugin).
 --------------------------------------------------------------------------------
-menu-overlay      — abrir/fechar fullscreen menu (GSAP).
-sticky-header     — mostrar barra sticky após scroll (GSAP ScrollTrigger).
-hero-intro        — animação 2 estados do hero da Home (GSAP timeline).
-quote-slider      — Swiper (setas laterais, 1 slide).
-google-map        — já existe google-maps.js no starter; activar template
-                    no array $templates do inc/enqueue.php.
-smooth-scroll     — Lenis (já no starter).
-(Isotope/Fancybox — não vi filtros nem lightbox nas páginas analisadas;
- confirmar nas restantes antes de incluir no bundle.)
+menu-overlay      — abrir/fechar mega-menu fullscreen (GSAP / Alpine).
+quote-slider      — Swiper (1 slide, setas).            [evidência: setas]
+stories-slider    — Swiper (cards + dots).              [evidência: ellipses/dots]
+faq-accordion     — expandir/colapsar (JS/GSAP).        [signals: 6 páginas]
+jobs-filter       — filtro + toggle lista/grelha (Isotope ou JS). [signals: Open positions]
+google-map        — "Wo sie uns finden" (google-maps.js do starter). [signals:
+                    Cantina e9, DASBREITEHOTEL, Rhyvage]
+video-lightbox    — vídeo do About Us (Fancybox).       [About Us "WAS UNS BEWEGT"]
+smooth-scroll     — Lenis (sempre on).
+scroll-anim       — GSAP ScrollTrigger (reveal de secções; sempre on).
+
+Bundle do starter: GSAP, Lenis, Swiper, Isotope, Fancybox, imagesloaded — TODOS
+com uso confirmado nesta página (ao contrário da v1, que não tinha visto
+filtro/lightbox). Manter todos no build.
 
 --------------------------------------------------------------------------------
-6. MAPEAMENTO WORDPRESS (templates + conteúdo)
+6. MAPEAMENTO WORDPRESS (templates, CPTs, archives)
 --------------------------------------------------------------------------------
-front-page.php                — Home (secções por ACF)
-page-templates/*              — interiores compostos por secções ACF:
-  Products, Kerzen, Holzspielwaren, Living Collection, Xyloba, Schreinerei,
-  Kreativatelier, Holzmanufaktur, Fiduciary, DASBREITEHOTEL, Rhyvage,
-  Cantina e9, Events & Seminare, Our Bakery, Supported Jobs/Apprenticeships,
-  Coaching, For social offices, Impact, Organization, Sponsoring, Services,
-  Corporate Gifts, Gastronomie-Hotellerie, Work & Training, About, Contact
-  >> NOTA: são ~25 páginas mas partilham as MESMAS secções — em vez de 25
-     page-templates, considerar flexible content ACF (secções modulares) ou
-     meia dúzia de templates por família (produto, gastronomia, social,
-     institucional).
-CPT news  (usar o CPT `blog` do starter ou renomear para `news`)
-  - archive-news.php (News_desktop: hero escuro + pinned + grelha + pag.)
-  - single-news.php (News Single Page_desktop)
-CPT job
-  - Sem archive próprio (a listagem vive na página Open Positions) →
-    fields: type (Offene Arbeitsstelle/Ausbildungsplatz), excerpt, ...
-  - Job Single page_desktop → single-job.php
-Produtos: DECISÃO NECESSÁRIA — o design NÃO tem carrinho/checkout; o single
-  tem formulário de encomenda/inquiry (Select Variant + Nome + Email + msg).
-  Opção A: WooCommerce sem checkout (catálogo) — pesado para o que é.
-  Opção B: CPT `product` + CF7 com campo de variante — mais leve, alinhado
-  com o design. Recomendo B, salvo se houver planos de loja online real.
-404.php                       — 404_desktop
-Legais (AGB, Data Policy, Impressum) — page.php standard.
+DECISÃO ESTRUTURAL: com ~35 páginas desktop a partilharem as MESMAS secções
+(page-hero, intro-panel, usp-band, quote-slider, cta-form, cross-links…),
+templates fixos por página são inviáveis. Recomendação: **ACF Flexible Content**
+(um leque de secções modulares reutilizáveis) montado num `page.php`/front-page,
+com 2–3 page-templates só para os casos com lógica própria (Open positions,
+Contact). As secções do ponto 3 são os "layouts" do flexible content.
+
+TEMPLATES DE SISTEMA / RAIZ
+  front-page.php   → Home (593:736). Ordem: hero-card → products (intro + range
+                     cards) → usp-band → services (intro + card-venue Schreinerei/
+                     Kreativatelier/Treuhand) → gastronomia ("zu allen Betrieben")
+                     → locations-band → work&training (intro + job-teasers) →
+                     about-teaser → footer(newsletter).
+  page.php         → páginas com flexible content (a maioria dos interiores).
+  404.php          → 404_desktop ("Oops!" + link Home).
+  Legais (ABG/AGB, Data Policy, Impressum) → page.php + layout legal-content.
+
+PAGE-TEMPLATES (lógica própria)
+  page-open-positions.php → jobs-listing (filtro + vista) sobre o CPT `job`.
+  page-contact.php        → dados de contacto + horários + google-map.
+  (Products/Services/About/etc. resolvem-se por flexible content no page.php.)
+
+CPTs / ARCHIVES  (o pedido do Bruno — mapeado à evidência das 51 páginas)
+  ┌────────────┬───────────────────────────────────────────────────────────────┐
+  │ CPT `news` │ archive-news.php  ← "News_desktop" (hero + cards + destaque)    │
+  │            │ single-news.php   ← "News Single Page_desktop"                  │
+  │            │  · single: data (<time>), título, corpo, imagem, prev/next      │
+  │            │    ("letzter/nächster Beitrag"), bloco de notícias relacionadas.│
+  │            │  · taxonomia: categoria (ex. "Creative Workshop").              │
+  │            │  · Schema Article via Yoast (por omissão). WPML traduzível.     │
+  │            │  · Base: reaproveitar o CPT `blog` do starter (renomear         │
+  │            │    labels/slug) OU criar `news` — decidir (afecta slugs/WPML).  │
+  ├────────────┼───────────────────────────────────────────────────────────────┤
+  │ CPT `job`  │ SEM archive próprio — listagem vive em page-open-positions.php  │
+  │            │  (jobs-listing: filtro + toggle vista). NÃO há single desenhado │
+  │            │  nesta página (o card tem seta "→"/"Mehr erfahren"; confirmar   │
+  │            │  se abre single-job.php ou modal/PDF externo).                  │
+  │            │  · campos: categoria (select: Arbeitsstelle/Ausbildungsplatz/   │
+  │            │    Praktikum…), Betrieb (relação/select), pensum, excerpt,      │
+  │            │    corpo, contacto. Taxonomia p/ o filtro (categoria + Betrieb).│
+  │            │  · Schema JobPosting via Yoast Schema API (filtros wpseo_*).    │
+  ├────────────┼───────────────────────────────────────────────────────────────┤
+  │ Produtos   │ SEM checkout e SEM página de detalhe de produto nesta Hifi. As  │
+  │ (catálogo) │ gamas mostram categorias em tabs + cards, e a venda é por vias  │
+  │            │ EXTERNAS (Pepperi, Socialstore, Werkladen) — só links.          │
+  │            │  → Recomendação: NÃO WooCommerce. Opções:                       │
+  │            │    A) CPT `product` + taxonomia `product_category`, listado nas │
+  │            │       páginas de gama (sem single, ou single leve).             │
+  │            │    B) Repeaters ACF dentro de cada página de gama (mais simples │
+  │            │       se o catálogo for pequeno/estático).                      │
+  │            │  DECISÃO com cliente (ver §9). Actualizar o CLAUDE.md (a linha   │
+  │            │  WooCommerce está "pendente").                                  │
+  ├────────────┼───────────────────────────────────────────────────────────────┤
+  │ Betriebe   │ As "oficinas"/unidades (Kerzen, Holzspielwaren, Living, Xyloba, │
+  │ (unidades) │ Holzmanufaktur, Kreativatelier, Schreinerei, Treuhand,          │
+  │ — EM       │ DASBREITEHOTEL, Rhyvage, Cantina e9, Bäckerei, Events) têm       │
+  │ ABERTO     │ layouts MUITO próprios e cruzam-se entre si ("Das könnte Sie    │
+  │            │ auch interessieren", "zu allen Betrieben", menu, locations).    │
+  │            │  → Recomendação: PÁGINAS com flexible content (não CPT), mas com │
+  │            │    UMA TAXONOMIA/relação "Betrieb" para alimentar cross-links,  │
+  │            │    locations-band e o mega-menu de forma dinâmica.              │
+  │            │    (CPT `betrieb` só se o cliente quiser gerir isto como lista  │
+  │            │    editável e uniforme — não é o caso pelo design.)             │
+  ├────────────┼───────────────────────────────────────────────────────────────┤
+  │ Schreinerei│ Sub-serviços (Innenausbau, Möbel, Haustüren, Brandschutz, Für   │
+  │ sub-serv.  │ Architekten, Dienstleistungen) partilham o MESMO template forte:│
+  │ (candidato │ page-hero → intro → offer-grid → texto → service-info-downloads │
+  │  a CPT/    │ → cta-form → cross-links → footer.                              │
+  │  child     │  → Bom candidato a CPT `leistung` (ou páginas-filho de          │
+  │  pages)    │    Schreinerei) com um único template + offer-grid via repeater.│
+  └────────────┴───────────────────────────────────────────────────────────────┘
+  Outros candidatos a dados reutilizáveis (CPT leve OU ACF, decidir por volume):
+    · `testimonial` — citações do quote-slider (reusadas em várias páginas).
+    · `person` / equipa — contact-person / "key people" (Organization).
+  Taxonomias sugeridas: `news_category`, `job_type`, `betrieb` (área),
+  `product_category`.
 
 --------------------------------------------------------------------------------
-7. SUGESTÃO DE CUSTOM FIELDS (padrão por secção; grupos por página/template)
+7. MAPA PÁGINA → SECÇÕES (ordem vertical; contrato para as skills de scaffold)
+   [G]=global  [S]=secção  [M]=module  [C]=componente dentro da secção
 --------------------------------------------------------------------------------
-Padrão recorrente de secção:
-  section: { overline, title, description, link (array), align/variant }
-hero_home: { title, tagline, description, image, button }
-intro_panel: { title, text }
-usp_band: { title, items[] (icon, label) }  — repeater
-cards_section: { section (padrão), cards[] (image, title, text, link) }
-quote_slider: { quotes[] (text, author, role, image) }
-cta_form: { title, form_id (CF7), variant }
-locations: { items[] (image, label, logo, description, link) }
-map: { address, lat/lng ou ACF google_map }
-contact_person: { image, name, role, phone, email }
-skills_lists: { panels[] (title, items[]) }
-job (CPT): { type (select), description, ... }
+Home (front-page)        : header[G] hero-card page-hero-scroll products(section-cards
+                           +range-cards) usp-band services(section-cards+card-venue)
+                           gastronomy(zu allen Betrieben) locations-band
+                           work&training(job-teasers) about-teaser footer[G]
+Home (menu overlay)      : menu-overlay[M]
+Products                 : header page-hero intro-panel product-range-cards usp-band
+                           quote-slider[M] sales-points cta-form(banda vermelha) footer
+Kerzen                   : header page-hero intro-panel product-overview(tabs+cards)
+                           usp-band quote-slider[M] stories-references[M]
+                           sales-points cta-form footer
+Holzspielwaren           : header page-hero intro-panel product-overview(tabs+cards)
+                           usp-band (+ bloco composto) cta-form footer
+Living Collection        : header page-hero intro-panel offer-grid(LINEA/RONDO/PORTO)
+                           usp-band feature-text quote-slider[M] stories-references[M]
+                           sales-points cta-form footer
+Xyloba                   : header page-hero feature(xyloba.ch) usp-band feature
+                           quote-slider[M] stories-references[M] sales-points cta-form footer
+Holzmanufaktur           : header page-hero stories-references[M] usp-band
+                           capabilities-grid cta-form footer
+Schreinerei              : header page-hero intro-panel offer-grid(Innenausbau/Möbel)
+                           cross-links(Brandschutz/Architekten) text capabilities-grid
+                           cta-form(+footer composto)
+Schreinerei sub (Innenausbau/Möbel/Haustüren/Brandschutz/Architekten/Dienstleistungen):
+                           header page-hero(500h) intro offer-grid text
+                           service-info-downloads cta-form cross-links footer
+Kreativatelier           : header page-hero intro process-steps(Konfektion…) usp-band
+                           quote-slider[M] process-steps testimonial faq-accordion[M] footer
+Fiduciary (Treuhand)     : header page-hero intro usp(3 selos) feature faq-accordion[M]? footer
+DASBREITEHOTEL           : header page-hero intro gastronomy-detail(Jetzt buchen) footer
+Rhyvage                  : header page-hero intro gastronomy-detail(cross venues) footer
+Cantina e9               : header page-hero intro gastronomy-detail(Catering) footer
+Events & Seminare        : header page-hero gastronomy-detail(DERBREITERAUM/MEETINGRAUM) footer
+Our Bakery               : header page-hero intro gastronomy-detail(Adresse/horários) footer
+Gastronomie-Hotellerie   : header page-hero cards(Seminare/Events…) usp-band
+                           quote-slider[M] cross-venues footer
+Work & Training          : header page-hero intro cards(Hausdienst/Dienstleistungen)
+                           job-teasers quote-slider[M] cta-form footer
+Supported jobs           : header page-hero intro-panel job-teasers cross-band
+                           process-steps quote-slider[M] cta-form faq-accordion[M]
+                           cross-links footer
+Supported Apprenticeships: header page-hero intro-panel job-teasers text cards
+                           process-steps quote-slider[M] contact-person cross-links footer
+Open positions           : header page-hero jobs-listing[M](filtro+vista) footer(+CTA)
+For social offices       : header page-hero intro-panel offers(Begleitete Arbeit/
+                           Ausbildung) downloads job-teasers contact-person cta-form
+                           cross-links footer
+Impact                   : header page-hero feature feature testimonial links-band
+                           cross-links footer
+Organization             : header page-hero intro key-people(contact-person)
+                           feature(DERBREITERAUM) cta cross-links footer
+Sponsoring / Donation    : header page-hero process-steps(Step1-4) usp-band
+                           faq-accordion[M] footer
+About Us                 : header page-hero intro-panel values-grid feature(So arbeiten
+                           wir) quote-slider[M] video-feature[M] feature(Organisation)
+                           donation-cta cross-links footer
+Services (overview)      : header[nav] page-hero cards(Treuhand/Kreativ…) usp-band
+                           testimonials cta-form discover-more(cross) footer
+Corporate Gifts          : header page-hero gift-options gift-grid selection
+                           process-steps text cta-form cross-links
+News (archive)           : header page-hero news-feature(pinned) news-cards(grelha) footer
+News Single              : header page-hero(prev/next) date title lead body gallery
+                           related-news footer
+Contact                  : header page-hero contact-info(tel/email) google-map[M]
+                           opening-hours footer
+Legais (ABG/DataPolicy/Impressum): header title-band legal-content footer
+404                      : header 404-block footer
+Variantes responsivas (Home/Products/Services/Gastronomie _tablet/_mobile):
+                           mesmas secções, layout empilhado; nav/hero/footer via
+                           componentes -tablet/-mobile.
 
 --------------------------------------------------------------------------------
-8. TEMPLATE TAGS (inc/theme-template-tags.php — @subpackage Helpers)
+8. SUGESTÃO DE CUSTOM FIELDS (ACF)
 --------------------------------------------------------------------------------
-- weizenkorn_the_formatted_date()      — datas de news/eventos com <time datetime>.
-- weizenkorn_the_arrow_icon()/svg      — seta e ícones inline reutilizados.
-- weizenkorn_get_link_attrs( $acf )    — normalizar o array do campo link ACF
-                                    (url/title/target) com escaping.
+FLEXIBLE CONTENT `page_sections` (layouts = secções do §3), padrão por layout:
+  section_base       : { overline, title, tag(h1/h2), align, rule_color, links[] }
+  hero_card          : { title, tagline, description, image, button }        (Home)
+  page_hero          : { title, subtitle, image, variant }
+  intro_panel        : { title, text }
+  usp_band           : { title, items[]{ icon, label } }
+  section_cards      : { section_base, cards[]{ image, title, text, link } }
+  product_range_cards: { section_base, ranges[]{ image, title, excerpt, page } }
+  quote_slider       : { quotes[]{ quote, name, role, image } }
+  stories_references : { section_base, items[]{ image, title, text, link } }
+  cta_form           : { title, text, form_id(CF7), variant(red/light) }
+  faq                : { title, items[]{ question, answer } }
+  offer_grid         : { section_base, items[]{ image, title, excerpt } }
+  capabilities_grid  : { title, groups[]{ title, items[] } }
+  service_info_downloads : { title, links[]{ label, url }, files[]{ title, file } }
+  downloads          : { title, text, files[]{ title, description, file } }
+  process_steps      : { section_base, steps[]{ title, text } }
+  contact_person     : { image, name, role, phone, email, text }
+  sales_points       : { title, retail[], enduser[], external_links[]{ label, url } }
+  locations_band     : { section_base, venues[]{ image, title, excerpt, page } }
+  gastronomy_detail  : { description, cta{label,url}, opening_hours[], address, map }
+  values_grid        : { title, values[]{ icon, title, text } }
+  video_feature      : { overline, title, text, poster, video_url }
+  cross_links        : { title, items[]{ image, title, page } }
+  donation_cta       : { title, text, button }
+CPT `news`   : (core) title/content/thumbnail + { subtitle, gallery }, tax news_category
+CPT `job`    : { job_type(tax), betrieb(tax/relation), pensum, excerpt, apply_contact }
+CPT `product`: (se opção A) { gallery, category(tax), external_links[] }
+Site options (ACF Options): socials, newsletter(Mailchimp), morada/contactos,
+  mega-menu (colunas dinâmicas), footer legal.
+
+--------------------------------------------------------------------------------
+9. TEMPLATE TAGS (inc/theme-template-tags.php — @subpackage Helpers)
+--------------------------------------------------------------------------------
+- weizenkorn_the_formatted_date()   — datas de news com <time datetime="">.
+- weizenkorn_the_svg_icon( $name )  — setas/ícones inline reutilizados (seta →,
+                                      espiga, ícones USP, redes sociais).
+- weizenkorn_get_link_attrs( $acf ) — normaliza o campo link ACF (url/title/target)
+                                      com escaping (esc_url/esc_attr).
+- weizenkorn_render_section( $layout, $data ) — dispatcher do flexible content
+                                      (mapeia layout → get_template_part).
 - wrappers before/after_main_content — já existem no starter.
 
 --------------------------------------------------------------------------------
-9. NOTAS / DECISÕES EM ABERTO
+10. DECISÕES EM ABERTO (precisam do designer/cliente)
 --------------------------------------------------------------------------------
-1. Produtos: CPT+inquiry vs WooCommerce (ver secção 6) — decidir com cliente.
-2. Page templates: flexible content ACF vs templates fixos por página —
-   com 25+ páginas a partilhar secções, o flexible content poupa muito
-   trabalho, mas foge ao padrão actual do starter (grupos fixos por
-   template). Discutir.
-3. News: usar CPT `blog` existente do starter (renomear labels) ou criar
-   `news` — afecta slugs/traduções WPML.
-4. O menu overlay e o sticky header não estão em todas as páginas do Figma —
-   confirmar comportamento com o designer.
-5. Isotope e Fancybox (do bundle do starter) ainda sem uso visto — verificar
-   as páginas restantes (galerias do hotel?) antes de decidir manter no build.
-6. [RESOLVIDO 2026-07-22] Cores/tipografia extraídas da página "Design
-   System" via MCP — ver secção 1. Falta ainda: confirmar hex dos estados
-   hover/pressed dos botões (não documentados como texto no Figma, só
-   visuais) antes de implementar `button.php`.
+1. PRODUTOS: catálogo sem checkout → CPT `product`+ACF (recomendado) vs
+   WooCommerce. Confirmar que a venda é mesmo só por vias externas (Pepperi,
+   Socialstore, Werkladen). Actualizar a linha WooCommerce do CLAUDE.md.
+2. ARQUITECTURA de páginas: ACF Flexible Content (recomendado, dada a partilha
+   massiva de secções) vs page-templates fixos. Confirmar abordagem antes de
+   fazer scaffold.
+3. CPT `job`: existe página de detalhe (single-job) ou o "Mehr erfahren" abre
+   modal/PDF/e-mail? O design não tem single de vaga. Confirmar.
+4. CPT `news` vs reutilizar `blog` do starter (impacto em slugs/WPML).
+5. "Betriebe": páginas + taxonomia (recomendado) vs CPT `betrieb`. Depende de
+   quererem gerir as unidades como lista editável uniforme.
+6. Schreinerei sub-serviços: CPT `leistung` vs páginas-filho (partilham template
+   forte — decidir por quem edita).
+7. quote-slider / testimonials: CPT `testimonial` vs ACF por página (são
+   reutilizados — um CPT evita duplicação).
+8. Menu overlay: confirmar interacção (fullscreen sempre? sticky header após
+   scroll? o design tem componente "navigation-*" novo mas não um "sticky bar"
+   explícito nesta página).
+9. Botões: hex dos estados hover/pressed não vêm como texto no Figma (só visual)
+   — confirmar antes de implementar button.php.
+10. i18n: conteúdo é DE primário com nomes de página EN; confirmar língua
+    default do site e as 3 línguas WPML (DE/EN/FR).
+
+================================================================================
+FIM — actualizar este ficheiro quando o design mudar (acrescentar secções novas,
+não reescrever). Fonte: Figma Dev Mode MCP + .claude/skills/figma-analysis.
 ================================================================================
