@@ -1,0 +1,205 @@
+================================================================================
+ANÁLISE DE ARQUITECTURA — FIGMA "Design_Client-private-design"
+Página analisada: Hifi Wireframe_in process
+Projecto: Weizenkorn (Stiftung Weizenkorn, Basel) — weizenkorn.ch
+Data: 2026-07-09 | Analisado por: Claude (a partir do Figma via MCP)
+================================================================================
+
+Páginas vistas em detalhe: Home, Products, Product Single, News, Events &
+Seminare, Open Positions. As restantes ~34 páginas desktop reutilizam os
+mesmos blocos (confirmado por análise de repetição dos frames — os grupos
+mais reutilizados aparecem em 19–25 páginas).
+
+--------------------------------------------------------------------------------
+1. VISÃO GERAL
+--------------------------------------------------------------------------------
+- Site institucional multilingue (EN/DE/FR — confirma WPML do nosso stack).
+- ~40 templates desktop + versões mobile (393px) e tablet (834px).
+- Áreas: produtos artesanais (velas, brinquedos de madeira, living collection),
+  gastronomia/hotelaria (DASBREITEHOTEL, Rhyvage, Cantina e9, Bakery),
+  trabalho social (jobs apoiados, formação, coaching), organização
+  (About, Impact, News, Sponsoring, Contact) + legais (AGB, Data Policy,
+  Impressum, 404).
+- Design tokens visíveis: vermelho de marca (CTAs, linhas, formulários),
+  preto/cinza-escuro (footer, cards de local), cinza-claro (bandas USP),
+  branco. Tipografia grotesca (títulos grandes ~90-120px, peso regular).
+  >> Extrair valores exactos das variáveis do Figma para _vars.sass e
+     tailwind.config.js na fase de setup.
+
+--------------------------------------------------------------------------------
+2. GLOBAIS (uma vez por site — template-parts/ + @subpackage Section)
+--------------------------------------------------------------------------------
+header-main.php
+  - Logo central, language switcher EN/DE/FR (WPML) à direita, hamburger
+    à esquerda. Existe frame "Sticky menu bar_desktop" → header sticky
+    (provavelmente aparece após scroll — GSAP/ScrollTrigger).
+footer-main.php
+  - Fundo escuro. Colunas: logo | contacto (morada, tel, email) | sitemap
+    (2 linhas de links) | newsletter (nome + email → Mailchimp for WP).
+  - Barra inferior: copyright + legais (Datenschutz, AGB, Impressum, Jobs).
+[MODULE] menu-overlay
+  - Frame "Home_menu_desktop" = menu fullscreen (hamburger). JS próprio.
+
+--------------------------------------------------------------------------------
+3. SECÇÕES (template-parts/pages/... — @subpackage Section)
+--------------------------------------------------------------------------------
+Identificadas e reutilizadas por quase todas as páginas (por ordem típica):
+
+hero.php                    — Home: 2 estados no Figma ("first moment" /
+                              "after a few seconds") → animação de entrada
+                              GSAP. Título + tagline + imagem + CTA.
+page-hero.php               — Interiores: imagem full-width OU banda escura
+                              com Subtitle + Title H1 (News). Variantes.
+intro-panel.php             — Painel com borda: título grande à esquerda +
+                              parágrafo à direita. Aparece em 25 páginas
+                              (o "Group 1000005088"). É o page-header
+                              standard dos interiores.
+divider-brand.php           — Ícone da marca (espiga) centrado — separador
+                              decorativo entre secções.
+usp-band.php                — Banda cinza "Das macht uns aus": 4 itens
+                              ícone+label (Qualität, Handarbeit, Sozial,
+                              Nachhaltig). Repetida em muitas páginas com
+                              títulos diferentes → título e itens via ACF.
+section-cards.php           — Grelha de cards com section-title + link(s)
+                              "alle ansehen": usada para produtos (5 cat.),
+                              dienstleistungen, standorte, news, etc.
+quote-slider.php            — [MODULE] Citação destacada + foto, setas
+                              laterais → Swiper.
+cta-form.php                — Banda vermelha com formulário (CF7): variantes
+                              contacto / encomenda / evento — campos mudam,
+                              padrão é o mesmo ("Noch Fragen?", "Order",
+                              "Event planen?").
+locations-grid.php          — Fotos grandes com legenda + cards escuros de
+                              descrição (hotel, restaurantes, bakery).
+map-section.php             — "Wo sie uns finden": Google Maps embed +
+                              morada (já temos google-maps.js no starter).
+discover-more.php           — "Entdecken Sie mehr": 3 cards imagem+label
+                              para navegação cruzada entre áreas do site.
+job-offers-grid.php         — Grelha de cards de vagas (ver CPT abaixo).
+skills-lists.php            — Painéis com listas bullet por área
+                              (Ausbildungen, Arbeitsstellen) — repeater ACF.
+contact-person.php          — Card de pessoa: foto + nome/cargo + contactos
+                              ("Dürfen wir weiterhelfen?").
+news-feature.php            — News: item pinned/destaque (texto + imagem +
+                              link "open").
+order-info-columns.php      — Product Single/Products: colunas de info de
+                              revenda/pontos de venda (Wiederverkäufer /
+                              Endkunde).
+related-products.php        — "You may also like": 3 cards com hover/painel
+                              de descrição.
+
+--------------------------------------------------------------------------------
+4. COMPONENTES (template-parts/components/ — @subpackage Component)
+   Reutilizáveis, recebem $args via get_template_part(), nunca get_field()
+--------------------------------------------------------------------------------
+section-title.php   — O MAIS repetido de todos: overline pequeno (ex.
+                      "PRODUKTE"), título H2 grande, linha horizontal
+                      (vermelha ou cinza), alinhamento esq/centro, link(s)
+                      opcionais com seta.
+                      $args: overline, title, tag (h1/h2), align, rule_color,
+                      links[]
+card-category.php   — Imagem + título + texto curto + seta. Usado em grelhas
+                      de produtos/serviços/standorte.
+                      $args: image_id, title, text, url, image_ratio
+card-news.php       — Imagem + DATE + título + excerpt. $args: post_id ou
+                      campos soltos.
+card-location.php   — Card escuro: logo/nome + descrição + link; e variante
+                      foto grande + label inferior.
+card-job.php        — Header vermelho (tipo de oferta + seta) + nome + texto.
+                      $args: type, title, excerpt, url
+card-info.php       — Card com borda: título + listas/texto (pontos de
+                      venda, painéis de skills). $args: title, content/items
+usp-item.php        — Ícone + label. $args: icon, label
+button.php          — Variantes: primário (vermelho, com seta), texto+seta
+                      (MEHR ERFAHREN ↓/→), submit. $args: label, url, style,
+                      icon, target
+arrow-link.php      — Link com seta → (aparece em todos os cards) — pode
+                      fundir-se em button.php como style 'arrow'.
+pagination.php      — "1/100 ... MORE →" nas listagens (News) — estilo
+                      próprio sobre the_posts_pagination ou load more.
+
+--------------------------------------------------------------------------------
+5. MODULES (JS em assets/js/ — @subpackage Module)
+--------------------------------------------------------------------------------
+menu-overlay      — abrir/fechar fullscreen menu (GSAP).
+sticky-header     — mostrar barra sticky após scroll (GSAP ScrollTrigger).
+hero-intro        — animação 2 estados do hero da Home (GSAP timeline).
+quote-slider      — Swiper (setas laterais, 1 slide).
+google-map        — já existe google-maps.js no starter; activar template
+                    no array $templates do inc/enqueue.php.
+smooth-scroll     — Lenis (já no starter).
+(Isotope/Fancybox — não vi filtros nem lightbox nas páginas analisadas;
+ confirmar nas restantes antes de incluir no bundle.)
+
+--------------------------------------------------------------------------------
+6. MAPEAMENTO WORDPRESS (templates + conteúdo)
+--------------------------------------------------------------------------------
+front-page.php                — Home (secções por ACF)
+page-templates/*              — interiores compostos por secções ACF:
+  Products, Kerzen, Holzspielwaren, Living Collection, Xyloba, Schreinerei,
+  Kreativatelier, Holzmanufaktur, Fiduciary, DASBREITEHOTEL, Rhyvage,
+  Cantina e9, Events & Seminare, Our Bakery, Supported Jobs/Apprenticeships,
+  Coaching, For social offices, Impact, Organization, Sponsoring, Services,
+  Corporate Gifts, Gastronomie-Hotellerie, Work & Training, About, Contact
+  >> NOTA: são ~25 páginas mas partilham as MESMAS secções — em vez de 25
+     page-templates, considerar flexible content ACF (secções modulares) ou
+     meia dúzia de templates por família (produto, gastronomia, social,
+     institucional).
+CPT news  (usar o CPT `blog` do starter ou renomear para `news`)
+  - archive-news.php (News_desktop: hero escuro + pinned + grelha + pag.)
+  - single-news.php (News Single Page_desktop)
+CPT job
+  - Sem archive próprio (a listagem vive na página Open Positions) →
+    fields: type (Offene Arbeitsstelle/Ausbildungsplatz), excerpt, ...
+  - Job Single page_desktop → single-job.php
+Produtos: DECISÃO NECESSÁRIA — o design NÃO tem carrinho/checkout; o single
+  tem formulário de encomenda/inquiry (Select Variant + Nome + Email + msg).
+  Opção A: WooCommerce sem checkout (catálogo) — pesado para o que é.
+  Opção B: CPT `product` + CF7 com campo de variante — mais leve, alinhado
+  com o design. Recomendo B, salvo se houver planos de loja online real.
+404.php                       — 404_desktop
+Legais (AGB, Data Policy, Impressum) — page.php standard.
+
+--------------------------------------------------------------------------------
+7. SUGESTÃO DE CUSTOM FIELDS (padrão por secção; grupos por página/template)
+--------------------------------------------------------------------------------
+Padrão recorrente de secção:
+  section: { overline, title, description, link (array), align/variant }
+hero_home: { title, tagline, description, image, button }
+intro_panel: { title, text }
+usp_band: { title, items[] (icon, label) }  — repeater
+cards_section: { section (padrão), cards[] (image, title, text, link) }
+quote_slider: { quotes[] (text, author, role, image) }
+cta_form: { title, form_id (CF7), variant }
+locations: { items[] (image, label, logo, description, link) }
+map: { address, lat/lng ou ACF google_map }
+contact_person: { image, name, role, phone, email }
+skills_lists: { panels[] (title, items[]) }
+job (CPT): { type (select), description, ... }
+
+--------------------------------------------------------------------------------
+8. TEMPLATE TAGS (inc/theme-template-tags.php — @subpackage Helpers)
+--------------------------------------------------------------------------------
+- weizenkorn_the_formatted_date()      — datas de news/eventos com <time datetime>.
+- weizenkorn_the_arrow_icon()/svg      — seta e ícones inline reutilizados.
+- weizenkorn_get_link_attrs( $acf )    — normalizar o array do campo link ACF
+                                    (url/title/target) com escaping.
+- wrappers before/after_main_content — já existem no starter.
+
+--------------------------------------------------------------------------------
+9. NOTAS / DECISÕES EM ABERTO
+--------------------------------------------------------------------------------
+1. Produtos: CPT+inquiry vs WooCommerce (ver secção 6) — decidir com cliente.
+2. Page templates: flexible content ACF vs templates fixos por página —
+   com 25+ páginas a partilhar secções, o flexible content poupa muito
+   trabalho, mas foge ao padrão actual do starter (grupos fixos por
+   template). Discutir.
+3. News: usar CPT `blog` existente do starter (renomear labels) ou criar
+   `news` — afecta slugs/traduções WPML.
+4. O menu overlay e o sticky header não estão em todas as páginas do Figma —
+   confirmar comportamento com o designer.
+5. Isotope e Fancybox (do bundle do starter) ainda sem uso visto — verificar
+   as páginas restantes (galerias do hotel?) antes de decidir manter no build.
+6. Extrair cores/tipografia exactas das variáveis do Figma na fase de setup
+   (get_variable_defs) — este doc só regista a estrutura.
+================================================================================
