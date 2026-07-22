@@ -1,0 +1,35 @@
+// =============================================================================
+// Home page sections — Weizenkorn
+// Layout/spacing scaffolding for the front page. Fill in as you build each
+// section (template-parts/pages/home/*.php). Grid + typography come from
+// _layout/_grid.sass and _components/_typography.sass; use Tailwind utilities
+// for spacing/responsive where possible and keep custom rules here.
+// =============================================================================
+
+// Vertical rhythm between home sections (tweak against Figma).
+.section-hero,
+.section-products,
+.section-services,
+.section-gastronomy,
+.section-locations,
+.section-work-training,
+.section-about-teaser
+  padding-block: 60px
+  @media (min-width: 1280px)
+    padding-block: 120px
+
+// -- Hero ----------------------------------------------------------------------
+.section-hero
+  // Hero title is brand-red in the design — set colour on the container.
+  .section-hero__title
+    color: var(--color-primary)
+
+// Per-section rules go below as you build each part. Empty placeholders are
+// left as comments only (bare empty selectors emit "won't be rendered" warnings).
+//
+//   .section-products        — "Schönes mit Sinn": 3-up range cards desktop
+//   .section-services        — "Massgeschneidert für Sie"
+//   .section-gastronomy      — "Gut essen. Gut schlafen."
+//   .section-locations       — "UNSERE STANDORTE"
+//   .section-work-training    — "Arbeiten. Lernen. Ankommen."
+//   .section-about-teaser    — "Lerne uns kennen"

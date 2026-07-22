@@ -1,0 +1,33 @@
+// =============================================================================
+// USP band ("Das macht uns aus") — shared module
+// Full-bleed cream background, 3–4 icon+label items. Reused across many pages
+// (Products, Home, Gastronomie, Services…) so it lives in _modules/.
+// =============================================================================
+
+.usp-band
+  background-color: var(--color-bg-alt)   // brand-cream #F8F3E9
+  color: var(--color-text)
+  padding-block: 48px
+  @media (min-width: 1280px)
+    padding-block: 72px
+
+  &__items
+    display: grid
+    gap: 20px
+    grid-template-columns: repeat(2, minmax(0, 1fr))
+    @media (min-width: 768px)
+      grid-template-columns: repeat(4, minmax(0, 1fr))
+
+  &__item
+    display: flex
+    flex-direction: column
+    align-items: center
+    text-align: center
+    gap: 12px
+
+  &__icon
+    width: 56px
+    height: 56px
+    @media (min-width: 1280px)
+      width: 72px
+      height: 72px

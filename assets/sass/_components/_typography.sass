@@ -1,0 +1,73 @@
+// =============================================================================
+// Typography — Weizenkorn
+// Custom classes are built with Tailwind utilities via @apply (house style —
+// see _buttons.sass). Responsive sizes use arbitrary values with the base / md
+// (768px) / xl (1280px) breakpoints, matching the design's mobile / tablet /
+// desktop layouts. Font: DM Sans (font-primary), weights 400/500/600/700/900.
+// Sizes are the REAL Figma values ("Hifi Wireframe_in process", 2026-07-22);
+// values marked (~) are interpolated pending a tablet/mobile Figma check.
+// Colour is intentionally NOT set here (except inline links) — set it on the
+// container so children (incl. wpautop <p>) inherit it (see CLAUDE.md).
+//
+//   Hero Title : 35/45 → (~56/64) → 82/100 · SemiBold 600
+//   H2 display : (~40/44) → 64/74 → 120/100 · Medium 500
+//   Overline   : 15 → 20/30 · Regular 400 · UPPERCASE
+//   Body       : 16/24 → 20/30 · Regular 400
+//   Card title : 18/26 → 20/30 · Bold 700
+//   Inline link: 20/30 · Bold 700 · underline · brand-red
+// =============================================================================
+
+// -- Base ----------------------------------------------------------------------
+html
+  font-size: 16px
+
+body
+  @apply font-primary text-base leading-normal tracking-[0.5px] text-brand-dark
+
+// Reset native heading sizing — headings get their look from the classes below.
+// Raw CSS: there is no Tailwind utility for font-size/line-height: inherit.
+h1, h2, h3, h4, h5, h6
+  font: inherit
+  margin: 0
+
+// =============================================================================
+// Display headings
+// =============================================================================
+
+// Hero title (H1) — 35 → 82px. Usually brand-red in the design.
+.title-hero
+  @apply font-primary font-semibold tracking-[0.5px] text-[35px] leading-[45px] md:text-[56px] md:leading-[64px] xl:text-[82px] xl:leading-[100px]
+
+// Big section title (H2) — 40 → 64 → 120px. The largest type on the site.
+.title-main
+  @apply font-primary font-medium tracking-[0.5px] text-[40px] leading-[44px] md:text-[64px] md:leading-[74px] xl:text-[120px] xl:leading-[100px]
+
+// Optional mid-level heading (e.g. "Das macht uns aus").
+.title-section
+  @apply font-primary font-semibold tracking-[0.5px] text-[28px] leading-[34px] xl:text-[40px] xl:leading-[48px]
+
+// Card / block title (H3) — 18 → 20px, bold.
+.title-card
+  @apply font-primary font-bold tracking-[0.5px] text-[18px] leading-[26px] xl:text-[20px] xl:leading-[30px]
+
+// =============================================================================
+// Text styles
+// =============================================================================
+
+// Overline / eyebrow above titles — uppercase.
+.overline
+  @apply font-primary font-normal uppercase tracking-[0.5px] text-[15px] leading-[22px] xl:text-[20px] xl:leading-[30px]
+
+// Body copy — 16 → 20px. Apply on a wrapper so wpautop <p> children inherit.
+.body-text
+  @apply font-primary font-normal tracking-[0.5px] text-[16px] leading-[24px] xl:text-[20px] xl:leading-[30px]
+  p
+    @apply mb-4 last:mb-0
+
+// Small text (captions, footer).
+.body-small
+  @apply font-primary font-normal tracking-[0.5px] text-[14px] leading-[21px]
+
+// Inline emphasised link ("mehr") — bold, underlined, brand-red.
+.link-inline
+  @apply font-primary font-bold tracking-[0.5px] text-brand-red underline underline-offset-2
