@@ -450,8 +450,16 @@ Site options (ACF Options): socials, newsletter(Mailchimp), morada/contactos,
 9. TEMPLATE TAGS (inc/theme-template-tags.php — @subpackage Helpers)
 --------------------------------------------------------------------------------
 - weizenkorn_the_formatted_date()   — datas de news com <time datetime="">.
-- weizenkorn_the_svg_icon( $name )  — setas/ícones inline reutilizados (seta →,
-                                      espiga, ícones USP, redes sociais).
+- weizenkorn_the_svg_icon( $name )  — [IMPLEMENTADO 2026-07-22, só setas] SVGs
+                                      exactos da página Design System > Icons >
+                                      Arrows (versão grande de cada uma; as
+                                      variantes "mobile" pequenas por baixo
+                                      foram ignoradas): 'arrow-right',
+                                      'arrow-down', 'arrow-download'. Falta
+                                      ainda: espiga, ícones USP, redes sociais
+                                      (redes sociais já estão à parte em
+                                      weizenkorn_socials(), ver inc/theme-
+                                      template-tags.php).
 - weizenkorn_get_link_attrs( $acf ) — normaliza o campo link ACF (url/title/target)
                                       com escaping (esc_url/esc_attr).
 - weizenkorn_render_section( $layout, $data ) — dispatcher do flexible content

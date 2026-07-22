@@ -253,6 +253,7 @@ O tema segue **Semantic Versioning** (`MAJOR.MINOR.PATCH`) e mantém um `CHANGEL
 
 ## Convenções Gerais
 
+- Breakpoints (confirmado 2026-07-22): usar sempre os breakpoints por omissão do Tailwind, sem os redefinir em `tailwind.config.js`. Vocabulário do projecto: **desktop = `xl` (≥1280px)**, **tablet = entre `md` e `xl` (768–1280px)**, **mobile = abaixo de `md` (<768px)**. Mobile-first: escrever o valor base para mobile/tablet e sobrepor com `xl:` para desktop (ex.: `text-[12px] xl:text-[15px]`), a não ser que o design precise de um valor próprio só para tablet (nesse caso usar `md:` também).
 - Não usar plugins desnecessários — preferir código no tema.
 - Não instalar dependências npm ou composer sem confirmação explícita.
 - Ao adicionar template parts, seguir a estrutura existente em `template-parts/`.

@@ -1,0 +1,69 @@
+// Button component (template-parts/components/button.php).
+// 5 types from the Figma "Design System" page (Buttons section, confirmed via
+// Figma Dev Mode MCP get_design_context, 2026-07-22): Primary, Secondary,
+// Black, Arrow Down, Arrow Only. Colors/states below are exact (not
+// placeholders) — DM Sans Black, uppercase, "Pressed" always adds an
+// underline on top of the Hover colors.
+// Font size: 12px up to tablet (<1280px), 15px on desktop (1280px+ — matches
+// Tailwind's default `xl` breakpoint exactly).
+.btn
+  @apply inline-flex items-center font-primary font-black text-[12px] xl:text-[15px] uppercase whitespace-nowrap transition-all duration-300 ease-in-out
+
+  &-primary,
+  &-secondary,
+  &-black,
+  &-arrow-down
+    @apply gap-16 px-3 py-3.5
+
+  &-arrow
+    @apply justify-center w-[38px] px-2 py-3
+
+  &-primary
+    @apply bg-brand-red text-white border border-brand-red
+
+    &:hover,
+    &:active
+      @apply bg-transparent text-brand-red
+
+    &:active
+      @apply underline
+
+  &-secondary
+    @apply bg-transparent text-brand-red border border-brand-red
+
+    &:hover,
+    &:active
+      @apply bg-brand-red text-white
+
+    &:active
+      @apply underline
+
+  &-black
+    @apply bg-transparent text-brand-dark border border-brand-dark
+
+    &:hover,
+    &:active
+      @apply bg-brand-red text-white border-brand-red
+
+    &:active
+      @apply underline
+
+  &-arrow-down
+    @apply text-brand-red border border-transparent
+
+    &:hover,
+    &:active
+      @apply border-brand-red
+
+    &:active
+      @apply underline
+
+  &-arrow
+    @apply text-brand-red border border-transparent
+
+    &:hover,
+    &:active
+      @apply border-brand-red
+
+  &__icon
+    @apply flex items-center justify-center shrink-0

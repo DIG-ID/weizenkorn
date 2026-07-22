@@ -11,6 +11,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.1.0] — 2026-07-22
+
+### Added
+- `button.php` component with the theme's 5 real button types (Primary, Secondary, Black, Arrow Down, Arrow Only), matching exact colors/states from the Figma Design System page.
+- `weizenkorn_the_svg_icon()` template tag with the arrow icon set (arrow-right, arrow-down, arrow-download) from Figma.
+- Design System preview page (`page-templates/page-design-system.php`), showcasing the button component live.
+
+### Changed
+- Documented the project's responsive breakpoint convention in `CLAUDE.md` (desktop = `xl`, tablet = `md`-`xl`, mobile = below `md`).
+
 ## [1.0.1] — 2026-07-22
 
 ### Changed
