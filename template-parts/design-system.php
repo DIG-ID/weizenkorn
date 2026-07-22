@@ -78,18 +78,19 @@ $weizenkorn_buttons = array(
 		);
 		?>
 
-Exemplo a partir do ACF "link":
+		<h3>Exemplo a partir do ACF "link"</h3>
 
-<?php
-$cta_button = get_field( 'cta_button' ); // campo ACF tipo "Link"
+		<?php
+		$cta_button = get_field( 'cta_button' ); // Campo ACF do tipo "Link".
 
-if ( $cta_button ) {
-	get_template_part(
-		'template-parts/components/button',
-		null,
-		array_merge( $cta_button, array( 'style' => 'primary' ) )
-	);
-}
-?>
+		if ( $cta_button ) {
+			get_template_part(
+				'template-parts/components/button',
+				null,
+				array_merge( $cta_button, array( 'style' => 'primary' ) )
+			);
+		}
+		?>
+
 	</div>
 </div>
