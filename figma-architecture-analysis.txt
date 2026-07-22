@@ -20,11 +20,18 @@ mais reutilizados aparecem em 19–25 páginas).
   trabalho social (jobs apoiados, formação, coaching), organização
   (About, Impact, News, Sponsoring, Contact) + legais (AGB, Data Policy,
   Impressum, 404).
-- Design tokens visíveis: vermelho de marca (CTAs, linhas, formulários),
-  preto/cinza-escuro (footer, cards de local), cinza-claro (bandas USP),
-  branco. Tipografia grotesca (títulos grandes ~90-120px, peso regular).
-  >> Extrair valores exactos das variáveis do Figma para _vars.sass e
-     tailwind.config.js na fase de setup.
+- Design tokens confirmados na página "Design System" (2026-07-22, via MCP):
+  vermelho de marca #E30613 (CTAs, linhas, botões, ícones), preto/cinza-escuro
+  #252525 (footer, cards de local, texto), creme/cinza-claro #F8F3E9 (bandas
+  USP), branco #FFFFFF. Já aplicados em `_vars.sass` e `tailwind.config.js`
+  (`brand-red`/`brand-dark`/`brand-cream`).
+- Tipografia: **DM Sans** para tudo (títulos H1-H3, texto, botões) — pesos
+  Regular/Medium/SemiBold/Bold/Black conforme o nível. Já aplicado em
+  `_vars.sass`, `tailwind.config.js` e `functions.php`
+  (`WEIZENKORN_GOOGLE_FONTS_URL`). Nota: a página "Design System" tinha
+  também um estilo H1/H2 alternativo em "Inria Serif" itálico — decidido
+  ignorar como estilo antigo/não usado (confirmar se aparecer nas páginas
+  Hifi finais).
 
 --------------------------------------------------------------------------------
 2. GLOBAIS (uma vez por site — template-parts/ + @subpackage Section)
@@ -200,6 +207,8 @@ job (CPT): { type (select), description, ... }
    confirmar comportamento com o designer.
 5. Isotope e Fancybox (do bundle do starter) ainda sem uso visto — verificar
    as páginas restantes (galerias do hotel?) antes de decidir manter no build.
-6. Extrair cores/tipografia exactas das variáveis do Figma na fase de setup
-   (get_variable_defs) — este doc só regista a estrutura.
+6. [RESOLVIDO 2026-07-22] Cores/tipografia extraídas da página "Design
+   System" via MCP — ver secção 1. Falta ainda: confirmar hex dos estados
+   hover/pressed dos botões (não documentados como texto no Figma, só
+   visuais) antes de implementar `button.php`.
 ================================================================================

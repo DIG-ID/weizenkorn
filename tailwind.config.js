@@ -15,8 +15,8 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      primary: ['Inter', 'sans-serif'],   // replace per project
-      secondary: ['Inter', 'sans-serif'], // replace per project
+      primary: ['DM Sans', 'sans-serif'],
+      secondary: ['DM Sans', 'sans-serif'],
     },
 
     extend: {
@@ -25,9 +25,11 @@ module.exports = {
         // wider: '.06em',
       },
       colors: {
-        // project colors go here
-        // example: 'brand-blue': '#1a3c5e',
-        // weizenkorn colors
+        // Weizenkorn brand colors (Figma "Design System" page — confirmed 2026-07-22)
+        'brand-red': '#E30613',
+        'brand-dark': '#252525',
+        'brand-cream': '#F8F3E9',
+        // dig.id agency colors (wp-admin welcome widget, login screen, admin bar)
         'weizenkorn-turquoise': '#00CCCC',
         'weizenkorn-light-grey': '#F8F8F8',
         'weizenkorn-pink': '#EA526C',
