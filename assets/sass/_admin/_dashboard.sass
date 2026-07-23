@@ -41,3 +41,12 @@ a
 
 .theme-browser .theme.active .theme-name
   @apply bg-weizenkorn-black
+
+// Nav menu item "Image" field preview (Appearance > Menus — see
+// weizenkorn_nav_menu_item_image_field() in inc/theme-setup.php). Fixed size
+// so a large upload doesn't blow up the menu item box.
+.weizenkorn-menu-item-image-preview
+  @apply inline-block
+
+  img
+    @apply block w-16 h-16 object-cover rounded

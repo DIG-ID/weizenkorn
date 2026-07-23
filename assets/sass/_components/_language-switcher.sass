@@ -1,0 +1,35 @@
+.header-main
+  &__lang
+    @apply hidden md:block justify-self-end
+    ul
+      @apply flex items-center gap-1 list-none m-0 p-0
+    a
+      @apply text-brand-dark text-[15px] xl:text-[20px] font-primary tracking-wide no-underline
+      &.wpml-ls-current-language
+        @apply underline
+
+    & > .wpml-ls
+      @apply block
+    .wpml-ls-legacy-list-horizontal
+      @apply border-none m-0 p-0
+      ul
+        @apply flex flex-row list-none
+        li.wpml-ls-item
+          @apply relative
+          &:not(:last-child)
+            &::after
+              @apply content-['/'] absolute text-[1.3rem] leading-[2.1rem] font-primary -right-[0.6rem] top-0 text-brand-dark mx-2
+          a.wpml-ls-link
+            @apply text-brand-dark font-primary text-xl  font-normal leading-none uppercase transition-colors duration-200
+            padding: 5px 10px 6px 0px
+            span.wpml-ls-native
+              @apply font-primary text-xl  font-normal leading-none uppercase
+          a.wpml-ls-link
+            span:not(.wpml-ls-native)
+              &:hover
+                @apply underline underline-offset-[3px] text-brand-red
+
+        li.wpml-ls-current-language
+          a.wpml-ls-link
+            span.wpml-ls-native
+              @apply text-brand-dark underline underline-offset-[3px]

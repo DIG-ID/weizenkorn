@@ -136,7 +136,7 @@ add_action( 'socials', 'weizenkorn_socials' );
  *
  * @since 1.1.0
  *
- * @param string $name Icon name: 'arrow-right', 'arrow-down' or 'arrow-download'.
+ * @param string $name Icon name: 'arrow-right', 'arrow-down', 'arrow-download', 'menu' or 'close'.
  */
 function weizenkorn_the_svg_icon( $name ) {
 
@@ -144,6 +144,8 @@ function weizenkorn_the_svg_icon( $name ) {
 		'arrow-right'    => '<svg width="24" height="19" viewBox="0 0 23.7301 18.632" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0 9.31602H22M10 17.816L22 9.31602L10 0.816024" stroke="currentColor" stroke-width="2" /></svg>',
 		'arrow-down'     => '<svg width="19" height="24" viewBox="0 0 18.632 23.7301" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.31602 4.33488e-08L9.31602 22M0.816024 10L9.31602 22L17.816 10" stroke="currentColor" stroke-width="2" /></svg>',
 		'arrow-download' => '<svg width="21" height="26" viewBox="0 0 21 25.5" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M10.5 0V20.5M2 8.5L10.5 20.5L19 8.5M0 24.5H21" stroke="currentColor" stroke-width="2" /></svg>',
+		'menu'           => '<svg width="40" height="22" viewBox="0 0 40 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><line x1="0" y1="1" x2="40" y2="1" stroke="currentColor" stroke-width="2" /><line x1="0" y1="11" x2="40" y2="11" stroke="currentColor" stroke-width="2" /><line x1="0" y1="21" x2="40" y2="21" stroke="currentColor" stroke-width="2" /></svg>',
+		'close'          => '<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><line x1="1" y1="1" x2="21" y2="21" stroke="currentColor" stroke-width="2" /><line x1="21" y1="1" x2="1" y2="21" stroke="currentColor" stroke-width="2" /></svg>',
 	);
 
 	if ( empty( $icons[ $name ] ) ) {
