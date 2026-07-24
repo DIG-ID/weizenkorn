@@ -8,10 +8,11 @@
  * @since 1.2.1
  */
 
-$weizenkorn_logo_id = weizenkorn_get_logo_id();
-$weizenkorn_address = get_field( 'general_address', 'option' );
-$weizenkorn_phone   = get_field( 'general_phone', 'option' );
-$weizenkorn_email   = get_field( 'general_email', 'option' );
+$weizenkorn_logo_id              = weizenkorn_get_logo_id();
+$weizenkorn_address              = get_field( 'general_address', 'option' );
+$weizenkorn_phone                = get_field( 'general_phone', 'option' );
+$weizenkorn_email                = get_field( 'general_email', 'option' );
+$weizenkorn_newsletter_shortcode = get_field( 'general_newsletter_shortcode', 'option' );
 ?>
 <footer id="footer-main" class="footer-main">
 
@@ -68,10 +69,12 @@ $weizenkorn_email   = get_field( 'general_email', 'option' );
 				?>
 			</nav>
 
-			<div class="footer-main__card footer-main__newsletter">
-				<h2 class="footer-main__heading"><?php esc_html_e( 'Newsletter', 'weizenkorn' ); ?></h2>
-				<?php echo do_shortcode( '[mc4wp_form id=59]' ); ?>
-			</div>
+			<?php if ( $weizenkorn_newsletter_shortcode ) : ?>
+				<div class="footer-main__card footer-main__newsletter">
+					<h2 class="footer-main__heading"><?php esc_html_e( 'Newsletter', 'weizenkorn' ); ?></h2>
+					<?php echo do_shortcode( $weizenkorn_newsletter_shortcode ); ?>
+				</div>
+			<?php endif; ?>
 
 		</div>
 	</div>

@@ -9,7 +9,7 @@
     @apply py-16 xl:py-16 gap-y-10
 
   &__brand
-    @apply col-span-2 md:col-span-6 xl:col-start-1 xl:col-span-4 flex flex-col gap-8
+    @apply col-span-2 md:col-span-6 xl:col-start-1 xl:col-span-4 flex flex-col justify-between gap-8
 
   &__logo-image
     @apply h-auto w-auto max-h-[100px]
@@ -70,12 +70,22 @@
     .mc4wp-form-fields
       @apply flex flex-col gap-6
 
-    label
-      @apply block font-primary text-[18px] leading-[1.65] text-brand-dark
-
     input[type="text"],
     input[type="email"]
-      @apply block w-full mt-2 border-0 border-b border-brand-dark bg-transparent font-primary text-brand-dark pb-1 focus:outline-none focus:border-brand-red
+      @apply block w-full border-0 border-b border-brand-dark bg-transparent font-primary text-[18px] leading-[1.65] text-brand-dark pb-1 focus:outline-none focus:border-brand-red
+
+      &::placeholder
+        @apply text-brand-dark opacity-100
+
+    // MC4WP's own stylesheet resets `border: none` on the submit button —
+    // reassert the shared .btn-black border explicitly, since the plugin
+    // CSS otherwise wins the cascade regardless of load order.
+    .btn-black
+      border: 1px solid #252525 !important
+
+      &:hover,
+      &:active
+        border-color: #E30613 !important
 
   &__legal
     @apply block py-7 text-[15px] font-normal leading-[30px] tracking-[0.5px]

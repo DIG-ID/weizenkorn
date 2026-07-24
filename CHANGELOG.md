@@ -11,6 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.2.2] — 2026-07-24
+
+### Changed
+- Footer newsletter form: shortcode is now read from the "Theme Options" ACF field (`general_newsletter_shortcode`) instead of being hardcoded, field labels replaced with placeholders to match the design, and the submit button's border is reasserted against MC4WP's default stylesheet.
+- Footer social icons updated to the final Figma artwork and spacing.
+- Refreshed `admin-bar.css`, `admin-dashboard.css` and `admin-login.css` — these hadn't been rebuilt into a commit since v1.0.1, so wp-admin/wp-login were serving an outdated build.
+
 ## [1.2.1] — 2026-07-24
 
 ### Added
