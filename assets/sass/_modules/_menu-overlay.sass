@@ -1,6 +1,7 @@
 // Mega menu overlay (Figma "Home_menu_desktop"). Desktop-only column layout
 // for now (xl:); mobile/tablet just stack full-width until that pass.
-// Behaviour: assets/js/menu-overlay.js (open/close + hover/focus image swap).
+// Behaviour: assets/js/menu-overlay.js — open/close "roll down" reveal
+// (GSAP clip-path tween + staggered group fade-in) and hover/focus image swap.
 body.menu-open
   @apply overflow-hidden
 
@@ -19,13 +20,15 @@ body.menu-open
 // breaks every time spacing/typography changes. The grid scrolls internally
 // if the text columns are genuinely taller than the space — header/divider
 // never scroll away. The image caps to that definite height via h-full.
+// visibility + clip-path start "closed" here as the no-JS/pre-JS fallback;
+// assets/js/menu-overlay.js drives the actual open/close via GSAP (clip-path
+// tween "rolling" the curtain down, visibility toggled at the start/end of
+// the animation so closed content stays out of the tab order).
 .menu-overlay
-  @apply fixed inset-0 z-40 bg-white invisible opacity-0 transition-opacity duration-300 ease-out
+  @apply fixed inset-0 z-40 bg-white invisible
   @apply flex flex-col
   padding-top: var(--header-height)
-
-  &.is-visible
-    @apply visible opacity-100
+  clip-path: inset(0% 0% 100% 0%)
 
   .theme-container
     @apply flex flex-col flex-1 min-h-0

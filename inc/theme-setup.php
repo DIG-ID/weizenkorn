@@ -14,10 +14,11 @@ function weizenkorn_theme_setup() {
 
 	register_nav_menus(
 		array(
-			'mega-menu-1' => __( 'Mega Menu — Column 1 (Produkte / Arbeiten & Ausbildung)', 'weizenkorn' ),
-			'mega-menu-2' => __( 'Mega Menu — Column 2 (Dienstleitungen / Über uns)', 'weizenkorn' ),
-			'mega-menu-3' => __( 'Mega Menu — Column 3 (Gastronomie & Hotellerie / News / Kontakt)', 'weizenkorn' ),
-			'footer-menu' => __( 'Footer Menu', 'weizenkorn' ),
+			'mega-menu-1'    => __( 'Mega Menu — Column 1 (Produkte / Arbeiten & Ausbildung)', 'weizenkorn' ),
+			'mega-menu-2'    => __( 'Mega Menu — Column 2 (Dienstleitungen / Über uns)', 'weizenkorn' ),
+			'mega-menu-3'    => __( 'Mega Menu — Column 3 (Gastronomie & Hotellerie / News / Kontakt)', 'weizenkorn' ),
+			'footer-menu'    => __( 'Footer Menu', 'weizenkorn' ),
+			'copyright-menu' => __( 'Copyright Bar Menu (Datenschutz / AGB / Impressum / Jobs)', 'weizenkorn' ),
 		)
 	);
 

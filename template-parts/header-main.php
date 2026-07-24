@@ -7,8 +7,7 @@
  * @since 1.0.0
  */
 
-$weizenkorn_general = get_field( 'general', 'option' );
-$weizenkorn_logo_id = ! empty( $weizenkorn_general['logo'] ) ? $weizenkorn_general['logo'] : 0;
+$weizenkorn_logo_id = weizenkorn_get_logo_id();
 ?>
 <header id="header-main" class="header-main" itemscope itemtype="http://schema.org/WebSite">
 	<div class="theme-container">

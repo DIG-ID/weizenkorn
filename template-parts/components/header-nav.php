@@ -19,8 +19,11 @@ $defaults = array(
 $args = wp_parse_args( $args, $defaults );
 ?>
 <button type="button" class="header-main__menu-toggle" aria-expanded="false" aria-controls="menu-overlay" aria-label="<?php esc_attr_e( 'Open menu', 'weizenkorn' ); ?>">
-	<span class="header-main__menu-icon header-main__menu-icon--open"><?php weizenkorn_the_svg_icon( 'menu' ); ?></span>
-	<span class="header-main__menu-icon header-main__menu-icon--close"><?php weizenkorn_the_svg_icon( 'close' ); ?></span>
+	<span class="menu-toggle__bars" aria-hidden="true">
+		<span class="bar bar--top"></span>
+		<span class="bar bar--middle"></span>
+		<span class="bar bar--bottom"></span>
+	</span>
 </button>
 
 <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="header-main__logo" rel="home">

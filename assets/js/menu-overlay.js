@@ -1,7 +1,9 @@
 /**
- * Mega menu overlay: open/close toggle + hover/focus image swap.
+ * Mega menu overlay: open/close "roll down" reveal + hover/focus image swap.
  * Markup: template-parts/menu-overlay.php + template-parts/components/header-nav.php.
  */
+
+import { gsap } from './gsap.js';
 
 const IMAGE_FADE_MS = 200;
 
@@ -88,21 +90,44 @@ export function initMenuOverlay() {
     toggles.forEach((toggle) => toggle.setAttribute('aria-expanded', String(expanded)));
   };
 
+  // "Roll down" open: a clip-path tween reveals the overlay from the top
+  // edge downward, then the menu groups (and the image) fade/slide in with
+  // a stagger. Targets are the top-level <li> (each a heading + its
+  // sub-menu, one unit) and .menu-overlay__image — NOT .menu-overlay__col
+  // or its <ul>, since those become `display:contents` at xl (see
+  // _menu-overlay.sass) and opacity/transform have no effect on a
+  // `contents` box.
+  const revealTargets = overlay.querySelectorAll('.menu-overlay__col > ul > li, .menu-overlay__image');
+
+  gsap.set(revealTargets, { autoAlpha: 0, y: -16 });
+
+  const revealTl = gsap.timeline({ paused: true })
+    .to(overlay, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.6, ease: 'power3.out' })
+    .to(revealTargets, { autoAlpha: 1, y: 0, duration: 0.45, ease: 'power2.out', stagger: 0.06 }, '-=0.3');
+
+  // Only visible/focusable once the "closed" reverse animation has fully finished.
+  revealTl.eventCallback('onReverseComplete', () => {
+    overlay.style.visibility = 'hidden';
+    overlay.setAttribute('aria-hidden', 'true');
+  });
+
   const openMenu = () => {
-    overlay.classList.add('is-visible');
+    overlay.style.visibility = 'visible';
     overlay.removeAttribute('aria-hidden');
     setExpanded(true);
     document.body.classList.add('menu-open');
     syncHeaderHeight();
     syncImageHeight();
+    revealTl.play();
   };
 
   const closeMenu = () => {
-    overlay.classList.remove('is-visible');
-    overlay.setAttribute('aria-hidden', 'true');
     setExpanded(false);
     document.body.classList.remove('menu-open');
+    revealTl.reverse();
   };
+
+  const isMenuOpen = () => toggles.length > 0 && toggles[0].getAttribute('aria-expanded') === 'true';
 
   toggles.forEach((toggle) => {
     toggle.addEventListener('click', () => {
@@ -112,7 +137,7 @@ export function initMenuOverlay() {
   });
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && overlay.classList.contains('is-visible')) {
+    if (e.key === 'Escape' && isMenuOpen()) {
       closeMenu();
     }
   });

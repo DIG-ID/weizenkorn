@@ -28,21 +28,31 @@
   &__menu-toggle
     @apply justify-self-start flex items-center text-brand-dark cursor-pointer bg-transparent border-0 p-0
 
-    // Icon swap (menu/close) driven by aria-expanded — see assets/js/menu-overlay.js.
+    // Burger → X morph (.menu-toggle__bars / .bar below), driven by the
+    // button's aria-expanded — toggled in assets/js/menu-overlay.js.
     &[aria-expanded="true"]
-      .header-main__menu-icon--open
-        @apply hidden
-      .header-main__menu-icon--close
-        @apply block
-
-  &__menu-icon
-    @apply flex items-center
-
-    &--close
-      @apply hidden
+      .bar--top
+        @apply translate-y-[10px] rotate-45
+      .bar--middle
+        @apply opacity-0
+      .bar--bottom
+        @apply -translate-y-[10px] -rotate-45
 
   &__logo
     @apply justify-self-center flex items-center
 
   &__logo-image
     @apply h-auto w-auto max-h-[45px] xl:max-h-[75px]
+
+// Hamburger icon (3 bars morphing into an X). Top/bottom bars rotate 45°
+// and slide to the middle bar's position (10px = the gap between bar
+// centers below); the middle bar just fades out. State toggle lives on
+// .header-main__menu-toggle[aria-expanded] above.
+.menu-toggle__bars
+  @apply flex flex-col justify-between w-10 h-[22px]
+
+.bar
+  @apply block h-0.5 w-full bg-current origin-center transition-transform duration-300 ease-in-out
+
+  &--middle
+    @apply transition-opacity duration-200 ease-in-out

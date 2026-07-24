@@ -11,6 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.2.1] — 2026-07-24
+
+### Added
+- Site footer: logo + social links, contact info (address/phone/email from Theme Options), sitemap menu, MC4WP newsletter form, and a legal/copyright bar (new "Copyright Bar Menu" nav location).
+
+### Changed
+- Mega menu now opens with a "roll down" reveal (GSAP) instead of a plain fade, with the menu groups fading in with a slight stagger.
+- Header burger icon now morphs into an X when the mega menu opens, instead of swapping between two icons.
+
 ## [1.2.0] — 2026-07-23
 
 ### Added
