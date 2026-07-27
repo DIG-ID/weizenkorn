@@ -1,11 +1,89 @@
 /**
- * Mega menu overlay: open/close "roll down" reveal + hover/focus image swap.
+ * Mega menu overlay: open/close "roll down" reveal, hover/focus image swap,
+ * and the mobile (<768px) tap-to-expand accordion.
  * Markup: template-parts/menu-overlay.php + template-parts/components/header-nav.php.
  */
 
 import { gsap } from './gsap.js';
 
 const IMAGE_FADE_MS = 200;
+const MOBILE_BREAKPOINT = 768;
+const ARROW_ICON = '<svg width="24" height="19" viewBox="0 0 23.7301 18.632" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0 9.31602H22M10 17.816L22 9.31602L10 0.816024" stroke="currentColor" stroke-width="2" /></svg>';
+
+/**
+ * Mobile accordion (Figma "Menu_mobile_tab open"): tapping a group heading
+ * expands its links. Groups with a single link (e.g. "News" > "Kontakt")
+ * are always-expanded instead — reads the real sub-menu child count rather
+ * than hardcoding which groups qualify, since editors can add/remove links
+ * in Appearance > Menus at any time.
+ */
+function initMobileMenuAccordion(overlay) {
+  const groups = overlay.querySelectorAll('.menu-overlay__col > ul > li');
+  const overviewLabel = overlay.dataset.overviewLabel || 'Übersicht';
+
+  groups.forEach((group, index) => {
+    const link = group.querySelector(':scope > a');
+    const subMenu = group.querySelector(':scope > .sub-menu');
+
+    if (!link || !subMenu) {
+      return;
+    }
+
+    if (subMenu.children.length <= 1) {
+      group.classList.add('menu-overlay__group--flat');
+      return;
+    }
+
+    group.classList.add('menu-overlay__group--accordion');
+
+    // The heading's own link is repurposed below as the accordion toggle
+    // (tapping it opens/closes the group instead of navigating), so its
+    // original destination would otherwise be unreachable on mobile — add
+    // it back as the sub-menu's first entry.
+    const overviewItem = document.createElement('li');
+    overviewItem.className = 'menu-overlay__group-overview';
+    const overviewLink = document.createElement('a');
+    overviewLink.href = link.getAttribute('href');
+    overviewLink.textContent = overviewLabel;
+    overviewItem.appendChild(overviewLink);
+    subMenu.insertBefore(overviewItem, subMenu.firstElementChild);
+
+    const subMenuId = subMenu.id || `menu-overlay-submenu-${index}`;
+    subMenu.id = subMenuId;
+    link.setAttribute('aria-expanded', 'false');
+    link.setAttribute('aria-controls', subMenuId);
+
+    const arrow = document.createElement('span');
+    arrow.className = 'menu-overlay__group-arrow';
+    arrow.setAttribute('aria-hidden', 'true');
+    arrow.innerHTML = ARROW_ICON;
+    link.appendChild(arrow);
+
+    link.addEventListener('click', (e) => {
+      if (window.innerWidth >= MOBILE_BREAKPOINT) {
+        return;
+      }
+
+      e.preventDefault();
+
+      const isOpen = link.getAttribute('aria-expanded') === 'true';
+      link.setAttribute('aria-expanded', String(!isOpen));
+      subMenu.style.maxHeight = isOpen ? '0px' : `${subMenu.scrollHeight}px`;
+    });
+  });
+
+  // Resizing past mobile shouldn't leave a stale inline max-height clipping
+  // the sub-menu on tablet/desktop, where it's meant to be fully visible.
+  window.addEventListener('resize', () => {
+    if (window.innerWidth < MOBILE_BREAKPOINT) {
+      return;
+    }
+
+    overlay.querySelectorAll('.menu-overlay__group--accordion > .sub-menu').forEach((subMenu) => {
+      subMenu.style.maxHeight = '';
+    });
+  }, { passive: true });
+}
 
 export function initMenuOverlay() {
   const toggles = document.querySelectorAll('.header-main__menu-toggle');
@@ -50,6 +128,8 @@ export function initMenuOverlay() {
 
   syncImageHeight();
   window.addEventListener('resize', syncImageHeight, { passive: true });
+
+  initMobileMenuAccordion(overlay);
 
   const setImage = (src) => {
     if (!image || !src || image.getAttribute('src') === src) {

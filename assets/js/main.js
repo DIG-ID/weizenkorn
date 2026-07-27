@@ -19,6 +19,7 @@ import { debounce, isTouchDevice } from './utils/helpers.js';
 // =============================================================================
 import { initStickyHeader } from './sticky-header.js';
 import { initMenuOverlay } from './menu-overlay.js';
+import { initLanguageSwitcher } from './language-switcher.js';
 
 // =============================================================================
 // DOM ready
@@ -27,5 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   initStickyHeader();
   initMenuOverlay();
+  initLanguageSwitcher();
 
 });

@@ -11,6 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.3.0] — 2026-07-24
+
+### Added
+- Mega menu mobile accordion: on screens below 768px, top-level menu groups expand/collapse to reveal their links, with an "Übersicht" link added to each group so its original destination stays reachable (previously only usable as the accordion trigger). Groups with a single link (e.g. "News" > "Kontakt") stay always-expanded with no toggle.
+- Mobile language switcher: the language list, previously hidden below 768px, now shows as a compact dropdown (current language + tap-to-reveal the others), instead of the tablet/desktop horizontal list.
+
+### Fixed
+- Mega menu mobile columns no longer stretch to match the tallest sibling's height, which was leaving large phantom gaps between groups.
+
 ## [1.2.2] — 2026-07-24
 
 ### Changed

@@ -10,7 +10,7 @@
 
 $weizenkorn_default_menu_image = weizenkorn_get_default_mega_menu_image_url();
 ?>
-<div id="menu-overlay" class="menu-overlay" aria-hidden="true">
+<div id="menu-overlay" class="menu-overlay" aria-hidden="true" data-overview-label="<?php echo esc_attr__( 'Übersicht', 'weizenkorn' ); ?>">
 	<div class="theme-container">
 
 		<hr class="menu-overlay__divider" />
