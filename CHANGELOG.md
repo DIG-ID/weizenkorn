@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.3.5] — 2026-07-28
+
+### Changed
+- Home hero (desktop): pinned to the viewport height left below the header (minus a 48px gap), so it's always fully visible above the fold instead of assuming a specific tall viewport. Title/tagline/body spacing shrinks smoothly on shorter windows down to ~800px tall.
+
 ## [1.3.4] — 2026-07-28
 
 ### Changed
