@@ -1,0 +1,16 @@
+// Social links (template tag: weizenkorn_socials(), inc/theme-template-tags.php).
+// Figma "Home_desktop" footer: plain bordered squares, monochrome icons —
+// same hairline #252525 border language as the footer's address/sitemap/
+// newsletter cards.
+.social-links
+  @apply flex items-center gap-14
+
+.social-link
+  @apply flex items-center justify-center w-8 h-8 text-brand-dark
+
+  svg
+    @apply w-8 h-8
+
+  &:hover,
+  &:focus
+    @apply border-brand-red text-brand-red

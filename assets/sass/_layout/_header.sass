@@ -1,1 +1,58 @@
-// Header styles
+// Header — burger (closed state) | centered logo | WPML language switcher.
+// Source: Figma "navigation-desktop" component (Hifi Wireframe_in process).
+.header-main
+  @apply relative z-50 bg-white
+
+  // Pinned to the viewport top while the mega menu is open (body.menu-open,
+  // see assets/js/menu-overlay.js) — instant, no scroll-reveal transition
+  // like the sticky bar below (menu state is a deliberate toggle, not scroll).
+  body.menu-open &
+    @apply fixed top-0 inset-x-0
+
+  &__row
+    @apply grid grid-cols-[auto_1fr_auto] items-center py-4 xl:py-[26px]
+
+    // Sticky bar (Figma "Sticky menu bar_desktop") is the same row, just
+    // without the taller desktop padding — 110px total vs ~127px normal.
+    &--sticky
+      @apply xl:py-4
+
+  // Fixed bar shown after scrolling past the normal header (assets/js/sticky-header.js).
+  // visibility (not just opacity) so it's out of the tab order while hidden.
+  &__sticky
+    @apply fixed top-0 inset-x-0 z-50 bg-white shadow-md invisible opacity-0 -translate-y-full transition-all duration-300 ease-out
+
+    &.is-visible
+      @apply visible opacity-100 translate-y-0
+
+  &__menu-toggle
+    @apply justify-self-start flex items-center text-brand-dark cursor-pointer bg-transparent border-0 p-0
+
+    // Burger → X morph (.menu-toggle__bars / .bar below), driven by the
+    // button's aria-expanded — toggled in assets/js/menu-overlay.js.
+    &[aria-expanded="true"]
+      .bar--top
+        @apply translate-y-[10px] rotate-45
+      .bar--middle
+        @apply opacity-0
+      .bar--bottom
+        @apply -translate-y-[10px] -rotate-45
+
+  &__logo
+    @apply justify-self-center flex items-center
+
+  &__logo-image
+    @apply h-auto w-auto max-h-[45px] xl:max-h-[75px]
+
+// Hamburger icon (3 bars morphing into an X). Top/bottom bars rotate 45°
+// and slide to the middle bar's position (10px = the gap between bar
+// centers below); the middle bar just fades out. State toggle lives on
+// .header-main__menu-toggle[aria-expanded] above.
+.menu-toggle__bars
+  @apply flex flex-col justify-between w-10 h-[22px]
+
+.bar
+  @apply block h-0.5 w-full bg-current origin-center transition-transform duration-300 ease-in-out
+
+  &--middle
+    @apply transition-opacity duration-200 ease-in-out

@@ -1,0 +1,225 @@
+// Mega menu overlay (Figma "Home_menu_desktop" desktop, "Menu_mobile_tab
+// open" mobile). Desktop-only column layout for now (xl:); tablet just
+// stacks full-width until that pass is reviewed; mobile (<768px) gets its
+// own bordered accordion look further down this file.
+// Behaviour: assets/js/menu-overlay.js — open/close "roll down" reveal
+// (GSAP clip-path tween + staggered group fade-in), hover/focus image swap,
+// and the mobile accordion (tap a group heading to reveal its links).
+body.menu-open
+  @apply overflow-hidden
+
+// --header-height is set precisely from .header-main's real offsetHeight by
+// assets/js/menu-overlay.js (header height depends on logo aspect ratio,
+// WPML markup, etc. — not safe to hand-calculate). These are only the
+// pre-JS fallback so there's no flash of wrong padding on first paint.
+:root
+  --header-height: 77px
+  @media (min-width: 1280px)
+    --header-height: 127px
+
+// .menu-overlay is a real flex column filling the viewport (fixed inset-0 =
+// 100vh). .theme-container/.menu-overlay__grid inherit a DEFINITE height
+// from that (flex-1), instead of a hand-subtracted `calc(100vh-Npx)` that
+// breaks every time spacing/typography changes. The grid scrolls internally
+// if the text columns are genuinely taller than the space — header/divider
+// never scroll away. The image caps to that definite height via h-full.
+// visibility + clip-path start "closed" here as the no-JS/pre-JS fallback;
+// assets/js/menu-overlay.js drives the actual open/close via GSAP (clip-path
+// tween "rolling" the curtain down, visibility toggled at the start/end of
+// the animation so closed content stays out of the tab order).
+.menu-overlay
+  @apply fixed inset-0 z-40 bg-white invisible
+  @apply flex flex-col
+  padding-top: var(--header-height)
+  clip-path: inset(0% 0% 100% 0%)
+
+  .theme-container
+    @apply flex flex-col flex-1 min-h-0
+
+  &__divider
+    @apply border-0 border-t border-brand-dark mb-10 shrink-0
+
+  &__grid
+    @apply items-stretch flex-1 min-h-0 overflow-y-auto pb-16 xl:gap-x-5 xl:gap-y-[135px]
+
+  // Desktop (xl): <nav> and its root <ul> (wp_nav_menu, container=false)
+  // become invisible for layout (display:contents) so the top-level <li>
+  // (group headings) are promoted to be direct items of .menu-overlay__grid
+  // itself. That lets each group sit in its own real CSS Grid row, shared
+  // across all 3 columns — so "Arbeiten.../Über uns/News" (row 2) align on
+  // the same baseline no matter how many links "Produkte/Dienstleitungen/
+  // Gastronomie" (row 1) has in each column. The row-gap above replaces the
+  // old inter-group gap.
+  // Below xl there's no Figma reference yet, so each <nav> just stays a
+  // normal box spanning the full grid width (2 cols mobile, 6 cols tablet)
+  // and stacks — no column promotion, no overflow risk.
+  &__col
+    @apply col-span-2 md:col-span-6 xl:contents
+
+    > ul
+      @apply list-none m-0 p-0 xl:contents
+
+    > ul > li
+      @apply list-none mb-8 xl:mb-0 last:mb-0
+
+      &:nth-of-type(1)
+        @apply xl:row-start-1
+      &:nth-of-type(2)
+        @apply xl:row-start-2
+
+    // Group heading (top-level menu item) — exact values from Figma (desktop).
+    > ul > li > a
+      @apply block text-[20px] xl:text-[27px] font-normal leading-[24px] xl:leading-[30px] tracking-[0.5px] uppercase text-brand-dark no-underline
+
+      &:hover,
+      &:focus
+        @apply underline underline-offset-4
+
+    // Group links (children of the heading).
+    .sub-menu
+      @apply flex flex-col gap-2 mt-4 xl:mt-10 list-none m-0 p-0
+
+      a
+        @apply block text-[16px] xl:text-[20px] font-normal uppercase tracking-wide text-brand-dark no-underline
+
+        &:hover,
+        &:focus
+          @apply underline underline-offset-4
+
+      // A group with a single link (e.g. "News" > "Kontakt") reads as its
+      // own heading, not an indented sub-item — same size as the others.
+      li:only-child > a
+        @apply text-[20px] xl:text-[27px] leading-[24px] xl:leading-[30px] tracking-[0.5px]
+
+    &--1 > ul > li
+      @apply xl:col-start-2 xl:col-span-3
+
+    &--2 > ul > li
+      @apply xl:col-start-5 xl:col-span-2
+
+    &--3 > ul > li
+      @apply xl:col-start-7 xl:col-span-2
+
+  // max-h-full (not a hand-calculated calc(100vh-Npx)) caps the image to the
+  // grid's own definite height (flex-1 above) — stays correct regardless of
+  // how tall the text columns' typography/spacing ends up being.
+  &__image
+    @apply hidden xl:block xl:col-start-9 xl:col-span-4 xl:row-start-1 xl:row-span-2 relative overflow-hidden rounded xl:max-h-full
+
+  &__image-el
+    @apply block w-full h-full object-cover transition-opacity duration-200 ease-out
+
+    &.is-fading
+      @apply opacity-0
+
+// Injected by assets/js/menu-overlay.js on every group with 2+ links,
+// regardless of viewport (so a click at mobile widths can be intercepted) —
+// hidden by default and only shown inside the mobile media query below.
+.menu-overlay__group-arrow
+  @apply hidden
+
+// Mobile (<768px) accordion — Figma "Menu_mobile_tab open". Groups render as
+// bordered red boxes; groups with 2+ links (.menu-overlay__group--accordion,
+// set by assets/js/menu-overlay.js — it reads the real sub-menu child count,
+// safer than hardcoding it here since editors can add/remove links any time)
+// toggle their sub-menu open/closed via the heading tap, arrow rotating
+// 90° → ↓. Groups with a single link (.menu-overlay__group--flat, e.g.
+// "News" > "Kontakt") have no arrow and stay always-expanded — both links
+// are just always-visible, no toggle needed.
+@media (max-width: 767px)
+  // .menu-overlay__grid is a flex-grow child (flex-1) of a ~100vh column, so
+  // it's often taller than its actual content needs. Two DIFFERENT grid
+  // properties both default to "stretch" here and both need overriding:
+  // align-items (desktop wants it, to match each row's tallest sibling —
+  // but at mobile every <nav> spans both columns and gets its own row, so
+  // it just stretches that one <nav> for no reason) AND align-content (the
+  // real cause of the big phantom gaps — with leftover height in the grid
+  // container, "stretch" distributes it across the ROW TRACKS themselves,
+  // not just the items, so every row ends up taller than its content).
+  .menu-overlay__grid
+    @apply items-start content-start
+
+  // A "flat" group (single link, e.g. "News" > "Kontakt") skips the shared
+  // box border here — it gets two independent boxes instead (on > a and on
+  // > .sub-menu directly, below), since parent and child are meant to read
+  // as two separate, equally-weighted items, not one box with a divider.
+  .menu-overlay__col > ul > li
+    @apply mb-4
+
+    &:not(.menu-overlay__group--flat)
+      @apply border border-brand-red
+
+  // Overrides the desktop hover/focus underline (_menu-overlay.sass, base
+  // `> ul > li > a` rule) — on touch, :focus/:active linger after a tap
+  // instead of clearing like a desktop mouse-out, so the heading stayed
+  // underlined after opening the accordion.
+  .menu-overlay__col > ul > li > a
+    @apply flex items-center justify-between gap-4 px-4 py-4 text-[15px] font-bold uppercase tracking-wide text-brand-red no-underline
+
+    &:hover,
+    &:focus,
+    &:active
+      @apply no-underline
+
+  .menu-overlay__group-arrow
+    @apply flex items-center justify-center w-6 h-6 shrink-0 text-brand-red transition-transform duration-300 ease-in-out
+
+  .menu-overlay__group--accordion > a[aria-expanded="true"] .menu-overlay__group-arrow
+    @apply rotate-90
+
+  .menu-overlay__group--accordion > .sub-menu
+    @apply overflow-hidden transition-[max-height] duration-300 ease-in-out mt-0
+    max-height: 0px
+
+    li
+      @apply px-4
+
+      &:last-child
+        @apply pb-4
+
+    a
+      @apply block py-2 text-[14px] font-normal uppercase tracking-wide text-brand-dark no-underline
+
+    // First entry, injected by assets/js/menu-overlay.js — the heading's
+    // own link (repurposed as the accordion toggle below, so it would
+    // otherwise be unreachable on mobile). Set apart with a divider so it
+    // doesn't read as just another sub-item.
+    .menu-overlay__group-overview
+      @apply border-b border-brand-dark/20 mb-2 pb-2
+
+      a
+        @apply font-semibold
+
+  // Neutralizes the desktop-only "single-child heading" override above
+  // (base .sub-menu rule: `li:only-child > a`, which bumps font-size to
+  // match the other headings) — "Kontakt" should look exactly like the
+  // other main items here (see .menu-overlay__group--flat > a below), not
+  // an oversized one-off. Same selector as the base rule so specificity
+  // ties and this (later in the file) wins.
+  .menu-overlay__col .sub-menu li:only-child > a
+    @apply text-[15px] leading-none tracking-wide
+
+  // Same touch-lingering-:focus/:active underline issue as the main
+  // headings above, but on sub-menu links (e.g. "Kontakt").
+  .menu-overlay__col .sub-menu a:hover,
+  .menu-overlay__col .sub-menu a:focus,
+  .menu-overlay__col .sub-menu a:active
+    @apply no-underline
+
+  // The "flat" parent link (e.g. "News") gets its own full box — same look
+  // as any other heading, just without an arrow/toggle (see the JS: it never
+  // gets .menu-overlay__group--accordion, so no click-intercept, no arrow —
+  // the href navigates normally).
+  .menu-overlay__group--flat > a
+    @apply border border-brand-red
+
+  // Its single child (e.g. "Kontakt") gets its own separate box too, with a
+  // gap above — not nested inside the parent's box.
+  .menu-overlay__group--flat > .sub-menu
+    @apply border border-brand-red mt-4
+
+    li
+      @apply px-4 py-4
+
+    a
+      @apply block text-[15px] font-bold uppercase tracking-wide text-brand-red no-underline

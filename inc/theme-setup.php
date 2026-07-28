@@ -14,8 +14,11 @@ function weizenkorn_theme_setup() {
 
 	register_nav_menus(
 		array(
-			'main-menu'   => __( 'Main Menu', 'weizenkorn' ),
-			'footer-menu' => __( 'Footer Menu', 'weizenkorn' ),
+			'mega-menu-1'    => __( 'Mega Menu — Column 1 (Produkte / Arbeiten & Ausbildung)', 'weizenkorn' ),
+			'mega-menu-2'    => __( 'Mega Menu — Column 2 (Dienstleitungen / Über uns)', 'weizenkorn' ),
+			'mega-menu-3'    => __( 'Mega Menu — Column 3 (Gastronomie & Hotellerie / News / Kontakt)', 'weizenkorn' ),
+			'footer-menu'    => __( 'Footer Menu', 'weizenkorn' ),
+			'copyright-menu' => __( 'Copyright Bar Menu (Datenschutz / AGB / Impressum / Jobs)', 'weizenkorn' ),
 		)
 	);
 
@@ -60,6 +63,135 @@ function weizenkorn_register_sidebars() {
 }
 
 add_action( 'widgets_init', 'weizenkorn_register_sidebars' );
+
+/**
+ * Adds an "Image" field to nav menu items (Appearance > Menus), used by the
+ * mega menu columns. Value is saved as attachment ID in post meta.
+ *
+ * @param int $item_id Menu item ID.
+ */
+function weizenkorn_nav_menu_item_image_field( $item_id ) {
+	$image_id = (int) get_post_meta( $item_id, '_menu_item_image', true );
+	?>
+	<p class="field-image description description-wide">
+		<label for="edit-menu-item-image-<?php echo esc_attr( $item_id ); ?>">
+			<?php esc_html_e( 'Image', 'weizenkorn' ); ?><br />
+			<input
+				type="hidden"
+				id="edit-menu-item-image-<?php echo esc_attr( $item_id ); ?>"
+				name="menu-item-image[<?php echo esc_attr( $item_id ); ?>]"
+				value="<?php echo esc_attr( $image_id ); ?>"
+			/>
+		</label>
+		<span class="weizenkorn-menu-item-image-preview">
+			<?php if ( $image_id ) : ?>
+				<?php echo wp_get_attachment_image( $image_id, 'thumbnail' ); ?>
+			<?php endif; ?>
+		</span>
+		<button type="button" class="button weizenkorn-menu-item-image-select" data-title="<?php esc_attr_e( 'Select image', 'weizenkorn' ); ?>">
+			<?php esc_html_e( 'Select image', 'weizenkorn' ); ?>
+		</button>
+		<button type="button" class="button weizenkorn-menu-item-image-remove" <?php echo $image_id ? '' : 'style="display:none;"'; ?>>
+			<?php esc_html_e( 'Remove image', 'weizenkorn' ); ?>
+		</button>
+	</p>
+	<?php
+}
+
+add_action( 'wp_nav_menu_item_custom_fields', 'weizenkorn_nav_menu_item_image_field', 10, 1 );
+
+/**
+ * Saves the nav menu item "Image" field as attachment ID post meta.
+ *
+ * @param int $menu_id         Nav menu ID (unused).
+ * @param int $menu_item_db_id Menu item DB ID.
+ */
+function weizenkorn_save_nav_menu_item_image( $menu_id, $menu_item_db_id ) {
+	// phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce ('update-nav_menu') already verified by WP core (nav-menus.php) before this action fires.
+	if ( ! isset( $_POST['menu-item-image'][ $menu_item_db_id ] ) ) {
+		return;
+	}
+
+	// phpcs:ignore WordPress.Security.NonceVerification.Missing -- see above.
+	$image_id = absint( $_POST['menu-item-image'][ $menu_item_db_id ] );
+
+	if ( $image_id ) {
+		update_post_meta( $menu_item_db_id, '_menu_item_image', $image_id );
+	} else {
+		delete_post_meta( $menu_item_db_id, '_menu_item_image' );
+	}
+}
+
+add_action( 'wp_update_nav_menu_item', 'weizenkorn_save_nav_menu_item_image', 10, 2 );
+
+/**
+ * Adds a data-menu-image attribute to mega menu links that have an "Image"
+ * set, so the menu overlay module (assets/js/menu-overlay.js) can swap the
+ * preview image on hover/focus.
+ *
+ * @param array  $atts  HTML attributes for the menu item link.
+ * @param object $item  Menu item data.
+ * @param object $args  Menu display args.
+ * @return array
+ */
+function weizenkorn_add_menu_item_image_attr( $atts, $item, $args ) {
+	$mega_menu_locations = array( 'mega-menu-1', 'mega-menu-2', 'mega-menu-3' );
+
+	if ( empty( $args->theme_location ) || ! in_array( $args->theme_location, $mega_menu_locations, true ) ) {
+		return $atts;
+	}
+
+	$image_id = (int) get_post_meta( $item->ID, '_menu_item_image', true );
+
+	if ( $image_id ) {
+		$image_url = wp_get_attachment_image_url( $image_id, 'large' );
+
+		if ( $image_url ) {
+			$atts['data-menu-image'] = $image_url;
+		}
+	}
+
+	return $atts;
+}
+
+add_filter( 'nav_menu_link_attributes', 'weizenkorn_add_menu_item_image_attr', 10, 3 );
+
+/**
+ * Returns the image URL for the first mega menu item (across the 3 columns,
+ * in menu order) that has one set. Used as the menu overlay's resting-state
+ * image, before any item is hovered.
+ *
+ * @return string Image URL, or '' if no mega menu item has an image yet.
+ */
+function weizenkorn_get_default_mega_menu_image_url() {
+	$locations = get_nav_menu_locations();
+
+	foreach ( array( 'mega-menu-1', 'mega-menu-2', 'mega-menu-3' ) as $location ) {
+		if ( empty( $locations[ $location ] ) ) {
+			continue;
+		}
+
+		$items = wp_get_nav_menu_items( $locations[ $location ] );
+
+		if ( ! $items ) {
+			continue;
+		}
+
+		foreach ( $items as $item ) {
+			$image_id = (int) get_post_meta( $item->ID, '_menu_item_image', true );
+
+			if ( $image_id ) {
+				$image_url = wp_get_attachment_image_url( $image_id, 'large' );
+
+				if ( $image_url ) {
+					return $image_url;
+				}
+			}
+		}
+	}
+
+	return '';
+}
 
 /**
  * Removes auto <p> wrapping from Contact Form 7 fields.

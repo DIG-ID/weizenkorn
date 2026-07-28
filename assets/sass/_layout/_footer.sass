@@ -1,1 +1,107 @@
-// Footer styles
+// Footer (Figma "Home_desktop" footer-main): logo+socials, address/sitemap/
+// newsletter cards, legal bar. Desktop-only precise layout for now (xl:);
+// mobile/tablet just stack full-width until the tablet/mobile Figma frames
+// are reviewed (same pattern as the mega menu, see _modules/_menu-overlay).
+.footer-main
+  @apply bg-brand-cream text-brand-dark
+
+  &__grid
+    @apply py-16 xl:py-16 gap-y-10
+
+  &__brand
+    @apply col-span-2 md:col-span-6 xl:col-start-1 xl:col-span-4 flex flex-col justify-between gap-8
+
+  &__logo-image
+    @apply h-auto w-auto max-h-[100px]
+
+  // Shared "card" look (address / sitemap / newsletter) — hairline border,
+  // no radius, matches the Figma wireframe exactly. Grid stretch (the
+  // default align-items for block-level items) makes all 3 cards match the
+  // tallest one's height automatically, same as the equal-height boxes in
+  // the design — no hand-set height needed.
+  &__card
+    @apply col-span-2 md:col-span-3 border border-brand-dark p-6 xl:pt-6 xl:pb-14 xl:py-4
+
+  &__address
+    @apply xl:col-start-5 xl:col-span-2
+
+  &__sitemap
+    @apply md:col-span-6 xl:col-start-7 xl:col-span-4 pt-[110px]
+
+  &__newsletter
+    @apply md:col-span-6 xl:col-start-11 xl:col-span-2
+
+  &__heading
+    @apply block text-[20px] font-normal leading-[30px] tracking-[0.5px] uppercase mb-6 xl:mb-14
+
+  &__address-body
+    @apply flex flex-col gap-10
+
+  &__address-line,
+  &__contact-line
+    @apply text-[20px] font-normal leading-[30px] tracking-[0.5px]
+
+  &__contact-line a
+    @apply text-brand-dark no-underline
+
+    &:hover,
+    &:focus
+      @apply underline underline-offset-4
+
+  &__sitemap-menu
+    @apply grid grid-cols-1 xl:grid-cols-3 gap-x-5 gap-y-4 xl:gap-y-32 list-none m-0 p-0
+
+    li
+      @apply list-none
+
+    a
+      @apply block text-[20px] font-normal leading-[30px] tracking-[0.5px] text-brand-dark no-underline
+
+      &:hover,
+      &:focus
+        @apply underline underline-offset-4
+
+  // MC4WP renders its own form markup (labels/fields/submit configured by
+  // the editor in wp-admin, Forms → id 59) — style via its default class
+  // names and input types rather than markup we control. The submit button
+  // gets the shared .btn.btn-black look by adding those classes to the
+  // field in MC4WP's own form editor (not theme code).
+  &__newsletter
+    .mc4wp-form-fields
+      @apply flex flex-col gap-6
+
+    input[type="text"],
+    input[type="email"]
+      @apply block w-full border-0 border-b border-brand-dark bg-transparent font-primary text-[18px] leading-[1.65] text-brand-dark pb-1 focus:outline-none focus:border-brand-red
+
+      &::placeholder
+        @apply text-brand-dark opacity-100
+
+    // MC4WP's own stylesheet resets `border: none` on the submit button —
+    // reassert the shared .btn-black border explicitly, since the plugin
+    // CSS otherwise wins the cascade regardless of load order.
+    .btn-black
+      border: 1px solid #252525 !important
+
+      &:hover,
+      &:active
+        border-color: #E30613 !important
+
+  &__legal
+    @apply block py-7 text-[15px] font-normal leading-[30px] tracking-[0.5px]
+
+  &__divider
+    @apply border-0 border-t border-brand-dark
+
+  &__legal-menu-list
+    @apply flex flex-wrap gap-x-6 gap-y-2 xl:gap-x-14 list-none m-0 p-0
+
+    li
+      @apply list-none
+
+    a
+      @apply text-brand-dark no-underline
+
+      &:hover,
+      &:focus
+        @apply underline underline-offset-4

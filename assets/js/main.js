@@ -15,13 +15,20 @@ import { initGastronomySlider } from './swiper.js';
 import { debounce, isTouchDevice } from './utils/helpers.js';
 
 // =============================================================================
+// Project modules
+// =============================================================================
+import { initStickyHeader } from './sticky-header.js';
+import { initMenuOverlay } from './menu-overlay.js';
+import { initLanguageSwitcher } from './language-switcher.js';
+
+// =============================================================================
 // DOM ready
 // =============================================================================
 document.addEventListener('DOMContentLoaded', () => {
 
-  // ---------------------------------------------------
-  // Project-specific initialisation goes here
-  // ---------------------------------------------------
+  initStickyHeader();
+  initMenuOverlay();
+  initLanguageSwitcher();
   initGastronomySlider();
 
 });

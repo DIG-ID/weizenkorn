@@ -185,6 +185,31 @@ add_action( 'admin_enqueue_scripts', 'weizenkorn_admin_bar_css', 10 );
 add_action( 'wp_enqueue_scripts', 'weizenkorn_admin_bar_css', 10 );
 
 /**
+ * Enqueues the media uploader and the nav menu item "Image" field script
+ * (Appearance > Menus screen only). Pairs with
+ * weizenkorn_nav_menu_item_image_field() in inc/theme-setup.php.
+ *
+ * @param string $hook_suffix Current admin page hook suffix.
+ */
+function weizenkorn_enqueue_nav_menu_admin_assets( $hook_suffix ) {
+	if ( 'nav-menus.php' !== $hook_suffix ) {
+		return;
+	}
+
+	wp_enqueue_media();
+
+	wp_enqueue_script(
+		'weizenkorn-admin-nav-menus',
+		get_theme_file_uri( '/dist/js/admin-nav-menus.js' ),
+		array(),
+		weizenkorn_asset_version( '/js/admin-nav-menus.js' ),
+		true
+	);
+}
+
+add_action( 'admin_enqueue_scripts', 'weizenkorn_enqueue_nav_menu_admin_assets' );
+
+/**
  * Changes the login logo link to point to the site homepage.
  *
  * @return string

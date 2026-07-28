@@ -32,6 +32,7 @@ mix
   })
 
   .js('assets/js/main.js', 'js')
+  .js('assets/js/admin-nav-menus.js', 'js')
   .sass('assets/sass/main.sass', 'css')
   .sass('assets/sass/admin-login.sass', 'css')
   .sass('assets/sass/admin-dashboard.sass', 'css')
