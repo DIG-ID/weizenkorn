@@ -6,12 +6,12 @@
   @apply bg-brand-cream text-brand-dark
 
   &__grid
-    @apply py-16 xl:py-16 gap-y-10
+    @apply pt-14 pb-12 md:pt-20 md:pb-12 xl:py-16 gap-y-5 xl:gap-y-10
 
   // Tablet: logo + socials on one row (justify-between spaces them apart
   // horizontally). Desktop resets to the original stacked column.
   &__brand
-    @apply col-span-2 md:col-span-6 xl:col-start-1 xl:col-span-4 flex flex-col justify-between gap-8
+    @apply col-span-2 md:col-span-6 xl:col-start-1 xl:col-span-4 flex flex-col justify-between gap-8 pb-14 md:pb-12 xl:pb-0
     @apply md:flex-row md:items-end xl:flex-col xl:items-start
 
   &__logo-image
@@ -25,8 +25,17 @@
   &__card
     @apply col-span-2 md:col-span-3 border border-brand-dark p-6 xl:pt-6 xl:pb-14 xl:py-4
 
+  // Mobile/tablet: "Kontakt" + the address block side by side (1/3 + 2/3)
+  // instead of stacked. Desktop resets to the original stacked block.
   &__address
     @apply xl:col-start-5 xl:col-span-2
+    @apply flex flex-row items-start gap-4 xl:block
+
+    > .footer-main__heading
+      @apply w-1/3 shrink-0 mb-0 xl:w-auto xl:mb-14
+
+    > .footer-main__address-body
+      @apply w-2/3 xl:w-auto
 
   // Tablet: Address + Newsletter side by side (each half the 6-col grid via
   // .footer-main__card's md:col-span-3), Sitemap pushed below, full-width.
@@ -40,10 +49,10 @@
     @apply md:order-1 xl:order-none xl:col-start-11 xl:col-span-2
 
   &__heading
-    @apply block text-[20px] font-normal leading-[30px] tracking-[0.5px] uppercase mb-6 xl:mb-14
+    @apply block text-[20px] font-normal leading-[30px] tracking-[0.5px] xl:uppercase mb-6 xl:mb-14
 
   &__address-body
-    @apply flex flex-col gap-10
+    @apply flex flex-col gap-5 xl:gap-10
 
   &__address-line,
   &__contact-line
@@ -57,7 +66,7 @@
       @apply underline underline-offset-4
 
   &__sitemap-menu
-    @apply grid grid-cols-1 md:grid-cols-3 gap-x-5 gap-y-4 xl:gap-y-32 list-none m-0 p-0
+    @apply grid grid-cols-1 md:grid-cols-3 gap-x-5 gap-y-5 xl:gap-y-32 list-none m-0 p-0
 
     li
       @apply list-none
@@ -115,8 +124,11 @@
   &__divider
     @apply border-0 border-t border-brand-dark
 
+  // Tablet: spread edge-to-edge across the row instead of clustering with a
+  // fixed gap. Desktop resets back to the original clustered-with-gap look.
   &__legal-menu-list
     @apply flex flex-wrap gap-x-6 gap-y-2 xl:gap-x-14 list-none m-0 p-0
+    @apply md:flex-nowrap md:justify-between xl:justify-start
 
     li
       @apply list-none
@@ -157,12 +169,20 @@
   .footer-main__newsletter
     @apply order-1
 
-  // Legal bar: menu before the copyright line.
+  // Legal bar: menu before the copyright line, copyright centered.
   .footer-main__legal-copyright
-    @apply order-2
+    @apply order-2 text-center
 
   .footer-main__legal-nav
     @apply order-1
+
+  // 2x2 grid (Datenschutz/AGB top, Impressum/Jobs bottom) instead of a
+  // wrapped single-line row. Right column (AGB/Jobs) flush to the right edge.
+  .footer-main__legal-menu-list
+    @apply grid grid-cols-2 gap-x-6 gap-y-4
+
+    li:nth-child(even)
+      @apply text-right
 
 // Tablet only (md to just below xl) — same 14px flattening idea as the
 // mobile 12px pass above, but tablet also gets the newsletter button

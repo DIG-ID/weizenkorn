@@ -72,7 +72,9 @@ $weizenkorn_newsletter_shortcode = get_field( 'general_newsletter_shortcode', 'o
 			<?php if ( $weizenkorn_newsletter_shortcode ) : ?>
 				<div class="footer-main__card footer-main__newsletter">
 					<h2 class="footer-main__heading"><?php esc_html_e( 'Newsletter', 'weizenkorn' ); ?></h2>
-					<?php echo do_shortcode( $weizenkorn_newsletter_shortcode ); ?>
+					<div class="newsletter-form__wrapper px-4 xl:px-0">
+						<?php echo do_shortcode( $weizenkorn_newsletter_shortcode ); ?>
+					</div>
 				</div>
 			<?php endif; ?>
 
@@ -84,7 +86,7 @@ $weizenkorn_newsletter_shortcode = get_field( 'general_newsletter_shortcode', 'o
 
 		<div class="footer-main__legal">
 			<div class="theme-grid">
-				<div class="footer-main__legal-copyright">
+				<div class="footer-main__legal-copyright pt-7 md:pt-5 xl:pt-0">
 					<p class="footer-main__copyright">
 						<?php
 						printf(

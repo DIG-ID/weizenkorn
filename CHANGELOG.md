@@ -11,6 +11,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.3.3] — 2026-07-28
+
+### Changed
+- Mega menu (desktop): the 3 menu columns are now equal thirds of the same width the image column already used, via a purpose-built 4-track grid instead of the site's 12-column one (8 didn't divide evenly by 3).
+- Mega menu (desktop): row gap, sub-menu margin, divider margin and grid padding now shrink smoothly on shorter windows (down to ~800px tall) instead of a fixed size that could overflow.
+- Footer legal bar: 2x2 grid for the Datenschutz/AGB/Impressum/Jobs links on mobile (right column flush right, copyright centered below), matching Figma.
+- Footer "Kontakt"/"Newsletter" headings: no longer uppercase on mobile/tablet (desktop unchanged).
+- Footer "Kontakt" card: heading and address now sit side by side (1/3 + 2/3) on mobile/tablet instead of stacked.
+
+### Fixed
+- Mega menu mobile: "Kontakt" line-height was equal to its font-size (no vertical breathing room); now 24px.
+- Header burger icon: the open-state "X" used a 45° rotation sized for a square icon, which overflowed a non-square (40x20 / 30x16) box. Now uses the exact angle and arm length for each box's own aspect ratio.
+
 ## [1.3.2] — 2026-07-28
 
 ### Added
