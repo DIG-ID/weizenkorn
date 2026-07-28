@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.3.4] — 2026-07-28
+
+### Changed
+- Footer (desktop): logo/address/sitemap/newsletter now split evenly (3+3+3+3) between the `xl` and `2xl` breakpoints, reverting to the original 4+2+4+2 proportions from `2xl` up.
+- Footer sitemap: 2-column link layout between `xl` and `2xl` (was 3, too cramped at that narrower card width), with a smaller row gap in that range; 3 columns again from `2xl` up.
+
 ## [1.3.3] — 2026-07-28
 
 ### Changed
