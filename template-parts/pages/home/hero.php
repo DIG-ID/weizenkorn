@@ -16,7 +16,7 @@
  */
 
 ?>
-<section class="section-hero py-[60px] xl:py-[120px]">
+<section class="section-hero pb-[60px] xl:pb-[120px]">
 	<div class="theme-container">
 		<div class="theme-grid items-stretch">
 
