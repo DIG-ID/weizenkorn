@@ -8,8 +8,11 @@
   &__grid
     @apply py-16 xl:py-16 gap-y-10
 
+  // Tablet: logo + socials on one row (justify-between spaces them apart
+  // horizontally). Desktop resets to the original stacked column.
   &__brand
     @apply col-span-2 md:col-span-6 xl:col-start-1 xl:col-span-4 flex flex-col justify-between gap-8
+    @apply md:flex-row md:items-end xl:flex-col xl:items-start
 
   &__logo-image
     @apply h-auto w-auto max-h-[100px]
@@ -25,11 +28,16 @@
   &__address
     @apply xl:col-start-5 xl:col-span-2
 
+  // Tablet: Address + Newsletter side by side (each half the 6-col grid via
+  // .footer-main__card's md:col-span-3), Sitemap pushed below, full-width.
+  // Desktop's explicit xl:col-start/col-span placement makes `order`
+  // irrelevant there (explicit position always wins), but xl:order-none
+  // keeps this rule's intent explicit rather than relying on that.
   &__sitemap
-    @apply md:col-span-6 xl:col-start-7 xl:col-span-4 pt-[110px]
+    @apply md:col-span-6 md:order-2 xl:order-none xl:col-start-7 xl:col-span-4 xl:pt-[110px]
 
   &__newsletter
-    @apply md:col-span-6 xl:col-start-11 xl:col-span-2
+    @apply md:order-1 xl:order-none xl:col-start-11 xl:col-span-2
 
   &__heading
     @apply block text-[20px] font-normal leading-[30px] tracking-[0.5px] uppercase mb-6 xl:mb-14
@@ -49,7 +57,7 @@
       @apply underline underline-offset-4
 
   &__sitemap-menu
-    @apply grid grid-cols-1 xl:grid-cols-3 gap-x-5 gap-y-4 xl:gap-y-32 list-none m-0 p-0
+    @apply grid grid-cols-1 md:grid-cols-3 gap-x-5 gap-y-4 xl:gap-y-32 list-none m-0 p-0
 
     li
       @apply list-none
@@ -90,6 +98,20 @@
   &__legal
     @apply block py-7 text-[15px] font-normal leading-[30px] tracking-[0.5px]
 
+  // Tablet: menu row full-width, then copyright centered on its own row
+  // below it. Desktop resets to the original side-by-side halves (copyright
+  // left, menu right — the natural DOM order, so xl:order-none undoes the
+  // tablet swap and xl:text-left undoes the tablet centering).
+  &__legal-copyright,
+  &__legal-nav
+    @apply col-span-2 md:col-span-6 xl:col-span-6
+
+  &__legal-copyright
+    @apply md:order-2 md:text-center xl:order-none xl:text-left
+
+  &__legal-nav
+    @apply md:order-1 xl:order-none
+
   &__divider
     @apply border-0 border-t border-brand-dark
 
@@ -105,3 +127,59 @@
       &:hover,
       &:focus
         @apply underline underline-offset-4
+
+@media (max-width: 767px)
+  // Same selectors as each base rule (so specificity ties and this, later
+  // in the file, wins) — flattens the footer's desktop type scale to 12px.
+  // leading-normal too: the desktop leading-[30px]/[1.65] values were sized
+  // for the larger desktop font, and look like broken, oversized gaps at
+  // 12px. The newsletter button is untouched (already 12px via .btn below xl).
+  .footer-main__heading,
+  .footer-main__address-line,
+  .footer-main__contact-line,
+  .footer-main__sitemap-menu a,
+  .footer-main__legal
+    @apply text-[12px] leading-normal
+
+  .footer-main__newsletter input[type="text"],
+  .footer-main__newsletter input[type="email"]
+    @apply text-[12px] leading-normal
+
+  // Logo + social icons centered instead of left-aligned.
+  .footer-main__brand
+    @apply items-center text-center
+
+  // Newsletter before the sitemap (DOM order stays brand → address →
+  // sitemap → newsletter — only the mobile visual order changes).
+  .footer-main__sitemap
+    @apply order-2
+
+  .footer-main__newsletter
+    @apply order-1
+
+  // Legal bar: menu before the copyright line.
+  .footer-main__legal-copyright
+    @apply order-2
+
+  .footer-main__legal-nav
+    @apply order-1
+
+// Tablet only (md to just below xl) — same 14px flattening idea as the
+// mobile 12px pass above, but tablet also gets the newsletter button
+// included. Scoped to .footer-main__newsletter .btn-black (not .btn-black
+// globally) so it doesn't touch buttons used elsewhere on the site; 2
+// classes beats .btn's own 1-class text-[12px] rule regardless of order.
+@media (min-width: 768px) and (max-width: 1279.98px)
+  .footer-main__heading,
+  .footer-main__address-line,
+  .footer-main__contact-line,
+  .footer-main__sitemap-menu a,
+  .footer-main__legal
+    @apply text-[14px] leading-normal
+
+  .footer-main__newsletter input[type="text"],
+  .footer-main__newsletter input[type="email"]
+    @apply text-[14px] leading-normal
+
+  .footer-main__newsletter .btn-black
+    @apply text-[14px]

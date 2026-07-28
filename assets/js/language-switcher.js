@@ -29,8 +29,6 @@ export function initLanguageSwitcher() {
     toggle.textContent = currentLabel.textContent;
     wrapper.insertBefore(toggle, list);
 
-    gsap.set(list, { display: 'none', clipPath: 'inset(0% 0% 100% 0%)', autoAlpha: 0 });
-
     const dropdownTl = gsap.timeline({ paused: true })
       .set(list, { display: 'block' })
       .to(list, { clipPath: 'inset(0% 0% 0% 0%)', autoAlpha: 1, duration: 0.3, ease: 'power2.out' });
@@ -50,6 +48,34 @@ export function initLanguageSwitcher() {
       toggle.setAttribute('aria-expanded', 'false');
       dropdownTl.reverse();
     };
+
+    // The dropdown-hidden-by-default state (clip-path + display:none via
+    // GSAP inline styles) only makes sense at mobile — those inline styles
+    // otherwise permanently hide WPML's own list at tablet/desktop too,
+    // since nothing there ever calls dropdownTl.play() to reveal it again.
+    // clearProps hands full control back to the stylesheet's own (visible)
+    // rules whenever we're not in mobile mode.
+    let isMobileMode = null;
+
+    const applyResponsiveState = () => {
+      const shouldBeMobile = window.innerWidth < MOBILE_BREAKPOINT;
+
+      if (shouldBeMobile === isMobileMode) {
+        return;
+      }
+
+      isMobileMode = shouldBeMobile;
+
+      if (shouldBeMobile) {
+        gsap.set(list, { display: 'none', clipPath: 'inset(0% 0% 100% 0%)', autoAlpha: 0 });
+      } else {
+        closeDropdown();
+        gsap.set(list, { clearProps: 'display,clipPath,opacity,visibility' });
+      }
+    };
+
+    applyResponsiveState();
+    window.addEventListener('resize', applyResponsiveState, { passive: true });
 
     toggle.addEventListener('click', () => {
       if (window.innerWidth >= MOBILE_BREAKPOINT) {

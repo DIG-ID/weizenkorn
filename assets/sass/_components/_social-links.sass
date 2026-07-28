@@ -5,11 +5,12 @@
 .social-links
   @apply flex items-center gap-14
 
+// 18x18px on mobile/tablet, 30x30px on desktop (xl).
 .social-link
-  @apply flex items-center justify-center w-8 h-8 text-brand-dark
+  @apply flex items-center justify-center w-[18px] h-[18px] xl:w-[30px] xl:h-[30px] text-brand-dark
 
   svg
-    @apply w-8 h-8
+    @apply w-[18px] h-[18px] xl:w-[30px] xl:h-[30px]
 
   &:hover,
   &:focus

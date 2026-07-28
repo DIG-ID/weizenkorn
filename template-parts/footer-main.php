@@ -84,7 +84,7 @@ $weizenkorn_newsletter_shortcode = get_field( 'general_newsletter_shortcode', 'o
 
 		<div class="footer-main__legal">
 			<div class="theme-grid">
-				<div class="col-span-2 md:col-span-3 xl:col-span-6">
+				<div class="footer-main__legal-copyright">
 					<p class="footer-main__copyright">
 						<?php
 						printf(
@@ -96,7 +96,7 @@ $weizenkorn_newsletter_shortcode = get_field( 'general_newsletter_shortcode', 'o
 						?>
 					</p>
 				</div>
-				<div class="col-span-2 md:col-span-3 xl:col-span-6">
+				<div class="footer-main__legal-nav">
 					<nav class="footer-main__legal-menu" aria-label="<?php esc_attr_e( 'Legal menu', 'weizenkorn' ); ?>">
 						<?php
 						wp_nav_menu(

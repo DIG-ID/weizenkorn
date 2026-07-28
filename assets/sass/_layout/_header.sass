@@ -28,6 +28,11 @@
   &__menu-toggle
     @apply justify-self-start flex items-center text-brand-dark cursor-pointer bg-transparent border-0 p-0
 
+    // .bar uses bg-current, so changing the button's own color on hover
+    // recolors all 3 bars (no need to target them individually).
+    &:hover
+      @apply text-brand-red
+
     // Burger → X morph (.menu-toggle__bars / .bar below), driven by the
     // button's aria-expanded — toggled in assets/js/menu-overlay.js.
     &[aria-expanded="true"]
@@ -49,7 +54,7 @@
 // centers below); the middle bar just fades out. State toggle lives on
 // .header-main__menu-toggle[aria-expanded] above.
 .menu-toggle__bars
-  @apply flex flex-col justify-between w-10 h-[22px]
+  @apply flex flex-col justify-between w-[30px] md:w-10 h-[22px]
 
 .bar
   @apply block h-0.5 w-full bg-current origin-center transition-transform duration-300 ease-in-out

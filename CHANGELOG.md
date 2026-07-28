@@ -11,6 +11,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.3.2] — 2026-07-28
+
+### Added
+- Mega menu: 3-column layout on tablet (previously stacked in a single column, like mobile).
+- Footer: tablet-specific layout (logo/socials on one row bottom-aligned, address+newsletter side by side with the sitemap full-width below, legal menu before the copyright line) and a 14px type scale; mobile also gets its own 12px scale, including the newsletter button.
+- Header burger icon: turns brand-red on hover, and is 30px wide on mobile (was 40px at every size).
+- Footer social icons: 18x18px on mobile/tablet, 30x30px on desktop (previously 32x32px everywhere), and bottom-aligned with the logo on tablet.
+
+### Fixed
+- Mobile language switcher dropdown was hiding WPML's language list at every screen size, not just mobile — tablet and desktop had lost the language switcher entirely.
+
 ## [1.3.1] — 2026-07-28
 
 ### Added

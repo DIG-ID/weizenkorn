@@ -50,11 +50,14 @@ body.menu-open
   // the same baseline no matter how many links "Produkte/Dienstleitungen/
   // Gastronomie" (row 1) has in each column. The row-gap above replaces the
   // old inter-group gap.
-  // Below xl there's no Figma reference yet, so each <nav> just stays a
-  // normal box spanning the full grid width (2 cols mobile, 6 cols tablet)
-  // and stacks — no column promotion, no overflow risk.
+  // Tablet (md, <xl): 3 columns side by side (2 of the 6 grid columns
+  // each), but each <nav> stays a real box — no `contents` promotion, so
+  // unlike desktop, "row 2" headings aren't guaranteed to align across
+  // columns yet (that needs the same contents+row-start trick as xl,
+  // applied here too, if/when that's wanted).
+  // Mobile still stacks full-width (its own accordion layout, further down).
   &__col
-    @apply col-span-2 md:col-span-6 xl:contents
+    @apply col-span-2 md:col-span-2 xl:contents
 
     > ul
       @apply list-none m-0 p-0 xl:contents
@@ -182,13 +185,8 @@ body.menu-open
 
     // First entry, injected by assets/js/menu-overlay.js — the heading's
     // own link (repurposed as the accordion toggle below, so it would
-    // otherwise be unreachable on mobile). Set apart with a divider so it
-    // doesn't read as just another sub-item.
-    .menu-overlay__group-overview
-      @apply border-b border-brand-dark/20 mb-2 pb-2
-
-      a
-        @apply font-semibold
+    // otherwise be unreachable on mobile). Styled identically to the other
+    // sub-items, per design — no divider/weight to set it apart.
 
   // Neutralizes the desktop-only "single-child heading" override above
   // (base .sub-menu rule: `li:only-child > a`, which bumps font-size to
