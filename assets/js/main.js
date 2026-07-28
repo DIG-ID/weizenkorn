@@ -6,7 +6,7 @@ import './gsap.js';
 // =============================================================================
 // Optional libraries — uncomment as needed per project
 // =============================================================================
-// import './swiper.js';
+import { initGastronomySlider } from './swiper.js';
 // import './fancybox.js';
 
 // =============================================================================
@@ -22,5 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---------------------------------------------------
   // Project-specific initialisation goes here
   // ---------------------------------------------------
+  initGastronomySlider();
 
 });

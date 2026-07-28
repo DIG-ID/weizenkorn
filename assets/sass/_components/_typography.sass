@@ -4,17 +4,18 @@
 // see _buttons.sass). Responsive sizes use arbitrary values with the base / md
 // (768px) / xl (1280px) breakpoints, matching the design's mobile / tablet /
 // desktop layouts. Font: DM Sans (font-primary), weights 400/500/600/700/900.
-// Sizes are the REAL Figma values ("Hifi Wireframe_in process", 2026-07-22);
-// values marked (~) are interpolated pending a tablet/mobile Figma check.
+// Sizes are the REAL Figma values (Home desktop/tablet/mobile styles, checked
+// 2026-07-23); values marked (~) are interpolated (no matching Figma token).
 // Colour is intentionally NOT set here (except inline links) — set it on the
 // container so children (incl. wpautop <p>) inherit it (see CLAUDE.md).
 //
-//   Hero Title : 35/45 → (~56/64) → 82/100 · SemiBold 600
-//   H2 display : (~40/44) → 64/74 → 120/100 · Medium 500
-//   Overline   : 15 → 20/30 · Regular 400 · UPPERCASE
-//   Body       : 16/24 → 20/30 · Regular 400
+//   Hero Title : 35/45 → 45/60 → 82/100 · SemiBold 600
+//   H2 display : 36/38 → 64/74 → 112/112 · Medium 500
 //   Card title : 18/26 → 20/30 · Bold 700
-//   Inline link: 20/30 · Bold 700 · underline · brand-red
+//   Hero tagline: 12/18 → 14/22 → 30/40 · Bold 700
+//   Overline   : 12/30 → 15/30 → 20/30 · Regular 400 · UPPERCASE
+//   Body/Text  : 12/20 → 14/22 → 20/30 · Regular 400
+//   Inline link: Bold 700 · underline · brand-red
 // =============================================================================
 
 // -- Base ----------------------------------------------------------------------
@@ -34,39 +35,51 @@ h1, h2, h3, h4, h5, h6
 // Display headings
 // =============================================================================
 
-// Hero title (H1) — 35 → 82px. Usually brand-red in the design.
+// Hero title (H1) — 35 → 45 → 82px, SemiBold. Usually brand-red in the design.
 .title-hero
-  @apply font-primary font-semibold tracking-[0.5px] text-[35px] leading-[45px] md:text-[56px] md:leading-[64px] xl:text-[82px] xl:leading-[100px]
+  @apply font-primary font-semibold tracking-[0.5px] text-[35px] leading-[45px] md:text-[45px] md:leading-[60px] xl:text-[82px] xl:leading-[100px]
 
-// Big section title (H2) — 40 → 64 → 120px. The largest type on the site.
+// Big section title (H2) — 36 → 64 → 112px, Medium. The largest type on the site.
 .title-main
-  @apply font-primary font-medium tracking-[0.5px] text-[40px] leading-[44px] md:text-[64px] md:leading-[74px] xl:text-[120px] xl:leading-[100px]
+  @apply font-primary font-medium tracking-[0.5px] text-[36px] leading-[38px] md:text-[64px] md:leading-[74px] xl:text-[112px] xl:leading-[112px]
 
-// Optional mid-level heading (e.g. "Das macht uns aus").
+// Optional mid-level heading (e.g. "Das macht uns aus"). No Figma token — (~).
 .title-section
   @apply font-primary font-semibold tracking-[0.5px] text-[28px] leading-[34px] xl:text-[40px] xl:leading-[48px]
 
-// Card / block title (H3) — 18 → 20px, bold.
+// Card / block title — 12/20 → 14/22 → 20/30, Bold (Figma: service cards mobile/tablet/desktop).
 .title-card
-  @apply font-primary font-bold tracking-[0.5px] text-[18px] leading-[26px] xl:text-[20px] xl:leading-[30px]
+  @apply font-primary font-bold tracking-[0.5px] text-[12px] leading-[20px] md:text-[14px] md:leading-[22px] xl:text-[20px] xl:leading-[30px]
+
+// Hero tagline — 12/18 → 14/22 → 30/40, Bold (Figma confirmed 2026-07-23).
+.title-tagline
+  @apply font-primary font-bold tracking-[0.5px] text-[12px] leading-[18px] md:text-[14px] md:leading-[22px] xl:text-[30px] xl:leading-[40px]
+
+// USP band title — 16/32 → 20/30 → 30/40, Bold.
+.title-usp
+  @apply font-primary font-bold tracking-[0.5px] text-[16px] leading-[32px] md:text-[20px] md:leading-[30px] xl:text-[30px] xl:leading-[40px]
 
 // =============================================================================
 // Text styles
 // =============================================================================
 
-// Overline / eyebrow above titles — uppercase.
+// Overline / eyebrow above titles — 12 → 15 → 20px, uppercase (line-height 30 throughout).
 .overline
-  @apply font-primary font-normal uppercase tracking-[0.5px] text-[15px] leading-[22px] xl:text-[20px] xl:leading-[30px]
+  @apply font-primary font-normal uppercase tracking-[0.5px] text-[12px] leading-[30px] md:text-[15px] xl:text-[20px]
 
-// Body copy — 16 → 20px. Apply on a wrapper so wpautop <p> children inherit.
+// Body copy — 12 → 14 → 20px. Apply on a wrapper so wpautop <p> children inherit.
 .body-text
-  @apply font-primary font-normal tracking-[0.5px] text-[16px] leading-[24px] xl:text-[20px] xl:leading-[30px]
+  @apply font-primary font-normal tracking-[0.5px] text-[12px] leading-[20px] md:text-[14px] md:leading-[22px] xl:text-[20px] xl:leading-[30px]
   p
     @apply mb-4 last:mb-0
 
 // Small text (captions, footer).
 .body-small
   @apply font-primary font-normal tracking-[0.5px] text-[14px] leading-[21px]
+
+// USP item label — 12/20 → 14/22 → 20/30, Bold (body scale, bold weight).
+.label-usp
+  @apply font-primary font-bold tracking-[0.5px] text-[12px] leading-[20px] md:text-[14px] md:leading-[22px] xl:text-[20px] xl:leading-[30px]
 
 // Inline emphasised link ("mehr") — bold, underlined, brand-red.
 .link-inline

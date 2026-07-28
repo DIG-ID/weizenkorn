@@ -1,0 +1,162 @@
+[
+	{
+		"key": "group_home",
+		"title": "Home",
+		"fields": [
+			{ "key": "field_home_tab_hero", "label": "Hero", "name": "", "type": "tab", "placement": "top", "endpoint": 0 },
+			{
+				"key": "field_home_hero", "label": "", "name": "hero", "type": "group", "layout": "block",
+				"sub_fields": [
+					{ "key": "field_hero_title", "label": "Title", "name": "title", "type": "text" },
+					{ "key": "field_hero_tagline", "label": "Tagline", "name": "tagline", "type": "text" },
+					{ "key": "field_hero_body", "label": "Body", "name": "body", "type": "textarea", "new_lines": "wpautop", "rows": 5 },
+					{ "key": "field_hero_button", "label": "Button", "name": "button", "type": "link", "return_format": "array" },
+					{ "key": "field_hero_image", "label": "Image", "name": "image", "type": "image", "return_format": "id", "preview_size": "medium", "library": "all" }
+				]
+			},
+
+			{ "key": "field_home_tab_products", "label": "Products", "name": "", "type": "tab", "placement": "top", "endpoint": 0 },
+			{
+				"key": "field_home_products", "label": "", "name": "products", "type": "group", "layout": "block",
+				"sub_fields": [
+					{ "key": "field_products_overline", "label": "Overline", "name": "overline", "type": "text", "default_value": "PRODUKTE" },
+					{ "key": "field_products_title", "label": "Title", "name": "title", "type": "text" },
+					{ "key": "field_products_lead", "label": "Lead", "name": "lead", "type": "textarea", "new_lines": "wpautop", "rows": 4 },
+					{
+						"key": "field_products_ranges", "label": "Ranges", "name": "ranges", "type": "repeater",
+						"layout": "block", "button_label": "Add range",
+						"sub_fields": [
+							{ "key": "field_products_ranges_image", "label": "Image", "name": "image", "type": "image", "return_format": "id", "preview_size": "medium", "library": "all" },
+							{ "key": "field_products_ranges_title", "label": "Title", "name": "title", "type": "text" },
+							{ "key": "field_products_ranges_text", "label": "Text", "name": "text", "type": "textarea", "new_lines": "wpautop", "rows": 3 },
+							{ "key": "field_products_ranges_page", "label": "Page", "name": "page", "type": "link", "return_format": "array" }
+						]
+					},
+					{ "key": "field_products_link", "label": "Button", "name": "link", "type": "link", "return_format": "array" }
+				]
+			},
+
+			{ "key": "field_home_tab_usp_band", "label": "USP Band", "name": "", "type": "tab", "placement": "top", "endpoint": 0 },
+			{
+				"key": "field_home_usp_band", "label": "", "name": "usp_band", "type": "group", "layout": "block",
+				"sub_fields": [
+					{ "key": "field_usp_band_title", "label": "Title", "name": "title", "type": "text", "default_value": "Das macht uns aus" },
+					{
+						"key": "field_usp_band_items", "label": "Items", "name": "items", "type": "repeater",
+						"layout": "table", "button_label": "Add item",
+						"sub_fields": [
+							{ "key": "field_usp_band_items_icon", "label": "Icon", "name": "icon", "type": "image", "return_format": "id", "preview_size": "thumbnail", "library": "all" },
+							{ "key": "field_usp_band_items_label", "label": "Label", "name": "label", "type": "text" }
+						]
+					}
+				]
+			},
+
+			{ "key": "field_home_tab_services", "label": "Services", "name": "", "type": "tab", "placement": "top", "endpoint": 0 },
+			{
+				"key": "field_home_services", "label": "", "name": "services", "type": "group", "layout": "block",
+				"sub_fields": [
+					{ "key": "field_services_overline", "label": "Overline", "name": "overline", "type": "text", "default_value": "DIENSTLEISTUNGEN" },
+					{ "key": "field_services_title", "label": "Title", "name": "title", "type": "text" },
+					{ "key": "field_services_lead", "label": "Lead", "name": "lead", "type": "textarea", "new_lines": "wpautop", "rows": 4 },
+					{
+						"key": "field_services_items", "label": "Items", "name": "items", "type": "repeater",
+						"layout": "block", "button_label": "Add service",
+						"sub_fields": [
+							{ "key": "field_services_items_image", "label": "Image", "name": "image", "type": "image", "return_format": "id", "preview_size": "medium", "library": "all" },
+							{ "key": "field_services_items_title", "label": "Title", "name": "title", "type": "text" },
+							{ "key": "field_services_items_text", "label": "Text", "name": "text", "type": "textarea", "new_lines": "wpautop", "rows": 3 },
+							{ "key": "field_services_items_page", "label": "Page", "name": "page", "type": "link", "return_format": "array" }
+						]
+					},
+					{ "key": "field_services_link", "label": "Button", "name": "link", "type": "link", "return_format": "array" }
+				]
+			},
+
+			{ "key": "field_home_tab_gastronomy", "label": "Gastronomy", "name": "", "type": "tab", "placement": "top", "endpoint": 0 },
+			{
+				"key": "field_home_gastronomy", "label": "", "name": "gastronomy", "type": "group", "layout": "block",
+				"sub_fields": [
+					{ "key": "field_gastronomy_overline", "label": "Overline", "name": "overline", "type": "text" },
+					{ "key": "field_gastronomy_title", "label": "Title", "name": "title", "type": "text" },
+					{ "key": "field_gastronomy_lead", "label": "Lead", "name": "lead", "type": "textarea", "new_lines": "wpautop", "rows": 4 },
+					{
+						"key": "field_gastronomy_venues", "label": "Venues", "name": "venues", "type": "repeater",
+						"layout": "block", "button_label": "Add venue",
+						"sub_fields": [
+							{ "key": "field_gastronomy_venues_image", "label": "Image", "name": "image", "type": "image", "return_format": "id", "preview_size": "medium", "library": "all" },
+							{ "key": "field_gastronomy_venues_title", "label": "Title", "name": "title", "type": "text" },
+							{ "key": "field_gastronomy_venues_text", "label": "Text", "name": "text", "type": "textarea", "new_lines": "wpautop", "rows": 3 },
+							{ "key": "field_gastronomy_venues_page", "label": "Page", "name": "page", "type": "link", "return_format": "array" }
+						]
+					},
+					{ "key": "field_gastronomy_link", "label": "Button", "name": "link", "type": "link", "return_format": "array" }
+				]
+			},
+
+			{ "key": "field_home_tab_locations", "label": "Locations", "name": "", "type": "tab", "placement": "top", "endpoint": 0 },
+			{
+				"key": "field_home_locations", "label": "", "name": "locations", "type": "group", "layout": "block",
+				"sub_fields": [
+					{ "key": "field_locations_overline", "label": "Overline", "name": "overline", "type": "text", "default_value": "UNSERE STANDORTE" },
+					{ "key": "field_locations_title", "label": "Title", "name": "title", "type": "text" },
+					{
+						"key": "field_locations_items", "label": "Locations", "name": "items", "type": "repeater",
+						"layout": "block", "button_label": "Add location",
+						"sub_fields": [
+							{ "key": "field_locations_items_image", "label": "Image", "name": "image", "type": "image", "return_format": "id", "preview_size": "medium", "library": "all" },
+							{ "key": "field_locations_items_title", "label": "Title", "name": "title", "type": "text" },
+							{ "key": "field_locations_items_text", "label": "Text", "name": "text", "type": "textarea", "new_lines": "wpautop", "rows": 3 },
+							{ "key": "field_locations_items_page", "label": "Page", "name": "page", "type": "link", "return_format": "array" }
+						]
+					}
+				]
+			},
+
+			{ "key": "field_home_tab_work_training", "label": "Work & Training", "name": "", "type": "tab", "placement": "top", "endpoint": 0 },
+			{
+				"key": "field_home_work_training", "label": "", "name": "work_training", "type": "group", "layout": "block",
+				"sub_fields": [
+					{ "key": "field_work_training_overline", "label": "Overline", "name": "overline", "type": "text", "default_value": "ARBEITEN & AUSBILDUNG" },
+					{ "key": "field_work_training_title", "label": "Title", "name": "title", "type": "text" },
+					{ "key": "field_work_training_body", "label": "Body", "name": "body", "type": "textarea", "new_lines": "wpautop", "rows": 5 },
+					{ "key": "field_work_training_image", "label": "Image", "name": "image", "type": "image", "return_format": "id", "preview_size": "medium", "library": "all" },
+					{
+						"key": "field_work_training_teasers", "label": "Teasers", "name": "teasers", "type": "repeater",
+						"layout": "block", "button_label": "Add teaser",
+						"sub_fields": [
+							{ "key": "field_work_training_teasers_title", "label": "Title", "name": "title", "type": "text" },
+							{ "key": "field_work_training_teasers_text", "label": "Text", "name": "text", "type": "textarea", "new_lines": "wpautop", "rows": 2 },
+							{ "key": "field_work_training_teasers_link", "label": "Link", "name": "link", "type": "link", "return_format": "array" }
+						]
+					}
+				]
+			},
+
+			{ "key": "field_home_tab_about", "label": "About", "name": "", "type": "tab", "placement": "top", "endpoint": 0 },
+			{
+				"key": "field_home_about", "label": "", "name": "about", "type": "group", "layout": "block",
+				"sub_fields": [
+					{ "key": "field_about_overline", "label": "Overline", "name": "overline", "type": "text", "default_value": "ÜBER UNS" },
+					{ "key": "field_about_title", "label": "Title", "name": "title", "type": "text" },
+					{ "key": "field_about_body", "label": "Body", "name": "body", "type": "textarea", "new_lines": "wpautop", "rows": 5 },
+					{ "key": "field_about_image", "label": "Image", "name": "image", "type": "image", "return_format": "id", "preview_size": "medium", "library": "all" },
+					{ "key": "field_about_link", "label": "Button", "name": "link", "type": "link", "return_format": "array" }
+				]
+			}
+		],
+		"location": [
+			[
+				{ "param": "page_template", "operator": "==", "value": "page-templates/page-home.php" }
+			]
+		],
+		"menu_order": 0,
+		"position": "normal",
+		"style": "default",
+		"label_placement": "top",
+		"instruction_placement": "label",
+		"hide_on_screen": "",
+		"active": true,
+		"description": "Home page sections (Weizenkorn). One tab + group per section; group sub-fields use short names, so ACF stores composite keys (hero_title, products_ranges…) matching get_field('hero_title')/have_rows('products_ranges') in the templates. Body fields are textareas."
+	}
+]

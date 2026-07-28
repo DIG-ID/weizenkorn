@@ -1,0 +1,12 @@
+// =============================================================================
+// Section heading (template-parts/components/section-heading.php)
+// =============================================================================
+
+// CTA buttons: stacked and full-width on mobile/tablet (label left, arrow
+// pushed right via space-between); inline, content-width on desktop (xl).
+.section-heading__buttons
+  @apply flex flex-col gap-4 xl:flex-row
+  // Small min-gap so space-between fits the narrow column (the .btn default
+  // gap-16 would overflow); arrow stays pushed to the right at every breakpoint.
+  .btn
+    @apply w-full justify-between gap-3 xl:w-auto

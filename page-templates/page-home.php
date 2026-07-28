@@ -24,7 +24,6 @@ if ( have_posts() ) :
 		get_template_part( 'template-parts/modules/usp-band' );
 		get_template_part( 'template-parts/pages/home/services' );
 		get_template_part( 'template-parts/pages/home/gastronomy' );
-		get_template_part( 'template-parts/pages/home/locations' );
 		get_template_part( 'template-parts/pages/home/work-training' );
 		get_template_part( 'template-parts/pages/home/about-teaser' );
 

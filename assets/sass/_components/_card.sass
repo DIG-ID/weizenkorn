@@ -1,0 +1,66 @@
+// =============================================================================
+// Cards — one independent, self-contained class per section (house style:
+// Tailwind utilities via @apply + @media). The cards differ enough between
+// sections that each owns its full design here; only the card's placement in
+// the section grid (col-span / order / margins) stays inline in the template.
+//
+//   .card-range    → Products  ("Schönes mit Sinn")
+//   .card-service  → Services  ("Massgeschneidert für Sie")
+//   .card-venue    → Gastronomy ("Gut essen. Gut schlafen.")
+// =============================================================================
+
+// -- Products: image on top, title + arrow, description ------------------------
+.card-range
+  @apply flex flex-col
+  .card__media
+    @apply overflow-hidden h-[220px] md:h-[300px] xl:h-[400px]
+    img
+      @apply w-full h-full object-cover
+  .card__head
+    @apply flex items-center justify-between gap-4
+  .card__arrow
+    @apply shrink-0 text-brand-red
+  .card__text
+    @apply xl:max-w-[90%]
+  .card__head
+    @apply mt-5 mb-3
+
+// -- Services: image + cream panel. Mobile/tablet the panel sits in flow with
+//    the text always visible; desktop the panel is an absolute overlay whose
+//    description + "mehr" collapse and slide open on hover. ---------------------
+.card-service
+  @apply relative flex w-full max-h-[340px] flex-col overflow-hidden bg-brand-cream md:h-full md:max-h-none xl:block xl:aspect-[488/444]
+  .card__media
+    @apply w-full flex-1 min-h-[160px] object-cover md:h-[165px] md:flex-none xl:absolute xl:inset-0 xl:h-full xl:flex-none
+  .card__panel
+    @apply relative flex flex-1 flex-col justify-between bg-brand-cream pl-[9px] pr-[9px] pt-[14px] pb-4 md:min-h-[270px] md:pr-1 md:pt-2 md:pb-3 xl:absolute xl:inset-x-0 xl:bottom-0 xl:flex-none xl:min-h-0
+  .card__text-group
+    @apply min-h-0 overflow-hidden
+  .card__more
+    @apply inline-block pt-4
+  // Hover-reveal: open on mobile/tablet, collapsed on desktop until hover.
+  .card__reveal
+    @apply grid overflow-hidden grid-rows-[1fr] transition-[grid-template-rows] duration-300 ease-in-out
+    > *
+      @apply overflow-hidden
+  @media (min-width: 1280px)
+    .card__reveal
+      grid-template-rows: 0fr
+    &:hover .card__reveal
+      grid-template-rows: 1fr
+
+// -- Gastronomy: logo + arrow head over a description; red outline that blends
+//    into a cream fill on hover. -------------------------------------------------
+.card-venue
+  @apply flex flex-col border border-brand-red bg-white max-h-60 md:max-h-72 xl:max-h-[459px] px-4 pt-6 pb-8 transition-colors duration-300
+  &:hover
+    @apply bg-brand-cream border-brand-cream
+  .card__head
+    @apply flex items-start justify-between gap-4 h-20 md:h-44
+  .card__text
+    @apply h-28 md:h-32 xl:h-44 mb-auto
+  .card__logo
+    img
+      @apply w-auto h-auto max-w-full max-h-12 xl:max-h-20
+  .card__arrow
+    @apply shrink-0 text-brand-red
