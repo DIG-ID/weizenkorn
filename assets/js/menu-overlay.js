@@ -191,10 +191,20 @@ export function initMenuOverlay() {
     overlay.setAttribute('aria-hidden', 'true');
   });
 
+  // body.menu-open (_menu-overlay.sass) freezes the page via
+  // position:fixed instead of overflow:hidden, so the scrollbar never
+  // disappears/reappears (see _base-styles.sass). Fixed positioning drops
+  // the body to the top, so `top` is set to minus the saved scroll
+  // position to hold its visual place, then cleared and the real scroll
+  // position restored on close.
+  let savedScrollY = 0;
+
   const openMenu = () => {
     overlay.style.visibility = 'visible';
     overlay.removeAttribute('aria-hidden');
     setExpanded(true);
+    savedScrollY = window.scrollY;
+    document.body.style.top = `-${savedScrollY}px`;
     document.body.classList.add('menu-open');
     syncHeaderHeight();
     syncImageHeight();
@@ -204,6 +214,8 @@ export function initMenuOverlay() {
   const closeMenu = () => {
     setExpanded(false);
     document.body.classList.remove('menu-open');
+    document.body.style.top = '';
+    window.scrollTo(0, savedScrollY);
     revealTl.reverse();
   };
 

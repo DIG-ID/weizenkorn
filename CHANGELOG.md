@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Sticky CTA: fixed bottom-right promo box on the homepage (Figma "hero section_first moment on website"), driven by the new "Sticky CTA" ACF field group (Title/Text/Link). Auto-collapses to a circular icon-only state after 5 seconds; hover/focus re-expands.
 - Home hero: optional background video (`hero_enable_video` + `hero_video_mp4`/`hero_video_webm`), replacing the image when enabled. WebM is tried first, MP4 is the fallback; falls back to the existing image when no video is set.
 
+### Fixed
+- Home hero: content can no longer be visually cut off at short/narrow viewports — the text column always sizes to its own content, while the media column caps to the available height instead of stretching the whole row taller. The existing spacing-shrink system on shorter viewports is preserved.
+- Mega menu: opening/closing it no longer hides the browser scrollbar and shifts the page width — the scrollbar stays permanently reserved and the background is frozen in place (without losing the scroll position) instead of using `overflow: hidden`.
+
 ## [1.3.5] — 2026-07-28
 
 ### Changed

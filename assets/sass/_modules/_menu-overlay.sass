@@ -5,8 +5,15 @@
 // Behaviour: assets/js/menu-overlay.js — open/close "roll down" reveal
 // (GSAP clip-path tween + staggered group fade-in), hover/focus image swap,
 // and the mobile accordion (tap a group heading to reveal its links).
+// Locks background scroll while the overlay is open WITHOUT hiding the
+// scrollbar (plain overflow:hidden would remove it, shifting the page a
+// few pixels sideways since html always reserves the scrollbar gutter —
+// see _base-styles.sass). Freezing the body in place via fixed positioning
+// keeps the scrollbar exactly as-is; assets/js/menu-overlay.js sets `top`
+// to minus the saved scroll position (so it doesn't visually jump to the
+// page top) and restores the real scroll position on close.
 body.menu-open
-  @apply overflow-hidden
+  @apply fixed inset-x-0
 
 // --header-height is set precisely from .header-main's real offsetHeight by
 // assets/js/menu-overlay.js (header height depends on logo aspect ratio,
@@ -48,7 +55,7 @@ body.menu-open
   // for full visibility with no scroll down to ~800px tall) sheds space
   // from all of them together instead of one alone having to do it all.
   &__divider
-    @apply border-0 border-t border-brand-dark mb-10 xl:mb-[clamp(20px,100vh_-_930px,40px)] shrink-0
+    @apply border-0 border-t border-brand-dark mb-10 xl:mb-[clamp(40px,100vh_-_930px,64px)] shrink-0
 
   // At xl, 8 of the site's 12 grid columns don't divide evenly into 3 equal
   // menu columns (8/3 isn't a whole number) while keeping the image at a

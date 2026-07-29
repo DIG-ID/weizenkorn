@@ -21,6 +21,7 @@ import { initStickyHeader } from './sticky-header.js';
 import { initMenuOverlay } from './menu-overlay.js';
 import { initLanguageSwitcher } from './language-switcher.js';
 import { initStickyCta } from './sticky-cta.js';
+import { initHeroFit } from './hero-fit.js';
 
 // =============================================================================
 // DOM ready
@@ -32,5 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initLanguageSwitcher();
   initGastronomySlider();
   initStickyCta();
+  initHeroFit();
 
 });

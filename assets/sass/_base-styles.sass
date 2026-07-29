@@ -8,6 +8,11 @@
 html
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
+  // Scrollbar always reserved/shown, even on short pages with nothing to
+  // scroll — without this, opening the mega menu (which locks body scroll,
+  // see body.menu-open in _menu-overlay.sass) removes the scrollbar and
+  // shifts the whole page a few pixels sideways, then shifts back on close.
+  overflow-y: scroll
 
 body
   font-family: var(--font-primary)
