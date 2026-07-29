@@ -109,6 +109,7 @@ $weizenkorn_hero_video_webm   = $weizenkorn_hero_enable_video ? get_field( 'hero
 					<video
 						class="w-full h-full object-cover"
 						<?php echo get_field( 'hero_image' ) ? 'poster="' . esc_url( wp_get_attachment_image_url( get_field( 'hero_image' ), 'full' ) ) . '"' : ''; ?>
+						preload="auto"
 						autoplay
 						muted
 						loop

@@ -39,14 +39,23 @@ commitar. Nunca deixar `dist/` de desenvolvimento ir para produção.
      - só correcções/ajustes → **PATCH**
      - funcionalidade nova → **MINOR**
      - breaking change → **MAJOR**
-   - **Confirmar o número com o utilizador antes de aplicar.**
+   - **Por omissão** (projecto ainda em fase local/staging, sem lançamento
+     público): a opção recomendada é **manter o número de versão actual**,
+     só acrescentando a entrada nova à secção do `CHANGELOG.md` já existente
+     para essa versão (não criar secção nova nem tocar no `style.css`). Ainda
+     assim, apresentar sempre as duas opções (manter vs. bump) e **confirmar
+     com o utilizador** qual aplicar antes de avançar — isto muda quando o
+     projecto passar a ter lançamentos públicos reais.
 
-5. **CHANGELOG.md + style.css**
+5. **CHANGELOG.md + style.css** (só quando a versão sobe)
    - Adicionar/completar a secção `## [X.Y.Z] — YYYY-MM-DD` com as categorias
      correctas (Added/Changed/Fixed/Removed/Deprecated/Security), em inglês,
      orientada ao que mudou.
    - Sincronizar o `Version:` do `style.css` com o mesmo número.
    - Changelog e `style.css` têm de ficar **sempre com o mesmo número**.
+   - Se a decisão do passo 4 foi manter a versão actual, saltar a mudança do
+     `style.css` e só adicionar as categorias novas (Added/Changed/Fixed/…)
+     à secção já existente do `CHANGELOG.md` para essa versão.
 
 6. **Commit** (mensagem curta e simples)
    - Formato: `vX.Y.Z: <resumo curto>` (inglês, uma linha, orientado ao utilizador).

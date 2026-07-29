@@ -20,6 +20,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 ### Fixed
 - Home hero: content can no longer be visually cut off at short/narrow viewports — the text column always sizes to its own content, while the media column caps to the available height instead of stretching the whole row taller. The existing spacing-shrink system on shorter viewports is preserved.
 - Mega menu: opening/closing it no longer hides the browser scrollbar and shifts the page width — the scrollbar stays permanently reserved and the background is frozen in place (without losing the scroll position) instead of using `overflow: hidden`.
+- Header/footer logo: fixed not rendering when uploaded as SVG (percentage-based intrinsic size collapsed to 0×0) — logo image now sized with an explicit height instead of `max-height`.
+- Home hero: video now sets `preload="auto"` so it starts buffering immediately instead of waiting on the browser's default metadata-only preload.
+
+### Changed
+- Typography: bumped several base/mobile font sizes (buttons, titles, tagline, overline, body/card/USP labels) and added a dedicated `2xl` step for the hero title/tagline/body and section titles, between the existing `xl` value and the largest breakpoint.
+- Footer (mobile): flattened text size raised from 12px to 14px to match the wider typography bump above.
 
 ## [1.3.5] — 2026-07-28
 

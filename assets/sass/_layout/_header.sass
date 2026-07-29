@@ -53,8 +53,17 @@
   &__logo
     @apply justify-self-center flex items-center
 
+  // Explicit height (not max-height) + width:auto — needed so SVG logos
+  // render correctly, not just PNGs. An SVG exported with a percentage
+  // width/height on its root <svg> (common from Figma/Illustrator) has no
+  // resolvable natural size, so height:auto/width:auto both collapse to 0
+  // (max-height only clamps an already-computed value, it can't rescue a
+  // 0 result). A definite height sidesteps that: width scales from it via
+  // the element's intrinsic ratio, falling back to the img's width/height
+  // HTML attributes (set from the attachment's real dimensions) when the
+  // SVG itself doesn't expose one.
   &__logo-image
-    @apply h-auto w-auto max-h-[45px] xl:max-h-[75px]
+    @apply h-[45px] xl:h-[75px] w-auto
 
 // Hamburger icon (3 bars morphing into an X) — 30x16px on mobile,
 // 40x20px on tablet/desktop (Figma "Home_menu_desktop"). Top/bottom bars

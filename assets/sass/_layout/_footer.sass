@@ -16,8 +16,10 @@
     @apply col-span-2 md:col-span-6 xl:col-start-1 xl:col-span-3 2xl:col-span-4 flex flex-col justify-between gap-8 pb-10 md:pb-12 xl:pb-0
     @apply md:flex-row md:items-end xl:flex-col xl:items-start
 
+  // Explicit height (not max-height) + width:auto — see the same rule in
+  // _layout/_header.sass for why this matters for SVG logos specifically.
   &__logo-image
-    @apply h-auto w-auto max-h-[100px]
+    @apply h-[100px] w-auto
 
   // Shared "card" look (address / sitemap / newsletter) — hairline border,
   // no radius, matches the Figma wireframe exactly. Grid stretch (the
@@ -156,11 +158,11 @@
   .footer-main__contact-line,
   .footer-main__sitemap-menu a,
   .footer-main__legal
-    @apply text-[12px] leading-normal
+    @apply text-[14px] leading-normal
 
   .footer-main__newsletter input[type="text"],
   .footer-main__newsletter input[type="email"]
-    @apply text-[12px] leading-normal
+    @apply text-[14px] leading-normal
 
   // Logo + social icons centered instead of left-aligned.
   .footer-main__brand
