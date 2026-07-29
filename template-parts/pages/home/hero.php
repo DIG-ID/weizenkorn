@@ -4,17 +4,23 @@
  * Split hero-card: red title + intro (tagline + body) + "Mehr erfahren" + image.
  *
  * ACF fields (flat, prefixed):
- *   hero_title   (text)
- *   hero_tagline (text)
- *   hero_body    (textarea / wysiwyg)
- *   hero_button  (link)
- *   hero_image   (image → return ID)
+ *   hero_title        (text)
+ *   hero_tagline      (text)
+ *   hero_body         (textarea / wysiwyg)
+ *   hero_button       (link)
+ *   hero_image        (image → return ID)
+ *   hero_enable_video (true/false) — when true, hero_video_mp4/webm replace hero_image.
+ *   hero_video_mp4    (file → return array)
+ *   hero_video_webm   (file → return array)
  *
  * @package weizenkorn
  * @subpackage Section
  * @since 1.0.0
  */
 
+$weizenkorn_hero_enable_video = get_field( 'hero_enable_video' );
+$weizenkorn_hero_video_mp4    = $weizenkorn_hero_enable_video ? get_field( 'hero_video_mp4' ) : null;
+$weizenkorn_hero_video_webm   = $weizenkorn_hero_enable_video ? get_field( 'hero_video_webm' ) : null;
 ?>
 <section class="section-hero pb-[60px] xl:pb-[120px]">
 	<?php
@@ -71,8 +77,24 @@
 			</div>
 
 			<div class="col-span-2 md:col-span-3 xl:col-span-7 section-hero__media overflow-hidden order-1 md:order-none">
-				<?php
-				if ( get_field( 'hero_image' ) ) {
+				<?php if ( $weizenkorn_hero_video_mp4 || $weizenkorn_hero_video_webm ) : ?>
+					<video
+						class="w-full h-full object-cover"
+						<?php echo get_field( 'hero_image' ) ? 'poster="' . esc_url( wp_get_attachment_image_url( get_field( 'hero_image' ), 'full' ) ) . '"' : ''; ?>
+						autoplay
+						muted
+						loop
+						playsinline
+					>
+						<?php if ( $weizenkorn_hero_video_webm ) : ?>
+							<source src="<?php echo esc_url( $weizenkorn_hero_video_webm['url'] ); ?>" type="video/webm" />
+						<?php endif; ?>
+						<?php if ( $weizenkorn_hero_video_mp4 ) : ?>
+							<source src="<?php echo esc_url( $weizenkorn_hero_video_mp4['url'] ); ?>" type="video/mp4" />
+						<?php endif; ?>
+					</video>
+				<?php elseif ( get_field( 'hero_image' ) ) : ?>
+					<?php
 					echo wp_get_attachment_image(
 						get_field( 'hero_image' ),
 						'full',
@@ -83,8 +105,8 @@
 							'fetchpriority' => 'high',
 						)
 					);
-				}
-				?>
+					?>
+				<?php endif; ?>
 			</div>
 
 		</div>

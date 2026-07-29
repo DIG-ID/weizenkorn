@@ -20,6 +20,7 @@ import { debounce, isTouchDevice } from './utils/helpers.js';
 import { initStickyHeader } from './sticky-header.js';
 import { initMenuOverlay } from './menu-overlay.js';
 import { initLanguageSwitcher } from './language-switcher.js';
+import { initStickyCta } from './sticky-cta.js';
 
 // =============================================================================
 // DOM ready
@@ -30,5 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initMenuOverlay();
   initLanguageSwitcher();
   initGastronomySlider();
+  initStickyCta();
 
 });

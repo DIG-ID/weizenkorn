@@ -20,3 +20,9 @@
 		<?php do_action( 'wp_body_open' ); ?>
 		<?php get_template_part( 'template-parts/header', 'main' ); ?>
 		<?php get_template_part( 'template-parts/menu-overlay' ); ?>
+		<?php
+		// Home only for now (Figma: "hero section_first moment on website").
+		if ( is_front_page() ) {
+			get_template_part( 'template-parts/components/sticky-cta' );
+		}
+		?>

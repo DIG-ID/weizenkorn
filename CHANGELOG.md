@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.3.6] — 2026-07-29
+
+### Added
+- Sticky CTA: fixed bottom-right promo box on the homepage (Figma "hero section_first moment on website"), driven by the new "Sticky CTA" ACF field group (Title/Text/Link). Auto-collapses to a circular icon-only state after 5 seconds; hover/focus re-expands.
+- Home hero: optional background video (`hero_enable_video` + `hero_video_mp4`/`hero_video_webm`), replacing the image when enabled. WebM is tried first, MP4 is the fallback; falls back to the existing image when no video is set.
+
 ## [1.3.5] — 2026-07-28
 
 ### Changed

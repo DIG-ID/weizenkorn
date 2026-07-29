@@ -1,0 +1,44 @@
+// Fixed bottom-right promo box (Figma "hero section_first moment on
+// website", node 652:822). Desktop/tablet only for now — no mobile design
+// was available at build time, and the 240px box would dominate a phone
+// screen. Behaviour: assets/js/sticky-cta.js (auto-collapse after 5s,
+// hover/focus re-expands).
+.sticky-cta
+  @apply hidden md:flex fixed bottom-[82px] right-[83px] z-30
+  @apply items-center justify-between gap-4 w-[250px] py-4 px-3
+  @apply bg-brand-red text-white no-underline overflow-hidden
+
+  // Collapsed: square card → red circle showing just the wheat mark
+  // (.sticky-cta__logo-icon) instead of the title/text/arrow. The
+  // transitions live only here (on .is-collapsed), not on the base
+  // classes below — collapsing (this class being added) animates, but
+  // expanding back (this class being removed, reverting to the base
+  // classes' un-transitioned values) is instant, as requested.
+  &.is-collapsed
+    @apply w-[100px] h-[100px] p-0 justify-center rounded-full
+    @apply transition-[width,height,padding] duration-500 ease-in-out
+
+    // No transition here — title/text/arrow disappear instantly so only
+    // the box shape (width/height/border-radius above) is seen animating.
+    .sticky-cta__content,
+    .sticky-cta__icon
+      @apply w-0 opacity-0
+
+    .sticky-cta__logo-icon
+      @apply opacity-100 transition-opacity duration-300 ease-in-out
+
+  &__content
+    @apply flex flex-col gap-[10px] min-w-0
+
+  &__title
+    @apply block font-primary font-black text-[15px] uppercase leading-normal whitespace-nowrap
+
+  &__text
+    @apply block font-primary font-medium text-[15px] leading-normal
+
+  &__icon
+    @apply flex items-center justify-center shrink-0 text-white absolute right-3 top-4
+
+  // Wheat mark — hidden until the card collapses (see .is-collapsed above).
+  &__logo-icon
+    @apply absolute top-3 w-[86px] h-[45px] opacity-0 pointer-events-none
