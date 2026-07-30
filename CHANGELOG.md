@@ -11,6 +11,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.4.0] — 2026-07-30
+
+### Added
+- Products archive template (`archive-products.php`) for the `products` post type, composed of the shared hero, USP band, quote slider and form sections.
+- `hero-section` module: the standard page header (image, bordered title/intro box, optional separator), shared by every page and archive except the home page.
+
+### Changed
+- `hero-section` and `usp-band` take an ACF read context and a field-name prefix through `$args`, so archives can keep their content in the theme options.
+- Layout grid gutter is now horizontal only — stacked columns no longer inherit an unintended 20px vertical gap.
+- Footer and USP band read their ACF fields inline at the point of use.
+
+### Fixed
+- Hero separator logo reads `hero_section_seperator_logo`, matching the ACF field group.
+
 ## [1.3.6] — 2026-07-29
 
 ### Added

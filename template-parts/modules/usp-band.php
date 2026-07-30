@@ -7,32 +7,56 @@
  *   usp_band_title (text)
  *   usp_band_items (repeater) → icon (image → return ID), label (text)
  *
+ * Usage — on a page the fields come from the current post:
+ *   get_template_part( 'template-parts/modules/usp-band' );
+ *
+ * A CPT archive has no post context, so pass the options store plus the
+ * archive's field prefix, the same way as template-parts/modules/hero-section:
+ *   get_template_part(
+ *       'template-parts/modules/usp-band',
+ *       null,
+ *       array(
+ *           'post_id' => 'option',
+ *           'prefix'  => 'products_archive_',
+ *       )
+ *   );
+ *
+ * @param array $args {
+ *     @type int|string $post_id Optional. ACF post id / options store to read
+ *                               the fields from. Default: the current post.
+ *     @type string     $prefix  Optional. Prepended to every field name.
+ *                               Default: '' (names used as-is).
+ * }
+ *
  * @package weizenkorn
  * @subpackage Module
  * @since 1.1.0
  */
 
-$band_title = get_field( 'usp_band_title' );
+// ACF read context: the current post normally, the options store on archives.
+$usp_ctx = ( ! empty( $args['post_id'] ) ) ? $args['post_id'] : get_the_ID();
 
-if ( ! have_rows( 'usp_band_items' ) ) {
+// Field-name prefix, so one shared module can serve several archives.
+$usp_prefix = ! empty( $args['prefix'] ) ? $args['prefix'] : '';
+
+if ( ! have_rows( $usp_prefix . 'usp_band_items', $usp_ctx ) ) {
 	return;
 }
-
-if ( ! $band_title ) {
-	$band_title = __( 'Das macht uns aus', 'weizenkorn' );
-}
 ?>
-<section class="usp-band bg-brand-cream text-brand-dark py-16 md:py-24 xl:py-32" aria-label="<?php echo esc_attr( $band_title ); ?>">
+<section class="usp-band bg-brand-cream text-brand-dark py-16 md:py-24 xl:py-32">
 	<div class="theme-container">
-		<?php if ( $band_title ) : ?>
-			<div class="usp-band__title-wrap mb-8 md:mb-16 xl:mb-24">
-				<h3 class="title-usp usp-band__title text-center"><?php echo esc_html( $band_title ); ?></h3>
-			</div>
-		<?php endif; ?>
+		<div class="usp-band__title-wrap mb-8 md:mb-16 xl:mb-24">
+			<h3 class="title-usp usp-band__title text-center">
+				<?php
+				// Falls back to the designed default so the band always has its heading.
+				echo esc_html( get_field( $usp_prefix . 'usp_band_title', $usp_ctx ) ? get_field( $usp_prefix . 'usp_band_title', $usp_ctx ) : __( 'Das macht uns aus', 'weizenkorn' ) );
+				?>
+			</h3>
+		</div>
 
 		<div class="usp-band__items gap-12 md:gap-24 xl:gap-52 flex flex-col md:flex-row items-center justify-center">
 			<?php
-			while ( have_rows( 'usp_band_items' ) ) :
+			while ( have_rows( $usp_prefix . 'usp_band_items', $usp_ctx ) ) :
 				the_row();
 				?>
 				<div class="usp-band__item flex flex-col items-center text-center gap-4 xl:gap-6">

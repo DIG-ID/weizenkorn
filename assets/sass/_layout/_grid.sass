@@ -15,7 +15,7 @@
 .theme-container
   width: 100%
   margin-inline: auto
-  padding-inline: 36px            // mobile margins
+  padding-inline: 37px            // mobile margins
   @media (min-width: 768px)
     padding-inline: 67px          // tablet margins
   @media (min-width: 1280px)
@@ -24,14 +24,12 @@
 
 // -- Grid ----------------------------------------------------------------------
 // 2 → 6 → 12 columns, constant 20px gutter.
+// COLUMN gutter only (gap-x-5): the 20px gutter in the design is horizontal.
+// There is deliberately NO row gap — vertical spacing is added by hand in each
+// section's template (margin/padding utilities on the children), so a stacked
+// layout below xl always gets the value from Figma instead of the gutter.
 .theme-grid
-  display: grid
-  gap: 20px
-  grid-template-columns: repeat(2, minmax(0, 1fr))
-  @media (min-width: 768px)
-    grid-template-columns: repeat(6, minmax(0, 1fr))
-  @media (min-width: 1280px)
-    grid-template-columns: repeat(12, minmax(0, 1fr))
+  @apply grid grid-cols-2 md:grid-cols-6 xl:grid-cols-12 gap-x-5
 
 // Note: for sections that inset one column each side on desktop (cols 2–11 =
 // 10 col — a common pattern in the design), just use Tailwind utilities on the

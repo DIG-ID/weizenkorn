@@ -8,11 +8,6 @@
  * @since 1.2.1
  */
 
-$weizenkorn_logo_id              = weizenkorn_get_logo_id();
-$weizenkorn_address              = get_field( 'general_address', 'option' );
-$weizenkorn_phone                = get_field( 'general_phone', 'option' );
-$weizenkorn_email                = get_field( 'general_email', 'option' );
-$weizenkorn_newsletter_shortcode = get_field( 'general_newsletter_shortcode', 'option' );
 ?>
 <footer id="footer-main" class="footer-main">
 
@@ -22,8 +17,8 @@ $weizenkorn_newsletter_shortcode = get_field( 'general_newsletter_shortcode', 'o
 			<div class="footer-main__brand">
 				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="footer-main__logo" rel="home">
 					<?php
-					if ( $weizenkorn_logo_id ) {
-						echo wp_get_attachment_image( $weizenkorn_logo_id, 'full', false, array( 'class' => 'footer-main__logo-image' ) );
+					if ( weizenkorn_get_logo_id() ) {
+						echo wp_get_attachment_image( weizenkorn_get_logo_id(), 'full', false, array( 'class' => 'footer-main__logo-image' ) );
 					} else {
 						bloginfo( 'name' );
 					}
@@ -37,19 +32,19 @@ $weizenkorn_newsletter_shortcode = get_field( 'general_newsletter_shortcode', 'o
 				<h2 class="footer-main__heading"><?php esc_html_e( 'Kontakt', 'weizenkorn' ); ?></h2>
 
 				<div class="footer-main__address-body">
-					<?php if ( $weizenkorn_address ) : ?>
-						<div class="footer-main__address-line"><?php echo wp_kses_post( $weizenkorn_address ); ?></div>
+					<?php if ( get_field( 'general_address', 'option' ) ) : ?>
+						<div class="footer-main__address-line"><?php echo wp_kses_post( get_field( 'general_address', 'option' ) ); ?></div>
 					<?php endif; ?>
 
-					<?php if ( $weizenkorn_phone ) : ?>
+					<?php if ( get_field( 'general_phone', 'option' ) ) : ?>
 						<p class="footer-main__contact-line">
-							<a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $weizenkorn_phone ) ); ?>"><?php echo esc_html( $weizenkorn_phone ); ?></a>
+							<a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', get_field( 'general_phone', 'option' ) ) ); ?>"><?php echo esc_html( get_field( 'general_phone', 'option' ) ); ?></a>
 						</p>
 					<?php endif; ?>
 
-					<?php if ( $weizenkorn_email ) : ?>
+					<?php if ( get_field( 'general_email', 'option' ) ) : ?>
 						<p class="footer-main__contact-line">
-							<a href="mailto:<?php echo esc_attr( $weizenkorn_email ); ?>"><?php echo esc_html( $weizenkorn_email ); ?></a>
+							<a href="mailto:<?php echo esc_attr( get_field( 'general_email', 'option' ) ); ?>"><?php echo esc_html( get_field( 'general_email', 'option' ) ); ?></a>
 						</p>
 					<?php endif; ?>
 				</div>
@@ -69,11 +64,11 @@ $weizenkorn_newsletter_shortcode = get_field( 'general_newsletter_shortcode', 'o
 				?>
 			</nav>
 
-			<?php if ( $weizenkorn_newsletter_shortcode ) : ?>
+			<?php if ( get_field( 'general_newsletter_shortcode', 'option' ) ) : ?>
 				<div class="footer-main__card footer-main__newsletter">
 					<h2 class="footer-main__heading"><?php esc_html_e( 'Newsletter', 'weizenkorn' ); ?></h2>
 					<div class="newsletter-form__wrapper px-4 xl:px-0">
-						<?php echo do_shortcode( $weizenkorn_newsletter_shortcode ); ?>
+						<?php echo do_shortcode( get_field( 'general_newsletter_shortcode', 'option' ) ); ?>
 					</div>
 				</div>
 			<?php endif; ?>
