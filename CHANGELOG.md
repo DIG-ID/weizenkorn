@@ -27,6 +27,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Typography: bumped several base/mobile font sizes (buttons, titles, tagline, overline, body/card/USP labels) and added a dedicated `2xl` step for the hero title/tagline/body and section titles, between the existing `xl` value and the largest breakpoint.
 - Footer (mobile): flattened text size raised from 12px to 14px to match the wider typography bump above.
 
+### Added (in progress)
+- Services section scaffolding: empty page templates for the new hierarchy (Services overview → Schreinerei/Kreativatelier/Fiduciary services → Schreinerei's 7 child pages), ready to receive their sections.
+
 ## [1.3.5] — 2026-07-28
 
 ### Changed
