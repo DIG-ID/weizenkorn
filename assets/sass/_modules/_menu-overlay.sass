@@ -66,7 +66,10 @@ body.menu-open
   // proportion as before) — 2:2:2:3 sums to 9, and 3/9 = 4/12.
   &__grid
     @apply items-stretch flex-1 min-h-0 overflow-y-auto pb-16 xl:pb-[clamp(24px,100vh_-_886px,64px)]
-    @apply xl:gap-x-5 xl:gap-y-[clamp(40px,100vh_-_815px,135px)]
+    // Row gap below xl: .theme-grid only carries the column gutter, so the
+    // 20px between the stacked <nav> boxes on mobile is declared here. Tablet
+    // puts the 3 columns on a single row, so it is only mobile that uses it.
+    @apply gap-y-5 xl:gap-x-5 xl:gap-y-[clamp(40px,100vh_-_815px,135px)]
     @apply xl:grid-cols-[repeat(3,minmax(0,2fr))_minmax(0,3fr)]
 
   // Desktop (xl): <nav> and its root <ul> (wp_nav_menu, container=false)
