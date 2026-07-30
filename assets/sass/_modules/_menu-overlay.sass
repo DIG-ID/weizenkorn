@@ -148,6 +148,14 @@ body.menu-open
 .menu-overlay__group-arrow
   @apply hidden
 
+// Same reasoning as .menu-overlay__group-arrow above: the "Übersicht" link
+// (assets/js/menu-overlay.js — repurposes the heading's own destination as
+// the sub-menu's first entry, since the heading itself becomes the accordion
+// toggle on mobile) is only meaningful there. Desktop/tablet don't intercept
+// the heading click, so its destination is already reachable directly.
+.menu-overlay__group-overview
+  @apply hidden
+
 // Mobile (<768px) accordion — Figma "Menu_mobile_tab open". Groups render as
 // bordered red boxes; groups with 2+ links (.menu-overlay__group--accordion,
 // set by assets/js/menu-overlay.js — it reads the real sub-menu child count,
@@ -193,6 +201,9 @@ body.menu-open
 
   .menu-overlay__group-arrow
     @apply flex items-center justify-center w-6 h-6 shrink-0 text-brand-red transition-transform duration-300 ease-in-out
+
+  .menu-overlay__group-overview
+    @apply block
 
   .menu-overlay__group--accordion > a[aria-expanded="true"] .menu-overlay__group-arrow
     @apply rotate-90
