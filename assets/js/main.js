@@ -6,7 +6,7 @@ import './gsap.js';
 // =============================================================================
 // Optional libraries — uncomment as needed per project
 // =============================================================================
-import { initGastronomySlider } from './swiper.js';
+import { initGastronomySlider, initQuoteSlider } from './swiper.js';
 // import './fancybox.js';
 
 // =============================================================================
@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMenuOverlay();
   initLanguageSwitcher();
   initGastronomySlider();
+  initQuoteSlider();
   initStickyCta();
   initHeroFit();
 

@@ -49,9 +49,30 @@ get_template_part(
 		'prefix'  => 'products_archive_',
 	)
 );
-get_template_part( 'template-parts/modules/quote-slider' );
-get_template_part( 'template-parts/archives/product/order-form' );
-get_template_part( 'template-parts/modules/cta-form' );
+get_template_part(
+	'template-parts/modules/quote-slider',
+	null,
+	array(
+		'post_id' => 'option',
+		'prefix'  => 'products_archive_',
+	)
+);
+get_template_part(
+	'template-parts/archives/product/order-form',
+	null,
+	array(
+		'post_id' => 'option',
+		'prefix'  => 'products_archive_',
+	)
+);
+get_template_part(
+	'template-parts/modules/cta-form',
+	null,
+	array(
+		'post_id' => 'option',
+		'prefix'  => 'products_archive_',
+	)
+);
 
 do_action( 'after_main_content' );
 

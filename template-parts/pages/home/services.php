@@ -28,7 +28,7 @@
 
 				<?php if ( have_rows( 'items' ) ) : ?>
 					<div class="theme-grid">
-						<div class="theme-grid section-services__grid col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-10 mt-8 md:mt-14 xl:mt-24">
+						<div class="theme-grid section-services__grid col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-10 mt-8 md:mt-14 xl:mt-24 gap-8 md:gap-5">
 							<?php
 							while ( have_rows( 'items' ) ) :
 								the_row();

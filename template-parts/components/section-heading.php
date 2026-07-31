@@ -95,7 +95,7 @@ if ( ! $st_title && ! $st_subtitle && ! $st_left && ! $st_right && ! $st_image )
 				<?php endif; ?>
 
 				<?php if ( $btn_primary || $btn_secondary ) : ?>
-					<div class="section-heading__buttons">
+					<div class="section-heading__buttons mb-8">
 
 						<?php
 						if ( $btn_primary ) {

@@ -15,7 +15,7 @@ if ( ! defined( 'WEIZENKORN_FONT_PROVIDER' ) ) {
 	define( 'WEIZENKORN_FONT_PROVIDER', 'google' );
 }
 if ( ! defined( 'WEIZENKORN_GOOGLE_FONTS_URL' ) ) {
-	define( 'WEIZENKORN_GOOGLE_FONTS_URL', 'https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400&display=swap' );
+	define( 'WEIZENKORN_GOOGLE_FONTS_URL', 'https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;0,900;1,300;1,400&display=swap' );
 }
 if ( ! defined( 'WEIZENKORN_ADOBE_FONTS_ID' ) ) {
 	define( 'WEIZENKORN_ADOBE_FONTS_ID', '' ); // Typekit kit ID, e.g. 'abc1234'.
