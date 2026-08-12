@@ -1,0 +1,245 @@
+// =============================================================================
+// Order form — template-parts/archives/product/order-form.php
+// Figma "Sie möchten bestellen?" — desktop, tablet and mobile confirmed 2026-08-11.
+//
+// The section body lives in a single .theme-grid item on columns 2–11 (see the
+// template), and the card rows divide that span:
+//   desktop  reseller cards halves (746px each = 5 + 5 columns); range cards
+//            thirds with a 16px gap → 493.8px, the design's 493px.
+//   tablet   everything is one column, full width, 24px apart.
+//   mobile   the same single column, 16px apart, with type stepped to 14/22.
+//
+// Spacing between a card's blocks is a gap, not margins, because the range cards
+// subgrid at xl: the row gap then comes from .order-form__cards and every card's
+// blocks line up on the same rows however long its title runs. Margins would sit
+// inside the rows and every card would need identical ones to stay aligned.
+//
+// The sign-up card holds a Contact Form 7 form. Paste this as its template — the
+// controls use the shared .form-field classes from _components/_form-fields.sass:
+//
+//   <div class="order-form__fields">
+//     <label class="form-label"><span class="form-label-text">Name</span>
+//       [text* your-name autocomplete:name class:form-field placeholder "Name"]</label>
+//     <label class="form-label"><span class="form-label-text">Email</span>
+//       [email* your-email autocomplete:email class:form-field placeholder "Email"]</label>
+//   </div>
+//   <label class="form-label"><span class="form-label-text">Thema</span>
+//     [select* your-topic first_as_label class:form-field class:form-field--select "Thema auswählen" "Kerzen" "Holzspielwaren" "Living Collection"]</label>
+//   <label class="form-label"><span class="form-label-text">Bemerkung</span>
+//     [textarea your-message class:form-field class:order-form__message placeholder "Bemerkung"]</label>
+//   <div class="order-form__actions">[submit class:order-form__submit "Senden"]</div>
+//
+// Only classes declared in the theme's SASS may be used there: Tailwind never sees
+// the CF7 template, which lives in the database.
+// =============================================================================
+
+.order-form
+
+  // 24px between blocks at tablet — the rhythm the design uses for the whole stack
+  // — and 32px at desktop. The first block relies on the section-heading's own
+  // bottom margin instead of adding to it.
+  &__block
+    @apply mt-4 first:mt-0 md:mt-6 xl:mt-8
+
+  // Type set here rather than with the shared .overline class, so the section owns
+  // its scale: 15/30 uppercase at tablet, 20/30 at desktop.
+  &__overline
+    @apply font-primary font-normal uppercase tracking-[0.5px]
+    @apply text-[14px] leading-[15px] md:text-[15px] md:leading-[30px] xl:text-[20px]
+    @apply mb-4 md:mb-6 xl:mb-8
+
+  // -- Cards -------------------------------------------------------------------
+  // Padding per breakpoint, measured from Figma: 24/30 on mobile, 32/44 at tablet
+  // where a card spans the whole container, and 24 all round at desktop where three
+  // cards share the row.
+  //
+  // The gap spaces the card's own blocks — header, stockists, partners — so no block
+  // carries a margin. At xl the range cards become subgrids and take their row gap
+  // from .order-form__cards instead, which is what keeps the three cards aligned.
+  // From tablet up all three cards share the same padding and inner gap. On mobile
+  // they do not: Figma gives the reseller card 74px of total height, which only works
+  // with ~12px of vertical padding and an 8px gap, while a range card gets 24/30 and
+  // 30px. So the mobile values live on the variants.
+  &__card
+    @apply border border-brand-dark bg-white
+    @apply flex flex-col
+    @apply md:gap-11 md:px-8 md:py-11 xl:gap-10 xl:p-6
+
+  &__card-title
+    @apply title-card text-brand-dark
+
+  // Title and intro are 8px apart and travel together, so a card without an intro
+  // still lines up with one that has it.
+  &__card-header
+    @apply flex flex-col gap-2
+
+    @media (min-width: 1280px)
+      grid-row: 1
+
+  &__card-intro
+    @apply body-text text-brand-dark
+
+  // Reseller cards: stacked at tablet, halves at desktop with the grid's own gutter.
+  &__row
+    @apply grid grid-cols-1 gap-6 xl:grid-cols-2 xl:gap-5
+
+  // Range cards: stacked at tablet, thirds at desktop. The 16px column gap is the
+  // design's, not the grid gutter: (1513.33 - 32) / 3 = 493.8px per card.
+  //
+  // The three rows are declared here and each card subgrids onto them, so the header,
+  // the stockists block and the partners block all start on the same line across the
+  // three cards. The 40px row gap is also what separates those blocks inside every
+  // card. Without subgrid support the cards keep their own heights — the layout
+  // degrades to what it was, nothing breaks.
+  &__cards
+    @apply grid grid-cols-1 gap-6 xl:grid-cols-3 xl:gap-x-4 xl:gap-y-10
+
+    @media (min-width: 1280px)
+      grid-template-rows: auto auto auto
+
+  &__card--reseller,
+  &__card--form
+    @apply xl:min-h-[410px]
+
+  &__card--reseller
+    @apply gap-2 px-4 py-3
+
+  &__card--form
+    @apply gap-8 px-5 py-6
+
+  &__card--range
+    @apply gap-[30px] px-6 py-[30px] xl:min-h-[530px]
+
+    @media (min-width: 1280px)
+      display: grid
+      grid-template-rows: subgrid
+      grid-row: span 3
+
+  // Pinned rather than auto-placed: a card missing one of the blocks would otherwise
+  // pull the next one up a row and break the alignment with its neighbours.
+  &__group--stockists
+    @media (min-width: 1280px)
+      grid-row: 2
+
+  &__group--partners
+    @media (min-width: 1280px)
+      grid-row: 3
+
+  // -- Card content ------------------------------------------------------------
+  // 8px between a group's heading and its items; the partner links add their own
+  // 12px between each other further down.
+  &__group
+    @apply flex flex-col gap-2
+
+  &__group-title
+    @apply font-primary font-bold tracking-[0.5px] text-brand-dark
+    @apply text-[14px] leading-[22px] md:text-[20px] md:leading-[30px]
+
+  &__list
+    @apply list-disc list-outside pl-5 m-0
+    @apply body-text text-brand-dark
+    @apply flex flex-col gap-0 md:gap-2
+
+  // A linked item is a full-width row so its arrow reaches the card's right edge,
+  // like the partner links below. The bullet stays outside it.
+  &__list-item &__link
+    @apply w-full
+
+  // Link rows: label left, red arrow hard right. The icon inherits the arrow from
+  // weizenkorn_the_svg_icon(), which is stroke="currentColor".
+  &__link
+    @apply flex items-center justify-between gap-4
+    @apply body-text text-brand-dark no-underline
+    @apply transition-colors duration-300
+
+    &:hover,
+    &:focus-visible
+      @apply text-brand-red
+
+  // The arrow is drawn at 24x19 by weizenkorn_the_svg_icon(); the design uses a
+  // smaller 16x12 one on mobile, so the SVG is scaled rather than a second icon added
+  // to the helper.
+  &__link-icon
+    @apply shrink-0 text-brand-red
+
+    svg
+      @apply w-4 h-3 md:w-6 md:h-[19px]
+
+  // 12px between consecutive partner links. The adjacent-sibling selector means the
+  // first one keeps only the group's own gap, so this never doubles up with it.
+  &__group--partners &__link + &__link
+    @apply mt-5 md:mt-3
+
+  // The design steps body copy in this section to 20/30 from tablet up, one size
+  // ahead of the shared .body-text scale.
+  &__card-intro,
+  &__list,
+  &__link
+    @apply text-[14px] leading-[22px] md:text-[20px] md:leading-[30px]
+
+  // -- Contact Form 7 form in the sign-up card ---------------------------------
+  .wpcf7
+    @apply m-0
+
+  // 10px between the card title and the fields, and between the fields themselves.
+  // The Senden row keeps the card's own 44px distance, since it is a separate block.
+  .wpcf7-form
+    @apply flex flex-col gap-6 md:gap-[10px]
+
+  // Name and Email share a row from md, 20px apart; everything else is full width.
+  &__fields
+    @apply grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-5
+
+  // Field heights are fixed by the design: 60px for every single-line control at
+  // desktop, 104px for the message box from tablet up. Set directly rather than
+  // derived from padding — box-sizing is border-box, so a padding-based height comes
+  // out 2px over once the 1px border counts. :not(textarea) keeps the 60px off the
+  // message box, which carries the class too.
+  // 14/22 on mobile: with the shared field's 12px padding and 1px border that comes
+  // to exactly the 48px of the design, so no height is needed there. The message box
+  // is 48px too on mobile — it only grows to 104px from tablet.
+  .form-field
+    @apply text-[14px] leading-[22px] md:text-[20px] md:leading-[30px]
+
+  .form-field:not(textarea)
+    @apply xl:h-[60px]
+
+  &__message
+    @apply resize-none md:h-[104px]
+
+  &__actions
+    @apply relative flex justify-end
+
+  // Dark bold text with a red arrow rather than the CTA form's white button — this
+  // one sits on white. The right padding clears the arrow: 24px icon + 24px gap.
+  &__submit
+    @apply bg-transparent border-0 rounded-none cursor-pointer
+    @apply font-primary font-bold tracking-[0.5px] text-brand-dark
+    @apply text-[14px] leading-[22px] md:text-[20px] md:leading-[30px]
+    @apply py-2 pl-0 pr-9 md:pr-12
+    @apply bg-no-repeat
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='19' viewBox='0 0 23.7301 18.632' fill='none'%3E%3Cpath d='M0 9.31602H22M10 17.816L22 9.31602L10 0.816024' stroke='%23E30613' stroke-width='2'/%3E%3C/svg%3E")
+    background-position: right center
+
+    // Without a size the data URI renders at its natural 24x19 on every screen; the
+    // design uses a smaller arrow on mobile.
+    background-size: 16px 13px
+
+    @media (min-width: 768px)
+      background-size: 24px 19px
+
+    &:hover,
+    &:focus-visible
+      @apply text-brand-red outline-none
+
+  // Same reason as the CTA form: CF7's JS injects the spinner as the submit's next
+  // sibling, and in flow it would reserve 24px and shift the button.
+  .wpcf7-spinner
+    @apply absolute right-full top-1/2 -translate-y-1/2 mr-4 my-0
+
+  .wpcf7-not-valid-tip
+    @apply font-primary text-[14px] leading-[20px] tracking-[0.5px] text-brand-red
+
+  .wpcf7 form .wpcf7-response-output
+    @apply font-primary text-[14px] leading-[20px] tracking-[0.5px] text-brand-dark
+    @apply mt-0 mx-0 border border-brand-dark p-3

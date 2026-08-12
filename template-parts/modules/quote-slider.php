@@ -24,10 +24,10 @@
  *     reserved for the image: a slide without one starts with its card at the
  *     top, and a slide with one pushes the card down below the image.
  *
- * Navigation is pagination bullets below the slider up to tablet, and arrows in
- * columns 2 and 11 from desktop. Swiper runs with autoHeight up to tablet, so the
- * viewport ends where the active card ends and the bullets follow it; from xl it
- * is off, so the constant height keeps the arrows from moving between slides.
+ * Navigation is pagination bullets below the slider at every breakpoint, plus
+ * arrows in columns 2 and 11 from desktop. Swiper runs with autoHeight up to
+ * tablet, so the viewport ends where the active card ends and the bullets follow
+ * it; from xl it is off, so the constant height keeps the arrows from moving.
  *
  * With a single quote there is nothing to navigate: Swiper is not initialised at
  * all (so the card cannot be swiped or dragged) and neither the bullets nor the
@@ -183,10 +183,10 @@ $quote_is_slider = count( (array) get_field( $quote_prefix . 'quote_slider_items
 
 		<?php
 		/*
-		* Two navigations, one per breakpoint range, both wired to the same Swiper:
-		* bullets below xl and arrows from xl. Each is hidden with CSS rather than
-		* rendered conditionally, so Swiper keeps both in sync and neither needs to
-		* be rebuilt when the viewport crosses the breakpoint.
+		* Two controls on the same Swiper: bullets at every breakpoint, plus arrows
+		* from xl. The arrows are hidden with CSS rather than rendered conditionally,
+		* so Swiper keeps them in sync and nothing needs rebuilding when the viewport
+		* crosses the breakpoint.
 		*
 		* Bullets: same look as the gastronomy slider on the home page. The element
 		* lives outside .swiper and is handed to Swiper explicitly, so Swiper's
@@ -194,7 +194,7 @@ $quote_is_slider = count( (array) get_field( $quote_prefix . 'quote_slider_items
 		* margin is an interim value — no Figma frame for the bullets yet.
 		*/
 		?>
-	<div class="theme-container xl:hidden">
+	<div class="theme-container">
 		<div class="quote-slider__pagination swiper-pagination js-quote-pagination"></div>
 	</div>
 

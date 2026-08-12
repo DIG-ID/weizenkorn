@@ -8,7 +8,8 @@
  *   title_heading      string  h1..h6 (heading tag; default h2)
  *   subtitle           string  eyebrow / overline
  *   title              string  main title (may contain <br>; new_lines = br)
- *   description        string  'left' | 'right' | 'both' (which columns show)
+ *   description        string  'left' | 'right' | 'both' — which description fields
+ *                              show. Each renders in the column its name says.
  *   desciption_left    string  wysiwyg — left column   [sic: ACF field name]
  *   description_right  string  wysiwyg — right column
  *   buttons            array   { prmary: link, secondary: link }  [sic]
@@ -37,6 +38,20 @@ $st_tag       = in_array( $st_tag, $allowed_tags, true ) ? $st_tag : 'h2';
 
 $show_left  = in_array( $st_layout, array( 'left', 'both' ), true );
 $show_right = in_array( $st_layout, array( 'right', 'both' ), true );
+
+/*
+ * The "description" choice picks which of the two description fields shows, and each
+ * one renders in the column its name says: the left one under the subtitle and
+ * buttons, the right one opposite. Before this, both landed in the right-hand column,
+ * so choosing "left" gave you the left field's text on the right of the layout.
+ *
+ * The left column widens when it carries a description — 5 of 12 at desktop, the
+ * design's 747px, and the full width at tablet where 2 of 6 columns is too narrow for
+ * a paragraph. Without one it keeps the narrow span the subtitle and buttons need.
+ */
+$st_intro_span = ( $show_left && $st_left )
+	? 'md:col-span-6 xl:col-start-2 xl:col-span-5'
+	: 'md:col-span-2 xl:col-start-2 xl:col-span-4';
 
 $btn_primary   = ! empty( $st_buttons['prmary'] ) ? $st_buttons['prmary'] : null;
 $btn_secondary = ! empty( $st_buttons['secondary'] ) ? $st_buttons['secondary'] : null;
@@ -89,7 +104,7 @@ if ( ! $st_title && ! $st_subtitle && ! $st_left && ! $st_right && ! $st_image )
 	<?php if ( $st_has_row ) : ?>
 		<div class="section-heading__row theme-grid">
 
-			<div class="section-heading__intro col-span-2 md:col-span-2 xl:col-start-2 xl:col-span-4">
+			<div class="section-heading__intro col-span-2 <?php echo esc_attr( $st_intro_span ); ?>">
 				<?php if ( $st_subtitle ) : ?>
 					<p class="section-heading__subtitle mb-6 xl:mb-8 uppercase"><?php echo esc_html( $st_subtitle ); ?></p>
 				<?php endif; ?>
@@ -116,16 +131,15 @@ if ( ! $st_title && ! $st_subtitle && ! $st_left && ! $st_right && ! $st_image )
 						?>
 					</div>
 				<?php endif; ?>
+				<?php // The left description belongs to the left column, under the subtitle and buttons. ?>
+				<?php if ( $show_left && $st_left ) : ?>
+					<div class="body-text section-heading__desc-text"><?php echo wp_kses_post( $st_left ); ?></div>
+				<?php endif; ?>
 			</div>
 
-			<?php if ( ( $show_left && $st_left ) || ( $show_right && $st_right ) ) : ?>
+			<?php if ( $show_right && $st_right ) : ?>
 				<div class="section-heading__desc col-span-2 md:col-start-4 md:col-span-3 xl:col-start-7 xl:col-span-5">
-					<?php if ( $show_left && $st_left ) : ?>
-						<div class="body-text section-heading__desc-text"><?php echo wp_kses_post( $st_left ); ?></div>
-					<?php endif; ?>
-					<?php if ( $show_right && $st_right ) : ?>
-						<div class="body-text section-heading__desc-text"><?php echo wp_kses_post( $st_right ); ?></div>
-					<?php endif; ?>
+					<div class="body-text section-heading__desc-text"><?php echo wp_kses_post( $st_right ); ?></div>
 				</div>
 			<?php endif; ?>
 

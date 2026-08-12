@@ -11,16 +11,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
-## [1.4.0] — 2026-07-30
+## [1.4.0] — 2026-08-12
 
 ### Added
 - Products archive template (`archive-products.php`) for the `products` post type, composed of the shared hero, USP band, quote slider and form sections.
 - `hero-section` module: the standard page header (image, bordered title/intro box, optional separator), shared by every page and archive except the home page.
+- `cta-form` module: a red band with a heading and a Contact Form 7 form, for the pages that end on a contact prompt. The form is chosen once for the whole site in the theme options, and any single page or archive can point at a different one.
+- Products archive: "Sie möchten bestellen?" ordering section — reseller cards with a sign-up form, plus one card per product range listing where to buy it in store and online.
+- Products archive: product-range section, showing the same cards as the home page with its own copy.
+- `range-grid` component: the product-range card flow, now shared by the home page and the products archive instead of being written twice.
+- Shared styling for Contact Form 7 controls, so every form on the site uses the same fields, selects and buttons.
 
 ### Changed
 - `hero-section` and `usp-band` take an ACF read context and a field-name prefix through `$args`, so archives can keep their content in the theme options.
 - Layout grid gutter is now horizontal only — stacked columns no longer inherit an unintended 20px vertical gap.
 - Footer and USP band read their ACF fields inline at the point of use.
+- `section-heading`: the optional description now renders in the left column when the field is set to the left, instead of always going to the right.
+- Quote slider: pagination bullets now show at every breakpoint, alongside the desktop arrows.
 
 ### Fixed
 - Hero separator logo reads `hero_section_seperator_logo`, matching the ACF field group.

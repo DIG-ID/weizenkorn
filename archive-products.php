@@ -11,17 +11,13 @@
  * paragraph, so the separate intro block listed in the older analysis is gone.
  *
  * An archive has no post context, so its page-level fields live in the theme
- * options under the `products_archive_` prefix, and the shared hero module is
- * told to read from there. The main query — the products themselves — is
- * consumed inside archives/product/ranges: every other section must stay OUTSIDE
- * the loop, or each one would render once per product.
+ * options under the `products_archive_` prefix, and every section is told to read
+ * from there through $args.
  *
- * STATUS — still to be built (the calls below output nothing until the template
- * parts exist, so this file is safe to ship meanwhile):
- *   pending: archives/product/ranges, archives/product/order-form,
- *            modules/quote-slider, modules/cta-form
- *   pending: the `product` post type. Until it is registered with `has_archive`
- *            (or WooCommerce is activated) WordPress never loads this template.
+ * Nothing here touches the main query. The product ranges are an ACF repeater in
+ * the options, not the `products` posts, because the page presents five editorial
+ * ranges rather than a listing — so the template is a straight sequence of
+ * sections and there is no loop for a section to accidentally end up inside.
  *
  * @package weizenkorn
  * @subpackage Template
@@ -40,7 +36,14 @@ get_template_part(
 		'prefix'  => 'products_archive_',
 	)
 );
-get_template_part( 'template-parts/archives/product/ranges' );
+get_template_part(
+	'template-parts/archives/product/ranges',
+	null,
+	array(
+		'post_id' => 'option',
+		'prefix'  => 'products_archive_',
+	)
+);
 get_template_part(
 	'template-parts/modules/usp-band',
 	null,

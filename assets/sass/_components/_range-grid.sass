@@ -1,0 +1,52 @@
+// =============================================================================
+// Range grid — template-parts/components/range-grid.php
+//
+// The product-range card flow, shared by the home page's Products section and the
+// products archive's Ranges section. It was written for the home page first and
+// lived in _pages/_home.sass; moved here when the archive needed the same layout.
+// Card styling itself is .card-range in _card.sass — this file is only the flow.
+// =============================================================================
+
+// Bespoke range-card flow. The page grid stays 12-col (this element is an inset
+// grid item); only the internal card layout is custom flex:
+//   mobile  → 1-up
+//   tablet  → 2-up
+//   desktop → row 1 = three 1/3 cards · row 2 = 40% / 60% (5-card design)
+// Gaps: mobile 56px · tablet 32/20 · desktop 56/25. nth-child(4/5) assume 5 ranges.
+.range-grid
+  display: flex
+  flex-wrap: wrap
+  gap: 32px                 // mobile: 32px between stacked items
+  > *
+    flex-grow: 0
+    flex-shrink: 0
+    flex-basis: 100%
+    min-width: 0
+  @media (min-width: 768px)
+    gap: 32px 20px          // tablet: row 32 · col 20
+    > *
+      flex-basis: calc((100% - 20px) / 2)
+    > :nth-child(5)         // lone last card spans the full row (2-up leftover)
+      flex-basis: 100%
+      .card__text           // cap the text so it doesn't stretch the full width
+        max-width: 650px
+  @media (min-width: 1280px)
+    gap: 56px 25px          // desktop: row 56 · col 25
+    > *
+      flex-basis: calc((100% - 50px) / 3)
+    > :nth-child(4)
+      flex-basis: calc(40% - 12.5px)
+    > :nth-child(5)
+      flex-basis: calc(60% - 12.5px)
+  // Fixed media height keeps rows aligned (row 2 cards differ in width).
+  // Desktop 400px from Figma; tablet/mobile (~) pending a Figma check.
+  .card__media
+    height: 220px
+    @media (min-width: 768px)
+      height: 300px
+    @media (min-width: 1280px)
+      height: 400px
+    img
+      width: 100%
+      height: 100%
+      object-fit: cover
