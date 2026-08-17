@@ -61,7 +61,7 @@ get_template_part(
 	)
 );
 get_template_part(
-	'template-parts/archives/product/order-form',
+	'template-parts/modules/order-form',
 	null,
 	array(
 		'post_id' => 'option',

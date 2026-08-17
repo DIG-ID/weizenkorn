@@ -5,20 +5,29 @@
  * Two halves under one heading: what resellers do, and where end customers can
  * buy each product range.
  *
- * Layout — Figma, desktop confirmed 2026-08-11 (canvas 1920 / container 1820):
+ * Layout — Figma, archive desktop confirmed 2026-08-11 (canvas 1920 / container
+ * 1820). The two halves are direct items of the page grid, so their columns are the
+ * grid's own rather than a span subdivided inside a cell.
  *
- * The whole body sits in ONE grid item on the container's inset columns 2–11, the
- * same span the section-heading puts the title on. Everything inside then divides
- * that span with plain grids, so no child needs its own column placement:
+ *   archive (default variant) — the halves stacked, each across the inset columns
+ *              2–11. The section-heading's title now runs 2–12, so the two no longer
+ *              share a right edge; the frames put the content on 2–11 regardless.
+ *              resellers  overline, then two 410px cards side by side from xl —
+ *                         halves of the 10-column span, the 5 + 5 of the design.
+ *              customers  overline, then the range cards in thirds of the span from
+ *                         xl. Figma has them 493px with a 17px gap; thirds with the
+ *                         grid's own 20px gutter give 491px, so they land on the grid.
+ *   range ('split' variant) — the two halves side by side, one card each: the
+ *              reseller pair stacks and the customer row is a single card. Not
+ *              halves, though — customers take columns 2–5 and resellers 7–11, with
+ *              column 6 empty between them, measured off the Kerzen frame's grid.
+ *   tablet / mobile — confirmed 2026-08-11, and the same in both variants: every card
+ *              row becomes a single column at the container's full width, 24px apart
+ *              at tablet and 16px at mobile, with the type stepped down to 14/22.
  *
- *   resellers  overline, then two 410px cards side by side from xl — halves of the
- *              10-column span, which is the 5 + 5 of the design.
- *   customers  overline, then the range cards: thirds of the span from xl. Figma has
- *              them 493px with a 17px gap; thirds with the grid's own 20px gutter
- *              give 491px, so they land on the grid.
- *   tablet / mobile — confirmed 2026-08-11. Every card row becomes a single column
- *              at the container's full width, 24px apart at tablet and 16px at
- *              mobile, with the type stepped down to 14/22.
+ * In the split variant the visual order is the reverse of the source order, done with
+ * column placement rather than by moving the markup — see _modules/_order-form.sass
+ * for why, and for what it costs.
  *
  * Card heights are min-heights: the content is editorial and the ranges do not all
  * have the same number of stockists.
@@ -48,11 +57,11 @@
  *     → links       (repeater) → link (link)
  *
  * Usage:
- *   get_template_part( 'template-parts/archives/product/order-form' );
+ *   get_template_part( 'template-parts/modules/order-form' );
  *
  * On the archive there is no post context, so pass the options store and prefix:
  *   get_template_part(
- *       'template-parts/archives/product/order-form',
+ *       'template-parts/modules/order-form',
  *       null,
  *       array(
  *           'post_id' => 'option',
@@ -67,7 +76,7 @@
  * }
  *
  * @package weizenkorn
- * @subpackage Section
+ * @subpackage Module
  * @since 1.5.0
  */
 
@@ -77,6 +86,17 @@ $of_ctx = ( ! empty( $args['post_id'] ) ) ? $args['post_id'] : get_the_ID();
 // Field-name prefix, so the section can serve a page or an archive.
 $of_prefix = ! empty( $args['prefix'] ) ? $args['prefix'] : '';
 
+/*
+ * Two arrangements of the same content, because the frames differ:
+ *
+ *   default  the archive — the two halves stacked, each across the inset columns
+ *            2–11: the reseller row of two cards, then the range cards in thirds.
+ *   split    a product range — the halves side by side on columns 2–6 and 7–11,
+ *            customers on the left. One card per half, so the reseller pair stacks
+ *            and the customer row is a single card rather than a third.
+ */
+$of_split = ( ! empty( $args['variant'] ) && 'split' === $args['variant'] );
+
 // Both halves are optional, but with neither there is no section.
 if ( ! get_field( $of_prefix . 'order_form_reseller_title', $of_ctx )
 	&& ! get_field( $of_prefix . 'order_form_shortcode', $of_ctx )
@@ -84,7 +104,7 @@ if ( ! get_field( $of_prefix . 'order_form_reseller_title', $of_ctx )
 	return;
 }
 ?>
-<section class="order-form mt-20 mb-28 md:mb-32 md:mt-32 xl:mb-48 xl:mt-48">
+<section class="order-form<?php echo $of_split ? ' order-form--split' : ''; ?> mt-20 mb-28 md:mb-32 md:mt-32 xl:mb-48 xl:mt-48">
 	<div class="theme-container">
 
 		<?php
@@ -109,11 +129,10 @@ if ( ! get_field( $of_prefix . 'order_form_reseller_title', $of_ctx )
 		 * column placement of their own and always line up with the heading.
 		 */
 		?>
-		<div class="theme-grid">
-			<div class="order-form__inner col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-10">
+		<div class="order-form__grid theme-grid">
 
 				<?php if ( get_field( $of_prefix . 'order_form_reseller_title', $of_ctx ) || get_field( $of_prefix . 'order_form_shortcode', $of_ctx ) ) : ?>
-					<div class="order-form__block">
+					<div class="order-form__block order-form__block--reseller">
 
 						<?php if ( get_field( $of_prefix . 'order_form_reseller_overline', $of_ctx ) ) : ?>
 							<p class="order-form__overline text-brand-dark">
@@ -155,7 +174,7 @@ if ( ! get_field( $of_prefix . 'order_form_reseller_title', $of_ctx )
 				<?php endif; ?>
 
 				<?php if ( have_rows( $of_prefix . 'order_form_cards', $of_ctx ) ) : ?>
-					<div class="order-form__block">
+					<div class="order-form__block order-form__block--customers">
 
 						<?php if ( get_field( $of_prefix . 'order_form_customer_overline', $of_ctx ) ) : ?>
 							<p class="order-form__overline text-brand-dark">
@@ -258,9 +277,8 @@ if ( ! get_field( $of_prefix . 'order_form_reseller_title', $of_ctx )
 							?>
 						</div>
 					</div>
-				<?php endif; ?>
+			<?php endif; ?>
 
-			</div>
 		</div>
 	</div>
 </section>
