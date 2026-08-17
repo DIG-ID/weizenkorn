@@ -177,53 +177,54 @@ $quote_is_slider = count( (array) get_field( $quote_prefix . 'quote_slider_items
 			endwhile;
 			?>
 		</div>
+
+		<?php if ( $quote_is_slider ) : ?>
+			<?php
+			/*
+			 * Inside .swiper and a sibling of .swiper-wrapper, not a layer over the
+			 * whole section. Swiper only manages the wrapper and its slides, so this is
+			 * left where it is — and .swiper is already position: relative, which makes
+			 * inset-0 the slider's own box. Over the section it was the slider plus the
+			 * bullets below it, so items-center put the arrows well under the card.
+			 *
+			 * The container + grid inside it is what places the arrows on columns 2 and
+			 * 11; no grid is ever nested inside a slide. Clicks pass through everywhere
+			 * except on the buttons themselves.
+			 */
+			?>
+			<div class="quote-slider__nav-layer absolute inset-0 z-10 hidden pointer-events-none xl:block">
+				<div class="theme-container h-full">
+					<div class="theme-grid h-full items-center">
+						<button type="button" class="quote-slider__nav quote-slider__nav--prev js-quote-prev pointer-events-auto col-start-2 row-start-1 justify-self-center" aria-label="<?php esc_attr_e( 'Previous quote', 'weizenkorn' ); ?>">
+							<?php weizenkorn_the_svg_icon( 'arrow-right' ); ?>
+						</button>
+						<button type="button" class="quote-slider__nav quote-slider__nav--next js-quote-next pointer-events-auto col-start-11 row-start-1 justify-self-center" aria-label="<?php esc_attr_e( 'Next quote', 'weizenkorn' ); ?>">
+							<?php weizenkorn_the_svg_icon( 'arrow-right' ); ?>
+						</button>
+					</div>
+				</div>
+			</div>
+		<?php endif; ?>
 	</div>
 
 	<?php if ( $quote_is_slider ) : ?>
 
 		<?php
 		/*
-		* Two controls on the same Swiper: bullets at every breakpoint, plus arrows
-		* from xl. The arrows are hidden with CSS rather than rendered conditionally,
-		* so Swiper keeps them in sync and nothing needs rebuilding when the viewport
-		* crosses the breakpoint.
-		*
 		* Bullets: same look as the gastronomy slider on the home page. The element
 		* lives outside .swiper and is handed to Swiper explicitly, so Swiper's
 		* absolute positioning rules for a nested pagination never apply. The top
 		* margin is an interim value — no Figma frame for the bullets yet.
+		*
+		* The arrows are the other control on the same Swiper, rendered above inside
+		* .swiper; they are hidden with CSS below xl rather than left out, so Swiper
+		* keeps them in sync and nothing needs rebuilding at a breakpoint.
 		*/
 		?>
 	<div class="theme-container">
 		<div class="quote-slider__pagination swiper-pagination js-quote-pagination"></div>
 	</div>
 
-		<?php
-		/*
-		* Arrows: desktop only, so they need no breakpoint-specific placement — the
-		* design has them inside the container, centred in columns 2 and 11. Their own
-		* container + grid layer covers the section, so `items-center` lines them up
-		* with the middle of the slider and no grid is ever nested inside the slider.
-		* Clicks pass through the layer everywhere except on the buttons.
-		*
-		* z-10 is required, not cosmetic: Swiper's own stylesheet gives .swiper
-		* `position: relative; z-index: 1`, so without it this layer sits UNDER the
-		* slider. The arrows still show through the empty columns but the slider
-		* swallows every click on them.
-		*/
-		?>
-	<div class="quote-slider__nav-layer absolute inset-0 z-10 hidden pointer-events-none xl:block">
-		<div class="theme-container h-full">
-			<div class="theme-grid h-full items-center">
-				<button type="button" class="quote-slider__nav quote-slider__nav--prev js-quote-prev pointer-events-auto col-start-2 row-start-1 justify-self-center" aria-label="<?php esc_attr_e( 'Previous quote', 'weizenkorn' ); ?>">
-					<?php weizenkorn_the_svg_icon( 'arrow-right' ); ?>
-				</button>
-				<button type="button" class="quote-slider__nav quote-slider__nav--next js-quote-next pointer-events-auto col-start-11 row-start-1 justify-self-center" aria-label="<?php esc_attr_e( 'Next quote', 'weizenkorn' ); ?>">
-					<?php weizenkorn_the_svg_icon( 'arrow-right' ); ?>
-				</button>
-			</div>
-		</div>
-	</div>
 
 	<?php endif; ?>
 

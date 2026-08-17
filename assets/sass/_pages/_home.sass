@@ -63,3 +63,59 @@
 .section-work-training__list
   .btn
     @apply w-full justify-between gap-3
+
+// =============================================================================
+// Services — template-parts/pages/home/services.php
+//
+// The same arrangement as modules/stories-references, and on purpose: three cards per
+// view at desktop on columns 3–10, one per view below. The card itself is .card-story
+// from that module — reused rather than copied, so its styling lives in one place.
+//
+// Two differences from it: no arrows at any breakpoint, and no bullets at desktop,
+// where the three cards fill one view and there is nothing to page through.
+//
+// Placement is one grid-column declaration per item rather than col-start-* plus
+// col-span-*: those are two utilities and the span one compiles to the shorthand,
+// which resets the start.
+// =============================================================================
+
+.section-services
+
+  // Swiper's own stylesheet gives .swiper-slide `height: 100%`, and with the container
+  // having no definite height that resolves to the slide's own content — which also
+  // defeats the flex row's align-items: stretch. Setting it back to auto is what lets
+  // the slides stretch to the tallest, and only then does the card's h-full resolve and
+  // every panel come out the same height.
+  &__viewport
+    grid-column: 1 / span 2
+
+    .swiper-slide
+      @apply h-auto
+
+    @media (min-width: 768px)
+      grid-column: 2 / span 4
+
+    @media (min-width: 1280px)
+      grid-column: 3 / span 8
+
+  // 15px red outlines 30px apart, filled when active — the bullets this project uses
+  // everywhere. `static` undoes Swiper's absolute positioning, since here they are a
+  // block below the slider rather than an overlay on it.
+  //
+  // Swiper spaces its own bullets with margin: 0 4px from a selector more specific than
+  // the m-0 below, so that margin wins and adds 8px to the gap. Zeroing its variable is
+  // the fix.
+  &__pagination
+    @apply static flex items-center justify-center gap-[26px] md:gap-[30px] mt-9 md:mt-14
+    @apply xl:hidden
+    grid-column: 1 / span 2
+    --swiper-pagination-bullet-horizontal-gap: 0px
+
+    @media (min-width: 768px)
+      grid-column: 1 / span 6
+
+    .swiper-pagination-bullet
+      @apply w-[15px] h-[15px] m-0 rounded-full border border-brand-red bg-transparent opacity-100 transition-colors duration-300
+
+    .swiper-pagination-bullet-active
+      @apply bg-brand-red

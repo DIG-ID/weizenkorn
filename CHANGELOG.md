@@ -11,6 +11,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.5.0] — 2026-08-17
+
+### Added
+- Product range pages: a template per range (Kerzen, Holzspielwaren, Living Collection), each composing shared modules in the order its design has them. The range is picked in the post's Template panel, so renaming or translating a range never changes which layout it gets.
+- `single-products.php`: the fallback for a range with no template assigned, so it renders as a product page rather than as a blog article.
+- `product-overview` module: the product-type card grid — an image with the name on a cream bar that opens on hover to reveal a short text and an optional link. Card widths follow the number of cards, so the last row always fills the page grid whether it holds one, two, three or four.
+- `stories-references` module: a slider of story cards, three per view at desktop and one below, with the copy revealed on hover at desktop and always visible on touch.
+- `craft-showcase` module: a heading and two images, the first with a paragraph beneath it.
+- Second ordering form for the range pages, with the page name in the mail subject so one form serves every range.
+
+### Changed
+- The "Sie möchten bestellen?" section is now a shared module with two arrangements: the archive's stacked halves, and the range pages' two columns.
+- Products archive: the range cards now come from the `products` posts themselves instead of a repeater, so the cards and the pages they link to can no longer drift apart.
+- Home services section rebuilt as a slider — three cards at desktop, one per view below — with every card's text box the same height.
+- Section heading: the title now runs to the container's last column and the red rule has equal air above and below it, matching the designs.
+- Quote slider: red arrows, centred on the quote box rather than on the whole section, and bullets spaced as designed.
+
+### Fixed
+- Quote slider arrows could not be clicked at desktop: the slider was painted over the layer holding them.
+- Slider bullets sat 8px further apart than designed, because Contact Form 7's — and Swiper's — own spacing was added to the theme's.
+- Product overview: the copy revealed on hover showed a sliver of its first line while collapsed.
+
 ## [1.4.0] — 2026-08-12
 
 ### Added

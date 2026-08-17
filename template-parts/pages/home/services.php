@@ -1,13 +1,27 @@
 <?php
 /**
  * Home — Services section ("Massgeschneidert für Sie" / DIENSTLEISTUNGEN).
- * Section heading (reusable "Section Title" clone) + grid of service cards.
+ *
+ * A section heading and a slider of service cards: three per view at desktop, one per
+ * view below it.
+ *
+ * Layout — the same arrangement as modules/stories-references, deliberately rebuilt
+ * here rather than shared with it: the two sections read different fields and the
+ * module is in use on the product range pages, so it is left alone. The card is this
+ * section's own `.card-service`: unlike the story card it puts its copy under the
+ * image rather than in an overlay, and shows it always instead of on hover.
+ *
+ *   viewport  columns 3–10 at desktop, 2–5 at tablet, the full width at mobile.
+ *   controls  no arrows anywhere, and no bullets at desktop, where the three cards
+ *             fit one view and there is nothing to page through. Bullets carry the
+ *             navigation at tablet and mobile.
+ *
  *
  * ACF structure (group "services"):
  *   section_title (clone → "Section Title" group; fed to the section-heading
  *                  component — subtitle, title, descriptions and CTA buttons)
  *   items         (repeater) → image (image, ID), title (text),
- *                                   text (textarea), page (link)
+ *                              text (textarea), page (link)
  *
  * @package weizenkorn
  * @subpackage Section
@@ -27,68 +41,95 @@
 				<?php endif; ?>
 
 				<?php if ( have_rows( 'items' ) ) : ?>
-					<div class="theme-grid">
-						<div class="theme-grid section-services__grid col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-10 mt-8 md:mt-14 xl:mt-24 gap-8 md:gap-5">
-							<?php
-							while ( have_rows( 'items' ) ) :
-								the_row();
-								$service_link   = get_sub_field( 'page' );
-								$service_url    = ( is_array( $service_link ) && ! empty( $service_link['url'] ) ) ? $service_link['url'] : '';
-								$service_target = ( is_array( $service_link ) && ! empty( $service_link['target'] ) ) ? $service_link['target'] : '';
-								$service_tag    = $service_url ? 'a' : 'div';
-								?>
-								<div class="col-span-2 md:col-span-2 xl:col-span-4">
+					<?php
+					/*
+					 * How many cards there are has to be known before the render loop
+					 * starts, so the set is walked once to count it. Not with
+					 * get_sub_field(): on a nested repeater that returns the raw meta —
+					 * the row count as a string — so count() answers 1 whatever the
+					 * number of rows, and the bullets never appeared.
+					 *
+					 * Running the loop to the end pops it off ACF's stack, so the render
+					 * loop below starts fresh.
+					 */
+					$service_count = 0;
+
+					while ( have_rows( 'items' ) ) {
+						the_row();
+						++$service_count;
+					}
+					?>
+					<div class="section-services__row theme-grid mt-8 md:mt-14 xl:mt-24">
+						<div class="section-services__viewport">
+							<div class="swiper js-services-slider">
+								<div class="swiper-wrapper">
 									<?php
-									// Card layout differs by breakpoint:
-									// - mobile/tablet: image (fixed height) in flow, cream panel
-									// pulled up over the image (−mt) and extending below it,
-									// always showing the description + "mehr".
-									// - desktop (xl): image fills a fixed-ratio card; the cream
-									// panel is an absolute overlay whose text is collapsed and
-									// reveals on hover (rectangle grows taller).
-									?>
-									<<?php echo esc_html( $service_tag ); ?> class="card-service"<?php echo $service_url ? ' href="' . esc_url( $service_url ) . '"' : ''; ?><?php echo ( '_blank' === $service_target ) ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>>
-										<?php if ( get_sub_field( 'image' ) ) : ?>
-											<?php
-											echo wp_get_attachment_image(
-												get_sub_field( 'image' ),
-												'large',
-												false,
-												array(
-													'class'   => 'card__media',
-													'loading' => 'lazy',
-												)
-											);
-											?>
-										<?php endif; ?>
+									while ( have_rows( 'items' ) ) :
+										the_row();
 
-										<div class="card__panel">
-											<div class="card__text-group">
-												<h3 class="title-card card__title"><?php echo esc_html( get_sub_field( 'title' ) ); ?></h3>
+										$service_link   = get_sub_field( 'page' );
+										$service_url    = ( is_array( $service_link ) && ! empty( $service_link['url'] ) ) ? $service_link['url'] : '';
+										$service_target = ( is_array( $service_link ) && ! empty( $service_link['target'] ) ) ? $service_link['target'] : '';
 
-												<?php if ( get_sub_field( 'text' ) ) : ?>
-													<div class="card__reveal">
-														<div>
-															<div class="body-text card__text pt-2"><?php echo wp_kses_post( get_sub_field( 'text' ) ); ?></div>
-														</div>
-													</div>
+										// A card with a link is the link, so "mehr" inside it is a
+										// span: an <a> inside an <a> is invalid and browsers unnest it.
+										$service_tag = $service_url ? 'a' : 'article';
+										?>
+										<div class="swiper-slide">
+											<<?php echo esc_html( $service_tag ); ?> class="card-service"<?php echo $service_url ? ' href="' . esc_url( $service_url ) . '"' : ''; ?><?php echo ( '_blank' === $service_target ) ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>>
+
+												<?php if ( get_sub_field( 'image' ) ) : ?>
+													<?php
+													echo wp_get_attachment_image(
+														get_sub_field( 'image' ),
+														'large',
+														false,
+														array(
+															'class'   => 'card__media',
+															'loading' => 'lazy',
+														)
+													);
+													?>
 												<?php endif; ?>
-											</div>
 
-											<?php if ( $service_url ) : ?>
-												<div class="card__reveal">
-													<div>
-														<span class="body-text link-inline card__more"><?php echo esc_html__( 'mehr', 'weizenkorn' ); ?></span>
-													</div>
+												<?php
+												/*
+												 * The panel sits under the image, in flow, and its copy is
+												 * always visible — no reveal here. Every panel ends up the
+												 * same height because the slides do: see _card.sass.
+												 */
+												?>
+												<div class="card__panel">
+													<?php if ( get_sub_field( 'title' ) ) : ?>
+														<h3 class="card__title"><?php echo esc_html( get_sub_field( 'title' ) ); ?></h3>
+													<?php endif; ?>
+
+													<?php if ( get_sub_field( 'text' ) ) : ?>
+														<div class="card__text"><?php echo wp_kses_post( get_sub_field( 'text' ) ); ?></div>
+													<?php endif; ?>
+
+													<?php if ( $service_url ) : ?>
+														<span class="card__more"><?php echo esc_html__( 'mehr', 'weizenkorn' ); ?></span>
+													<?php endif; ?>
 												</div>
-											<?php endif; ?>
+											</<?php echo esc_html( $service_tag ); ?>>
 										</div>
-									</<?php echo esc_html( $service_tag ); ?>>
+										<?php
+									endwhile;
+									?>
 								</div>
-								<?php
-							endwhile;
-							?>
+							</div>
 						</div>
+
+						<?php if ( $service_count > 1 ) : ?>
+							<?php
+							/*
+							 * A grid item in the row below the slider, so it spans the whole
+							 * container and centres on it. Hidden from xl in the stylesheet.
+							 */
+							?>
+							<div class="section-services__pagination js-services-pagination"></div>
+						<?php endif; ?>
 					</div>
 				<?php endif; ?>
 				<?php

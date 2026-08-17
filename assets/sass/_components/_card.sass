@@ -5,49 +5,38 @@
 // the section grid (col-span / order / margins) stays inline in the template.
 //
 //   .card-range    → Products  ("Schönes mit Sinn")
-//   .card-service  → Services  ("Massgeschneidert für Sie")
-//   .card-venue    → Gastronomy ("Gut essen. Gut schlafen.")
-// =============================================================================
-
-// -- Products: image on top, title + arrow, description ------------------------
-.card-range
-  @apply flex flex-col
-  .card__media
-    @apply overflow-hidden h-[220px] md:h-[300px] xl:h-[400px]
-    img
-      @apply w-full h-full object-cover
-  .card__head
-    @apply flex items-center justify-between gap-4
-  .card__arrow
-    @apply shrink-0 text-brand-red
-  .card__text
-    @apply xl:max-w-[90%]
-  .card__head
-    @apply mt-5 mb-3
-
-// -- Services: image + cream panel. Mobile/tablet the panel sits in flow with
-//    the text always visible; desktop the panel is an absolute overlay whose
-//    description + "mehr" collapse and slide open on hover. ---------------------
+//   // -- Services: image with the copy in a cream panel under it, never an overlay.
+//    Every panel comes out the same height without a fixed value: .swiper-wrapper is a
+//    flex row and its slides stretch to the tallest, the media is a fixed ratio, and the
+//    panel takes what is left with flex-1. So the tallest card sets the height and the
+//    others follow it — add a longer text and they all grow together.
+//
+//    "mehr" is pushed to the panel's bottom edge with mt-auto rather than sitting after
+//    the copy, which is what makes the equal heights read as intentional instead of as
+//    cards with trailing space.
+// -----------------------------------------------------------------------------------
 .card-service
-  @apply relative flex w-full max-h-[340px] flex-col overflow-hidden bg-brand-cream md:h-full md:max-h-none xl:block xl:aspect-[488/444]
+  @apply relative flex h-full w-full flex-col overflow-hidden bg-brand-cream no-underline
+
+  // A ratio and not a height: the card's width changes with the breakpoint — the full
+  // container at mobile, four of six columns at tablet, a third of eight at desktop —
+  // and the media should scale with it. 488/444 is the ratio the section used before.
   .card__media
-    @apply w-full flex-1 min-h-[160px] object-cover md:h-[165px] md:flex-none xl:absolute xl:inset-0 xl:h-full xl:flex-none
+    @apply w-full flex-none object-cover
+    aspect-ratio: 488 / 444
+
   .card__panel
-    @apply relative flex flex-1 flex-col justify-between bg-brand-cream pl-[9px] pr-[9px] pt-[14px] pb-4 md:min-h-[270px] md:pr-1 md:pt-2 md:pb-3 xl:absolute xl:inset-x-0 xl:bottom-0 xl:flex-none xl:min-h-0
-  .card__text-group
-    @apply min-h-0 overflow-hidden
+    @apply flex flex-1 flex-col bg-brand-cream
+    @apply px-4 py-4 xl:px-6 xl:py-5
+
+  .card__title
+    @apply title-card text-brand-dark m-0
+
+  .card__text
+    @apply body-text text-brand-dark mt-2
+
   .card__more
-    @apply inline-block pt-4
-  // Hover-reveal: open on mobile/tablet, collapsed on desktop until hover.
-  .card__reveal
-    @apply grid overflow-hidden grid-rows-[1fr] transition-[grid-template-rows] duration-300 ease-in-out
-    > *
-      @apply overflow-hidden
-  @media (min-width: 1280px)
-    .card__reveal
-      grid-template-rows: 0fr
-    &:hover .card__reveal
-      grid-template-rows: 1fr
+    @apply link-inline inline-block mt-auto pt-4
 
 // -- Gastronomy: logo + arrow head over a description; red outline that blends
 //    into a cream fill on hover. -------------------------------------------------

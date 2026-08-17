@@ -36,6 +36,71 @@ export function initGastronomySlider() {
 }
 
 /**
+ * Home services — three cards per view at desktop, one below it.
+ *
+ * Bullets only: no arrows at any breakpoint, and the bullets themselves are hidden from
+ * xl in CSS, where the three cards fill one view. They live outside .swiper, in the
+ * section's own grid row, so the element is passed explicitly.
+ */
+export function initServicesSlider() {
+  document.querySelectorAll('.js-services-slider').forEach((el) => {
+    const root = el.closest('.section-services');
+
+    new Swiper(el, {
+      modules: [Pagination, A11y],
+      spaceBetween: 20,
+      slidesPerView: 1,
+      breakpoints: {
+        1280: { slidesPerView: 3 },
+      },
+      observer: true,
+      observeParents: true,
+      pagination: {
+        el: root ? root.querySelector('.js-services-pagination') : null,
+        clickable: true,
+      },
+    });
+  });
+}
+
+/**
+ * Stories & references — three story cards per view at desktop, fewer below.
+ *
+ * The arrows and the bullets are siblings of .swiper in the page grid, not children
+ * of it, so both are looked up from the section root. The template only renders them
+ * when there are more slides than fit a view, so this never wires up a dead control.
+ */
+export function initStoriesSlider() {
+  document.querySelectorAll('.js-stories-slider').forEach((el) => {
+    const root = el.closest('.stories-references');
+
+    new Swiper(el, {
+      modules: [Navigation, Pagination, A11y],
+      // spaceBetween is the grid's own gutter, which puts the desktop cards at
+      // 388.67px against the frame's 390 — see the template's layout note.
+      spaceBetween: 20,
+      // One per view up to tablet, three from desktop. The tablet frame gives the
+      // slider four of six columns for a single card, so 2-up is not a step the
+      // design has.
+      slidesPerView: 1,
+      breakpoints: {
+        1280: { slidesPerView: 3 },
+      },
+      observer: true,
+      observeParents: true,
+      pagination: {
+        el: root ? root.querySelector('.js-stories-pagination') : null,
+        clickable: true,
+      },
+      navigation: {
+        prevEl: root ? root.querySelector('.js-stories-prev') : null,
+        nextEl: root ? root.querySelector('.js-stories-next') : null,
+      },
+    });
+  });
+}
+
+/**
  * Quote slider — one testimonial per slide, at every breakpoint.
  *
  * The arrows are not inside the slider element (they sit in the outer grid

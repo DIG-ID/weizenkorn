@@ -105,6 +105,11 @@
   &__pagination
     @apply static mt-8 md:mt-10 flex items-center justify-center gap-[30px]
 
+    // Swiper spaces its own bullets with margin: 0 4px, from a selector more specific
+    // than the m-0 below — so that margin wins and adds 8px to every gap here.
+    // Zeroing its variable is the fix; out-shouting it on specificity is not.
+    --swiper-pagination-bullet-horizontal-gap: 0px
+
     .swiper-pagination-bullet
       @apply w-[15px] h-[15px] m-0 rounded-full border border-brand-red bg-transparent opacity-100 transition-colors duration-300
 
@@ -115,12 +120,15 @@
   // "previous". Swiper adds .swiper-button-disabled at either end of the list,
   // which is when the arrow fades and stops taking clicks, rather than
   // disappearing and shifting the layout.
+  // Red, like every other arrow in the design — the icon is stroke="currentColor",
+  // so the colour here is all it takes. Hover dims rather than changing hue: with red
+  // as the resting state there is no second arrow colour in the design to move to.
   &__nav
-    @apply text-brand-dark transition-colors duration-300
+    @apply text-brand-red transition-opacity duration-300
 
     &:hover,
     &:focus-visible
-      @apply text-brand-red
+      @apply opacity-70
 
     &.swiper-button-disabled
       @apply opacity-30 pointer-events-none

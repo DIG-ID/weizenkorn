@@ -67,9 +67,17 @@ if ( ! $st_title && ! $st_subtitle && ! $st_left && ! $st_right && ! $st_image )
 ?>
 <header class="section-heading">
 	<?php if ( $st_title ) : ?>
-		<div class="section-heading__title-wrap border-b border-brand-red pb-6 xl:pb-10 mb-8 xl:mb-12">
+		<?php
+		/*
+		 * The red rule sits 16 / 24 / 32px under the title and the same distance above
+		 * whatever follows it — measured off the product-overview and stories frames,
+		 * which agree at every breakpoint. Symmetric on purpose: it is one rule with
+		 * equal air either side, not a heading with a trailing gap.
+		 */
+		?>
+		<div class="section-heading__title-wrap border-b border-brand-red pb-4 md:pb-6 xl:pb-8 mb-4 md:mb-6 xl:mb-8">
 			<div class="theme-grid">
-				<<?php echo esc_html( $st_tag ); ?> class="title-main section-heading__title col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-10">
+				<<?php echo esc_html( $st_tag ); ?> class="title-main section-heading__title col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-11">
 					<?php
 					echo wp_kses(
 						$st_title,
