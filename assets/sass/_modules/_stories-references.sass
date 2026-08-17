@@ -1,0 +1,205 @@
+// =============================================================================
+// Stories & references — template-parts/modules/stories-references.php
+// Figma 2882:586 + 2882:628, desktop confirmed 2026-08-13. Tablet and mobile have
+// no frame yet and carry interim values.
+//
+// The arrows and the slider viewport are siblings in the page grid, not an overlay
+// with its own grid: prev on column 2, the viewport on 3–10, next on column 11. They
+// cannot overlap, which also avoids the trap the quote-slider hit — Swiper gives
+// .swiper `position: relative; z-index: 1`, so an absolute nav layer underneath it is
+// visible but unclickable.
+//
+// Placement is one grid-column declaration per item rather than col-start-* plus
+// col-span-*. Those are two utilities and the span one compiles to the grid-column
+// shorthand, which resets the start; a later breakpoint's span then silently drops
+// the start it was paired with.
+// =============================================================================
+
+.stories-references
+
+  // items-center is what vertically centres the arrows against the cards, which all
+  // three frames do — the arrows share row 1 with the slider, so the row's height is
+  // the card's. The row gap is the frames' distance from the cards to the bullets.
+  &__row
+    @apply items-center gap-y-9 md:gap-y-14
+
+  // The frames give the slider the columns between the arrows: 2–5 of six at tablet
+  // (460px, four columns to the pixel) and 3–10 of twelve at desktop (1206px, eight
+  // columns to the pixel).
+  &__viewport
+    grid-column: 1 / span 2
+    grid-row: 1
+
+    @media (min-width: 768px)
+      grid-column: 2 / span 4
+
+    @media (min-width: 1280px)
+      grid-column: 3 / span 8
+
+  // The arrows sit beside the cards at every breakpoint from tablet up, in the outer
+  // columns the slider leaves free, and stay on the slider's row rather than dropping
+  // below it with the bullets.
+  // Red in the frames, not the dark the other sliders use. The icon is
+  // stroke="currentColor", so the colour here is all it takes. Hover dims rather than
+  // changing hue: there is no second arrow colour in the design to move to.
+  &__nav
+    @apply flex items-center justify-center text-brand-red transition-opacity duration-300
+    grid-row: 1
+
+    &:hover,
+    &:focus-visible
+      @apply opacity-70 outline-none
+
+    // Swiper adds .swiper-button-disabled at either end of the list. Faded and
+    // click-through rather than hidden, so the columns keep their width and the
+    // slider does not shift when you reach an end.
+    &.swiper-button-disabled
+      @apply opacity-30 pointer-events-none
+
+    // The design draws a smaller, chevron-only glyph at mobile and tablet. The theme
+    // has one arrow, with a shaft, so it is scaled to the frames' heights instead —
+    // matching the glyph would mean a second icon in weizenkorn_the_svg_icon().
+    svg
+      @apply w-[15px] h-3 md:w-[21px] md:h-[17px]
+
+  // At mobile the frame puts the arrows OUTSIDE the container, in the page's own 36px
+  // margins: the card takes the full container width, so there is no free column to
+  // hold them. They stay grid items — which is what keeps them centred on the card —
+  // and are pulled out of the container by a negative margin. The container pads 36px
+  // and the frame has the arrow 13px from the viewport edge, hence 23px.
+  //
+  // This relies on nothing between here and the viewport clipping its overflow. From
+  // tablet up the slider leaves columns free and the arrows sit inside.
+  &__nav--prev
+    grid-column: 1
+    @apply -ml-[23px] md:ml-0
+
+    @media (min-width: 1280px)
+      grid-column: 2
+
+    svg
+      @apply -scale-x-100
+
+  &__nav--next
+    grid-column: 2
+    @apply -mr-[23px] md:mr-0
+
+    @media (min-width: 768px)
+      grid-column: 6
+
+    @media (min-width: 1280px)
+      grid-column: 11
+
+  // Bullets: the same 15px red outlines as the quote slider's, 30px apart, filled
+  // when active. `static` undoes Swiper's absolute positioning — here they are a
+  // block below the slider, not an overlay on it. Their row gap comes from __row.
+  &__pagination
+    @apply static flex items-center justify-center gap-[26px] md:gap-[30px]
+
+    // Swiper spaces its own bullets with margin: 0 4px, from a selector more specific
+    // than the m-0 below — so that margin wins and adds 8px to every gap here. Zeroing
+    // its variable is the fix; raising specificity to out-shout it is not.
+    --swiper-pagination-bullet-horizontal-gap: 0px
+    grid-row: 2
+    grid-column: 1 / span 2
+
+    @media (min-width: 768px)
+      grid-column: 1 / span 6
+
+    @media (min-width: 1280px)
+      grid-column: 1 / span 12
+
+    .swiper-pagination-bullet
+      @apply w-[15px] h-[15px] m-0 rounded-full border border-brand-red bg-transparent opacity-100 transition-colors duration-300
+
+    .swiper-pagination-bullet-active
+      @apply bg-brand-red
+
+  // Two or three cards: one per view below xl so the controls are needed, all three
+  // in one view at xl so they would be dead. Hidden from xl up rather than not
+  // rendered, because the same markup has to be there below it.
+  &--fits-xl &__nav,
+  &--fits-xl &__pagination
+    @media (min-width: 1280px)
+      @apply hidden
+
+// -- The card ------------------------------------------------------------------
+// Image filling a fixed-height card with the cream panel as an absolute overlay on
+// its bottom edge. The panel has no set height: it is as tall as its content, so it
+// grows on its own as the reveals open and there is no per-breakpoint percentage to
+// keep in step with the card height.
+// Card heights are the frames', and the tablet one is taller than both its neighbours
+// rather than sitting between them: at tablet a single card takes four of six columns
+// (460px), at desktop three share eight of twelve (389px each), and at mobile one
+// takes the whole 321px container. Wider card, taller card.
+.card-story
+  @apply relative block w-full overflow-hidden bg-brand-cream no-underline
+  @apply h-[386px] md:h-[551px] xl:h-[430px]
+
+  .card__media
+    @apply absolute inset-0 w-full h-full object-cover
+
+  // 8px of vertical padding is what makes the collapsed bar the frame's 46px around
+  // a 30px title line. The frame's expanded panel pads 16px at the top instead; the
+  // 8px difference only shows while the card is open, and matching it would mean
+  // animating padding as well as the rows.
+  .card__panel
+    @apply absolute inset-x-0 bottom-0 z-10
+    @apply flex flex-col justify-between
+    @apply bg-brand-cream px-4 py-2
+
+  // 6px between the name and the copy, which is the frame's 36px baseline step
+  // against a 30px line.
+  .card__head
+    @apply flex flex-col gap-1.5
+
+  .card__title
+    @apply title-card text-brand-dark m-0
+
+  .card__text
+    @apply body-text text-brand-dark
+
+  // .link-inline is the theme's own "mehr" — bold, underlined, brand red. It carries
+  // no size; the scale below sets it along with the rest of the card.
+  .card__more
+    @apply link-inline inline-block
+
+  // One scale for the whole card: 14/22 at mobile and 20/30 from tablet up, which is
+  // what all three frames measure — the tablet and desktop panels use the same type,
+  // only mobile steps down. Set here rather than left to .title-card and .body-text,
+  // whose shared scales pass through 14/22 at tablet and 18/28 at desktop before
+  // reaching 20/30. Placed after those classes so it wins.
+  .card__title,
+  .card__text,
+  .card__more
+    @apply text-[14px] leading-[22px] md:text-[20px] md:leading-[30px]
+
+  // Open by default and only collapsed at desktop. Touch has no hover, so below xl a
+  // reveal would put the copy out of reach entirely — and open is the only state the
+  // tablet and mobile frames draw, each showing a single card with its text visible.
+  // (modules/product-overview keeps the hover at every breakpoint because its frames
+  // do the opposite: a grid of closed cards with one opened to document it.)
+  //
+  // grid-template-rows 0fr → 1fr, the same technique as .card-service: it animates to
+  // the content's own height, so nothing here needs to know how tall the copy is.
+  // The child needs its own overflow: hidden, or it spills out of the 0fr row.
+  .card__reveal
+    @apply grid overflow-hidden
+    grid-template-rows: 1fr
+
+    > *
+      @apply overflow-hidden
+
+    @media (min-width: 1280px)
+      grid-template-rows: 0fr
+      transition: grid-template-rows var(--transition-slow)
+
+  // :focus-visible and not :focus-within — the card is the anchor, so a click leaves
+  // focus on it and :focus-within would hold the panel open with nothing to close it.
+  &:hover .card__reveal,
+  &:focus-visible .card__reveal
+    grid-template-rows: 1fr
+
+  @media (prefers-reduced-motion: reduce)
+    .card__reveal
+      transition: none
