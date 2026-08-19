@@ -56,6 +56,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Slider bullets sat 8px further apart than designed, because Contact Form 7's — and Swiper's — own spacing was added to the theme's.
 - Product overview: the copy revealed on hover showed a sliver of its first line while collapsed.
 
+### Added (in progress)
+- Services page: overview section (heading + preview cards) listing the Schreinerei/Kreativatelier/Fiduciary services pages, USP band and quote slider.
+- `overview-cards` module + `card-overview` component: a "hub" page's own children (image/title/text) become its preview cards automatically, no manual re-entry.
+- `hero-section-detail` module: the 2nd-level interior-page hero (bordered panel + image side by side at desktop) for the Schreinerei service detail pages.
+- New page template: Gastronomie und Hotellerie, starting with the shared hero section.
+- Gastronomie und Hotellerie page: venues section (same layout as the Home page's own gastronomy section — mobile slider, tablet+ image bento with info cards), plus the shared USP band and quote slider.
+
 ## [1.4.0] — 2026-08-12
 
 ### Added

@@ -1,15 +1,15 @@
 <?php
 /**
- * Template Name: Services Template
+ * Template Name: Gastronomie und Hotellerie Template
  *
- * Services overview (Figma "services_desktop") — top level of the Services
- * section. Lists the 3 service category pages (Schreinerei, Kreativatelier,
- * Fiduciary services) as its children (post_parent), via a shared "overview
- * cards" module. Sections to be added as template-parts.
+ * Gastronomie und Hotellerie overview page: shared hero-section module,
+ * then the page-specific venues section (same structure as the Home page's
+ * gastronomy section, not a module), then the shared USP band and quote
+ * slider modules.
  *
  * @package weizenkorn
  * @subpackage Template
- * @since 1.4.0
+ * @since 1.5.0
  */
 
 get_header();
@@ -21,7 +21,7 @@ if ( have_posts() ) :
 		do_action( 'before_main_content' );
 
 		get_template_part( 'template-parts/modules/hero-section' );
-		get_template_part( 'template-parts/pages/services/services-overview' );
+		get_template_part( 'template-parts/pages/gastronomie-hotellerie/gastronomy' );
 		get_template_part( 'template-parts/modules/usp-band' );
 		get_template_part( 'template-parts/modules/quote-slider' );
 
