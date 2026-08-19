@@ -38,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - `overview-cards` module + `card-overview` component: a "hub" page's own children (image/title/text) become its preview cards automatically, no manual re-entry.
 - `hero-section-detail` module: the 2nd-level interior-page hero (bordered panel + image side by side at desktop) for the Schreinerei service detail pages.
 - New page template: Gastronomie und Hotellerie, starting with the shared hero section.
+- Gastronomie und Hotellerie page: venues section (same layout as the Home page's own gastronomy section — mobile slider, tablet+ image bento with info cards), plus the shared USP band and quote slider.
 
 ## [1.4.0] — 2026-08-12
 
