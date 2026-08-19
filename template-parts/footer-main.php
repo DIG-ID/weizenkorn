@@ -25,7 +25,7 @@
 					?>
 				</a>
 
-				<?php do_action( 'socials' ); ?>
+			<?php // do_action( 'socials' ); ?>
 			</div>
 
 			<div class="footer-main__card footer-main__address">
