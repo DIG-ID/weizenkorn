@@ -20,7 +20,10 @@ if ( have_posts() ) :
 
 		do_action( 'before_main_content' );
 
-		// Sections go here (get_template_part calls).
+		get_template_part( 'template-parts/modules/hero-section' );
+		get_template_part( 'template-parts/pages/services/services-overview' );
+		get_template_part( 'template-parts/modules/usp-band' );
+		get_template_part( 'template-parts/modules/quote-slider' );
 
 		do_action( 'after_main_content' );
 

@@ -20,7 +20,7 @@ if ( have_posts() ) :
 
 		do_action( 'before_main_content' );
 
-		// Sections go here (get_template_part calls).
+		get_template_part( 'template-parts/modules/hero-section-detail' );
 
 		do_action( 'after_main_content' );
 
