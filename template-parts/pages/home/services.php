@@ -94,9 +94,17 @@
 
 												<?php
 												/*
-												 * The panel sits under the image, in flow, and its copy is
-												 * always visible — no reveal here. Every panel ends up the
-												 * same height because the slides do: see _card.sass.
+												 * Two breakpoint behaviours from one markup. Below desktop the
+												 * panel sits under the image with everything visible, and the
+												 * panels come out the same height because the slides do. At
+												 * desktop the panel becomes an overlay on the image, collapsed
+												 * to its title until the card is hovered — see _card.sass.
+												 *
+												 * That is what the __reveal wrappers are for: each is a grid
+												 * whose single row animates from 0fr to 1fr, so the panel opens
+												 * to exactly the height of whatever is inside instead of to a
+												 * guessed max-height. They are open at every breakpoint except
+												 * desktop, where the collapse lives.
 												 */
 												?>
 												<div class="card__panel">
@@ -104,12 +112,42 @@
 														<h3 class="card__title"><?php echo esc_html( get_sub_field( 'title' ) ); ?></h3>
 													<?php endif; ?>
 
+													<?php
+													/*
+													 * The bare <div> inside each __reveal is NOT redundant.
+													 *
+													 * grid-template-rows: 0fr behaves as minmax(auto, 0fr), so the
+													 * row never gets shorter than its item's automatic minimum.
+													 * overflow: hidden on the item zeroes what its CONTENT
+													 * contributes, but not its own padding or margin — and
+													 * .card__text has mt-2 while .card__more has pt-4. Left as
+													 * direct children, the collapsed rows stayed 8px and 16px tall,
+													 * so a card with a link had a taller cream bar than one
+													 * without, which is exactly the bug this wrapper fixes.
+													 *
+													 * The wrapper has no spacing of its own, so it collapses to
+													 * nothing and the spacing rides inside it, clipped.
+													 */
+													?>
 													<?php if ( get_sub_field( 'text' ) ) : ?>
-														<div class="card__text"><?php echo wp_kses_post( get_sub_field( 'text' ) ); ?></div>
+														<div class="card__reveal">
+															<div>
+																<div class="card__text"><?php echo wp_kses_post( get_sub_field( 'text' ) ); ?></div>
+															</div>
+														</div>
 													<?php endif; ?>
 
 													<?php if ( $service_url ) : ?>
-														<span class="card__more"><?php echo esc_html__( 'mehr', 'weizenkorn' ); ?></span>
+														<?php
+														// --bottom carries the mt-auto that pushes "mehr" to the
+														// panel's bottom edge below desktop, where the panel is
+														// taller than its content.
+														?>
+														<div class="card__reveal card__reveal--bottom">
+															<div>
+																<span class="card__more"><?php echo esc_html__( 'mehr', 'weizenkorn' ); ?></span>
+															</div>
+														</div>
 													<?php endif; ?>
 												</div>
 											</<?php echo esc_html( $service_tag ); ?>>

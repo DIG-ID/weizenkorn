@@ -11,6 +11,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.6.0] — 2026-08-19
+
+### Added
+- Holzmanufaktur and Xyloba range pages, each composing the shared modules in the order its design has them.
+- `our-equipment` module: the machine-park slider — two photos per view at desktop, the run carrying on past the container's right edge, one per view below. Each photo is captioned with the technique it shows, and the controls follow the design: arrows at desktop, bullets on tablet and mobile.
+- `trust` module: the reassurance block — title, wide workshop photo, then a lead and a list of commitments side by side at desktop and stacked below.
+- `photo-mosaic` module.
+- Buttons pick their arrow from the link: one pointing at a file (PDF, ZIP, Office documents) points down, so a download no longer needs a second field to get the right icon.
+- Product range cards: the title now shares its line with the arrow and the arrow takes the brand red.
+
+### Changed
+- Every section reads its heading through one shared helper. A heading whose fields are stored flat now keeps its buttons — before, they were silently dropped while the title still rendered.
+- Section eyebrows carry the shared overline type (14 → 15 → 20px) instead of the browser's default size.
+- Services cards: at desktop the cream panel is an overlay that opens on hover; below desktop it stays under the image with everything visible.
+- Quote slider: 56px of side padding in the quote box at desktop.
+- Gastronomy: 20px between the rows of images.
+
+### Fixed
+- The overline text style was renamed, because Tailwind ships an `.overline` utility of its own that drew a literal line above the text wherever the class was used.
+- Services cards no longer come out at different heights depending on whether a card has a link.
+
+---
+
 ## [1.5.0] — 2026-08-17
 
 ### Added

@@ -64,7 +64,11 @@ h1, h2, h3, h4, h5, h6
 // =============================================================================
 
 // Overline / eyebrow above titles — 12 → 15 → 20px, uppercase (line-height 30 throughout).
-.overline
+//
+// Named label-overline and not overline: Tailwind ships an .overline utility of its own
+// (text-decoration-line: overline), which would draw a literal rule above the text on
+// every element carrying the class. Different property, so nothing here overrides it.
+.label-overline
   @apply font-primary font-normal uppercase tracking-[0.5px] text-[14px] leading-[30px] md:text-[15px] xl:text-[20px]
 
 // Body copy — 12 → 14 → 20px. Apply on a wrapper so wpautop <p> children inherit.
@@ -72,6 +76,33 @@ h1, h2, h3, h4, h5, h6
   @apply font-primary font-normal tracking-[0.5px] text-[14px] leading-[20px] md:text-[14px] md:leading-[22px] xl:text-[18px] 2xl:text-[20px] xl:leading-[28px] 2xl:leading-[30px]
   p
     @apply mb-4 last:mb-0
+
+  // Lists written in a WYSIWYG field. _base-styles strips list markers site-wide, so a
+  // bullet list from the editor arrives as unmarked plain lines until they are put back
+  // here — which is why this belongs to the body-copy component and not to one section.
+  //
+  // Unclassed lists only: a list the editor wrote carries no class, while the theme's
+  // own markup does (order-form__list) and has to stay unmarked. That is the whole
+  // guard, and it is why this can live in a shared class safely.
+  //
+  // The marker is a real list-style rather than a drawn pseudo-element so wrapped lines
+  // hang against the text, as the frames show, and so the list stays a list.
+  ul:not([class]),
+  ol:not([class])
+    @apply mb-4 last:mb-0 pl-[18px]
+    list-style-position: outside
+
+  ul:not([class])
+    list-style-type: disc
+
+  ol:not([class])
+    list-style-type: decimal
+
+  // 4px between items: no frame measures this, but the frames clearly set list items
+  // tighter than paragraphs, which the 16px above would not.
+  ul:not([class]) li,
+  ol:not([class]) li
+    @apply mb-1 last:mb-0
 
 // Small text (captions, footer).
 .body-small

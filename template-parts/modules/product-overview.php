@@ -74,24 +74,12 @@ $po_ctx = ( ! empty( $args['post_id'] ) ) ? $args['post_id'] : get_the_ID();
 $po_prefix = ! empty( $args['prefix'] ) ? $args['prefix'] : '';
 
 /*
- * Both shapes of the "Section Title" clone are accepted, the same way modules/cta-form
- * and modules/stories-references do it. With Display: Group the clone stores an extra
- * key and get_field() returns the whole group as an array; with Display: Seamless it
- * does not, and only the flat `..._title` and `..._subtitle` exist. Neither mode is
- * wrong, so the section reads whichever is there rather than depending on which was
- * picked in the admin.
+ * The heading comes from the shared helper, which reads a cloned "Section Title" group
+ * in either of its Displays and rebuilds the links a Seamless clone hides behind a
+ * composite field reference. See weizenkorn_get_section_heading() in
+ * inc/theme-template-tags.php for why that read is not a plain get_field().
  */
-$po_heading = get_field( $po_prefix . 'product_overview_section_title', $po_ctx );
-
-if ( ! $po_heading && get_field( $po_prefix . 'product_overview_title', $po_ctx ) ) {
-	$po_tag_name = get_field( $po_prefix . 'product_overview_title_heading', $po_ctx );
-
-	$po_heading = array(
-		'title'         => get_field( $po_prefix . 'product_overview_title', $po_ctx ),
-		'title_heading' => $po_tag_name ? $po_tag_name : 'h2',
-		'subtitle'      => get_field( $po_prefix . 'product_overview_subtitle', $po_ctx ),
-	);
-}
+$po_heading = weizenkorn_get_section_heading( $po_prefix . 'product_overview_', $po_ctx );
 
 if ( ! $po_heading && ! have_rows( $po_prefix . 'product_overview_items', $po_ctx ) ) {
 	return;

@@ -170,3 +170,104 @@ function weizenkorn_the_svg_icon( $name ) {
 
 	echo $icons[ $name ]; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG markup, not user input.
 }
+
+/**
+ * Reads a cloned "Section Title" group and returns it shaped for the
+ * components/section-heading part.
+ *
+ * Every section that carries a heading clones the same "Section Title" group, and that
+ * clone can be set to either Display in the admin. The two Displays do not read alike:
+ *
+ *   Display: Group     the clone keeps a name, so get_field( '{prefix}section_title' )
+ *                      returns the whole group as one array.
+ *   Display: Seamless  the clone has no name of its own and its fields land flat, so
+ *                      that call returns nothing and each field has to be read by name.
+ *
+ * The flat read has one trap, which is why this lives in a helper instead of being
+ * repeated per section. A Seamless clone stores its nested groups — `buttons`, holding
+ * the two links — under a COMPOSITE field reference (field_A_field_B) that
+ * acf_get_field() cannot resolve, so get_field( '{prefix}buttons' ) comes back empty
+ * even though the links are in the database. It is the same failure as a cloned
+ * repeater's have_rows() returning false while the admin shows the rows. The leaves keep
+ * an ordinary reference, so they are read one by one and the array is rebuilt here.
+ *
+ * Before this existed, each section wrote its own fallback and every one of them read
+ * the title and dropped the buttons — the heading looked right and the CTA silently
+ * never rendered, on any Seamless clone.
+ *
+ * What this does NOT read is the clone's `image`, for the collision explained at the
+ * flat read below.
+ *
+ * @since 1.6.0
+ *
+ * @param string     $prefix  Field-name prefix including the trailing underscore, e.g.
+ *                            'product_overview_' or 'latest_product_overview_'.
+ * @param int|string $post_id Optional. ACF post id / options store. Default: current post.
+ * @return array Args for components/section-heading, or an empty array when there is no
+ *               heading to render.
+ */
+function weizenkorn_get_section_heading( $prefix, $post_id = false ) {
+
+	// Display: Group — the whole group in one read, nothing to reassemble.
+	$group = get_field( $prefix . 'section_title', $post_id );
+
+	if ( is_array( $group ) && ! empty( $group ) ) {
+		return $group;
+	}
+
+	// Display: Seamless — field by field. Names are the group's verbatim, typos included.
+	$heading = array();
+
+	/*
+	 * The clone's `image` is deliberately NOT read here. Flat storage puts it at
+	 * {prefix}image, which is the same meta key as a section's own image field — on
+	 * craft-showcase, {prefix}image IS craft_showcase_image, the left photo. Reading it
+	 * as the heading's image drew that photo twice, once wide across the top and once in
+	 * its own column.
+	 *
+	 * The other names here are safe because no section calls its own fields `title`,
+	 * `subtitle` or `description`, while `image` is the one name a section is likely to
+	 * want. A section that does need a heading image reads it itself and adds it to this
+	 * array — see modules/trust.php. The Display: Group path above is unaffected, since
+	 * there the clone's fields are nested and cannot collide.
+	 */
+	$fields = array(
+		'title_heading',
+		'subtitle',
+		'title',
+		'description',
+		'desciption_left',
+		'description_right',
+	);
+
+	foreach ( $fields as $field ) {
+		$value = get_field( $prefix . $field, $post_id );
+
+		if ( '' !== $value && null !== $value && false !== $value ) {
+			$heading[ $field ] = $value;
+		}
+	}
+
+	// The two links, read as leaves for the reason in the docblock above.
+	$primary   = get_field( $prefix . 'buttons_prmary', $post_id );
+	$secondary = get_field( $prefix . 'buttons_secondary', $post_id );
+
+	if ( $primary || $secondary ) {
+		$heading['buttons'] = array(
+			'prmary'    => $primary ? $primary : null,
+			'secondary' => $secondary ? $secondary : null,
+		);
+	}
+
+	// No title means there is no heading — the caller decides what that implies for the
+	// rest of its section.
+	if ( empty( $heading['title'] ) ) {
+		return array();
+	}
+
+	if ( empty( $heading['title_heading'] ) ) {
+		$heading['title_heading'] = 'h2';
+	}
+
+	return $heading;
+}

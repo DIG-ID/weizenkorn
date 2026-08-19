@@ -131,7 +131,7 @@ $quote_is_slider = count( (array) get_field( $quote_prefix . 'quote_slider_items
 							 * Colour on the container, so the wpautop <p> inside inherits it.
 							 */
 							?>
-							<figure class="quote-slider__box border-2 border-brand-red flex flex-col gap-[60px] px-7 py-[21px] min-h-[396px] md:row-start-1 md:gap-0 md:justify-between md:px-10 md:py-8 md:min-h-[376px] xl:px-[62px] xl:py-[38px] xl:min-h-[553px] col-start-1 col-span-2 <?php echo $quote_has_image ? 'row-start-2 md:col-start-1 md:col-span-4 xl:col-start-3 xl:col-span-5' : 'row-start-1 quote-slider__box--centered md:col-start-1 md:col-span-6 xl:col-start-1 xl:col-span-12'; ?>">
+							<figure class="quote-slider__box border-2 border-brand-red flex flex-col gap-[60px] px-7 py-[21px] min-h-[396px] md:row-start-1 md:gap-0 md:justify-between md:px-10 md:py-8 md:min-h-[376px] xl:px-14 xl:py-[38px] xl:min-h-[553px] col-start-1 col-span-2 <?php echo $quote_has_image ? 'row-start-2 md:col-start-1 md:col-span-4 xl:col-start-3 xl:col-span-5' : 'row-start-1 quote-slider__box--centered md:col-start-1 md:col-span-6 xl:col-start-1 xl:col-span-12'; ?>">
 
 								<?php if ( get_sub_field( 'quote' ) ) : ?>
 									<blockquote class="quote-slider__text text-brand-red">

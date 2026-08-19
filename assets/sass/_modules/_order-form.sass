@@ -266,8 +266,9 @@
   &--split &__message
     @apply md:h-[104px]
 
-  // Type set here rather than with the shared .overline class, so the section owns
-  // its scale: 15/30 uppercase at tablet, 20/30 at desktop.
+  // Type set here rather than with the shared .label-overline class, so the section owns
+  // its scale: the mobile line-height is 15 and not the shared 30. Tablet and desktop
+  // match it — 15/30 and 20/30.
   &__overline
     @apply font-primary font-normal uppercase tracking-[0.5px]
     @apply text-[14px] leading-[15px] md:text-[15px] md:leading-[30px] xl:text-[20px]

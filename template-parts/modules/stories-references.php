@@ -103,27 +103,12 @@ $sr_fits_xl      = ( $sr_count <= 3 );
 
 		<?php
 		/*
-		 * Heading and red rule, from the shared component, which takes the whole
-		 * "Section Title" group.
-		 *
-		 * Both shapes of the ACF clone are accepted, the same way modules/cta-form
-		 * does it. With Display: Group the clone returns the nested array the
-		 * component wants; with Display: Seamless ACF replaces the clone with the
-		 * fields themselves and the names come out flat — `..._title` and
-		 * `..._title_heading` — at which point the array is built here instead.
-		 * Neither is wrong, and this way the section does not depend on which one was
-		 * picked in the admin.
+		 * The heading comes from the shared helper, which reads a cloned "Section Title" group
+		 * in either of its Displays and rebuilds the links a Seamless clone hides behind a
+		 * composite field reference. See weizenkorn_get_section_heading() in
+		 * inc/theme-template-tags.php for why that read is not a plain get_field().
 		 */
-		$sr_heading = get_field( $sr_prefix . 'stories_references_section_title', $sr_ctx );
-
-		if ( ! $sr_heading && get_field( $sr_prefix . 'stories_references_title', $sr_ctx ) ) {
-			$sr_tag = get_field( $sr_prefix . 'stories_references_title_heading', $sr_ctx );
-
-			$sr_heading = array(
-				'title'         => get_field( $sr_prefix . 'stories_references_title', $sr_ctx ),
-				'title_heading' => $sr_tag ? $sr_tag : 'h2',
-			);
-		}
+		$sr_heading = weizenkorn_get_section_heading( $sr_prefix . 'stories_references_', $sr_ctx );
 
 		if ( $sr_heading ) {
 			get_template_part( 'template-parts/components/section-heading', null, $sr_heading );

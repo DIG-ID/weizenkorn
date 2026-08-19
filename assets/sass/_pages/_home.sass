@@ -68,7 +68,7 @@
 // Services — template-parts/pages/home/services.php
 //
 // The same arrangement as modules/stories-references, and on purpose: three cards per
-// view at desktop on columns 3–10, one per view below. The card itself is .card-story
+// view at desktop on columns 2–11, one per view below. The card itself is .card-story
 // from that module — reused rather than copied, so its styling lives in one place.
 //
 // Two differences from it: no arrows at any breakpoint, and no bullets at desktop,
@@ -95,8 +95,12 @@
     @media (min-width: 768px)
       grid-column: 2 / span 4
 
+    // Columns 2–11, the ten-column inset the home's other sections use. With Swiper's
+    // 20px between slides that puts each of the three cards at 491px — which is the 488
+    // the card's own 488/444 ratio is drawn from, so the ratio and the columns agree.
+    // Eight columns, which this was, made them 389 and the images came out short.
     @media (min-width: 1280px)
-      grid-column: 3 / span 8
+      grid-column: 2 / span 10
 
   // 15px red outlines 30px apart, filled when active — the bullets this project uses
   // everywhere. `static` undoes Swiper's absolute positioning, since here they are a

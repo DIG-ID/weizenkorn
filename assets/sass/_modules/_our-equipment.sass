@@ -1,0 +1,163 @@
+// =============================================================================
+// Our equipment — template-parts/modules/our-equipment.php
+// Figma 3974:6714, desktop confirmed 2026-08-18. Tablet and mobile have no frame yet
+// and carry interim values.
+//
+// The viewport and the arrow block are siblings in the page grid, each placed with one
+// grid-column declaration rather than col-start-* plus col-span-*: those are two
+// utilities and the span one compiles to the shorthand, which resets the start.
+// =============================================================================
+
+.our-equipment
+
+  // The slides run past the container's right edge, so the section is what clips them —
+  // see the overflow note on __viewport below. Without this the page gains a horizontal
+  // scrollbar as wide as the off-screen slides.
+  @apply overflow-hidden
+
+  // Slider down to the controls: 32px at mobile, 56 at tablet and desktop — the frames'
+  // distances to the bullets and, at desktop, to the arrows.
+  &__row
+    @apply gap-y-8 md:gap-y-14
+
+  // Columns 2–11 at desktop, which is 1513px — and two five-column slides with the grid's
+  // 20px between them are 1513px too, so slidesPerView: 2 needs no slide width of its own.
+  // See swiper.js.
+  &__viewport
+    grid-column: 1 / span 2
+
+    @media (min-width: 768px)
+      grid-column: 1 / span 6
+
+    @media (min-width: 1280px)
+      grid-column: 2 / span 10
+
+    // The bleed, desktop only. Swiper hides its own overflow, so showing it lets the
+    // slides carry on past the viewport's right edge, and the section's overflow: hidden
+    // above ends the run at the browser's edge. That is the whole mechanism — no negative
+    // margins and no width arithmetic against the container.
+    //
+    // Below xl Swiper's own clipping is left alone: the tablet frame shows one card and
+    // nothing of the next one on either side, so the slide has to end where the container
+    // does.
+    .swiper
+      @media (min-width: 1280px)
+        @apply overflow-visible
+
+  // Desktop only. The tablet frame (3974:6668) replaces the arrows with the shared
+  // bullets component, so below xl this block is hidden rather than left unrendered —
+  // Swiper needs the elements in the DOM to wire the navigation to at any width.
+  //
+  // Under the slider rather than in the margins beside the slides, which is where
+  // modules/stories-references puts its arrows.
+  //
+  // At desktop the block is column 11 alone and the two arrows are pushed to its edges:
+  // the frame draws them at x=1583 and x=1717, and that column runs 1587 to 1721. So the
+  // distance between them is not a value to set — it is whatever the column leaves, which
+  // is what space-between gives. A gap would have to be re-measured every time the column
+  // width changes.
+  //
+  // Below desktop there is no frame yet: the pair stays right-aligned with a fixed gap.
+  &__nav
+    @apply hidden items-center justify-between
+    grid-column: 11
+
+    @media (min-width: 1280px)
+      @apply flex
+
+  // Tablet's controls: three 15px red outlines 30px apart, filled when active, centred
+  // under the slider — the same shared component stories-references and the quote slider
+  // use. `static` undoes Swiper's absolute positioning: this is a block in the row, not
+  // an overlay on the slides.
+  //
+  // Hidden from xl, where the arrows take over. The mobile frame gives the same 30px
+  // gap as the tablet one, so there is nothing to step down.
+  //
+  // The frames drew three bullets; the real section has nine, and the count follows the
+  // content. At the frames' 30px gap that is 375px against a 321px container, so mobile
+  // takes 20 instead — nine bullets come to 295 and hold one line. Tablet keeps the 30:
+  // 703px fits far more than the content is ever likely to have.
+  //
+  // flex-wrap is the fallback for the count that outgrows even that. Its row gap is the
+  // one invented value here, since no frame has a second row to measure.
+  &__pagination
+    @apply static flex flex-wrap items-center justify-center gap-x-5 md:gap-x-[30px] gap-y-4 xl:hidden
+    grid-column: 1 / span 2
+
+    // Swiper spaces its own bullets with margin: 0 4px, from a selector more specific
+    // than the m-0 below — so that margin wins and adds 8px to every gap here. Zeroing
+    // its variable is the fix; raising specificity to out-shout it is not.
+    --swiper-pagination-bullet-horizontal-gap: 0px
+
+    @media (min-width: 768px)
+      grid-column: 1 / span 6
+
+    // shrink-0 or the flex line squeezes the width out of them and the circles come out
+    // as vertical ovals — width is what gives, since the height is untouched.
+    .swiper-pagination-bullet
+      @apply w-[15px] h-[15px] shrink-0 m-0 rounded-full border border-brand-red bg-transparent opacity-100 transition-colors duration-300
+
+    .swiper-pagination-bullet-active
+      @apply bg-brand-red
+
+  // Red in the frame. The icon is stroke="currentColor", so the colour here is all it
+  // takes. Hover dims rather than changing hue: the design has no second arrow colour.
+  &__arrow
+    @apply flex items-center justify-center text-brand-red transition-opacity duration-300
+
+    &:hover,
+    &:focus-visible
+      @apply opacity-70 outline-none
+
+    // Swiper adds .swiper-button-disabled at either end. Faded and click-through rather
+    // than hidden, so the block keeps its size and nothing shifts at the ends.
+    &.swiper-button-disabled
+      @apply opacity-30 pointer-events-none
+
+    svg
+      @apply w-[15px] h-3 md:w-6 md:h-[19px]
+
+  // The first arrow is the shared arrow-right turned around, so there is no second icon
+  // to add to weizenkorn_the_svg_icon() for one use.
+  .js-equipment-prev svg
+    @apply -scale-x-100
+
+// -- The slide: a photo with a bordered caption box under it. Kept here rather than in
+//    _components/_card.sass because it belongs to this section only, the way .card-story
+//    belongs to stories-references. ------------------------------------------------------
+.card-equipment
+  @apply flex h-full w-full flex-col m-0
+
+  // A ratio and not a height: the slide's width changes with the breakpoint, and the photo
+  // should scale with it. 744/570 is the frame's — 744 wide with the 80px caption box
+  // taking the rest of the slide's 650.
+  &__media
+    @apply relative w-full flex-none overflow-hidden
+    aspect-ratio: 321 / 229
+
+    @media (min-width: 768px)
+      aspect-ratio: 703 / 543
+
+    @media (min-width: 1280px)
+      aspect-ratio: 744 / 570
+
+  // 80px in the frame, with the label 24px in from the left. flex-1 rather than a height,
+  // so a caption that wraps grows the box instead of spilling out of it — and the slides
+  // all match anyway, because Swiper stretches them to the tallest.
+  //
+  // Type set here rather than with the shared .label-overline class, the way
+  // _modules/_order-form.sass does, because the section's scale is not the shared one:
+  // 14/15 at mobile and then 20/30 at both tablet and desktop, where .label-overline
+  // goes 14/30 → 15 → 20. The tablet frame uses the Desktop/Subtitle style for this
+  // caption while the section's own overline above it drops to the tablet 15/30.
+  //
+  // 49px tall at mobile with 16 of padding all round, 66 at tablet with 20/18, 80 at
+  // desktop. min-height rather than a height, so a caption that wraps grows the box
+  // instead of spilling out of it — and the slides all match anyway, because Swiper
+  // stretches them to the tallest.
+  &__label
+    @apply font-primary font-normal uppercase tracking-[0.5px]
+    @apply text-[14px] leading-[15px] md:text-[20px] md:leading-[30px]
+    @apply flex flex-1 items-center border border-brand-red bg-white
+    @apply px-4 py-4 md:px-5 md:py-[18px]
+    @apply min-h-[49px] md:min-h-[66px] xl:min-h-[80px]

@@ -1,0 +1,64 @@
+// =============================================================================
+// Photo mosaic — template-parts/modules/photo-mosaic.php
+// Figma 2882:5176 desktop, 2882:5216 tablet, 2882:5226 mobile — all confirmed
+// 2026-08-17.
+//
+// The photos are direct items of the page grid, so their columns are the grid's own.
+// Only the first one is placed: it spans both rows, and auto-placement drops the rest
+// into the two columns beside it in the order they are entered. That is what makes the
+// arrangement follow the content — a sixth photo continues into a third row with no
+// rule of its own.
+// =============================================================================
+
+.photo-mosaic
+
+  // Every height lives on the grid's rows rather than on the photos, because the first
+  // row differs from the ones under it at all three breakpoints: the frames give the
+  // opening photo its own size (377 / 825 / 369) and then repeat one size for
+  // everything after it (218 / 232 / 400).
+  //
+  // That repeat is grid-auto-rows, so the module holds any number of photos: a sixth
+  // and a seventh come in at the same height as the rest with no rule of their own.
+  //
+  // Where the frames draw those later rows slightly differently from one another
+  // (mobile 201/200/218/217, tablet 214/232) it is hand-drawn variance, not intent —
+  // each breakpoint takes the largest of them so no row comes out shorter than the
+  // frame shows.
+  //
+  // 24px between rows below desktop, 20px at desktop, which is the grid's own gutter.
+  &__grid
+    @apply gap-y-6 xl:gap-y-5
+
+    grid-template-rows: 377px
+    grid-auto-rows: 218px
+
+    @media (min-width: 768px)
+      grid-template-rows: 825px
+      grid-auto-rows: 232px
+
+    @media (min-width: 1280px)
+      grid-template-rows: 369px 400px
+      grid-auto-rows: 400px
+
+  // Four grid columns each — the frame's 588-591px against the grid's 593.33 — and
+  // across the full container, not the usual inset. Below that: three columns each at
+  // tablet, two up per row, and full width stacked at mobile.
+  &__item
+    @apply relative w-full m-0 overflow-hidden h-auto
+    grid-column: 1 / span 2
+
+    @media (min-width: 768px)
+      grid-column: span 3
+
+    @media (min-width: 1280px)
+      grid-column: span 4
+
+  // The tall one. At desktop it takes both rows, which is what its 787px in the frame
+  // is — 369 + 20 + 400. At tablet it runs the full width above the others.
+  &__item:first-child
+    @media (min-width: 768px)
+      grid-column: 1 / span 6
+
+    @media (min-width: 1280px)
+      grid-column: 1 / span 4
+      grid-row: span 2

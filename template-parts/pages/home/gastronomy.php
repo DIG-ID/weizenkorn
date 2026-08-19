@@ -98,7 +98,15 @@ $gastro_card_order = array(
 				<?php // ---------- Tablet+: images bento (top) + info cards row (bottom) ---------- ?>
 				<div class="hidden md:block mt-14 xl:mt-24">
 					<?php if ( have_rows( 'items' ) ) : ?>
-						<div class="section-gastronomy__images theme-grid">
+						<?php
+						/*
+						 * gap-y-5 because .theme-grid carries no row gap on purpose — vertical
+						 * spacing is each section's own. Here it is the grid's own 20px gutter,
+						 * the same value the info-cards row below uses between its cards and
+						 * above itself.
+						 */
+						?>
+						<div class="section-gastronomy__images theme-grid gap-y-5">
 							<?php
 							while ( have_rows( 'items' ) ) :
 								the_row();

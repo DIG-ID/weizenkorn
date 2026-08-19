@@ -1,0 +1,73 @@
+// =============================================================================
+// Trust — template-parts/modules/trust.php
+// Figma 2882:4306, tablet confirmed 2026-08-19 (canvas 834 / container 703). Desktop has
+// no frame measured — its columns are read off a screenshot — and mobile none at all.
+//
+// All three type blocks are 20/30 at tablet, which is one reason none of them uses the
+// theme's shared classes: .body-text is 14/22 there, and it is a component, so it is
+// emitted after this file and wins any override written here. The same goes for pairing
+// .label-overline with a font-bold utility. Writing the type out is what _order-form.sass
+// already does, for the same reason.
+// =============================================================================
+
+.trust
+
+  // 320 x 183 at mobile, 703 x 346 at tablet, 1517 x 450 at desktop — where the frame's
+  // 1517 is columns 2–11 (1513 at a 1820 container, near enough that the ratio is the
+  // frame's own numbers). Ratios and not heights, so each crop holds as the container
+  // changes width.
+  &__media
+    @apply overflow-hidden
+    aspect-ratio: 320 / 183
+
+    @media (min-width: 768px)
+      aspect-ratio: 703 / 346
+
+    @media (min-width: 1280px)
+      aspect-ratio: 1517 / 450
+
+  // The red line above the lead: bold, 14/22 at mobile and 20/30 from tablet. Colour is
+  // on the element in the template, like every other type class in the theme.
+  &__overline
+    @apply font-primary font-bold uppercase tracking-[0.5px]
+    @apply text-[14px] leading-[22px] md:text-[20px] md:leading-[30px]
+
+  // The line under it: the same 20/30 bold, only the colour differs. The frame draws the
+  // two as consecutive lines of one text block, so there is no space between them — the
+  // 30px leading is the whole rhythm.
+  &__lead
+    @apply font-primary font-bold tracking-[0.5px]
+    @apply text-[14px] leading-[22px] md:text-[20px] md:leading-[30px]
+
+    // wpautop wraps the field in <p>; keep paragraphs apart if the editor writes two.
+    p
+      @apply mb-4 last:mb-0
+
+  // The commitments: regular, 14/22 at mobile and 20/30 from tablet, with disc markers
+  // 21px in and then 30, and no space between items — the frames set them one leading
+  // apart, which is what mb-0 leaves.
+  //
+  // The markers are restored here rather than by .body-text because the type is not the
+  // body scale. _base-styles strips list markers site-wide, so an editor-written list
+  // arrives as unmarked plain lines. Unclassed lists only, so theme markup that carries
+  // its own class stays unmarked.
+  &__list
+    @apply font-primary font-normal tracking-[0.5px]
+    @apply text-[14px] leading-[22px] md:text-[20px] md:leading-[30px]
+
+    p
+      @apply mb-4 last:mb-0
+
+    ul:not([class]),
+    ol:not([class])
+      @apply mb-4 last:mb-0 pl-[21px] md:pl-[30px]
+      list-style-position: outside
+
+    ul:not([class])
+      list-style-type: disc
+
+    ol:not([class])
+      list-style-type: decimal
+
+    li
+      @apply mb-0

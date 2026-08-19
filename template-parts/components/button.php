@@ -52,7 +52,26 @@ $target    = $args['target'] ? $args['target'] : '_self';
 $class     = 'btn btn-' . sanitize_html_class( $args['style'] );
 $icon_only = ( 'arrow' === $args['style'] );
 $has_icon  = in_array( $args['style'], array( 'primary', 'secondary', 'black', 'arrow-down', 'arrow' ), true );
-$icon_name = ( 'arrow-down' === $args['style'] ) ? 'arrow-down' : 'arrow-right';
+
+/*
+ * Arrow direction. The 'arrow-down' style says so outright; for every other style it
+ * is read off the URL, because a button that fetches a file points down in the design
+ * and one that navigates points right — the Living Collection's "DOWNLOAD" is a
+ * primary button with a down arrow, which is not one of the five design-system types.
+ *
+ * Inferring it means an ACF Link needs no companion field and an editor cannot pair
+ * the wrong arrow with a PDF. The cost is the reverse: a file that is meant to read as
+ * navigation still points down, and a download served by a URL with no extension
+ * (a redirect, a query string) points right. Both are then fixed by choosing the
+ * 'arrow-down' style explicitly.
+ */
+$download_types = array( 'pdf', 'zip', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'csv', 'rar', '7z' );
+$url_path       = (string) wp_parse_url( $args['url'], PHP_URL_PATH );
+$url_extension  = strtolower( pathinfo( $url_path, PATHINFO_EXTENSION ) );
+
+$is_download = in_array( $url_extension, $download_types, true );
+
+$icon_name = ( 'arrow-down' === $args['style'] || $is_download ) ? 'arrow-down' : 'arrow-right';
 ?>
 <?php
 $icon = '';

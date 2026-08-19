@@ -114,7 +114,7 @@ if ( ! $st_title && ! $st_subtitle && ! $st_left && ! $st_right && ! $st_image )
 
 			<div class="section-heading__intro col-span-2 <?php echo esc_attr( $st_intro_span ); ?>">
 				<?php if ( $st_subtitle ) : ?>
-					<p class="section-heading__subtitle mb-6 xl:mb-8 uppercase"><?php echo esc_html( $st_subtitle ); ?></p>
+					<p class="section-heading__subtitle label-overline mb-6 xl:mb-8"><?php echo esc_html( $st_subtitle ); ?></p>
 				<?php endif; ?>
 
 				<?php if ( $btn_primary || $btn_secondary ) : ?>

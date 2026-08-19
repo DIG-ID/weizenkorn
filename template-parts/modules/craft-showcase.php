@@ -62,21 +62,12 @@ $cs_ctx = ( ! empty( $args['post_id'] ) ) ? $args['post_id'] : get_the_ID();
 $cs_prefix = ! empty( $args['prefix'] ) ? $args['prefix'] : '';
 
 /*
- * Both shapes of the "Section Title" clone are accepted, as in the other modules:
- * Display: Group stores an extra key and get_field() returns the group as an array,
- * Display: Seamless stores only the flat fields. Neither is wrong.
+ * The heading comes from the shared helper, which reads a cloned "Section Title" group
+ * in either of its Displays and rebuilds the links a Seamless clone hides behind a
+ * composite field reference. See weizenkorn_get_section_heading() in
+ * inc/theme-template-tags.php for why that read is not a plain get_field().
  */
-$cs_heading = get_field( $cs_prefix . 'craft_showcase_section_title', $cs_ctx );
-
-if ( ! $cs_heading && get_field( $cs_prefix . 'craft_showcase_title', $cs_ctx ) ) {
-	$cs_tag = get_field( $cs_prefix . 'craft_showcase_title_heading', $cs_ctx );
-
-	$cs_heading = array(
-		'title'         => get_field( $cs_prefix . 'craft_showcase_title', $cs_ctx ),
-		'title_heading' => $cs_tag ? $cs_tag : 'h2',
-		'subtitle'      => get_field( $cs_prefix . 'craft_showcase_subtitle', $cs_ctx ),
-	);
-}
+$cs_heading = weizenkorn_get_section_heading( $cs_prefix . 'craft_showcase_', $cs_ctx );
 
 if ( ! $cs_heading
 	&& ! get_field( $cs_prefix . 'craft_showcase_image', $cs_ctx )

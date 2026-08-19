@@ -144,3 +144,43 @@ export function initQuoteSlider() {
     });
   });
 }
+
+/**
+ * Our equipment — two five-column slides per view at desktop, one below.
+ *
+ * slidesPerView is a whole 2 and no slide width is set anywhere: the viewport is the
+ * ten-column inset (1513px at desktop) and two five-column slides with the grid's 20px
+ * between them come to exactly that. The slides that follow stay visible past the
+ * container's right edge because the CSS shows .swiper's overflow — see
+ * _modules/_our-equipment.sass.
+ *
+ * Arrows at desktop, bullets at tablet and below — the frames give each breakpoint one
+ * control, and the CSS hides the other. Both are wired here all the same: Swiper binds
+ * them once at init, so a viewport that later crosses 1280 finds the control it needs
+ * already live. All of them sit in the section's grid below the slider, outside .swiper,
+ * so they are looked up from the section root and passed explicitly.
+ */
+export function initEquipmentSlider() {
+  document.querySelectorAll('.js-equipment-slider').forEach((el) => {
+    const root = el.closest('.our-equipment');
+
+    new Swiper(el, {
+      modules: [Navigation, Pagination, A11y],
+      spaceBetween: 20,
+      slidesPerView: 1,
+      breakpoints: {
+        1280: { slidesPerView: 2 },
+      },
+      observer: true,
+      observeParents: true,
+      pagination: {
+        el: root ? root.querySelector('.js-equipment-pagination') : null,
+        clickable: true,
+      },
+      navigation: {
+        prevEl: root ? root.querySelector('.js-equipment-prev') : null,
+        nextEl: root ? root.querySelector('.js-equipment-next') : null,
+      },
+    });
+  });
+}

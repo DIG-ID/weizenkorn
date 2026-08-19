@@ -103,22 +103,12 @@ if ( ! $cta_shortcode ) {
 
 		<?php
 		/*
-		 * Heading + red rule, from the shared section-heading component.
-		 *
-		 * That component takes the whole "Section Title" group, but every Figma frame
-		 * of this section needs nothing but a title — so a plain text field is
-		 * accepted too and the minimal args are synthesised from it. Saves putting a
-		 * group with subtitle, descriptions and two buttons in the admin for a
-		 * section that uses none of them, while still going through one component.
+		 * The heading comes from the shared helper, which reads a cloned "Section Title" group
+		 * in either of its Displays and rebuilds the links a Seamless clone hides behind a
+		 * composite field reference. See weizenkorn_get_section_heading() in
+		 * inc/theme-template-tags.php for why that read is not a plain get_field().
 		 */
-		$cta_heading = get_field( $cta_prefix . 'cta_section_title', $cta_ctx );
-
-		if ( ! $cta_heading && get_field( $cta_prefix . 'cta_title', $cta_ctx ) ) {
-			$cta_heading = array(
-				'title'         => get_field( $cta_prefix . 'cta_title', $cta_ctx ),
-				'title_heading' => 'h2',
-			);
-		}
+		$cta_heading = weizenkorn_get_section_heading( $cta_prefix . 'cta_', $cta_ctx );
 
 		if ( $cta_heading ) {
 			get_template_part( 'template-parts/components/section-heading', null, $cta_heading );
