@@ -15,10 +15,17 @@
  *   gastronomy_section_title    (text)
  *   gastronomy_section_subtitle (text)
  *   gastronomy_section_text     (textarea / wpautop)
- *   gastronomy_items            (repeater) → image (image, ID), title (text),
+ *   gastronomy_items            (repeater, up to 5) → image (image, ID), title (text),
  *                                            logo (image, ID), text (textarea),
  *                                            page (link)
- *   Repeater order drives the images bento: 1 Rhyvage · 2 Cantina · 3 Hotel · 4 Bäckerei.
+ *   Repeater order drives the images bento: 1 Rhyvage · 2 Cantina · 3 Seminare & Events ·
+ *   4 Bäckerei · 5 DASBREITEHOTEL.
+ *
+ * 5 venues instead of the Home page's 4: 3 across the top row, 2 across the
+ * bottom (see the __images--5 modifier in _pages/_gastronomie-hotellerie.sass
+ * for why that needs a modifier class rather than just different column
+ * spans — the base .section-gastronomy__images rule, shared with Home, sets
+ * fixed row heights tuned for its different 4-item bento).
  *
  * @package weizenkorn
  * @subpackage Section
@@ -32,20 +39,25 @@ if ( ! $gastro_title ) {
 }
 
 // Images bento placement per repeater index (tablet 6-col · desktop 12-col).
+// 3 equal columns on top, 2 equal (wider) columns below — unlike Home's 4-item
+// bento, no image spans multiple rows, so every cell is a plain col-span.
 $gastro_bento = array(
-	1 => 'md:col-start-1 md:col-span-3 md:row-start-1 xl:col-start-1 xl:col-span-3 xl:row-start-1',
-	2 => 'md:col-start-1 md:col-span-3 md:row-start-2 xl:col-start-4 xl:col-span-3 xl:row-start-1',
-	3 => 'md:col-start-4 md:col-span-3 md:row-start-1 md:row-span-2 xl:col-start-7 xl:col-span-6 xl:row-start-1 xl:row-span-2',
-	4 => 'md:col-start-1 md:col-span-6 md:row-start-3 xl:col-start-1 xl:col-span-6 xl:row-start-2',
+	1 => 'md:col-start-1 md:col-span-2 md:row-start-1 xl:col-start-1 xl:col-span-4 xl:row-start-1',
+	2 => 'md:col-start-3 md:col-span-2 md:row-start-1 xl:col-start-5 xl:col-span-4 xl:row-start-1',
+	3 => 'md:col-start-5 md:col-span-2 md:row-start-1 xl:col-start-9 xl:col-span-4 xl:row-start-1',
+	4 => 'md:col-start-1 md:col-span-3 md:row-start-2 xl:col-start-1 xl:col-span-6 xl:row-start-2',
+	5 => 'md:col-start-4 md:col-span-3 md:row-start-2 xl:col-start-7 xl:col-span-6 xl:row-start-2',
 );
 
 // Info-cards row order (differs from the bento) via CSS order — repeater stays
-// in image order: 1 Rhyvage → 2nd · 2 Cantina → 3rd · 3 Hotel → 1st · 4 Bäckerei → 4th.
+// in image order: 1 Rhyvage → 2nd · 2 Cantina → 3rd · 3 Seminare & Events → 5th ·
+// 4 Bäckerei → 4th · 5 DASBREITEHOTEL → 1st.
 $gastro_card_order = array(
 	1 => 'order-2',
 	2 => 'order-3',
-	3 => 'order-1',
+	3 => 'order-5',
 	4 => 'order-4',
+	5 => 'order-1',
 );
 ?>
 <section class="section-gastronomy mb-24 md:mb-32 xl:mb-48">
@@ -115,14 +127,35 @@ $gastro_card_order = array(
 		<?php // ---------- Tablet+: images bento (top) + info cards row (bottom) ---------- ?>
 		<div class="hidden md:block mt-14 xl:mt-24">
 			<?php if ( have_rows( 'gastronomy_items' ) ) : ?>
-				<div class="section-gastronomy__images theme-grid">
+				<div class="section-gastronomy__images section-gastronomy__images--5 theme-grid">
 					<?php
 					while ( have_rows( 'gastronomy_items' ) ) :
 						the_row();
 						$g_idx  = get_row_index();
 						$g_cols = isset( $gastro_bento[ $g_idx ] ) ? $gastro_bento[ $g_idx ] : '';
 						?>
-						<div class="section-gastronomy__img relative overflow-hidden <?php echo esc_attr( $g_cols ); ?>">
+						<?php
+						/*
+						 * xl:max-h caps the bottom row (6-col span, so at wide viewports the
+						 * aspect-[3/2] height would otherwise grow past 384px). No min-width
+						 * here on purpose — an explicit min-width on a 1fr grid track item
+						 * feeds into the track-sizing algorithm, and the top row's 4-col items
+						 * needing ~96px/track (384px ÷ 4) outweighed the bottom row's 6-col
+						 * items needing only ~64px/track (384px ÷ 6), so every track ended up
+						 * sized to the stronger constraint — flattening the intended 4-vs-6-col
+						 * (33%-vs-50%) split into 5 equal-width tiles.
+						 *
+						 * w-full: once max-height caps the aspect-[3/2] height, the browser can
+						 * resolve width FROM that capped height instead of from the grid column
+						 * (aspect-ratio auto-sizing is allowed to go either direction once both
+						 * axes have a constraint) — on the 6-col row that produced a 384×1.5 =
+						 * 576px-wide box instead of the real (wider) column width, undoing the
+						 * 4-vs-6-col split visually. An explicit width keeps width unconditionally
+						 * tied to the column; only height is left for the aspect-ratio/max-height
+						 * to resolve.
+						 */
+						?>
+						<div class="section-gastronomy__img relative overflow-hidden aspect-[3/2] w-full xl:max-h-[384px] <?php echo esc_attr( $g_cols ); ?>">
 							<?php if ( get_sub_field( 'image' ) ) : ?>
 								<?php
 								echo wp_get_attachment_image(
@@ -143,7 +176,7 @@ $gastro_card_order = array(
 					?>
 				</div>
 
-				<div class="section-gastronomy__cards grid md:grid-cols-2 xl:grid-cols-4 gap-5 mt-5">
+				<div class="section-gastronomy__cards grid md:grid-cols-2 xl:grid-cols-5 gap-5 mt-5">
 					<?php
 					while ( have_rows( 'gastronomy_items' ) ) :
 						the_row();

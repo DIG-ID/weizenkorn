@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.6.1] — 2026-08-20
+
+### Changed
+- Gastronomie und Hotellerie page: venues section now shows 5 venues instead of 4 (3 across the top row, 2 wider ones across the bottom), with a 20px gap between the two rows and each tile capped at 384px tall on desktop. Kept separate from the Home page's own 4-venue version.
+
+### Fixed
+- Footer: a leftover commented-out `do_action( 'socials' )` call failed lint (not properly punctuated) — reworded as a plain placeholder note.
+
 ## [1.6.0] — 2026-08-19
 
 ### Added

@@ -25,7 +25,7 @@
 					?>
 				</a>
 
-			<?php // do_action( 'socials' ); ?>
+			<?php // Placeholder for social icons in the footer brand block, not implemented yet. ?>
 			</div>
 
 			<div class="footer-main__card footer-main__address">

@@ -1,0 +1,25 @@
+// =============================================================================
+// Gastronomie und Hotellerie page — template-parts/pages/gastronomie-hotellerie/
+// =============================================================================
+
+// -- Gastronomy (5 venues) -------------------------------------------------
+// Same component as the Home page's own gastronomy section (.section-gastronomy,
+// styled in _pages/_home.sass), but with a 5th venue: 3 across the top row,
+// 2 across the bottom, instead of Home's 4-item bento (2 small squares + 1
+// tall image spanning both rows + 1 wide image). Home's base rule sets a
+// fixed pair of row heights tuned for that spanning image — wrong for this
+// page's plain two-row layout, so this modifier (compound selector, so it
+// wins on specificity regardless of stylesheet order) cancels it instead.
+// Every image uses a consistent aspect-[3/2] (set in the PHP) so each row's
+// height follows naturally from its own column width — the wider bottom-row
+// images end up taller automatically, matching the design, without needing
+// new hand-picked pixel heights.
+.section-gastronomy__images.section-gastronomy__images--5
+  grid-auto-rows: auto
+  // .theme-grid only sets a column gap (gap-x-5) — row-gap is deliberately
+  // left to each section, since most don't stack rows at all. This one does
+  // (top row of 3, bottom row of 2), so it gets its own 20px row-gap here,
+  // matching the grid's usual gutter.
+  row-gap: 20px
+  @media (min-width: 1280px)
+    grid-template-rows: none
