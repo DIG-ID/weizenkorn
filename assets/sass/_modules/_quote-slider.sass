@@ -61,13 +61,13 @@
       margin-left: calc(16.667% + 13.33px)
 
   // Quotation, 24px at both mobile and tablet (only the leading differs: 37 vs
-  // 36), 50/65 at desktop. No colour here — it is set on the blockquote in the
+  // 36), 40/60 at desktop. No colour here — it is set on the blockquote in the
   // template so the wpautop <p> inherits it.
   // NOTE: needs the 1,300 italic axis in WEIZENKORN_GOOGLE_FONTS_URL, otherwise
   // the browser synthesises a fake light italic from the 400 weight.
   &__text
     @apply font-primary font-light italic tracking-[0.5px]
-    @apply text-[24px] leading-[37px] md:leading-[36px] xl:text-[50px] xl:leading-[65px]
+    @apply text-[24px] leading-[37px] md:leading-[36px] xl:text-[40px] xl:leading-[60px]
 
     p
       @apply mb-6 last:mb-0
