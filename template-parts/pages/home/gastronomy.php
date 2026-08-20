@@ -9,9 +9,17 @@
  *
  * ACF structure (group "gastronomy"):
  *   section_title (clone → "Section Title" group; fed to the section-heading)
- *   items         (repeater) → image (image, ID), title (text), logo (image, ID),
+ *   items         (repeater, up to 5) → image (image, ID), title (text), logo (image, ID),
  *                                   text (textarea), page (link)
- *   Repeater order drives the images bento: 1 Rhyvage · 2 Cantina · 3 Hotel · 4 Bäckerei.
+ *   Repeater order drives the images bento: 1 Rhyvage · 2 Cantina · 3 Seminare & Events ·
+ *   4 Bäckerei · 5 DASBREITEHOTEL.
+ *
+ * 5 venues (was 4): 3 across the top row, 2 across the bottom — no image spans
+ * multiple rows any more, so every tile is a plain col-span and its height
+ * comes from a consistent aspect-[3/2] instead of hand-picked pixel row
+ * heights (see the __images rule removed from _pages/_home.sass). Matches
+ * template-parts/pages/gastronomie-hotellerie/gastronomy.php exactly, kept as
+ * a separate file since that page reads its own flat ACF fields.
  *
  * @package weizenkorn
  * @subpackage Section
@@ -19,20 +27,24 @@
  */
 
 // Images bento placement per repeater index (tablet 6-col · desktop 12-col).
+// 3 equal columns on top, 2 equal (wider) columns below.
 $gastro_bento = array(
-	1 => 'md:col-start-1 md:col-span-3 md:row-start-1 xl:col-start-1 xl:col-span-3 xl:row-start-1',
-	2 => 'md:col-start-1 md:col-span-3 md:row-start-2 xl:col-start-4 xl:col-span-3 xl:row-start-1',
-	3 => 'md:col-start-4 md:col-span-3 md:row-start-1 md:row-span-2 xl:col-start-7 xl:col-span-6 xl:row-start-1 xl:row-span-2',
-	4 => 'md:col-start-1 md:col-span-6 md:row-start-3 xl:col-start-1 xl:col-span-6 xl:row-start-2',
+	1 => 'md:col-start-1 md:col-span-2 md:row-start-1 xl:col-start-1 xl:col-span-4 xl:row-start-1',
+	2 => 'md:col-start-3 md:col-span-2 md:row-start-1 xl:col-start-5 xl:col-span-4 xl:row-start-1',
+	3 => 'md:col-start-5 md:col-span-2 md:row-start-1 xl:col-start-9 xl:col-span-4 xl:row-start-1',
+	4 => 'md:col-start-1 md:col-span-3 md:row-start-2 xl:col-start-1 xl:col-span-6 xl:row-start-2',
+	5 => 'md:col-start-4 md:col-span-3 md:row-start-2 xl:col-start-7 xl:col-span-6 xl:row-start-2',
 );
 
 // Info-cards row order (differs from the bento) via CSS order — repeater stays
-// in image order: 1 Rhyvage → 2nd · 2 Cantina → 3rd · 3 Hotel → 1st · 4 Bäckerei → 4th.
+// in image order: 1 Rhyvage → 2nd · 2 Cantina → 3rd · 3 Seminare & Events → 5th ·
+// 4 Bäckerei → 4th · 5 DASBREITEHOTEL → 1st.
 $gastro_card_order = array(
 	1 => 'order-2',
 	2 => 'order-3',
-	3 => 'order-1',
+	3 => 'order-5',
 	4 => 'order-4',
+	5 => 'order-1',
 );
 ?>
 <section class="section-gastronomy mb-24 md:mb-32 xl:mb-48">
@@ -113,7 +125,17 @@ $gastro_card_order = array(
 								$g_idx  = get_row_index();
 								$g_cols = isset( $gastro_bento[ $g_idx ] ) ? $gastro_bento[ $g_idx ] : '';
 								?>
-								<div class="section-gastronomy__img relative overflow-hidden <?php echo esc_attr( $g_cols ); ?>">
+								<?php
+								/*
+								* xl:max-h caps the bottom row (6-col span, so at wide viewports the
+								* aspect-[3/2] height would otherwise grow past 384px). w-full keeps
+								* width unconditionally tied to the grid column — once max-height caps
+								* the aspect-driven height, a grid item can otherwise resolve its width
+								* FROM that capped height instead of from the column (384 × 1.5 = 576,
+								* which happened to undo the 4-vs-6-col split visually).
+								*/
+								?>
+						<div class="section-gastronomy__img relative overflow-hidden aspect-[3/2] w-full xl:max-h-[384px] <?php echo esc_attr( $g_cols ); ?>">
 									<?php if ( get_sub_field( 'image' ) ) : ?>
 										<?php
 										echo wp_get_attachment_image(
@@ -134,7 +156,7 @@ $gastro_card_order = array(
 							?>
 						</div>
 
-						<div class="section-gastronomy__cards grid md:grid-cols-2 xl:grid-cols-4 gap-5 mt-5">
+						<div class="section-gastronomy__cards grid md:grid-cols-2 xl:grid-cols-5 gap-5 mt-5">
 							<?php
 							while ( have_rows( 'items' ) ) :
 								the_row();
@@ -146,6 +168,9 @@ $gastro_card_order = array(
 									<div class="card__head">
 										<?php if ( get_sub_field( 'logo' ) ) : ?>
 											<span class="card__logo"><?php echo wp_get_attachment_image( get_sub_field( 'logo' ), 'medium', false, array( 'loading' => 'lazy' ) ); ?></span>
+										<?php elseif ( get_sub_field( 'title' ) ) : ?>
+											<?php // No logo set — fall back to the venue's own name/title, styled to spec (font-bold/20px/30px/0.5px) rather than the responsive .title-card scale, since it's meant to read the same at every breakpoint here. ?>
+											<span class="card__logo card__logo--text font-primary font-bold text-[20px] leading-[30px] tracking-[0.5px]"><?php echo esc_html( get_sub_field( 'title' ) ); ?></span>
 										<?php endif; ?>
 										<?php if ( $c_url ) : ?>
 											<span class="card__arrow" aria-hidden="true"><?php weizenkorn_the_svg_icon( 'arrow-right' ); ?></span>

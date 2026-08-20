@@ -31,9 +31,12 @@
 
 // -- Gastronomy ----------------------------------------------------------------
 // Mobile: Swiper slider (JS, see swiper.js) pairs image + card per slide.
-// Tablet+: images bento (this grid) on top + info-cards row below. The big
-// venue spans 2 rows (row-span-2). Row heights approximate the Figma
-// (tablet ~220px · desktop 369/400).
+// Tablet+: images bento (this grid, gap-y-5 utility) on top + info-cards row
+// below — 3 venues across the top row, 2 (wider) across the bottom. No image
+// spans multiple rows, so every tile is a plain col-span and gets its height
+// from a consistent aspect-[3/2] set in the template (template-parts/pages/
+// home/gastronomy.php and .../gastronomie-hotellerie/gastronomy.php), capped
+// at 384px tall from xl — no grid-level height rule needed here any more.
 
 // Mobile slider: image + info card stacked 8px apart. Swiper stretches slides
 // to equal height, so every card is the same size — the card grows to fill.
@@ -50,12 +53,6 @@
     @apply w-[15px] h-[15px] m-0 rounded-full border border-brand-red bg-transparent opacity-100
   .swiper-pagination-bullet-active
     @apply bg-brand-red
-
-.section-gastronomy__images
-  grid-auto-rows: 220px
-  @media (min-width: 1280px)
-    grid-auto-rows: unset
-    grid-template-rows: 369px 400px
 
 // -- Work & Training -----------------------------------------------------------
 // Equal-width link buttons in a row (grid): each fills its cell with the label

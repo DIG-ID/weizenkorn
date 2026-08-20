@@ -21,11 +21,9 @@
  *   Repeater order drives the images bento: 1 Rhyvage · 2 Cantina · 3 Seminare & Events ·
  *   4 Bäckerei · 5 DASBREITEHOTEL.
  *
- * 5 venues instead of the Home page's 4: 3 across the top row, 2 across the
- * bottom (see the __images--5 modifier in _pages/_gastronomie-hotellerie.sass
- * for why that needs a modifier class rather than just different column
- * spans — the base .section-gastronomy__images rule, shared with Home, sets
- * fixed row heights tuned for its different 4-item bento).
+ * Same 5-venue bento as the (now also 5-venue) Home page section: 3 across
+ * the top row, 2 across the bottom, height from a consistent aspect-[3/2]
+ * per image rather than hand-picked pixel row heights.
  *
  * @package weizenkorn
  * @subpackage Section
@@ -127,7 +125,13 @@ $gastro_card_order = array(
 		<?php // ---------- Tablet+: images bento (top) + info cards row (bottom) ---------- ?>
 		<div class="hidden md:block mt-14 xl:mt-24">
 			<?php if ( have_rows( 'gastronomy_items' ) ) : ?>
-				<div class="section-gastronomy__images section-gastronomy__images--5 theme-grid">
+				<?php
+				/*
+				 * gap-y-5 because .theme-grid carries no row gap on purpose — vertical
+				 * spacing is each section's own. Same fix as Home's gastronomy section.
+				 */
+				?>
+				<div class="section-gastronomy__images theme-grid gap-y-5">
 					<?php
 					while ( have_rows( 'gastronomy_items' ) ) :
 						the_row();
@@ -188,6 +192,9 @@ $gastro_card_order = array(
 							<div class="card__head">
 								<?php if ( get_sub_field( 'logo' ) ) : ?>
 									<span class="card__logo"><?php echo wp_get_attachment_image( get_sub_field( 'logo' ), 'medium', false, array( 'loading' => 'lazy' ) ); ?></span>
+								<?php elseif ( get_sub_field( 'title' ) ) : ?>
+									<?php // No logo set — fall back to the venue's own name/title, styled to spec (font-bold/20px/30px/0.5px) rather than the responsive .title-card scale, since it's meant to read the same at every breakpoint here. ?>
+									<span class="card__logo card__logo--text font-primary font-bold text-[20px] leading-[30px] tracking-[0.5px]"><?php echo esc_html( get_sub_field( 'title' ) ); ?></span>
 								<?php endif; ?>
 								<?php if ( $c_url ) : ?>
 									<span class="card__arrow" aria-hidden="true"><?php weizenkorn_the_svg_icon( 'arrow-right' ); ?></span>
