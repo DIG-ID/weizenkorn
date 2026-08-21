@@ -1,56 +1,32 @@
-// =============================================================================
-// Section heading (template-parts/components/section-heading.php)
-// =============================================================================
+// Section heading — template-parts/components/section-heading.php
 
-// CTA buttons: stacked below desktop, inline from xl. The label sits left and the arrow
-// is pushed to the right by space-between at every breakpoint.
+// CTA buttons: stacked below desktop, inline from xl, and all the same width as the
+// widest of them.
 //
-// w-fit plus the default stretch is what makes a stack of buttons come out all the same
-// width as the widest of them, which is what the home's frame shows: "ZU ALLEN
-// PRODUKTEN" and the shorter "KUNDENGESCHENKE" are drawn the same size.
+// w-fit plus the default stretch is the load-bearing pair, and neither half reads as
+// important on its own. w-fit shrinks this box to its widest child; the stretch every
+// flex column has by default then pulls the narrower children out to that width. Take
+// w-fit away and the box is as wide as the column, so the stretch runs the buttons to
+// full width. Replace the stretch with items-start and each button falls back to its own
+// content width, so they no longer match.
 //
-// The pair is load-bearing and neither half reads as important on its own. w-fit shrinks
-// this box to its widest child (min-widths included), and the stretch every flex column
-// has by default then pulls the narrower children out to that width. Take w-fit away and
-// the box is as wide as the column, so the stretch runs the buttons to the full width —
-// which is the bug this replaced. Replace the stretch with items-start and each button
-// falls back to its own content width, so they no longer match each other.
-//
-// A stretched flex item also ignores width: auto, since the stretch is what sets the
-// cross-size — so the .btn width below only ever acts through this box.
+// A stretched flex item also ignores width: auto, so the .btn width below only ever acts
+// through this box.
 .section-heading__buttons
   @apply flex w-fit flex-col items-stretch gap-4 xl:flex-row
 
-  // The frames size this button 188x42 at mobile and 218x48 at tablet and desktop
-  // (Figma 2882:3962 / 2882:3482 / 2882:5170, confirmed 2026-08-17). Those are the
-  // component's own sizes, not the grid's: 188 is 58% of the 321 container and ends
-  // inside column 2, and 218 is no multiple of the desktop column either. Only the
-  // tablet value happens to land on 2 columns, 2px off.
+  // min-width, not width: below desktop the frame's box is wider than the label and the
+  // arrow need, and space-between pushes the arrow into that extra room. A fixed width
+  // would overflow the moment a longer label arrived, .btn being whitespace-nowrap. With
+  // a minimum, the frame's size is the floor and a longer label just widens the button.
   //
-  // min-width, not width. At mobile and tablet the frame's box is wider than the label
-  // and the arrow need, and space-between is what pushes the arrow to the right of that
-  // extra room. A fixed width would do the same until a longer label arrived and then
-  // overflow it, since .btn is whitespace-nowrap and cannot wrap out of the way. With a
-  // minimum, the frame's size is the floor and a longer label just makes the button
-  // wider.
+  // gap-4 because at desktop the frame's width is exactly what the contents come to, so
+  // nothing is left to distribute and the gap sets the distance — .btn's default gap-16
+  // would blow the button out.
   //
-  // At desktop the two coincide exactly: 12 + 154 label + 16 gap + 24 arrow + 12 = 218,
-  // so nothing is left to distribute and the gap sets the distance — hence gap-4, where
-  // the .btn default gap-16 (64px) would blow the button out.
-  // Size, from the home's mobile frame (Figma 1891:1874, confirmed 2026-08-17) and the
-  // Xyloba frames for the wider breakpoints: 221x40 at mobile, 218x48 at tablet and
-  // desktop. Both the primary and the secondary button take it, which is what the home
-  // shows — the two are drawn the same size there.
-  //
-  // The frame's 221 holds a 124px label with 51px of air before the arrow, so the width
-  // is the component's own and not a function of the text. It is a minimum here for the
-  // reason above: whitespace-nowrap means a longer label has nowhere to go, so it widens
-  // the button rather than overflowing it.
-  //
-  // Height needs the line-height set, not just the padding. .btn declares none, so it
-  // inherits the body's 1.5 and every button comes out 49px at mobile and 50.5 at
-  // desktop. Padding plus an explicit leading gives the frames exactly: 12 + 16 + 12 =
-  // 40, and 14 + 20 + 14 = 48.
+  // The height needs the line-height set, not just the padding: .btn declares none, so
+  // it inherits the body's 1.5 and the buttons come out ~49px instead of the frames' 40
+  // and 48.
   .btn
     @apply w-auto justify-between gap-4 min-w-[221px] md:min-w-[218px]
     @apply py-3 leading-4 md:py-3.5 md:leading-5

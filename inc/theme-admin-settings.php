@@ -29,8 +29,7 @@ add_action( 'wp_dashboard_setup', 'weizenkorn_disable_default_dashboard_widgets'
 /**
  * Registers the dig.id welcome widget as the first dashboard box.
  *
- * Shown to every role (unlike the core welcome panel, which is
- * admin-only), so clients get onboarding guidance too.
+ * Shown to every role, unlike the core welcome panel, so clients get the guidance too.
  *
  * @since 1.12.0
  */
@@ -55,10 +54,9 @@ add_action( 'wp_dashboard_setup', 'weizenkorn_add_welcome_dashboard_widget' );
 /**
  * Renders the dig.id welcome widget content.
  *
- * The support button links to WEIZENKORN_SUPPORT_EMAIL (define it in
- * wp-config.php or functions.php to override per project). The
- * knowledgebase button is a disabled placeholder until the dig.id
- * knowledge base exists.
+ * The support button links to WEIZENKORN_SUPPORT_EMAIL — define it in wp-config.php or
+ * functions.php to override per project. The knowledgebase button is a disabled
+ * placeholder until the dig.id knowledge base exists.
  *
  * @since 1.12.0
  */
@@ -99,8 +97,7 @@ function weizenkorn_render_welcome_widget() {
 /**
  * Removes the default WordPress welcome panel from the dashboard.
  *
- * Unhooking wp_welcome_panel() removes the panel content and frees the
- * welcome_panel hook for a future dig.id branded welcome widget.
+ * Unhooking wp_welcome_panel() frees the welcome_panel hook for our own widget.
  *
  * @since 1.12.0
  */
@@ -113,9 +110,8 @@ add_action( 'admin_init', 'weizenkorn_remove_welcome_panel' );
 /**
  * Keeps the welcome panel dismissed so its empty container never renders.
  *
- * Core prints the #welcome-panel wrapper whenever the show_welcome_panel
- * user meta is 1 (the default for new users), even with the content
- * unhooked — forcing it to 0 on the dashboard hides the empty shell.
+ * Core prints the #welcome-panel wrapper whenever show_welcome_panel is 1, the default
+ * for a new user, even with the content unhooked. Forcing it to 0 hides the empty shell.
  *
  * @since 1.12.0
  */
@@ -162,9 +158,8 @@ add_action( 'admin_enqueue_scripts', 'weizenkorn_admin_css', 10 );
 /**
  * Enqueues the admin bar stylesheet wherever the bar is rendered.
  *
- * The admin bar markup is identical on wp-admin and on the front end,
- * so a single small bundle is loaded in both contexts (only when the
- * bar is actually showing).
+ * The markup is identical on wp-admin and on the front end, so one small bundle serves
+ * both — loaded only when the bar is actually showing.
  *
  * @since 1.13.0
  */
@@ -185,9 +180,8 @@ add_action( 'admin_enqueue_scripts', 'weizenkorn_admin_bar_css', 10 );
 add_action( 'wp_enqueue_scripts', 'weizenkorn_admin_bar_css', 10 );
 
 /**
- * Enqueues the media uploader and the nav menu item "Image" field script
- * (Appearance > Menus screen only). Pairs with
- * weizenkorn_nav_menu_item_image_field() in inc/theme-setup.php.
+ * Enqueues the media uploader and the nav menu item "Image" field script, on the
+ * Appearance > Menus screen only. Pairs with weizenkorn_nav_menu_item_image_field().
  *
  * @param string $hook_suffix Current admin page hook suffix.
  */

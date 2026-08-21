@@ -2,11 +2,9 @@
 /**
  * Theme security hardening.
  *
- * Complements the SG Security (Security Optimizer) plugin — which is
- * installed on every dig.id site — by covering vulnerabilities the plugin
- * does not address: REST API user enumeration, author archive enumeration,
- * login error information disclosure, XML-RPC/pingback abuse, front-end
- * search abuse and missing HTTP security headers.
+ * Complements the SG Security plugin, which is installed on every dig.id site, by
+ * covering what it does not: REST API and author archive user enumeration, login error
+ * disclosure, XML-RPC abuse, front-end search abuse and HTTP security headers.
  *
  * @package weizenkorn
  * @subpackage Functionality
@@ -18,19 +16,15 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Disable XML-RPC.
  *
- * Not used by our standard stack (no Jetpack, no remote-publishing apps).
- * XML-RPC is a known attack surface: pingback.ping can be abused for
- * reflected DDoS and enumeration, and system.multicall amplifies
- * credential-stuffing attempts. Disables the authenticated methods, strips
- * the pingback methods (which work without authentication) and removes the
- * X-Pingback header advertising the endpoint.
- *
- * Remove these filters on projects that need XML-RPC integrations.
+ * The pingback.ping method can be abused for reflected DDoS and system.multicall
+ * amplifies credential stuffing. Remove these three filters on a project that needs it.
  */
 add_filter( 'xmlrpc_enabled', '__return_false' );
 
 /**
  * Strip the pingback methods from the XML-RPC server.
+ *
+ * These work without authentication, so xmlrpc_enabled alone does not stop them.
  *
  * @param array $methods Registered XML-RPC methods.
  * @return array Filtered methods.
@@ -44,7 +38,7 @@ function weizenkorn_remove_xmlrpc_pingback_methods( $methods ) {
 add_filter( 'xmlrpc_methods', 'weizenkorn_remove_xmlrpc_pingback_methods' );
 
 /**
- * Remove the X-Pingback header from HTTP responses.
+ * Remove the X-Pingback header, which advertises the endpoint.
  *
  * @param array $headers HTTP response headers.
  * @return array Filtered headers.
@@ -59,9 +53,7 @@ add_filter( 'wp_headers', 'weizenkorn_remove_pingback_header' );
 /**
  * Block public access to the REST API users endpoints.
  *
- * By default WordPress exposes /wp-json/wp/v2/users to unauthenticated
- * visitors, leaking real usernames (and sometimes login emails) that can
- * be used in brute-force attacks.
+ * Core exposes them to unauthenticated visitors, leaking real usernames.
  *
  * @param array $endpoints Registered REST API endpoints.
  * @return array Filtered endpoints.
@@ -79,8 +71,7 @@ add_filter( 'rest_endpoints', 'weizenkorn_disable_rest_user_endpoints' );
 /**
  * Block author archive enumeration.
  *
- * Requests like ?author=1 or /author/username/ redirect to a URL containing
- * the real username. Redirect unauthenticated visitors to the homepage.
+ * ?author=1 redirects to a URL containing the real username.
  *
  * @return void
  */
@@ -95,15 +86,9 @@ add_action( 'template_redirect', 'weizenkorn_disable_author_archives' );
 /**
  * Disable front-end search by default.
  *
- * The starter ships without a search UI, but WordPress still answers ?s=
- * requests: each one runs an expensive LIKE query over the whole posts
- * table, and internal search result URLs are a common spam-crawling
- * target. Serve a clean 404 instead of redirecting (redirects to the
- * homepage would create soft-404s and point spam URLs at it).
- *
- * On projects that need search: remove this filter and build search.php
- * (plus searchform.php) designed for that project. Note that WooCommerce
- * product search also uses ?s=, so shops with search need this removed.
+ * A 404 rather than a redirect, which would create soft-404s and point spam URLs at the
+ * homepage. On a project that needs search, remove this filter and build search.php and
+ * searchform.php for it — note that WooCommerce product search also uses ?s=.
  *
  * @return void
  */
@@ -119,10 +104,8 @@ function weizenkorn_disable_search() {
 add_action( 'template_redirect', 'weizenkorn_disable_search' );
 
 /**
- * Remove author data from oEmbed responses.
- *
- * The oEmbed responses (/wp-json/oembed/1.0/embed) include author_name and
- * author_url, which leak usernames even when author archives are blocked.
+ * Remove author data from oEmbed responses, which leaks usernames even when author
+ * archives are blocked.
  *
  * @param array $data oEmbed response data.
  * @return array Filtered response data.
@@ -138,9 +121,8 @@ add_filter( 'oembed_response_data', 'weizenkorn_remove_oembed_author' );
 /**
  * Remove users from core XML sitemaps.
  *
- * WordPress core sitemaps include a users provider that lists all authors.
- * Yoast SEO replaces core sitemaps on our stack, but this acts as a safety
- * net for sites where Yoast is disabled or misconfigured.
+ * Yoast replaces core sitemaps on our stack; this is the safety net for a site where it
+ * is disabled or misconfigured.
  *
  * @param WP_Sitemaps_Provider|false $provider Sitemap provider instance.
  * @param string                     $name     Provider name.
@@ -158,9 +140,7 @@ add_filter( 'wp_sitemaps_add_provider', 'weizenkorn_remove_users_sitemap', 10, 2
 /**
  * Use a generic login error message.
  *
- * Default login errors reveal whether a username exists ("incorrect
- * password" vs "unknown username"), letting attackers confirm valid
- * accounts. Return the same message for every failure.
+ * The defaults reveal whether a username exists, letting an attacker confirm accounts.
  *
  * @return string Generic error message.
  */
@@ -170,23 +150,16 @@ function weizenkorn_generic_login_error() {
 add_filter( 'login_errors', 'weizenkorn_generic_login_error' );
 
 /**
- * Disable application passwords.
- *
- * Not used by our standard stack. Remove this filter on projects that need
- * authenticated REST API integrations via application passwords.
+ * Disable application passwords. Remove on a project that needs authenticated REST API
+ * integrations through them.
  */
 add_filter( 'wp_is_application_passwords_available', '__return_false' );
 
 /**
  * Send standard HTTP security headers.
  *
- * Covers headers the SG Security plugin does not reliably send: HSTS,
- * X-Frame-Options, X-Content-Type-Options, Referrer-Policy and
- * Permissions-Policy.
- *
- * Content-Security-Policy is intentionally left out — it must be built per
- * project (GTM, embeds, payment scripts) and always tested first in
- * Report-Only mode before enforcing.
+ * Content-Security-Policy is deliberately left out — it has to be built per project (GTM,
+ * embeds, payment scripts) and tested in Report-Only mode before being enforced.
  *
  * @return void
  */
@@ -199,8 +172,7 @@ function weizenkorn_security_headers() {
 	header( 'X-Content-Type-Options: nosniff' );
 	header( 'Referrer-Policy: strict-origin-when-cross-origin' );
 
-	// Adjust per project if the site itself needs any of these features
-	// (e.g. geolocation for a store locator / map "locate me" button).
+	// Adjust per project if the site itself needs any of these features.
 	header( 'Permissions-Policy: camera=(), microphone=(), geolocation=()' );
 
 	if ( is_ssl() ) {

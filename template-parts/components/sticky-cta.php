@@ -1,16 +1,14 @@
 <?php
 /**
- * Fixed bottom-right promo box (Figma "hero section_first moment on website",
- * node 652:822) — shows title + text + arrow on load, collapses to just the
- * arrow after a few seconds (assets/js/sticky-cta.js), hover/focus
- * re-expands. Home only for now — included from header.php behind an
- * is_front_page() check.
+ * Fixed bottom-right promo box — title, text and arrow on load, collapsing to just the
+ * arrow after a few seconds (assets/js/sticky-cta.js), re-expanding on hover or focus.
+ * Home only for now, included from header.php behind an is_front_page() check.
  *
- * ACF fields (flat, "Sticky CTA" group, page-templates/page-home.php):
+ * ACF fields (flat, "Sticky CTA" group):
  *   sticky_cta_title (text)
  *   sticky_cta_text  (textarea)
- *   sticky_cta_link  (text — a plain URL; the whole box is the link, so no
- *                     separate link title/target are needed)
+ *   sticky_cta_link  (text) a plain URL — the whole box is the link, so it needs no title
+ *                    or target of its own
  *
  * @package weizenkorn
  * @subpackage Component

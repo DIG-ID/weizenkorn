@@ -1,0 +1,31 @@
+// Location — template-parts/modules/location.php
+
+.location
+
+  // Google Maps needs a height of its own here: the API renders into a zero-height box
+  // without complaint, and the section then looks like it simply did not load. A ratio
+  // rather than a height, so the map keeps its shape as the container narrows.
+  &__map
+    @apply w-full overflow-hidden
+    aspect-ratio: 320 / 192
+
+    @media (min-width: 768px)
+      aspect-ratio: 700 / 448
+
+    @media (min-width: 1280px)
+      aspect-ratio: 1514 / 640
+
+    // The marker is data for the script, never something to paint.
+    .marker
+      @apply hidden
+
+  // Its own type in the design system — "Map Address" — and not the body scale, which is
+  // why .body-text is not used here.
+  &__address
+    @apply font-primary font-normal tracking-[0.5px]
+    @apply text-[16px] leading-[22px] md:text-[24px] md:leading-[42px] xl:text-[40px] xl:leading-[55px]
+
+    // One block of lines, so paragraphs sit one leading apart like the <br> lines inside
+    // them, not a paragraph gap apart.
+    p
+      @apply mb-0

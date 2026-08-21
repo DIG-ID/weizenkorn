@@ -1,21 +1,25 @@
 <?php
 /**
- * Section Title — renders the reusable "Section Title" ACF group
- * (title heading tag, subtitle, title, left/right descriptions, 2 buttons).
- * Receives the group's data via $args; the component never calls get_field().
+ * Section Title — renders the reusable "Section Title" ACF group. Receives the group's
+ * data via $args; the component never calls get_field().
  *
- * $args keys match the "Section Title" ACF group field names verbatim:
+ * $args keys match the ACF group's field names verbatim, typos included:
  *   title_heading      string  h1..h6 (heading tag; default h2)
  *   subtitle           string  eyebrow / overline
  *   title              string  main title (may contain <br>; new_lines = br)
- *   description        string  'left' | 'right' | 'both' — which description fields
- *                              show. Each renders in the column its name says.
- *   desciption_left    string  wysiwyg — left column   [sic: ACF field name]
+ *   description        string  'left' | 'right' | 'both' — which description field shows.
+ *                              Each renders in the column its name says.
+ *   desciption_left    string  wysiwyg — left column   [sic]
  *   description_right  string  wysiwyg — right column
  *   buttons            array   { prmary: link, secondary: link }  [sic]
  *   image              int     optional heading image (attachment ID)
  *
- * Usage (section reads its cloned Section Title group and passes it through):
+ * One key is the caller's own and not the group's:
+ *   title_style        string  'overline' typesets the title as the eyebrow instead of the
+ *                              display heading — the gastronomy venues' photo mosaic,
+ *                              which has no display title at all.
+ *
+ * Usage:
  *   $st = get_field( 'products_section_title' );
  *   if ( $st ) { get_template_part( 'template-parts/components/section-heading', null, $st ); }
  *
@@ -33,22 +37,24 @@ $st_right    = isset( $args['description_right'] ) ? $args['description_right'] 
 $st_buttons  = ( isset( $args['buttons'] ) && is_array( $args['buttons'] ) ) ? $args['buttons'] : array();
 $st_image    = isset( $args['image'] ) ? (int) $args['image'] : 0;
 
+// Type only — the title keeps its slot, its tag and its columns either way, so a heading
+// that reads as an eyebrow is still the page's h2 and still carries the rule.
+$st_title_class = ( ! empty( $args['title_style'] ) && 'overline' === $args['title_style'] )
+	? 'label-overline'
+	: 'title-main';
+
 $allowed_tags = array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' );
 $st_tag       = in_array( $st_tag, $allowed_tags, true ) ? $st_tag : 'h2';
 
 $show_left  = in_array( $st_layout, array( 'left', 'both' ), true );
 $show_right = in_array( $st_layout, array( 'right', 'both' ), true );
 
-/*
- * The "description" choice picks which of the two description fields shows, and each
- * one renders in the column its name says: the left one under the subtitle and
- * buttons, the right one opposite. Before this, both landed in the right-hand column,
- * so choosing "left" gave you the left field's text on the right of the layout.
- *
- * The left column widens when it carries a description — 5 of 12 at desktop, the
- * design's 747px, and the full width at tablet where 2 of 6 columns is too narrow for
- * a paragraph. Without one it keeps the narrow span the subtitle and buttons need.
- */
+// Each description renders in the column its name says: the left one under the subtitle
+// and buttons, the right one opposite. Before this both landed on the right, so choosing
+// "left" put the left field's text on the right of the layout.
+//
+// The left column widens when it carries a description — at tablet two of six columns is
+// too narrow for a paragraph. Without one it keeps the narrow span the subtitle needs.
 $st_intro_span = ( $show_left && $st_left )
 	? 'md:col-span-6 xl:col-start-2 xl:col-span-5'
 	: 'md:col-span-2 xl:col-start-2 xl:col-span-4';
@@ -68,16 +74,12 @@ if ( ! $st_title && ! $st_subtitle && ! $st_left && ! $st_right && ! $st_image )
 <header class="section-heading">
 	<?php if ( $st_title ) : ?>
 		<?php
-		/*
-		 * The red rule sits 16 / 24 / 32px under the title and the same distance above
-		 * whatever follows it — measured off the product-overview and stories frames,
-		 * which agree at every breakpoint. Symmetric on purpose: it is one rule with
-		 * equal air either side, not a heading with a trailing gap.
-		 */
+		// The rule has equal air either side at every breakpoint, on purpose: it is one rule
+		// with air around it, not a heading with a trailing gap.
 		?>
 		<div class="section-heading__title-wrap border-b border-brand-red pb-4 md:pb-6 xl:pb-8 mb-4 md:mb-6 xl:mb-8">
 			<div class="theme-grid">
-				<<?php echo esc_html( $st_tag ); ?> class="title-main section-heading__title col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-11">
+				<<?php echo esc_html( $st_tag ); ?> class="<?php echo esc_attr( $st_title_class ); ?> section-heading__title col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-11">
 					<?php
 					echo wp_kses(
 						$st_title,

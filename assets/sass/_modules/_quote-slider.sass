@@ -1,49 +1,34 @@
-// =============================================================================
 // Quote slider — template-parts/modules/quote-slider.php
-// Figma "quote-desktop" (3018:3034), "quote-tablet" (3018:3047) and the mobile
-// group (2857:458), confirmed 2026-07-30.
 //
-// There is exactly ONE grid here: the page's. The slider sits outside
-// .theme-container and each slide carries its own container + .theme-grid, so a
-// slide is the viewport width and its columns ARE the page's columns — no grid
-// nested inside another grid, no doubled column lines.
+// There is exactly ONE grid here: the page's. The slider sits outside .theme-container
+// and each slide carries its own container + .theme-grid, so a slide is the viewport
+// width and its columns ARE the page's columns — no grid nested inside another.
 //
-// Layout is Tailwind utilities in the template; this file holds the type styles,
-// the navigation states, and the two half-column trims on tablet — the only
-// places that need real CSS rather than a utility.
-// =============================================================================
+// Layout is Tailwind utilities in the template; this file holds the type styles, the
+// navigation states, and the two half-column trims on tablet.
 
 .quote-slider
 
-  // .theme-grid has no row gap by design, so the mobile stack declares its own.
-  // Nothing reserves the image row: a slide without an image puts its card in
-  // row 1 and the card sits at the top; a slide with one puts the image in row 1
-  // and the card slides down below it. content-start (set in the template) keeps
-  // the card at its own height instead of stretching to the slider's, which is
-  // the height of the tallest slide.
+  // .theme-grid has no row gap by design. Nothing reserves the image row: a slide
+  // without an image puts its card in row 1. content-start (set in the template) keeps
+  // the card at its own height instead of stretching to the tallest slide's.
   &__grid
     @apply gap-y-[14px] md:gap-y-0
 
-  // Tablet splits the container at the MIDDLE of column 4 — 3.5 columns for the
-  // box, 2.5 for the image — which no col-span can express. Both panels are
-  // therefore placed on whole columns and trimmed by half a column.
+  // Tablet splits the container at the MIDDLE of column 4 — 3.5 columns for the box,
+  // 2.5 for the image — which no col-span can express. So both panels are placed on
+  // whole columns and trimmed by half a column.
   //
-  // Box: placed on columns 1–4, whose area is 4c + 3g. Target is 3.5c + 3g, so
-  // it loses c/2. Solving c from the area (c = (area - 60) / 4) gives
-  // width = area - (area - 60) / 8 = 87.5% + 7.5px — a percentage of its own
-  // grid area, exact at any container width.
-  //   700px container → area 460 → 410px.
+  // Placed on columns 1-4, area 4c + 3g, target 3.5c + 3g, so it loses c/2. Solving c
+  // from the area gives 87.5% + 7.5px — a percentage of its own grid area, exact at any
+  // container width.
   &__box
     @media (min-width: 768px) and (max-width: 1279px)
       width: calc(87.5% + 7.5px)
 
-  // A slide without an image keeps the box at its designed width and centres it
-  // on the page instead of stretching. This cannot be a col-span either: 3.5 of
-  // 6 columns, or 5 of 12, never start on a column line. Both widths are solved
-  // the same way, against an area that here IS the container:
-  //   tablet  3.5c + 3g of 6c + 5g  →  58.3333% + 1.667px  (410 of 700)
-  //   desktop 5c + 4g of 12c + 11g  →  41.667% - 11.67px   (746.67 of 1820)
-  // Mobile needs nothing: the box is already the full container width.
+  // A slide without an image keeps the box at its designed width and centres it. Also
+  // not expressible as a col-span: 3.5 of 6 columns, or 5 of 12, never start on a
+  // column line. Solved the same way, against an area that here IS the container.
   &__box--centered
     @media (min-width: 768px) and (max-width: 1279px)
       width: calc(58.3333% + 1.667px)
@@ -52,19 +37,17 @@
       width: calc(41.667% - 11.67px)
       justify-self: center
 
-  // Image: placed on columns 4–6 (area 3c + 2g) but starting half a column plus
-  // one gutter further in, so its left edge meets the box's right edge.
-  //   margin-left = c/2 + g = 16.667% + 13.33px  →  70px at a 700px container,
-  //   leaving 270px = 2.5 columns.
+  // Placed on columns 4-6 but starting half a column plus one gutter further in, so its
+  // left edge meets the box's right edge.
   &__media
     @media (min-width: 768px) and (max-width: 1279px)
       margin-left: calc(16.667% + 13.33px)
 
-  // Quotation, 24px at both mobile and tablet (only the leading differs: 37 vs
-  // 36), 40/60 at desktop. No colour here — it is set on the blockquote in the
-  // template so the wpautop <p> inherits it.
-  // NOTE: needs the 1,300 italic axis in WEIZENKORN_GOOGLE_FONTS_URL, otherwise
-  // the browser synthesises a fake light italic from the 400 weight.
+  // No colour here — it is set on the blockquote in the template so the wpautop <p>
+  // inherits it.
+  //
+  // NOTE: needs the 1,300 italic axis in WEIZENKORN_GOOGLE_FONTS_URL, or the browser
+  // synthesises a fake light italic from the 400 weight.
   &__text
     @apply font-primary font-light italic tracking-[0.5px]
     @apply text-[24px] leading-[37px] md:leading-[36px] xl:text-[40px] xl:leading-[60px]
@@ -72,10 +55,7 @@
     p
       @apply mb-6 last:mb-0
 
-  // Attribution: name bold, role regular. Two stacked lines up to tablet —
-  // mobile 16 + 14 with an 8px gap, tablet "Citation Bold" 18/32 + "Citation
-  // Regular" 16/32 with none — and one inline line with a comma on desktop
-  // (25/32 + 20/32).
+  // Two stacked lines up to tablet, one inline line with a comma at desktop.
   &__author
     @apply font-primary font-normal uppercase tracking-[0.5px]
     @apply flex flex-col gap-2 text-[14px] leading-normal
@@ -85,29 +65,23 @@
     strong
       @apply font-bold text-[16px] md:text-[18px] xl:text-[25px]
 
-      // The comma belongs to the desktop single-line version only, so it is
-      // generated content rather than markup. :not(:last-child) means a role
-      // followed the name — a name on its own never gets a trailing comma.
+      // Generated content rather than markup, the comma belonging to the desktop
+      // single-line version only. :not(:last-child) means a role followed the name — a
+      // name on its own never gets a trailing comma.
       &:not(:last-child)::after
         @apply hidden xl:inline
         content: ','
 
-  // Pagination bullets, at every breakpoint (desktop shows them alongside the
-  // arrows), matching the gastronomy slider on the home page: 15px red outlines,
-  // filled when active. `static` undoes Swiper's absolute positioning, since here
-  // the bullets are a block below the slider.
-  // A single quote renders no pagination at all: the template only outputs it
-  // when there is more than one slide.
+  // `static` undoes Swiper's absolute positioning: a block below the slider. A single
+  // quote renders no pagination at all — the template only outputs it for two or more.
   //
-  // The margin is measured from the card, not from the section: Swiper runs with
-  // autoHeight up to tablet, so the viewport ends where the active slide's card
-  // ends and the bullets follow it. Interim value — no Figma frame for them yet.
+  // The margin is measured from the card, not the section: Swiper runs with autoHeight
+  // up to tablet, so the viewport ends where the active slide's card ends.
   &__pagination
     @apply static mt-8 md:mt-10 flex items-center justify-center gap-[30px]
 
-    // Swiper spaces its own bullets with margin: 0 4px, from a selector more specific
-    // than the m-0 below — so that margin wins and adds 8px to every gap here.
-    // Zeroing its variable is the fix; out-shouting it on specificity is not.
+    // Swiper spaces its own bullets from a selector more specific than the m-0 below, so
+    // that margin would win and add 8px to every gap. Zeroing its variable is the fix.
     --swiper-pagination-bullet-horizontal-gap: 0px
 
     .swiper-pagination-bullet
@@ -116,13 +90,10 @@
     .swiper-pagination-bullet-active
       @apply bg-brand-red
 
-  // Arrows (desktop): the shared 24x19 arrow-right icon, mirrored for
-  // "previous". Swiper adds .swiper-button-disabled at either end of the list,
-  // which is when the arrow fades and stops taking clicks, rather than
-  // disappearing and shifting the layout.
-  // Red, like every other arrow in the design — the icon is stroke="currentColor",
-  // so the colour here is all it takes. Hover dims rather than changing hue: with red
-  // as the resting state there is no second arrow colour in the design to move to.
+  // The icon is stroke="currentColor", so the colour here is all it takes. Hover dims
+  // rather than changing hue, red being the resting state. Swiper adds
+  // .swiper-button-disabled at either end, where the arrow fades and stops taking
+  // clicks rather than disappearing and shifting the layout.
   &__nav
     @apply text-brand-red transition-opacity duration-300
 

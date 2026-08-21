@@ -1,33 +1,28 @@
 <?php
 /**
- * Home — Gastronomy section ("Gut essen. Gut schlafen.").
- * Section heading (reusable "Section Title" clone) + venues in two forms:
- *   - mobile  : Swiper slider — each slide pairs the image + the info card.
- *   - tablet+ : two decoupled blocks — a bento of images (with name bar) on top,
- *               and a row of info cards (logo + arrow + text, red border, cream
- *               background on hover) below.
+ * Home — Gastronomy section.
+ *
+ * A section heading and the venues in two forms: a slider pairing image and card per slide
+ * at mobile, and from tablet up a bento of images with name bars over a row of info cards.
+ *
+ * Matches template-parts/pages/gastronomie-hotellerie/gastronomy.php exactly, kept as a
+ * separate file because that page reads its own flat ACF fields.
  *
  * ACF structure (group "gastronomy"):
- *   section_title (clone → "Section Title" group; fed to the section-heading)
+ *   section_title (clone → "Section Title") fed to the section-heading
  *   items         (repeater, up to 5) → image (image, ID), title (text), logo (image, ID),
- *                                   text (textarea), page (link)
- *   Repeater order drives the images bento: 1 Rhyvage · 2 Cantina · 3 Seminare & Events ·
- *   4 Bäckerei · 5 DASBREITEHOTEL.
+ *                                       text (textarea), page (link)
  *
- * 5 venues (was 4): 3 across the top row, 2 across the bottom — no image spans
- * multiple rows any more, so every tile is a plain col-span and its height
- * comes from a consistent aspect-[3/2] instead of hand-picked pixel row
- * heights (see the __images rule removed from _pages/_home.sass). Matches
- * template-parts/pages/gastronomie-hotellerie/gastronomy.php exactly, kept as
- * a separate file since that page reads its own flat ACF fields.
+ * The repeater order drives the images bento: 1 Rhyvage · 2 Cantina · 3 Seminare & Events
+ * · 4 Bäckerei · 5 DASBREITEHOTEL. Three across the top row, two across the bottom, each
+ * tile sized by a consistent aspect ratio rather than hand-picked row heights.
  *
  * @package weizenkorn
  * @subpackage Section
  * @since 1.1.0
  */
 
-// Images bento placement per repeater index (tablet 6-col · desktop 12-col).
-// 3 equal columns on top, 2 equal (wider) columns below.
+// Bento placement per repeater index. Three equal columns on top, two wider ones below.
 $gastro_bento = array(
 	1 => 'md:col-start-1 md:col-span-2 md:row-start-1 xl:col-start-1 xl:col-span-4 xl:row-start-1',
 	2 => 'md:col-start-3 md:col-span-2 md:row-start-1 xl:col-start-5 xl:col-span-4 xl:row-start-1',
@@ -36,9 +31,8 @@ $gastro_bento = array(
 	5 => 'md:col-start-4 md:col-span-3 md:row-start-2 xl:col-start-7 xl:col-span-6 xl:row-start-2',
 );
 
-// Info-cards row order (differs from the bento) via CSS order — repeater stays
-// in image order: 1 Rhyvage → 2nd · 2 Cantina → 3rd · 3 Seminare & Events → 5th ·
-// 4 Bäckerei → 4th · 5 DASBREITEHOTEL → 1st.
+// The info-cards row order differs from the bento and is set with CSS order, the
+// repeater staying in image order.
 $gastro_card_order = array(
 	1 => 'order-2',
 	2 => 'order-3',
@@ -111,12 +105,9 @@ $gastro_card_order = array(
 				<div class="hidden md:block mt-14 xl:mt-24">
 					<?php if ( have_rows( 'items' ) ) : ?>
 						<?php
-						/*
-						 * gap-y-5 because .theme-grid carries no row gap on purpose — vertical
-						 * spacing is each section's own. Here it is the grid's own 20px gutter,
-						 * the same value the info-cards row below uses between its cards and
-						 * above itself.
-						 */
+						// gap-y-5 because .theme-grid carries no row gap on purpose — vertical spacing is each
+						// section's own. Here it is the grid's own gutter, the same value the info-cards row
+						// below uses.
 						?>
 						<div class="section-gastronomy__images theme-grid gap-y-5">
 							<?php
@@ -126,14 +117,10 @@ $gastro_card_order = array(
 								$g_cols = isset( $gastro_bento[ $g_idx ] ) ? $gastro_bento[ $g_idx ] : '';
 								?>
 								<?php
-								/*
-								* xl:max-h caps the bottom row (6-col span, so at wide viewports the
-								* aspect-[3/2] height would otherwise grow past 384px). w-full keeps
-								* width unconditionally tied to the grid column — once max-height caps
-								* the aspect-driven height, a grid item can otherwise resolve its width
-								* FROM that capped height instead of from the column (384 × 1.5 = 576,
-								* which happened to undo the 4-vs-6-col split visually).
-								*/
+								// xl:max-h caps the bottom row, whose wider span would otherwise let the aspect ratio
+								// grow the height past the cap. w-full keeps width tied to the grid column: once
+								// max-height caps the aspect-driven height, a grid item can otherwise resolve its width
+								// FROM that height instead of from the column, which undid the split visually.
 								?>
 						<div class="section-gastronomy__img relative overflow-hidden aspect-[3/2] w-full xl:max-h-[384px] <?php echo esc_attr( $g_cols ); ?>">
 									<?php if ( get_sub_field( 'image' ) ) : ?>

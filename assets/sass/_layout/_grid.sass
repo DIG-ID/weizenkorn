@@ -1,17 +1,12 @@
-// =============================================================================
-// Layout grid — container + 12/6/2 column grid
-// Source: Figma "Hifi Wireframe_in process" grid overlay (confirmed 2026-07-22)
+// Layout grid — the project's container and column grid.
+//
 //   desktop 1920 → container 1820 · 12 col · col ~133 · gutter 20 · margins 50
 //   tablet   834 → container  700 ·  6 col · col  100 · gutter 20 · margins 67
 //   mobile   393 → container  321 ·  2 col · col  150 · gutter 20 · margins 36
-// Gutter is a CONSTANT 20px across all breakpoints.
-// Breakpoints follow Tailwind (md = 768px, xl = 1280px) so utility classes
-// used on grid children (md:col-span-*, xl:col-span-*) stay aligned.
-// =============================================================================
+//
+// The gutter is a constant 20px at every breakpoint.
 
 // -- Container -----------------------------------------------------------------
-// Full-width wrapper with the design's side margins. Caps the content area at
-// 1820px on large screens (max-width 1920 minus the 2×50px side padding).
 .theme-container
   width: 100%
   margin-inline: auto
@@ -23,14 +18,11 @@
     padding-inline: 50px          // desktop margins → inner content = 1820px
 
 // -- Grid ----------------------------------------------------------------------
-// 2 → 6 → 12 columns, constant 20px gutter.
-// COLUMN gutter only (gap-x-5): the 20px gutter in the design is horizontal.
-// There is deliberately NO row gap — vertical spacing is added by hand in each
-// section's template (margin/padding utilities on the children), so a stacked
-// layout below xl always gets the value from Figma instead of the gutter.
+// Column gutter only. There is deliberately NO row gap: vertical spacing is set by hand
+// in each section's template, so a stacked layout below xl gets the design's value
+// rather than the gutter.
 .theme-grid
   @apply grid grid-cols-2 md:grid-cols-6 xl:grid-cols-12 gap-x-5
 
-// Note: for sections that inset one column each side on desktop (cols 2–11 =
-// 10 col — a common pattern in the design), just use Tailwind utilities on the
-// child, e.g.  class="col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-10"
+// The common desktop inset (columns 2-11) is a utility on the child:
+//   class="col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-10"

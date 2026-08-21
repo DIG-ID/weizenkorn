@@ -1,31 +1,21 @@
-// =============================================================================
-// Cards — one independent, self-contained class per section (house style:
-// Tailwind utilities via @apply + @media). The cards differ enough between
-// sections that each owns its full design here; only the card's placement in
-// the section grid (col-span / order / margins) stays inline in the template.
+// Cards — one independent, self-contained class per section. The cards differ enough
+// between sections that each owns its full design here; only the card's placement in the
+// section grid (col-span / order / margins) stays inline in the template.
 //
 //   .card-range    → Products    ("Schönes mit Sinn")
 //   .card-service  → Services
 //   .card-venue    → Gastronomy
-// =============================================================================
 
-// -- Products: image, then the title with its arrow on the same line and the copy
-//    under them. The flow (columns, gaps, media heights) is _range-grid.sass; this is
-//    the card itself, which had never been written — the class was listed above and
-//    the rules were missing, so .card__head stayed a block and dropped the arrow onto
-//    its own line, and .card__arrow inherited black instead of taking the brand red
-//    every other card's arrow has. -------------------------------------------------
+// -- Products: image, then the title with its arrow on the same line and the copy under
+//    them. The flow (columns, gaps, media heights) is _range-grid.sass. --------------
 .card-range
   @apply no-underline
 
-  // 16px under the image, and the same again between the title and the copy — the
-  // frame's values, and the same at every breakpoint, so no responsive steps here.
   .card__body
     @apply mt-4
 
-  // Title and arrow share a line, arrow pushed to the card's right edge — the same
-  // arrangement .card-venue uses, and the reason the arrow is a sibling of the h3
-  // rather than sitting inside it.
+  // Title and arrow share a line, which is why the arrow is a sibling of the h3 rather
+  // than sitting inside it.
   .card__head
     @apply flex items-start justify-between gap-4
 
@@ -35,10 +25,8 @@
   .card__arrow
     @apply shrink-0 text-brand-red
 
-  // 427px is the frame's paragraph width against a card of roughly 488 at desktop, so
-  // the copy stops short of the card's right edge instead of filling it. It only bites
-  // at desktop: at tablet the card is ~340 wide and at mobile the full container, both
-  // already narrower than this.
+  // The copy stops short of the card's right edge instead of filling it. Only bites at
+  // desktop, the card being narrower than this below.
   //
   // The wide fifth card keeps the 650px _range-grid gives it — that rule is
   // .range-grid > :nth-child(5) .card__text, which outweighs this one.
@@ -48,32 +36,26 @@
 // -- Services: one markup, two behaviours.
 //
 //    Desktop: the cream panel is an overlay on the image, collapsed to one title line
-//    until the card is hovered, when the copy and "mehr" open. The card carries the
-//    488/444 ratio and the image fills it, so the three come out equal height on their
-//    own.
+//    until the card is hovered. The card carries the ratio and the image fills it, so
+//    the three come out equal height on their own.
 //
 //    Below desktop: the panel is a block under the image with everything visible, and
-//    the slider takes over. Every panel comes out the same height without a fixed value —
-//    .swiper-wrapper is a flex row whose slides stretch to the tallest, the media is a
-//    fixed ratio, and the panel takes what is left with flex-1. "mehr" is then pushed to
-//    the panel's bottom edge with mt-auto rather than sitting straight after the copy,
-//    which is what makes the equal heights read as intentional instead of as cards with
-//    trailing space.
-// -----------------------------------------------------------------------------------
+//    the slider takes over. The panels match without a fixed height — .swiper-wrapper is
+//    a flex row whose slides stretch to the tallest, the media is a fixed ratio, and the
+//    panel takes what is left with flex-1. "mehr" is then pushed to the bottom with
+//    mt-auto, which is what makes the equal heights read as intentional.
+// ---------------------------------------------------------------------------------
 .card-service
   @apply relative flex h-full w-full flex-col overflow-hidden bg-brand-cream no-underline
 
-  // A ratio and not a height: the card's width changes with the breakpoint — the full
-  // container at mobile, four of six columns at tablet, a third of eight at desktop —
-  // and the media should scale with it. 488/444 is the ratio the section used before.
+  // A ratio and not a height: the card's width changes with the breakpoint.
   .card__media
     @apply w-full flex-none object-cover
     aspect-ratio: 488 / 444
 
-  // Below desktop the panel is a block with room to breathe. At desktop it is a bar over
-  // the image, so the vertical padding drops to the 10px modules/product-overview uses on
-  // the same kind of collapsed bar — that plus one 30px title line is a 50px bar, where
-  // py-5 made it 70 and it read as a box sitting under the image rather than a bar on it.
+  // At desktop it is a bar over the image, so the vertical padding drops to the 10px
+  // product-overview uses on the same kind of collapsed bar. At py-5 it read as a box
+  // sitting under the image rather than a bar on it.
   .card__panel
     @apply flex flex-1 flex-col bg-brand-cream
     @apply px-4 py-4 xl:px-6 xl:py-[10px]
@@ -87,14 +69,12 @@
   .card__more
     @apply link-inline inline-block pt-4
 
-  // The reveals are open everywhere except desktop. A grid row animating 0fr → 1fr is
-  // what lets the panel open to exactly the height of its content — a max-height would
-  // have to be guessed, and would either clip a longer text or leave a gap after a
-  // shorter one.
+  // 0fr → 1fr opens the panel to exactly the height of its content; a max-height would
+  // have to be guessed and would clip a longer text or leave a gap after a shorter one.
   //
   // The overflow: hidden on the child is what makes 0fr actually reach zero: 0fr resolves
   // as minmax(auto, 0fr), so the row keeps the child's automatic minimum, and hiding the
-  // overflow drops the CONTENT's part of that minimum to nothing. It does not drop the
+  // overflow drops the content's part of that minimum to nothing. It does NOT drop the
   // child's own padding or margin, which is why the template wraps each reveal's contents
   // in a bare <div> and keeps the spacing inside it. See services.php.
   .card__reveal
@@ -105,19 +85,14 @@
     > *
       @apply overflow-hidden
 
-  // Below desktop the panel is taller than its content, so "mehr" is pushed to its
-  // bottom edge rather than sitting right after the copy. The margin is on the wrapper
-  // and not on .card__more, because the wrapper is the flex child now.
+  // The margin is on the wrapper and not on .card__more, because the wrapper is the flex
+  // child.
   .card__reveal--bottom
     @apply mt-auto
 
-  // Desktop: the panel stops being a block under the image and becomes an overlay on it,
-  // collapsed to one title line until the card is hovered. That is the arrangement the
-  // section had before the slider was added, and the slider did not have to replace it —
-  // below xl the same markup is simply a stack with everything showing.
-  //
-  // The card carries the ratio here and the media fills it absolutely, which is also what
-  // makes the three cards equal height at desktop without the slides' stretch.
+  // Desktop: the panel becomes an overlay on the image, collapsed to one title line. The
+  // card carries the ratio here and the media fills it absolutely, which is what makes
+  // the three equal height without the slides' stretch.
   //
   // :focus-visible and not :focus-within: the card is the anchor, so a plain click leaves
   // focus on it and :focus-within would hold the panel open with no way to close it.
@@ -140,8 +115,8 @@
     &:focus-visible .card__reveal
       grid-template-rows: 1fr
 
-// -- Gastronomy: logo + arrow head over a description; red outline that blends
-//    into a cream fill on hover. -------------------------------------------------
+// -- Gastronomy: logo + arrow head over a description; red outline that blends into a
+//    cream fill on hover. -----------------------------------------------------------
 .card-venue
   @apply flex flex-col border border-brand-red bg-white max-h-60 md:max-h-72 xl:max-h-[459px] px-4 pt-6 pb-8 transition-colors duration-300
   &:hover

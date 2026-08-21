@@ -1,28 +1,18 @@
-// =============================================================================
 // Attention to detail — template-parts/modules/craft-showcase.php
-// Figma 2882:2823, desktop confirmed 2026-08-14. Tablet and mobile have no frame yet
-// and carry interim values.
 //
 // Both columns are direct items of the page grid, placed with one grid-column
 // declaration each rather than col-start-* plus col-span-*: those are two utilities and
 // the span one compiles to the shorthand, which resets the start.
-// =============================================================================
 
 .craft-showcase
 
-  // 32px between the stacked parts at every breakpoint — at mobile and tablet that is
-  // the gap between all three, and at desktop it is the one between the image and the
-  // paragraph under it, which the second image spans across.
   &__row
     @apply gap-y-8
 
-  // The three parts are direct grid items, so the paragraph gets a column span of its
-  // own — it is not a max-width inside a wrapper column. All three stack full width
-  // below xl; at desktop the image and the paragraph take rows 1 and 2 on the left and
-  // the second image spans both on the right.
-  //
-  // The frame's widths in columns: the image is 741px = 5, the paragraph 585px = 4, both
-  // starting at column 2. At tablet the paragraph's 579px is 5 of 6.
+  // All three are direct grid items, so the paragraph gets a column span of its own
+  // rather than a max-width inside a wrapper. They stack full width below xl; at desktop
+  // the image and the paragraph take rows 1 and 2 on the left and the second image spans
+  // both on the right.
   &__media
     @apply relative w-full m-0 overflow-hidden
     aspect-ratio: 320 / 183
@@ -49,10 +39,8 @@
     @media (min-width: 1280px)
       grid-column: 2 / span 4
 
-  // No height of its own at desktop: spanning the image's row and the paragraph's makes
-  // it exactly as tall as the two together, which is what the frame's 553px against the
-  // left pair's 547 was approximating. Below xl it is the third block in the stack and
-  // keeps its own ratio, which is not the first image's.
+  // No height of its own at desktop: spanning both rows makes it exactly as tall as the
+  // pair beside it. Below xl it is the third block in the stack, with its own ratio.
   &__media--side
     aspect-ratio: 320 / 223
     grid-column: 1 / span 2

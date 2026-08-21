@@ -1,24 +1,21 @@
-// Header — burger (closed state) | centered logo | WPML language switcher.
-// Source: Figma "navigation-desktop" component (Hifi Wireframe_in process).
+// Header — burger | centered logo | WPML language switcher.
 .header-main
   @apply relative z-50 bg-white
 
-  // Pinned to the viewport top while the mega menu is open (body.menu-open,
-  // see assets/js/menu-overlay.js) — instant, no scroll-reveal transition
-  // like the sticky bar below (menu state is a deliberate toggle, not scroll).
+  // Pinned while the mega menu is open. Instant, unlike the sticky bar below: the menu
+  // state is a deliberate toggle, not a scroll position.
   body.menu-open &
     @apply fixed top-0 inset-x-0
 
   &__row
     @apply grid grid-cols-[auto_1fr_auto] items-center py-4 xl:py-[26px]
 
-    // Sticky bar (Figma "Sticky menu bar_desktop") is the same row, just
-    // without the taller desktop padding — 110px total vs ~127px normal.
+    // The same row, just without the taller desktop padding.
     &--sticky
       @apply xl:py-4
 
-  // Fixed bar shown after scrolling past the normal header (assets/js/sticky-header.js).
-  // visibility (not just opacity) so it's out of the tab order while hidden.
+  // Shown after scrolling past the normal header (assets/js/sticky-header.js).
+  // visibility, not just opacity, so it stays out of the tab order while hidden.
   &__sticky
     @apply fixed top-0 inset-x-0 z-50 bg-white shadow-md invisible opacity-0 -translate-y-full transition-all duration-300 ease-out
 
@@ -28,20 +25,16 @@
   &__menu-toggle
     @apply justify-self-start flex items-center text-brand-dark cursor-pointer bg-transparent border-0 p-0
 
-    // .bar uses bg-current, so changing the button's own color on hover
-    // recolors all 3 bars (no need to target them individually).
+    // .bar uses bg-current, so recolouring the button recolours all three bars.
     &:hover
       @apply text-brand-red
 
-    // Burger → X morph (.menu-toggle__bars / .bar below), driven by the
-    // button's aria-expanded — toggled in assets/js/menu-overlay.js.
-    // A flattened X (Figma: 40x20 desktop/tablet, 30x16 mobile) isn't a
-    // plain 45°/full-width rotation — that only works for a SQUARE icon.
-    // For a WxH box, an X inscribed corner-to-corner needs angle
-    // atan(H/W) and each arm's length = the box diagonal (√(W²+H²)), both
-    // bigger than a 45°/w-full guess: mobile 30x16 → 28.072°, 34px; desktop
-    // 40x20 → 26.565°, 44.72px. Translate (7px/9px) is unchanged — still
-    // (height − bar thickness) / 2, since height itself didn't change.
+    // Burger → X, driven by aria-expanded (toggled in assets/js/menu-overlay.js).
+    //
+    // The icon box is wider than it is tall, so this is NOT a 45° full-width rotation —
+    // that only works for a square. An X inscribed corner to corner needs angle
+    // atan(H/W) and arms as long as the diagonal: 30x16 → 28.072° and 34px, 40x20 →
+    // 26.565° and 44.72px. The translate is (height - bar thickness) / 2.
     &[aria-expanded="true"]
       .bar--top
         @apply translate-y-[7px] md:translate-y-[9px] rotate-[28.072deg] md:rotate-[26.565deg] w-[34px] md:w-[44.72px]
@@ -53,23 +46,17 @@
   &__logo
     @apply justify-self-center flex items-center
 
-  // Explicit height (not max-height) + width:auto — needed so SVG logos
-  // render correctly, not just PNGs. An SVG exported with a percentage
-  // width/height on its root <svg> (common from Figma/Illustrator) has no
-  // resolvable natural size, so height:auto/width:auto both collapse to 0
-  // (max-height only clamps an already-computed value, it can't rescue a
-  // 0 result). A definite height sidesteps that: width scales from it via
-  // the element's intrinsic ratio, falling back to the img's width/height
-  // HTML attributes (set from the attachment's real dimensions) when the
-  // SVG itself doesn't expose one.
+  // Explicit height (not max-height) plus width:auto, so SVG logos render and not just
+  // PNGs. An SVG exported with a percentage width/height on its root <svg> has no
+  // resolvable natural size, so height:auto and width:auto both collapse to 0, and
+  // max-height can only clamp an already-computed value. A definite height sidesteps
+  // that: the width scales from it via the intrinsic ratio.
   &__logo-image
     @apply h-[45px] xl:h-[75px] w-auto
 
-// Hamburger icon (3 bars morphing into an X) — 30x16px on mobile,
-// 40x20px on tablet/desktop (Figma "Home_menu_desktop"). Top/bottom bars
-// rotate 45° and slide to the middle bar's position; the middle bar just
-// fades out. State toggle lives on .header-main__menu-toggle[aria-expanded]
-// above — its translate values must stay in sync with this height.
+// Three bars morphing into an X: the outer two rotate and slide to the middle's
+// position, the middle fades out. The rotation lives on the [aria-expanded] rule above,
+// whose translate values must stay in sync with the height set here.
 .menu-toggle__bars
   @apply flex flex-col justify-between w-[30px] md:w-10 h-[16px] md:h-[20px]
 

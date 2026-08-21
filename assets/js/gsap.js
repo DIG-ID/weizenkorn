@@ -4,12 +4,10 @@ import Lenis from 'lenis';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Expo-out easing for a cinematic, filmic stop
 const easeExpoOut = (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t));
 
 /**
- * Initialise Lenis with a cinematic glide feel.
- * Tweak duration and wheelMultiplier per project to taste.
+ * Initialise Lenis. Tweak duration and wheelMultiplier per project.
  *
  * @returns {Lenis}
  */
@@ -22,10 +20,9 @@ function initLenis() {
     wheelMultiplier: 0.85,   // lower = softer on high-res/trackpad devices
   });
 
-  // Keep ScrollTrigger in sync with Lenis scroll position
   lenis.on('scroll', ScrollTrigger.update);
 
-  // Drive Lenis with GSAP ticker — single RAF source
+  // A single RAF source for both.
   gsap.ticker.add((time) => {
     lenis.raf(time * 1000);
   });

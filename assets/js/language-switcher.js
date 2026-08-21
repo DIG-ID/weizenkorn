@@ -1,10 +1,7 @@
 /**
- * Mobile (<768px) language switcher: WPML's own markup (a horizontal list,
- * see assets/sass/_components/_language-switcher.sass) is hidden and
- * replaced by a compact "DE" trigger that reveals the other languages as a
- * dropdown panel, with the same "roll down" clip-path reveal as the mega
- * menu (assets/js/menu-overlay.js). Tablet/desktop keep WPML's original
- * horizontal list, untouched.
+ * Mobile language switcher: WPML's own horizontal list is hidden and replaced by a compact
+ * trigger that reveals the other languages as a dropdown panel, with the same clip-path
+ * reveal as the mega menu. Tablet and desktop keep WPML's list untouched.
  */
 
 import { gsap } from './gsap.js';
@@ -49,12 +46,9 @@ export function initLanguageSwitcher() {
       dropdownTl.reverse();
     };
 
-    // The dropdown-hidden-by-default state (clip-path + display:none via
-    // GSAP inline styles) only makes sense at mobile — those inline styles
-    // otherwise permanently hide WPML's own list at tablet/desktop too,
-    // since nothing there ever calls dropdownTl.play() to reveal it again.
-    // clearProps hands full control back to the stylesheet's own (visible)
-    // rules whenever we're not in mobile mode.
+    // The hidden-by-default state is GSAP inline styles, which only make sense at mobile:
+    // above it nothing ever calls dropdownTl.play(), so they would permanently hide WPML's
+    // own list. clearProps hands control back to the stylesheet.
     let isMobileMode = null;
 
     const applyResponsiveState = () => {

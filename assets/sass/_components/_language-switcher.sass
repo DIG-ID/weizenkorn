@@ -36,11 +36,9 @@
             span.wpml-ls-native
               @apply text-brand-dark underline underline-offset-[3px]
 
-// Mobile (<768px) trigger — injected by assets/js/language-switcher.js right
-// before WPML's own list, which becomes a dropdown panel underneath it.
-// Open/close (clip-path reveal) and display are driven entirely by GSAP in
-// that file — no CSS `hidden`/`.is-open` display toggle here, to avoid two
-// systems fighting over the same property.
+// The mobile trigger, injected by assets/js/language-switcher.js before WPML's own list.
+// Open, close and display are driven entirely by GSAP there — deliberately no CSS
+// display toggle here, so two systems are not fighting over the same property.
 .header-main__lang-toggle
   @apply hidden
 
@@ -51,10 +49,9 @@
   .header-main__lang-toggle
     @apply flex items-center bg-transparent border-0 p-0 cursor-pointer text-brand-dark text-[15px] font-primary uppercase tracking-wide
 
-  // right: -0.75rem (not 0) — the panel's own p-3 pushes "EN"/"FR" text 12px
-  // in from its border, but the "DE" trigger has no padding around its
-  // text. Shifting the panel outward by exactly that padding lines up the
-  // TEXT edges (what the eye tracks), not just the two boxes' borders.
+  // Not 0: the panel's own p-3 insets its text, while the trigger has no padding, so
+  // shifting the panel out by exactly that padding lines up the TEXT edges rather than
+  // the two boxes' borders.
   .header-main__lang .wpml-ls-legacy-list-horizontal
     @apply absolute top-full mt-2 bg-white border border-brand-dark p-3 z-10
     right: -0.75rem
@@ -62,7 +59,7 @@
   .header-main__lang .wpml-ls-legacy-list-horizontal ul
     @apply flex flex-col gap-3
 
-    // Already shown by the trigger itself — no need to repeat it in the dropdown.
+    // Already shown by the trigger itself.
     li.wpml-ls-current-language
       @apply hidden
 
@@ -70,10 +67,8 @@
       &::after
         @apply hidden
 
-      // Same font as the closed trigger (.header-main__lang-toggle above),
-      // instead of WPML's own larger desktop-list styling — nested exactly
-      // like the base (non-mobile) rule above so specificity matches and
-      // this (later in the file) wins.
+      // Nested exactly like the base rule above, so specificity ties and this wins by
+      // coming later.
       a.wpml-ls-link
         @apply text-[15px] font-primary font-normal uppercase tracking-wide leading-none
         padding: 0

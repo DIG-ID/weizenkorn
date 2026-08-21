@@ -2,22 +2,15 @@
 /**
  * The template for the products archive.
  *
- * Products landing page, composed of ordered sections (see
- * figma-architecture-analysis.txt, §7 "Products"). The hero, USP band, quote
- * slider and the two forms are shared modules because the product-range pages
- * (Kerzen, Holzspielwaren, Living Collection, Xyloba) repeat the same stack.
+ * The hero, USP band, quote slider and the two forms are shared modules, the product-range
+ * pages repeating the same stack. No intro-panel: the hero already carries the page title
+ * and the intro paragraph.
  *
- * No intro-panel: the hero section already carries the page title and the intro
- * paragraph, so the separate intro block listed in the older analysis is gone.
+ * An archive has no post context, so its page-level fields live in the theme options under
+ * the `products_archive_` prefix, and every section is told to read from there via $args.
  *
- * An archive has no post context, so its page-level fields live in the theme
- * options under the `products_archive_` prefix, and every section is told to read
- * from there through $args.
- *
- * Nothing here touches the main query. The product ranges are an ACF repeater in
- * the options, not the `products` posts, because the page presents five editorial
- * ranges rather than a listing — so the template is a straight sequence of
- * sections and there is no loop for a section to accidentally end up inside.
+ * Nothing here touches the main query. The page is a straight sequence of sections, so
+ * there is no loop for a section to accidentally end up inside.
  *
  * @package weizenkorn
  * @subpackage Template

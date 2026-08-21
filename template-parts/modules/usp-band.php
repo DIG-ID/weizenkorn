@@ -1,31 +1,26 @@
 <?php
 /**
- * USP band ("Das macht uns aus") — shared module.
- * Full-bleed cream band with 3–4 icon+label items. Reused across many pages.
+ * USP band — a full-bleed cream band with 3-4 icon and label items. Reused across many
+ * pages.
  *
  * ACF fields (flat, prefixed):
  *   usp_band_title (text)
  *   usp_band_items (repeater) → icon (image → return ID), label (text)
  *
- * Usage — on a page the fields come from the current post:
+ * Usage:
  *   get_template_part( 'template-parts/modules/usp-band' );
  *
- * A CPT archive has no post context, so pass the options store plus the
- * archive's field prefix, the same way as template-parts/modules/hero-section:
+ * A CPT archive has no post context, so pass the options store plus the archive's prefix:
  *   get_template_part(
  *       'template-parts/modules/usp-band',
  *       null,
- *       array(
- *           'post_id' => 'option',
- *           'prefix'  => 'products_archive_',
- *       )
+ *       array( 'post_id' => 'option', 'prefix' => 'products_archive_' )
  *   );
  *
  * @param array $args {
- *     @type int|string $post_id Optional. ACF post id / options store to read
- *                               the fields from. Default: the current post.
+ *     @type int|string $post_id Optional. ACF post id / options store to read the fields
+ *                               from. Default: the current post.
  *     @type string     $prefix  Optional. Prepended to every field name.
- *                               Default: '' (names used as-is).
  * }
  *
  * @package weizenkorn
@@ -33,10 +28,6 @@
  * @since 1.1.0
  */
 
-// ACF read context: the current post normally, the options store on archives.
-$usp_ctx = ( ! empty( $args['post_id'] ) ) ? $args['post_id'] : get_the_ID();
-
-// Field-name prefix, so one shared module can serve several archives.
 $usp_prefix = ! empty( $args['prefix'] ) ? $args['prefix'] : '';
 
 if ( ! have_rows( $usp_prefix . 'usp_band_items', $usp_ctx ) ) {

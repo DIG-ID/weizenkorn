@@ -1,41 +1,21 @@
 <?php
 /**
- * Products archive — "Sie möchten bestellen?" ordering section.
+ * Ordering section — "Sie möchten bestellen?"
  *
- * Two halves under one heading: what resellers do, and where end customers can
- * buy each product range.
+ * Two halves under one heading: what resellers do, and where end customers can buy each
+ * product range. Two arrangements of the same content, because the frames differ:
  *
- * Layout — Figma, archive desktop confirmed 2026-08-11 (canvas 1920 / container
- * 1820). The two halves are direct items of the page grid, so their columns are the
- * grid's own rather than a span subdivided inside a cell.
+ *   default  the archive — the halves stacked, each across the inset columns.
+ *   split    a product range — the halves side by side, one card each. The visual order
+ *            is the reverse of the source order, done with column placement rather than
+ *            by moving the markup; see _modules/_order-form.sass for what that costs.
  *
- *   archive (default variant) — the halves stacked, each across the inset columns
- *              2–11. The section-heading's title now runs 2–12, so the two no longer
- *              share a right edge; the frames put the content on 2–11 regardless.
- *              resellers  overline, then two 410px cards side by side from xl —
- *                         halves of the 10-column span, the 5 + 5 of the design.
- *              customers  overline, then the range cards in thirds of the span from
- *                         xl. Figma has them 493px with a 17px gap; thirds with the
- *                         grid's own 20px gutter give 491px, so they land on the grid.
- *   range ('split' variant) — the two halves side by side, one card each: the
- *              reseller pair stacks and the customer row is a single card. Not
- *              halves, though — customers take columns 2–5 and resellers 7–11, with
- *              column 6 empty between them, measured off the Kerzen frame's grid.
- *   tablet / mobile — confirmed 2026-08-11, and the same in both variants: every card
- *              row becomes a single column at the container's full width, 24px apart
- *              at tablet and 16px at mobile, with the type stepped down to 14/22.
- *
- * In the split variant the visual order is the reverse of the source order, done with
- * column placement rather than by moving the markup — see _modules/_order-form.sass
- * for why, and for what it costs.
- *
- * Card heights are min-heights: the content is editorial and the ranges do not all
- * have the same number of stockists.
+ * Card heights are min-heights: the content is editorial and the ranges do not all have
+ * the same number of stockists.
  *
  * The sign-up card is Contact Form 7 — a second form, separate from the one in
- * modules/cta-form, because it collects a different enquiry. Its controls use the
- * shared .form-field classes; see _components/_form-fields.sass for the form
- * template to paste into the plugin.
+ * modules/cta-form, because it collects a different enquiry. See
+ * _components/_form-fields.sass for the form template to paste into the plugin.
  *
  * ACF fields (flat, prefixed):
  *   order_form_title              (text)     the section heading
@@ -47,12 +27,10 @@
  *   order_form_customer_overline  (text)     "Als Endkunde"
  *   order_form_cards              (repeater) one per product range:
  *     → title       (text)     "Kerzen"
- *     → intro       (textarea)  optional lead-in
+ *     → intro       (textarea) optional lead-in
  *     → list_title  (text)     "Endkunden kaufen unsere Kerzen in Basel:"
- *     → list_items  (repeater) → text (text), link (link, optional). Only the items
- *                                with a link become buttons and get an arrow — the
- *                                Werkladen points at the contact page, the market
- *                                dates are plain text.
+ *     → list_items  (repeater) → text (text), link (link, optional). Only the items with
+ *                                a link become buttons and get an arrow.
  *     → links_title (text)     "Online erhalten Sie … über folgende Vertriebspartner"
  *     → links       (repeater) → link (link)
  *
@@ -63,16 +41,14 @@
  *   get_template_part(
  *       'template-parts/modules/order-form',
  *       null,
- *       array(
- *           'post_id' => 'option',
- *           'prefix'  => 'products_archive_',
- *       )
+ *       array( 'post_id' => 'option', 'prefix' => 'products_archive_' )
  *   );
  *
  * @param array $args {
  *     @type int|string $post_id Optional. ACF post id / options store to read from.
  *                               Default: the current post.
  *     @type string     $prefix  Optional. Prepended to every field name.
+ *     @type string     $variant Optional. 'split' for the product-range arrangement.
  * }
  *
  * @package weizenkorn
@@ -80,21 +56,9 @@
  * @since 1.5.0
  */
 
-// ACF read context: the current post normally, the options store on archives.
-$of_ctx = ( ! empty( $args['post_id'] ) ) ? $args['post_id'] : get_the_ID();
-
-// Field-name prefix, so the section can serve a page or an archive.
+$of_ctx    = ( ! empty( $args['post_id'] ) ) ? $args['post_id'] : get_the_ID();
 $of_prefix = ! empty( $args['prefix'] ) ? $args['prefix'] : '';
 
-/*
- * Two arrangements of the same content, because the frames differ:
- *
- *   default  the archive — the two halves stacked, each across the inset columns
- *            2–11: the reseller row of two cards, then the range cards in thirds.
- *   split    a product range — the halves side by side on columns 2–6 and 7–11,
- *            customers on the left. One card per half, so the reseller pair stacks
- *            and the customer row is a single card rather than a third.
- */
 $of_split = ( ! empty( $args['variant'] ) && 'split' === $args['variant'] );
 
 // Both halves are optional, but with neither there is no section.
@@ -108,8 +72,8 @@ if ( ! get_field( $of_prefix . 'order_form_reseller_title', $of_ctx )
 	<div class="theme-container">
 
 		<?php
-		// Heading + red rule. Same component and the same synthesised args as
-		// modules/cta-form: this section needs a title and nothing else from it.
+		// The same synthesised args as modules/cta-form: this section needs a title from
+		// the component and nothing else.
 		if ( get_field( $of_prefix . 'order_form_title', $of_ctx ) ) {
 			get_template_part(
 				'template-parts/components/section-heading',
@@ -124,9 +88,9 @@ if ( ! get_field( $of_prefix . 'order_form_reseller_title', $of_ctx )
 
 		<?php
 		/*
-		 * One grid item for the entire body, on the inset columns 2–11. Everything
-		 * below divides that span with its own plain grid, so the cards never carry
-		 * column placement of their own and always line up with the heading.
+		 * One grid item for the entire body, on the inset columns. Everything below divides
+		 * that span with its own plain grid, so the cards never carry column placement of
+		 * their own and always line up with the heading.
 		 */
 		?>
 		<div class="order-form__grid theme-grid">
@@ -189,7 +153,7 @@ if ( ! get_field( $of_prefix . 'order_form_reseller_title', $of_ctx )
 								?>
 								<article class="order-form__card order-form__card--range">
 
-									<?php // Row 1 of the subgrid: title and intro travel together, so a card without an intro still lines up with one that has it. ?>
+									<?php // Row 1 of the subgrid: title and intro travel together, so a card with no intro still lines up with one that has it. ?>
 									<div class="order-form__card-header">
 										<?php if ( get_sub_field( 'title' ) ) : ?>
 											<h3 class="order-form__card-title"><?php echo esc_html( get_sub_field( 'title' ) ); ?></h3>
@@ -200,14 +164,6 @@ if ( ! get_field( $of_prefix . 'order_form_reseller_title', $of_ctx )
 										<?php endif; ?>
 									</div>
 
-								<?php
-								/*
-								 * Only the items that carry a link become buttons — in the design that
-								 * is the Werkladen, which points at the contact page, while the market
-								 * dates are plain text. So the arrow is per item, not per block, and an
-								 * item without a link renders as text.
-								 */
-								?>
 								<?php if ( get_sub_field( 'list_title' ) || have_rows( 'list_items' ) ) : ?>
 									<div class="order-form__group order-form__group--stockists">
 

@@ -1,27 +1,21 @@
 <?php
 /**
- * Home — Services section ("Massgeschneidert für Sie" / DIENSTLEISTUNGEN).
+ * Home — Services section.
  *
- * A section heading and a slider of service cards: three per view at desktop, one per
- * view below it.
+ * A section heading and a slider of service cards: three per view at desktop, one below.
  *
- * Layout — the same arrangement as modules/stories-references, deliberately rebuilt
- * here rather than shared with it: the two sections read different fields and the
- * module is in use on the product range pages, so it is left alone. The card is this
- * section's own `.card-service`: unlike the story card it puts its copy under the
- * image rather than in an overlay, and shows it always instead of on hover.
+ * The same arrangement as modules/stories-references, deliberately rebuilt here rather
+ * than shared with it — the two read different fields, and the module is in use on the
+ * product range pages. The card is this section's own `.card-service`: unlike the story
+ * card it puts its copy under the image rather than in an overlay, and shows it always
+ * instead of on hover.
  *
- *   viewport  columns 3–10 at desktop, 2–5 at tablet, the full width at mobile.
- *   controls  no arrows anywhere, and no bullets at desktop, where the three cards
- *             fit one view and there is nothing to page through. Bullets carry the
- *             navigation at tablet and mobile.
- *
+ * No arrows anywhere, and no bullets at desktop, where the three cards fit one view.
  *
  * ACF structure (group "services"):
- *   section_title (clone → "Section Title" group; fed to the section-heading
- *                  component — subtitle, title, descriptions and CTA buttons)
- *   items         (repeater) → image (image, ID), title (text),
- *                              text (textarea), page (link)
+ *   section_title (clone → "Section Title") fed to the section-heading component
+ *   items         (repeater) → image (image, ID), title (text), text (textarea),
+ *                              page (link)
  *
  * @package weizenkorn
  * @subpackage Section
@@ -42,16 +36,11 @@
 
 				<?php if ( have_rows( 'items' ) ) : ?>
 					<?php
-					/*
-					 * How many cards there are has to be known before the render loop
-					 * starts, so the set is walked once to count it. Not with
-					 * get_sub_field(): on a nested repeater that returns the raw meta —
-					 * the row count as a string — so count() answers 1 whatever the
-					 * number of rows, and the bullets never appeared.
-					 *
-					 * Running the loop to the end pops it off ACF's stack, so the render
-					 * loop below starts fresh.
-					 */
+					// The count has to be known before the render loop starts, so the set is walked once.
+					// Not with get_sub_field(): on a nested repeater that returns the raw meta — the row
+					// count as a string — so count() answered 1 whatever the number of rows and the
+					// bullets never appeared. Running the loop to the end pops it off ACF's stack, so the
+					// render loop below starts fresh.
 					$service_count = 0;
 
 					while ( have_rows( 'items' ) ) {
@@ -71,8 +60,8 @@
 										$service_url    = ( is_array( $service_link ) && ! empty( $service_link['url'] ) ) ? $service_link['url'] : '';
 										$service_target = ( is_array( $service_link ) && ! empty( $service_link['target'] ) ) ? $service_link['target'] : '';
 
-										// A card with a link is the link, so "mehr" inside it is a
-										// span: an <a> inside an <a> is invalid and browsers unnest it.
+										// A card with a link IS the link, so "mehr" inside it is a span: an <a> inside an <a>
+										// is invalid and browsers unnest it.
 										$service_tag = $service_url ? 'a' : 'article';
 										?>
 										<div class="swiper-slide">
@@ -93,19 +82,13 @@
 												<?php endif; ?>
 
 												<?php
-												/*
-												 * Two breakpoint behaviours from one markup. Below desktop the
-												 * panel sits under the image with everything visible, and the
-												 * panels come out the same height because the slides do. At
-												 * desktop the panel becomes an overlay on the image, collapsed
-												 * to its title until the card is hovered — see _card.sass.
-												 *
-												 * That is what the __reveal wrappers are for: each is a grid
-												 * whose single row animates from 0fr to 1fr, so the panel opens
-												 * to exactly the height of whatever is inside instead of to a
-												 * guessed max-height. They are open at every breakpoint except
-												 * desktop, where the collapse lives.
-												 */
+												// Two breakpoint behaviours from one markup: below desktop the panel sits under the
+												// image with everything visible, and at desktop it becomes an overlay collapsed to its
+												// title until the card is hovered — see _card.sass.
+												//
+												// That is what the __reveal wrappers are for: each is a grid whose single row animates
+												// from 0fr to 1fr, so the panel opens to exactly the height of what is inside instead
+												// of to a guessed max-height.
 												?>
 												<div class="card__panel">
 													<?php if ( get_sub_field( 'title' ) ) : ?>
@@ -113,21 +96,16 @@
 													<?php endif; ?>
 
 													<?php
-													/*
-													 * The bare <div> inside each __reveal is NOT redundant.
-													 *
-													 * grid-template-rows: 0fr behaves as minmax(auto, 0fr), so the
-													 * row never gets shorter than its item's automatic minimum.
-													 * overflow: hidden on the item zeroes what its CONTENT
-													 * contributes, but not its own padding or margin — and
-													 * .card__text has mt-2 while .card__more has pt-4. Left as
-													 * direct children, the collapsed rows stayed 8px and 16px tall,
-													 * so a card with a link had a taller cream bar than one
-													 * without, which is exactly the bug this wrapper fixes.
-													 *
-													 * The wrapper has no spacing of its own, so it collapses to
-													 * nothing and the spacing rides inside it, clipped.
-													 */
+													// The bare <div> inside each __reveal is NOT redundant.
+													//
+													// grid-template-rows: 0fr behaves as minmax(auto, 0fr), so the row never gets shorter
+													// than its item's automatic minimum. overflow: hidden zeroes what the CONTENT
+													// contributes but not the item's own padding or margin — and .card__text has mt-2
+													// while .card__more has pt-4. As direct children the collapsed rows stayed 8px and
+													// 16px tall, so a card with a link had a taller cream bar than one without.
+													//
+													// The wrapper has no spacing of its own, so it collapses to nothing and the spacing
+													// rides inside it, clipped.
 													?>
 													<?php if ( get_sub_field( 'text' ) ) : ?>
 														<div class="card__reveal">
@@ -161,10 +139,8 @@
 
 						<?php if ( $service_count > 1 ) : ?>
 							<?php
-							/*
-							 * A grid item in the row below the slider, so it spans the whole
-							 * container and centres on it. Hidden from xl in the stylesheet.
-							 */
+							// A grid item in the row below the slider, so it spans the container and centres on
+							// it. Hidden from xl in the stylesheet.
 							?>
 							<div class="section-services__pagination js-services-pagination"></div>
 						<?php endif; ?>

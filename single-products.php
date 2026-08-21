@@ -2,21 +2,15 @@
 /**
  * The template for a single product range, when no range template is assigned.
  *
- * The five ranges each get their own template (page-templates/product-range-*.php),
- * picked in the Template panel, because their compositions differ — see the docblock
- * in product-range-kerzen.php for why the assignment is explicit and not
- * single-products-{slug}.php.
+ * The five ranges each get their own template (page-templates/product-range-*.php), picked
+ * in the Template panel — see product-range-kerzen.php for why that assignment is explicit.
  *
- * This file is the floor under that. Without it get_single_template() falls all the
- * way through to single.php, the blog article template, and a product range renders
- * with a publish date and a raw featured image. So this renders the three sections
- * every range has, and nothing else: a range with no template assigned still looks
- * like a product page, just an incomplete one.
+ * This file is the floor under that: without it get_single_template() falls through to
+ * single.php, the blog article template, and a range renders with a publish date and a raw
+ * featured image. So it renders the three sections every range has and nothing else.
  *
- * The sections a range does NOT share — the tabbed overview, the offer grid, the
- * feature blocks, the capabilities grid — belong to its own template. Do not add
- * them here and switch on the slug: that is the conditional soup the per-range
- * templates exist to avoid.
+ * The sections a range does NOT share belong to its own template. Do not add them here and
+ * switch on the slug — that is the conditional soup the per-range templates exist to avoid.
  *
  * @package weizenkorn
  * @subpackage Template

@@ -1,18 +1,17 @@
 /**
- * Home hero (desktop): .real-hero-section has a CSS xl:min-height of
- * "100vh minus header minus 48px" (see hero.php) — content should fit
- * within that whenever possible, but the section is allowed to grow
- * taller if it genuinely doesn't (never clipped, never forced into an
- * internal scrollbar). The CSS clamp()s there approximate the right
- * spacing for a viewport height, assuming the title wraps to its usual
- * number of lines — but real line-wrap count depends on the actual
- * (translated) text and the exact viewport width too, so the CSS alone
- * can't guarantee a fit in every case. This re-checks the real rendered
- * height against that same target after render and, only if it's still
- * taller, shaves a bit more off the same spacing the CSS already
- * controls, largest/least-visually-important first, down to a floor —
- * a best-effort top-up, not a hard requirement (see the CSS min-height
- * for why it's safe for this to fall short: the section just grows).
+ * Home hero (desktop). The section has a CSS min-height of "100vh minus header minus the
+ * bottom gap" (see hero.php) — content should fit within that where possible, but the
+ * section is allowed to grow taller if it genuinely does not; it is never clipped and
+ * never given an internal scrollbar.
+ *
+ * The CSS clamp()s approximate the right spacing for a viewport height, assuming the title
+ * wraps to its usual number of lines. Real wrap count depends on the translated text and
+ * the exact width, so this re-checks the rendered height against the same target and, only
+ * if it is still taller, shaves more off the same spacing the CSS controls — largest and
+ * least visually important first, down to a floor.
+ *
+ * A best-effort top-up, not a hard requirement: falling short is safe, the section simply
+ * grows.
  */
 
 const XL_BREAKPOINT = 1280;
@@ -50,8 +49,8 @@ export function initHeroFit() {
       return;
     }
 
-    // Start from the CSS clamp()'s own value for the current viewport —
-    // this only ever tops up that system, never fights it.
+    // Start from the CSS clamp()'s own value for this viewport: this tops that system
+    // up, never fights it.
     reset();
 
     const targetHeight = window.innerHeight - getHeaderHeight() - BOTTOM_GAP_PX;
@@ -75,8 +74,8 @@ export function initHeroFit() {
       }
     });
 
-    // Whatever's left (every spacing target already at its floor) is left
-    // alone on purpose — the section's own min-height just grows to fit.
+    // Whatever is left once every target is at its floor is left alone on purpose — the
+    // section's own min-height grows to fit.
   };
 
   let resizeTimer;

@@ -1,17 +1,15 @@
 <?php
 /**
- * Home — Products section ("Schönes mit Sinn" / PRODUKTE).
- * Section heading (reusable "Section Title" clone) + grid of product-range cards.
+ * Home — Products section.
+ *
+ * A section heading and a grid of product-range cards. The cards are rendered by
+ * components/range-grid, which the products archive uses too; this section only supplies
+ * the rows.
  *
  * ACF structure (group "products"):
- *   section_title (clone → "Section Title" group; fed to the section-heading
- *                  component, which renders subtitle, title, descriptions and
- *                  the CTA buttons)
- *   ranges        (repeater) → image (image, ID), title (text),
- *                                   text (textarea), page (link)
- *
- * The cards themselves are rendered by components/range-grid, which the products
- * archive uses too — this section only supplies the rows.
+ *   section_title (clone → "Section Title") fed to the section-heading component
+ *   ranges        (repeater) → image (image, ID), title (text), text (textarea),
+ *                              page (link)
  *
  * @package weizenkorn
  * @subpackage Section
@@ -32,9 +30,7 @@
 
 				<?php if ( get_sub_field( 'ranges' ) ) : ?>
 					<?php
-					// The card flow is shared with the products archive, so it lives in a
-					// component. The page grid stays 12-col; the component only fills the
-					// inset span it is given.
+					// The page grid stays 12-col; the component only fills the inset span it is given.
 					?>
 					<div class="theme-grid">
 						<div class="col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-10 mt-8 md:mt-14 xl:mt-24">

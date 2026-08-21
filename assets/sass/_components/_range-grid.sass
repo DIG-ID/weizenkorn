@@ -1,21 +1,10 @@
-// =============================================================================
 // Range grid — template-parts/components/range-grid.php
 //
 // The product-range card flow, shared by the home page's Products section and the
-// products archive's Ranges section. It was written for the home page first and
-// lived in _pages/_home.sass; moved here when the archive needed the same layout.
-// Card styling itself is .card-range in _card.sass — this file is only the flow.
-// =============================================================================
-
-// Bespoke range-card flow. The page grid stays 12-col (this element is an inset
-// grid item); only the internal card layout is custom flex:
-//   mobile  → 1-up
-//   tablet  → 2-up
-//   desktop → row 1 = three 1/3 cards · row 2 = 45.55% / 54.45% (5-card design)
-// Gaps: the column gutter is the project's 20px at every breakpoint, as everywhere else;
-// only the row gaps differ (32 mobile · 32 tablet · 56 desktop). Desktop used to carry a
-// 25px column gutter measured off a frame — hand-drawing, not a value of its own.
-// nth-child(4/5) assume 5 ranges.
+// products archive's Ranges section. Card styling itself is .card-range in _card.sass;
+// this file is only the flow — 1-up, 2-up, then three thirds over an uneven pair.
+//
+// The nth-child(4) and (5) rules assume five ranges.
 .range-grid
   display: flex
   flex-wrap: wrap
@@ -37,31 +26,22 @@
     gap: 56px 20px          // desktop: row 56 · col 20 (the grid's gutter)
     > *
       flex-basis: calc((100% - 40px) / 3)
-    // The second row is 680 / 812 in the frame with 21px between them, which comes to
-    // the 1513px of the ten-column inset this grid sits in. Not 40/60, which is what
-    // this was and which made the fourth card ~593 — narrower than the 616 its own copy
-    // is capped at, so that cap did nothing and the row read too lopsided.
+    // A share of the space left after the gutter rather than pixels, so the row still
+    // divides correctly if the container changes. Not 40/60, which made the fourth card
+    // narrower than the cap its own copy carries, so the cap did nothing.
     //
-    // Written as a share of the space left after the gutter rather than as pixels, so the
-    // row still divides correctly if the container changes. On the project's 20px gutter
-    // these land on 680 and 813 against the frame's 680 and 812 — the frame's 21px gutter
-    // is that 1px of hand-drawing and nothing more.
-    //
-    // Copy is capped wider here than the 427 the narrower row-1 cards get on .card-range
-    // in _card.sass: 616 of 680 and 750 of 813, both ~92% of their card. These
-    // out-specify that rule.
+    // The copy caps here out-specify the narrower one .card-range gives row 1.
     > :nth-child(4)
       flex-basis: calc((100% - 20px) * 0.4555)
       .card__text
         max-width: 616px
     > :nth-child(5)
       flex-basis: calc((100% - 20px) * 0.5445)
-      // Overrides the 650px the tablet block above sets for this card, which has no
-      // upper bound of its own and would otherwise carry into desktop.
+      // Overrides the tablet cap above, which is unbounded and would carry into
+      // desktop.
       .card__text
         max-width: 750px
-  // Fixed media height keeps rows aligned (row 2 cards differ in width).
-  // Desktop 400px from Figma; tablet/mobile (~) pending a Figma check.
+  // A fixed height keeps the rows aligned, the second row's cards differing in width.
   .card__media
     height: 220px
     @media (min-width: 768px)

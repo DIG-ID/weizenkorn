@@ -1,47 +1,21 @@
-// =============================================================================
-// Home page sections — Weizenkorn
-// Layout/spacing scaffolding for the front page. Fill in as you build each
-// section (template-parts/pages/home/*.php). Grid + typography come from
-// _layout/_grid.sass and _components/_typography.sass; use Tailwind utilities
-// for spacing/responsive where possible and keep custom rules here.
-// =============================================================================
-
-// Vertical rhythm between sections lives on each <section> as Tailwind utils
-// (bottom spacing only: pb-[60px] xl:pb-[120px] / mb-24 md:mb-32 xl:mb-48) — see
-// the home template-parts. The hero is the first section, so it carries no top
-// padding: it sits directly below the site header.
+// Home page sections — template-parts/pages/home/*.php
+//
+// Vertical rhythm between sections lives on each <section> as Tailwind utilities. The
+// hero carries no top padding: it sits directly below the site header.
 
 // -- Hero ----------------------------------------------------------------------
 .section-hero
-  // Hero title is brand-red in the design — set colour on the container.
   .section-hero__title
     color: var(--color-primary)
 
 // -- Products ------------------------------------------------------------------
-// The range-card flow moved to _components/_range-grid.sass when the products
-// archive needed the same layout. Nothing home-specific is left here.
-
-// Per-section rules go below as you build each part. Empty placeholders are
-// left as comments only (bare empty selectors emit "won't be rendered" warnings).
-//
-//   .section-services        — "Massgeschneidert für Sie"
-//   .section-gastronomy      — "Gut essen. Gut schlafen."
-//   .section-work-training    — "Arbeiten. Lernen. Ankommen."
-//   .section-about-teaser    — "Lerne uns kennen"
+// The range-card flow lives in _components/_range-grid.sass, shared with the products
+// archive. Nothing home-specific is left here.
 
 // -- Gastronomy ----------------------------------------------------------------
-// Mobile: Swiper slider (JS, see swiper.js) pairs image + card per slide.
-// Tablet+: images bento (this grid, gap-y-5 utility) on top + info-cards row
-// below — 3 venues across the top row, 2 (wider) across the bottom. No image
-// spans multiple rows, so every tile is a plain col-span and gets its height
-// from a consistent aspect-[3/2] set in the template (template-parts/pages/
-// home/gastronomy.php and .../gastronomie-hotellerie/gastronomy.php), capped
-// at 384px tall from xl — no grid-level height rule needed here any more.
-
-// Mobile slider: image + info card stacked 8px apart. Swiper stretches slides
-// to equal height, so every card is the same size — the card grows to fill.
-// Pagination sits below the slides (static) with red bullets (outline → filled
-// when active).
+// Mobile is a slider pairing image + card per slide; from tablet up it is an images
+// bento above an info-cards row, both sized from the template. Swiper stretches slides
+// to equal height, so the card grows to fill.
 .section-gastronomy__slider
   .swiper-slide
     @apply flex flex-col gap-2
@@ -55,34 +29,26 @@
     @apply bg-brand-red
 
 // -- Work & Training -----------------------------------------------------------
-// Equal-width link buttons in a row (grid): each fills its cell with the label
-// left and the arrow pushed right (small min-gap so long labels still fit).
+// Equal-width link buttons in a row, each filling its cell with the label left and the
+// arrow pushed right.
 .section-work-training__list
   .btn
     @apply w-full justify-between gap-3
 
-// =============================================================================
-// Services — template-parts/pages/home/services.php
-//
-// The same arrangement as modules/stories-references, and on purpose: three cards per
-// view at desktop on columns 2–11, one per view below. The card itself is .card-story
-// from that module — reused rather than copied, so its styling lives in one place.
-//
-// Two differences from it: no arrows at any breakpoint, and no bullets at desktop,
-// where the three cards fill one view and there is nothing to page through.
+// -- Services — template-parts/pages/home/services.php -------------------------
+// The same arrangement as modules/stories-references, and on purpose: the card itself is
+// .card-story from that module, reused rather than copied. Two differences: no arrows at
+// any breakpoint, and no bullets at desktop, where the three cards fill one view.
 //
 // Placement is one grid-column declaration per item rather than col-start-* plus
-// col-span-*: those are two utilities and the span one compiles to the shorthand,
-// which resets the start.
-// =============================================================================
-
+// col-span-*: those are two utilities and the span one compiles to the shorthand, which
+// resets the start.
 .section-services
 
-  // Swiper's own stylesheet gives .swiper-slide `height: 100%`, and with the container
-  // having no definite height that resolves to the slide's own content — which also
-  // defeats the flex row's align-items: stretch. Setting it back to auto is what lets
-  // the slides stretch to the tallest, and only then does the card's h-full resolve and
-  // every panel come out the same height.
+  // Swiper's stylesheet gives .swiper-slide height: 100%, which with no definite height
+  // on the container resolves to the slide's own content and defeats the flex row's
+  // stretch. Setting it back to auto is what lets the slides match the tallest, and only
+  // then does the card's h-full resolve.
   &__viewport
     grid-column: 1 / span 2
 
@@ -92,20 +58,15 @@
     @media (min-width: 768px)
       grid-column: 2 / span 4
 
-    // Columns 2–11, the ten-column inset the home's other sections use. With Swiper's
-    // 20px between slides that puts each of the three cards at 491px — which is the 488
-    // the card's own 488/444 ratio is drawn from, so the ratio and the columns agree.
-    // Eight columns, which this was, made them 389 and the images came out short.
+    // Ten columns, not eight: with Swiper's 20px between slides that puts each card at
+    // 491px, which is what the card's own 488/444 ratio is drawn from. At eight columns
+    // they came out 389 and the images were short.
     @media (min-width: 1280px)
       grid-column: 2 / span 10
 
-  // 15px red outlines 30px apart, filled when active — the bullets this project uses
-  // everywhere. `static` undoes Swiper's absolute positioning, since here they are a
-  // block below the slider rather than an overlay on it.
-  //
-  // Swiper spaces its own bullets with margin: 0 4px from a selector more specific than
-  // the m-0 below, so that margin wins and adds 8px to the gap. Zeroing its variable is
-  // the fix.
+  // `static` undoes Swiper's absolute positioning. Swiper also spaces its own bullets
+  // from a selector more specific than the m-0 below, so zeroing its variable is what
+  // stops that margin adding 8px to the gap.
   &__pagination
     @apply static flex items-center justify-center gap-[26px] md:gap-[30px] mt-9 md:mt-14
     @apply xl:hidden

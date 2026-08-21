@@ -1,15 +1,10 @@
-// Admin bar (#wpadminbar) — same markup on wp-admin and on the front end
-// (WP_Admin_Bar renders both), so these rules apply everywhere the bar shows.
+// Admin bar (#wpadminbar) — the same markup on wp-admin and on the front end.
 //
-// Selector groups mirror the core color scheme layer
-// (wp-admin/css/colors/{scheme}/colors.css, ~lines 449-545) — like the admin
-// menu, the bar's JS adds a `.hover` class to the li on real mouse hover, so
-// every state needs the FULL group (:hover + .hover + :focus), never :hover
-// alone.
+// The selector groups mirror core's colour scheme layer. The bar's JS adds a `.hover`
+// class to the li on real mouse hover, so every state needs the FULL group
+// (:hover + .hover + :focus) and never :hover alone.
 
-// ---------------------------------------------------------------------------
-// Bar + top-level items (base state)
-// ---------------------------------------------------------------------------
+// -- Bar + top-level items -----------------------------------------------------
 #wpadminbar
   @apply bg-weizenkorn-black
 
@@ -19,16 +14,14 @@
 #wpadminbar > #wp-toolbar span.noticon
   @apply text-weizenkorn-light-grey
 
-// Icons (dashicons live on ::before/::after pseudo-elements).
+// Dashicons live on the ::before/::after pseudo-elements.
 #wpadminbar .ab-icon,
 #wpadminbar .ab-icon:before,
 #wpadminbar .ab-item:before,
 #wpadminbar .ab-item:after
   @apply text-weizenkorn-light-grey
 
-// ---------------------------------------------------------------------------
-// Top-level items — hover / open (JS .hover class) / focus
-// ---------------------------------------------------------------------------
+// -- Top-level items: hover / open / focus -------------------------------------
 #wpadminbar:not(.mobile) .ab-top-menu > li:hover > .ab-item,
 #wpadminbar:not(.mobile) .ab-top-menu > li > .ab-item:focus,
 #wpadminbar.nojq .quicklinks .ab-top-menu > li > .ab-item:focus,
@@ -36,7 +29,6 @@
 #wpadminbar .ab-top-menu > li.menupop.hover > .ab-item
   @apply bg-weizenkorn-turquoise text-weizenkorn-light-grey
 
-// Labels and icons on the same states.
 #wpadminbar:not(.mobile) > #wp-toolbar li:hover span.ab-label,
 #wpadminbar:not(.mobile) > #wp-toolbar li.hover span.ab-label,
 #wpadminbar:not(.mobile) > #wp-toolbar a:focus span.ab-label
@@ -48,20 +40,16 @@
 #wpadminbar:not(.mobile) li:hover #adminbarsearch:before
   @apply text-weizenkorn-light-grey
 
-// ---------------------------------------------------------------------------
-// Submenus (dropdowns)
-// ---------------------------------------------------------------------------
+// -- Submenus ------------------------------------------------------------------
 #wpadminbar .menupop .ab-sub-wrapper
   @apply bg-[#0c171c]
 
-// Submenu links — base state.
 #wpadminbar .ab-submenu .ab-item,
 #wpadminbar .quicklinks .menupop ul li a,
 #wpadminbar .quicklinks .menupop.hover ul li a,
 #wpadminbar.nojs .quicklinks .menupop:hover ul li a
   @apply text-weizenkorn-light-grey
 
-// Submenu links — hover/focus (full core group, icons included).
 #wpadminbar .quicklinks .menupop ul li a:hover,
 #wpadminbar .quicklinks .menupop ul li a:focus,
 #wpadminbar .quicklinks .menupop ul li a:hover strong,

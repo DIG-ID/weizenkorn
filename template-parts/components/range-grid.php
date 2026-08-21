@@ -1,17 +1,12 @@
 <?php
 /**
- * Range grid — the product-range card flow, shared by the home page's Products
- * section and the products archive's Ranges section. Identical markup in both; only
- * the content differs.
+ * Range grid — the product-range card flow, shared by the home page's Products section and
+ * the products archive's Ranges section. Identical markup in both; only the content
+ * differs. See _components/_range-grid.sass for the flow and _card.sass for the card.
  *
- * Layout — Figma, desktop confirmed 2026-08-11. Five cards across two rows: three
- * thirds on top, then 40% / 60%. Media is a fixed height per breakpoint so the rows
- * stay aligned even though the second row's cards differ in width. See
- * _components/_range-grid.sass for the flow and _card.sass for the card itself.
- *
- * Like every component here it never calls get_field(): the caller reads its own
- * fields and passes the rows in, which is what lets one file serve a page group and
- * an archive's options store without knowing about either.
+ * Like every component here it never calls get_field(): the caller reads its own fields and
+ * passes the rows in, which is what lets one file serve a page group and an archive's
+ * options store without knowing about either.
  *
  * Usage:
  *   get_template_part(
@@ -21,9 +16,8 @@
  *   );
  *
  * @param array $args {
- *     @type array $ranges Rows as ACF returns them. Each row:
- *                         image (int, attachment id), title (string),
- *                         text (string), page (array, ACF link).
+ *     @type array $ranges Rows as ACF returns them. Each row: image (int, attachment id),
+ *                         title (string), text (string), page (array, ACF link).
  * }
  *
  * @package weizenkorn

@@ -3,50 +3,18 @@
  * Our equipment — the machine park: a heading and a slider of photographs, each captioned
  * with the technique it shows.
  *
- * Holzmanufaktur's "Vom Feinsten – unsere Ausrüstung" (Formatieren, UV Digitaldruck, CNC
- * fräsen…). The Figma analysis (§3) gives the same block to the Schreinerei, which is why
- * it is a module rather than a part of one page.
+ * Two slides of five columns with the grid's 20px between them come to the desktop inset
+ * exactly, so slidesPerView is 2 and the slide width needs no value of its own. The slides
+ * carry on past the container's right edge there: the .swiper shows its overflow and the
+ * section clips it, so the run ends at the browser's edge with no negative margins.
  *
- * The analysis calls it capabilities-grid. It is neither: a grid does not page through its
- * items, and what the frame lists is equipment.
+ * Arrows at desktop, bullets below it — each hidden with CSS at the other breakpoints
+ * rather than left out, so Swiper keeps them in sync.
  *
- * Layout — Figma 3974:6714, desktop confirmed 2026-08-18 (canvas 1920 / container 1820):
- *
- *   heading   title on column 2, red rule full width, overline under the rule — all from
- *             the shared section-heading. 96px down to the slider.
- *   viewport  columns 2–11. Two slides of five columns with the grid's 20px between them
- *             come to 1513px, which is that inset exactly — so slidesPerView is 2 and the
- *             slide width needs no value of its own.
- *   bleed     the slides carry on past the container's right edge. The .swiper shows its
- *             overflow and the section clips it, so the run ends at the browser's edge
- *             with no negative margins and no width arithmetic.
- *   slide     a photo at 744/570 with a bordered 80px caption box under it.
- *   arrows    both below the slider and right-aligned to the viewport's right edge, 56px
- *             under it — not flanking the slides the way stories-references does.
- *
- * Tablet — Figma 3974:6668, confirmed 2026-08-18 (canvas 834 / container 703):
- *
- *   viewport  the whole container, one slide per view, and no bleed: the frame's slider
- *             is exactly the 703 the container is.
- *   slide     the photo at 703/543 with a 66px caption box under it (20/18 of padding).
- *   controls  bullets, not arrows — three 15px red outlines 30px apart, centred, 56px
- *             under the slider. The arrows are hidden here and the bullets at desktop.
- *   caption   20/30, the same as desktop: the frame uses the Desktop/Subtitle style for
- *             it, while the section's own overline above drops to the tablet 15/30.
- *
- * Mobile — Figma 3974:6667, confirmed 2026-08-18 (canvas 393 / container 321):
- *
- *   viewport  the container again, one slide, no bleed.
- *   slide     the photo at 321/229 with a 49px caption box under it (16 all round), the
- *             caption itself down to 14/15.
- *   controls  the same bullets, 30px apart, but 32px under the slider rather than 56.
- *   heading   24px down to the slider, which is exactly the margin the section-heading
- *             carries under its overline — so the row adds nothing of its own here.
- *
- * ACF fields (flat, prefixed) — the `our_equipment` group. The group name produces
- * the prefix, so renaming it renames all of these and orphans whatever is stored:
- *   our_equipment_section_title  (clone of "Section Title") title + overline. Clone
- *                                      the GROUP, never a repeater inside one.
+ * ACF fields (flat, prefixed) — the `our_equipment` group. The group name produces the
+ * prefix, so renaming it orphans whatever is stored:
+ *   our_equipment_section_title  (clone of "Section Title") title + overline. Clone the
+ *                                GROUP, never a repeater inside one.
  *   our_equipment_items          (repeater) one row per technique:
  *     → image  (image → ID)
  *     → title  (text)  the caption, e.g. "UV Digitaldruck"

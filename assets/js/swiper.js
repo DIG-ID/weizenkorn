@@ -4,9 +4,8 @@ import { Navigation, Pagination, A11y } from 'swiper/modules';
 /**
  * Gastronomy venues — Swiper on mobile only.
  *
- * The same markup is a slider on phones (< 768px) and a bento CSS grid from
- * tablet up. We init/destroy Swiper on the media query so the grid takes over
- * cleanly once the slider is no longer needed.
+ * The same markup is a slider on phones and a bento CSS grid from tablet up, so Swiper is
+ * created and destroyed on the media query and the grid takes over cleanly.
  */
 export function initGastronomySlider() {
   document.querySelectorAll('.js-gastronomy-slider').forEach((el) => {
@@ -38,9 +37,8 @@ export function initGastronomySlider() {
 /**
  * Home services — three cards per view at desktop, one below it.
  *
- * Bullets only: no arrows at any breakpoint, and the bullets themselves are hidden from
- * xl in CSS, where the three cards fill one view. They live outside .swiper, in the
- * section's own grid row, so the element is passed explicitly.
+ * Bullets only, and hidden from xl in CSS where the three cards fill one view. They live
+ * outside .swiper, in the section's own grid row, so the element is passed explicitly.
  */
 export function initServicesSlider() {
   document.querySelectorAll('.js-services-slider').forEach((el) => {
@@ -66,9 +64,9 @@ export function initServicesSlider() {
 /**
  * Stories & references — three story cards per view at desktop, fewer below.
  *
- * The arrows and the bullets are siblings of .swiper in the page grid, not children
- * of it, so both are looked up from the section root. The template only renders them
- * when there are more slides than fit a view, so this never wires up a dead control.
+ * The arrows and bullets are siblings of .swiper in the page grid, not children, so both
+ * are looked up from the section root. The template renders them only when there are more
+ * slides than fit a view, so this never wires up a dead control.
  */
 export function initStoriesSlider() {
   document.querySelectorAll('.js-stories-slider').forEach((el) => {
@@ -76,12 +74,10 @@ export function initStoriesSlider() {
 
     new Swiper(el, {
       modules: [Navigation, Pagination, A11y],
-      // spaceBetween is the grid's own gutter, which puts the desktop cards at
-      // 388.67px against the frame's 390 — see the template's layout note.
+      // The grid's own gutter.
       spaceBetween: 20,
-      // One per view up to tablet, three from desktop. The tablet frame gives the
-      // slider four of six columns for a single card, so 2-up is not a step the
-      // design has.
+      // One per view up to tablet, three from desktop — 2-up is not a step the design
+      // has.
       slidesPerView: 1,
       breakpoints: {
         1280: { slidesPerView: 3 },
@@ -103,24 +99,20 @@ export function initStoriesSlider() {
 /**
  * Quote slider — one testimonial per slide, at every breakpoint.
  *
- * The arrows are not inside the slider element (they sit in the outer grid
- * columns on desktop), so they are looked up from the section root instead of
- * from the Swiper container. autoHeight keeps the viewport at the height of the
- * current slide, since quotes differ in length.
+ * The arrows sit in the outer grid columns rather than inside the slider element, so they
+ * are looked up from the section root.
  */
 export function initQuoteSlider() {
   document.querySelectorAll('.js-quote-slider').forEach((el) => {
     const root = el.closest('.quote-slider');
 
-    // Bullets below xl, arrows from xl. Both are always wired up and hidden with
-    // CSS, so crossing the breakpoint needs no re-init.
+    // Both controls are always wired up and hidden with CSS, so crossing the breakpoint
+    // needs no re-init.
     //
-    // autoHeight up to tablet, off from desktop. Up to tablet the card stacks
-    // under the image, so its vertical position differs from slide to slide;
-    // sizing the viewport to the active slide is what keeps the bullets sitting
-    // right under the card instead of under the tallest slide. From xl the two
-    // panels are side by side and the arrows are vertically centred, so a
-    // constant height is what stops them moving between slides.
+    // autoHeight up to tablet, where the card stacks under the image and its position
+    // differs per slide, so sizing the viewport to the active slide keeps the bullets
+    // under the card rather than under the tallest slide. Off from xl, where the panels
+    // are side by side and a constant height stops the centred arrows moving.
     new Swiper(el, {
       modules: [Navigation, Pagination, A11y],
       slidesPerView: 1,
@@ -130,9 +122,7 @@ export function initQuoteSlider() {
       },
       observer: true,
       observeParents: true,
-      // Neither control sits inside .swiper — the bullets are in their own
-      // .theme-container below it and the arrows in an overlay — so both
-      // elements have to be passed explicitly.
+      // Neither control sits inside .swiper, so both elements are passed explicitly.
       pagination: {
         el: root ? root.querySelector('.js-quote-pagination') : null,
         clickable: true,
@@ -148,17 +138,14 @@ export function initQuoteSlider() {
 /**
  * Our equipment — two five-column slides per view at desktop, one below.
  *
- * slidesPerView is a whole 2 and no slide width is set anywhere: the viewport is the
- * ten-column inset (1513px at desktop) and two five-column slides with the grid's 20px
- * between them come to exactly that. The slides that follow stay visible past the
- * container's right edge because the CSS shows .swiper's overflow — see
- * _modules/_our-equipment.sass.
+ * slidesPerView is a whole 2 with no slide width set anywhere: the viewport is the
+ * ten-column inset and two five-column slides with the grid's gutter between them come to
+ * exactly that. The slides after them stay visible past the container's right edge because
+ * the CSS shows .swiper's overflow — see _modules/_our-equipment.sass.
  *
- * Arrows at desktop, bullets at tablet and below — the frames give each breakpoint one
- * control, and the CSS hides the other. Both are wired here all the same: Swiper binds
- * them once at init, so a viewport that later crosses 1280 finds the control it needs
- * already live. All of them sit in the section's grid below the slider, outside .swiper,
- * so they are looked up from the section root and passed explicitly.
+ * Both controls are wired here even though the CSS shows one per breakpoint: Swiper binds
+ * them once at init, so a viewport that later crosses 1280 finds the control already live.
+ * All of them sit outside .swiper, so they are looked up from the section root.
  */
 export function initEquipmentSlider() {
   document.querySelectorAll('.js-equipment-slider').forEach((el) => {

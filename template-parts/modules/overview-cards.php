@@ -1,21 +1,16 @@
 <?php
 /**
- * Overview cards — grid of preview cards for a page's own child pages
- * (Figma "Frame 1000006007" on Services_desktop), image/title/text pulled
- * from each child's own "Overview Card" fields, linking through to it.
- * Reused by any "hub" page that needs to list its children — e.g. Services
- * → Schreinerei/Kreativatelier/Fiduciary services now, Schreinerei → its own
- * 7 children later.
+ * Overview cards — a grid of preview cards for a page's own child pages, with the image,
+ * title and text pulled from each child's own "Overview Card" fields. Reused by any hub
+ * page that needs to list its children.
  *
- * Expects to be called from inside an already-open .theme-container (see
- * template-parts/pages/services/services-overview.php) — it only renders the
- * grid-inset row of cards, not a section/container wrapper of its own. Query
- * + field-reading only; each card itself is the shared
- * template-parts/components/card-overview.php component.
+ * Expects to be called from inside an already-open .theme-container — it renders the
+ * grid-inset row of cards and no section or container wrapper of its own. Query and field
+ * reading only; each card is template-parts/components/card-overview.php.
  *
- * ACF fields (flat, prefixed, read from each CHILD page):
- *   overview_card_image  (image → return ID)  required — cards without one are skipped
- *   overview_card_title  (text)                falls back to the child's post title
+ * ACF fields (flat, read from each CHILD page):
+ *   overview_card_image  (image → return ID) required — cards without one are skipped
+ *   overview_card_title  (text)              falls back to the child's post title
  *   overview_card_text   (textarea / wpautop)
  *
  * @param array $args {
@@ -62,13 +57,9 @@ if ( ! $cards ) {
 ?>
 <div class="theme-grid">
 	<?php
-	// A nested .theme-grid (not flex) — .theme-grid already sets display:grid,
-	// so combining it with flex utilities on the same element silently loses
-	// (both are plain classes of equal specificity; grid was winning and
-	// squeezing every <li> into a single 1-column-wide grid track). Each card
-	// spans the FULL column count below xl (col-span-2 of 2, col-span-6 of 6 —
-	// i.e. stacked), then exactly a third at xl (col-span-4 of 12) — same
-	// technique as template-parts/pages/home/services.php's card grid.
+	// A nested .theme-grid and not flex: .theme-grid already sets display:grid, so flex
+	// utilities on the same element silently lose — both are plain classes of equal
+	// specificity, and grid was winning and squeezing every <li> into one track.
 	?>
 	<ul class="overview-cards theme-grid col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-10 xl:gap-x-[25px] gap-y-8 md:gap-y-16 list-none m-0 p-0">
 		<?php foreach ( $cards as $card ) : ?>

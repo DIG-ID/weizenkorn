@@ -1,14 +1,10 @@
 <?php
 /**
- * Button component: the 5 button types from the Figma "Design System" page
- * (Buttons section) — primary, secondary, black, arrow-down and arrow
- * (icon-only). Colors/states per type are documented in
- * assets/sass/_components/_buttons.sass.
+ * Button component — the 5 button types from the Figma Design System page. Colours and
+ * states per type live in assets/sass/_components/_buttons.sass.
  *
- * $args mirrors the shape of an ACF Link field ('title'/'url'/'target'), so a
- * caller can pass get_field( 'some_button' ) straight through and just add
- * 'style'/'type' on top — no glue code, and the component never calls
- * get_field() itself.
+ * $args mirrors the shape of an ACF Link field, so a caller can pass
+ * get_field( 'some_button' ) straight through and add 'style' / 'type' on top.
  *
  * Usage:
  *   $button = get_field( 'cta_button' );
@@ -21,16 +17,13 @@
  * @since 1.0.0
  *
  * @var array $args {
- *     @type string $title  Button text. Required, except for style 'arrow'
- *                          where it is used as the accessible name only
- *                          (icon-only button has no visible label).
+ *     @type string $title  Button text. Required — for style 'arrow' it is the accessible
+ *                          name only, that button having no visible label.
  *     @type string $url    Destination URL. Ignored for type 'submit'.
- *     @type string $target Link target ('_blank'/'_self'). Ignored for type 'submit'.
- *     @type string $style  'primary' (default), 'secondary', 'black',
- *                          'arrow-down' (text + down arrow) or 'arrow'
- *                          (icon-only, no visible label).
- *     @type string $type   'link' (default, renders <a>) or 'submit'
- *                          (renders <button type="submit">).
+ *     @type string $target Link target. Ignored for type 'submit'.
+ *     @type string $style  'primary' (default), 'secondary', 'black', 'arrow-down' or
+ *                          'arrow' (icon-only).
+ *     @type string $type   'link' (default, renders <a>) or 'submit'.
  * }
  */
 
@@ -53,18 +46,13 @@ $class     = 'btn btn-' . sanitize_html_class( $args['style'] );
 $icon_only = ( 'arrow' === $args['style'] );
 $has_icon  = in_array( $args['style'], array( 'primary', 'secondary', 'black', 'arrow-down', 'arrow' ), true );
 
-/*
- * Arrow direction. The 'arrow-down' style says so outright; for every other style it
- * is read off the URL, because a button that fetches a file points down in the design
- * and one that navigates points right — the Living Collection's "DOWNLOAD" is a
- * primary button with a down arrow, which is not one of the five design-system types.
- *
- * Inferring it means an ACF Link needs no companion field and an editor cannot pair
- * the wrong arrow with a PDF. The cost is the reverse: a file that is meant to read as
- * navigation still points down, and a download served by a URL with no extension
- * (a redirect, a query string) points right. Both are then fixed by choosing the
- * 'arrow-down' style explicitly.
- */
+// Arrow direction. The 'arrow-down' style says so outright; for every other style it is
+// read off the URL, a button that fetches a file pointing down in the design and one
+// that navigates pointing right.
+//
+// Inferring it means an ACF Link needs no companion field and an editor cannot pair the
+// wrong arrow with a PDF. The cost is the reverse: a download served by a URL with no
+// extension points right. Both cases are fixed by choosing 'arrow-down' explicitly.
 $download_types = array( 'pdf', 'zip', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'csv', 'rar', '7z' );
 $url_path       = (string) wp_parse_url( $args['url'], PHP_URL_PATH );
 $url_extension  = strtolower( pathinfo( $url_path, PATHINFO_EXTENSION ) );

@@ -1,19 +1,12 @@
-// Fixed bottom-right promo box (Figma "hero section_first moment on
-// website", node 652:822). Desktop/tablet only for now — no mobile design
-// was available at build time, and the 240px box would dominate a phone
-// screen. Behaviour: assets/js/sticky-cta.js (auto-collapse after 5s,
-// hover/focus re-expands).
+// Fixed bottom-right promo box. Desktop and tablet only — the box would dominate a
+// phone screen. Behaviour: assets/js/sticky-cta.js (auto-collapse, hover re-expands).
 .sticky-cta
   @apply hidden md:flex fixed bottom-[82px] right-[83px] z-30
   @apply items-center justify-between gap-4 w-[250px] py-4 px-3
   @apply bg-brand-red text-white no-underline overflow-hidden
 
-  // Collapsed: square card → red circle showing just the wheat mark
-  // (.sticky-cta__logo-icon) instead of the title/text/arrow. The
-  // transitions live only here (on .is-collapsed), not on the base
-  // classes below — collapsing (this class being added) animates, but
-  // expanding back (this class being removed, reverting to the base
-  // classes' un-transitioned values) is instant, as requested.
+  // The transitions live only here and not on the base classes, so collapsing animates
+  // while expanding back is instant — as asked for.
   &.is-collapsed
     @apply w-[100px] h-[100px] p-0 justify-center rounded-full
     @apply transition-[width,height,padding] duration-500 ease-in-out

@@ -1,9 +1,9 @@
 <?php
 /**
- * Home — About teaser ("Lerne uns kennen" / Über uns).
- * Reuses the section-heading component for the full-width title + red rule,
- * then a two-column row: intro (overline + body + CTA) on the left and the
- * image on the right.
+ * Home — About teaser.
+ *
+ * The section-heading component for the full-width title and red rule, then a two-column
+ * row: intro (overline, body, CTA) on the left and the image on the right.
  *
  * ACF fields (flat, prefixed):
  *   about_subtitle (text)

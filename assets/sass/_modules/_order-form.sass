@@ -1,21 +1,8 @@
-// =============================================================================
 // Order form — template-parts/modules/order-form.php
-// Figma "Sie möchten bestellen?" — desktop, tablet and mobile confirmed 2026-08-11.
 //
-// The section body lives in a single .theme-grid item on columns 2–11 (see the
-// template), and the card rows divide that span:
-//   desktop  reseller cards halves (746px each = 5 + 5 columns); range cards
-//            thirds with a 16px gap → 493.8px, the design's 493px.
-//   tablet   everything is one column, full width, 24px apart.
-//   mobile   the same single column, 16px apart, with type stepped to 14/22.
-//
-// Spacing between a card's blocks is a gap, not margins, because the range cards
-// subgrid at xl: the row gap then comes from .order-form__cards and every card's
-// blocks line up on the same rows however long its title runs. Margins would sit
-// inside the rows and every card would need identical ones to stay aligned.
-//
-// The sign-up card holds a Contact Form 7 form. Paste this as its template — the
-// controls use the shared .form-field classes from _components/_form-fields.sass:
+// The sign-up card holds a Contact Form 7 form. Paste this as its template — only
+// classes declared in the theme's SASS work there, since Tailwind never sees the CF7
+// template, which lives in the database:
 //
 //   <div class="order-form__fields">
 //     <label class="form-label"><span class="form-label-text">Name</span>
@@ -28,20 +15,10 @@
 //   <label class="form-label"><span class="form-label-text">Bemerkung</span>
 //     [textarea your-message class:form-field class:order-form__message placeholder "Bemerkung"]</label>
 //   <div class="order-form__actions">[submit class:order-form__submit "Senden"]</div>
-//
-// Only classes declared in the theme's SASS may be used there: Tailwind never sees
-// the CF7 template, which lives in the database.
-// =============================================================================
 
 .order-form
 
-  // 24px between blocks at tablet — the rhythm the design uses for the whole stack
-  // — and 32px at desktop. The first block relies on the section-heading's own
-  // bottom margin instead of adding to it.
-  //
-  // The blocks are direct items of the page grid, so their columns are the grid's own
-  // rather than a span subdivided inside a cell: stacked across the inset 2–11 here,
-  // and side by side in the split variant below.
+  // Direct items of the page grid, so their columns are the grid's own.
   &__block
     @apply mt-4 first:mt-0 md:mt-6 xl:mt-8
     grid-column: 1 / span 2
@@ -53,22 +30,10 @@
       grid-column: 2 / span 10
 
   // -- Split variant (a product range) -----------------------------------------
-  // The two halves side by side, customers left. That is the reverse of the source
-  // order, and it is done with column placement rather than by moving the markup,
-  // because this section stays one file. The cost is that the tab key and a screen
-  // reader meet the reseller half first; both are reachable, and the alternative was
-  // duplicating the whole block.
-  //
-  // Only at xl: below that both halves are full width and stacked in source order,
-  // which is already what the frames show.
-  // Customers come first at EVERY breakpoint, not just where the two blocks share a
-  // row: the tablet frame stacks Endkunde above Wiederverkäufer, which is the reverse
-  // of the source order too. So the rows are pinned rather than left to auto-placement.
-  //
-  // At xl they share row 1, and not as halves — the frame gives customers four columns
-  // and resellers five with column 6 empty between them. Measured off the Kerzen
-  // frame's grid overlay: the customer card runs 150→740 and the reseller column
-  // 923→1677 on the 1820 container, which is 2–5 and 7–11.
+  // Customers come first visually at every breakpoint, which is the reverse of the
+  // source order, so the rows are pinned rather than left to auto-placement. The cost
+  // is that the tab key and a screen reader meet the reseller half first; the
+  // alternative was duplicating the whole block into a second file.
   &--split &__block--customers
     grid-row: 1
 
@@ -82,61 +47,41 @@
       grid-row: 1
       grid-column: 7 / span 5
 
-  // The blocks' own margins cannot space a stack whose visual order is not the source
-  // order — `first:mt-0` would land on the block that ends up second. So in this
-  // variant the gap is the grid's row gap instead: 24px, the frame's distance between
-  // the two blocks and the same one it uses between overline and card.
+  // `first:mt-0` cannot space a stack whose visual order is not the source order — it
+  // would land on the block that ends up second. The grid's row gap does it instead.
   &--split &__block
     @apply mt-0
 
-  // 24px between the blocks at both mobile and tablet. The 8px at the top is the
-  // difference between the frames' 24px from the rule to the first block and the 16px
-  // the section-heading already carries there at mobile; from tablet up its own 24 and
-  // 32 are already right.
   &--split &__grid
     @apply gap-y-6 xl:gap-y-0
     @apply mt-2 md:mt-0
 
-  // One card per half: the reseller pair stops being two columns and the customer
-  // row stops being thirds.
+  // One card per half: the reseller pair stops being two columns and the customer row
+  // stops being thirds.
   &--split &__row,
   &--split &__cards
     @apply xl:grid-cols-1
 
-  // The archive gives these a min-height so its two side-by-side cards match. Here
-  // they stack, and the frames show the first one short — just a title and a link —
-  // so it sizes to its content instead.
   &--split &__card--reseller,
   &--split &__card--form
     @apply xl:min-h-0
 
   // -- Equal columns at desktop ------------------------------------------------
-  // The frames end both columns on the same line. The two blocks are grid items in
-  // one row, so they already stretch to the taller of them; what does not follow is
-  // the card inside, which stops at its own content. So each block becomes a flex
-  // column, its card row takes the leftover space, and the card fills it.
-  //
-  // On the right that space goes to the form card, not the first one: the frames keep
-  // "Bestehende Wiederverkäufer" short — a title and a link — and let the form absorb
-  // the difference.
+  // The blocks already stretch to the taller of them, being grid items in one row; the
+  // card inside does not. So each block becomes a flex column, its card row takes the
+  // leftover space, and the card fills it.
   &--split &__block
     @apply xl:flex xl:flex-col
 
-  // Both rows take the leftover space, but they fill it differently because they hold
-  // different numbers of cards.
-  //
-  // The reseller row has two: the first stays at its content height and the second
-  // absorbs the rest, which is what keeps "Bestehende Wiederverkäufer" short.
+  // Two cards: the first stays at its content height, the second absorbs the rest.
   &--split &__row
     @apply xl:flex-1
 
     @media (min-width: 1280px)
       grid-template-rows: auto 1fr
 
-  // The customer row has one. `auto 1fr` would put it in the auto track and leave it
-  // at its own height — the bug this replaces. grid-auto-rows covers the case of a
-  // range with more than one card too: they would then share the height evenly rather
-  // than the first one being pinned.
+  // One card, so `auto 1fr` would leave it at its own height. grid-auto-rows also
+  // covers a range with more than one card — they share the height evenly.
   &--split &__cards
     @apply xl:flex-1
 
@@ -144,70 +89,44 @@
       grid-template-rows: 1fr
       grid-auto-rows: 1fr
 
-  // The range card subgrids at xl so three of them line up row by row. There is only
-  // one here and it has to fill its column instead, so it goes back to being the plain
-  // flex column every other card is, without the min-height the archive needs.
+  // Back to the plain flex column every other card is: there is only one here, so it
+  // has to fill its column rather than subgrid onto shared rows.
   &--split &__card--range
     @media (min-width: 1280px)
       display: flex
       grid-row: auto
       min-height: 0
 
-  // 32px all round and 40px between a card's blocks, at mobile and tablet alike.
-  // Unlike the desktop frame — whose 16/19/29 are text layers dropped into rectangles
-  // — these come from real auto-layout frames, every one at x=32 y=32, so they are
-  // worth matching exactly. Desktop keeps the 24px the section already used, there
-  // being no reliable value there to match.
   &--split &__card
     @apply px-8 py-8 xl:p-6
 
-  // The gap between a card's blocks is per card, not one value for the section — the
-  // frames give each its own: 16px in the reseller card between its title and link,
-  // 24px in the form card between its title and the fields (20 at desktop, set below),
-  // and 16px in the customer card, whose 40px step to the partner links is a margin
-  // there instead.
   &--split &__card--reseller
     @apply gap-4
 
-  // 16px between the two reseller cards at mobile, 24px at tablet.
   &--split &__row
     @apply gap-4 md:gap-6
 
-  // The frames group the intro and the bullets together, 16px apart, and keep the 40px
-  // for the step to the partner links. This markup has them in separate blocks, so the
-  // card's own gap cannot be 40 — it becomes the 16, and the partner block makes up the
-  // difference with a margin.
   &--split &__card--range
     @apply gap-4
 
   &--split &__group--partners
     @apply mt-6
 
-  // 8px between the bullets and between the partner links, at every breakpoint. The
-  // section's defaults are 0 and 20px at mobile, from the archive's frames.
   &--split &__list
     @apply gap-2
 
   &--split &__group--partners &__link + &__link
     @apply mt-2
 
-  // Control heights are the frames': 14 + 22 + 14 = the mobile design's 50px, and
-  // 16 + 22 + 16 = the tablet design's 54px, which the shared .form-field already
-  // gives. Only the mobile padding and the tablet side padding differ from it, so only
-  // those are set — scoped to this variant, so the CTA form and the archive keep what
-  // their own frames gave them.
+  // Scoped to this variant, so the CTA form and the archive keep their own values.
   &--split .form-field
     @apply py-[14px] md:py-4 md:px-6
 
-  // 26px between the controls at mobile and tablet, 20px at desktop, where the
-  // archive's frame gave 24 and 10.
   &--split .wpcf7-form
     @apply gap-[26px] xl:gap-5
 
-  // Name and Email are 20px apart — stacked at mobile, side by side from tablet — and
-  // they are NOT halves: the frames draw 250/369 at tablet and 267/418 at desktop, so
-  // Email takes about three fifths. The fr values are the frames' own widths, which
-  // makes the gap fall where it does there without any arithmetic here.
+  // Name and Email are NOT halves — Email takes about three fifths. The fr values are
+  // the frames' own widths, so the gap falls where it does there without arithmetic.
   &--split &__fields
     @apply gap-5
 
@@ -217,16 +136,11 @@
     @media (min-width: 1280px)
       grid-template-columns: 267fr 418fr
 
-  // 20px from the card title to the form at desktop, against the 40px the card uses
-  // between its blocks elsewhere. Only on the form card: the customer card keeps 40.
   &--split &__card--form
     @apply gap-6 xl:gap-5
 
-  // The archive's frames step this section's copy to 20/30 from tablet up; the range
-  // frames hold 14/22 through tablet and only step at desktop — their whole tablet
-  // scale is Tablet/Text, 14/22. Same classes, different breakpoint, so the variant
-  // restates them. The card titles need no entry: .title-card already does 14/22 at
-  // tablet and 20/30 at desktop.
+  // The range frames step the copy a breakpoint later than the archive's, so the
+  // variant restates the same classes.
   &--split &__card-intro,
   &--split &__list,
   &--split &__link,
@@ -235,57 +149,36 @@
   &--split .form-field
     @apply md:text-[14px] md:leading-[22px] xl:text-[20px] xl:leading-[30px]
 
-  // The arrow never reaches the card's edge: the frames cap the text-plus-arrow row at
-  // 327px on tablet and 423px on desktop, and only let it run the full width at mobile,
-  // where 256px is all the padding leaves anyway.
-  //
-  // Measured from the customer card's rows. The reseller card's link comes to 380px in
-  // the same frame rather than 423 — close enough to read as the same intent, and a
-  // second value for one row is not worth a rule of its own.
+  // The arrow never reaches the card's edge, so the text-plus-arrow row is capped.
   &--split &__link
     @apply md:max-w-[327px] xl:max-w-[423px]
 
-  // A list item's link starts 20px in, after the ul's indent for the bullet, so the
-  // same cap would put its arrow 20px further right than the partner links below it.
-  // The frames line the two up: there the marker's offset sits inside the row's width
-  // rather than before it. Hence the cap less the indent.
+  // The cap less the ul's 20px indent, so a list item's arrow lines up with the
+  // partner links below it.
   &--split &__list-item &__link
     @apply md:max-w-[307px] xl:max-w-[403px]
 
-  // The tablet frame draws the submit arrow 16x10 while the link arrows around it are
-  // 27x17. Not matched on purpose: sitting beside them in the same card, a smaller one
-  // reads as an inconsistency rather than a decision, so it keeps the section's 24x19
-  // like every other arrow. Only the gap is the frame's — 16px, so the right padding
-  // is 24 for the arrow plus 16.
+  // The tablet frame draws this arrow smaller than the ones beside it. Not matched on
+  // purpose — it would read as an inconsistency. Only the gap is the frame's.
   &--split &__submit
     @apply md:pr-10
 
-  // The tablet frame draws the message box the same 54px as the single-line controls.
-  // Overridden on purpose: at that height a textarea reads as another text input, with
-  // nothing to say it takes more than a line. It keeps the desktop's 104px instead.
+  // The tablet frame draws the message box at the single-line height. Overridden: at
+  // that height a textarea reads as another text input.
   &--split &__message
     @apply md:h-[104px]
 
-  // Type set here rather than with the shared .label-overline class, so the section owns
-  // its scale: the mobile line-height is 15 and not the shared 30. Tablet and desktop
-  // match it — 15/30 and 20/30.
+  // Not .label-overline: this section's mobile line-height is 15, not the shared 30.
   &__overline
     @apply font-primary font-normal uppercase tracking-[0.5px]
     @apply text-[14px] leading-[15px] md:text-[15px] md:leading-[30px] xl:text-[20px]
     @apply mb-4 md:mb-6 xl:mb-8
 
   // -- Cards -------------------------------------------------------------------
-  // Padding per breakpoint, measured from Figma: 24/30 on mobile, 32/44 at tablet
-  // where a card spans the whole container, and 24 all round at desktop where three
-  // cards share the row.
-  //
-  // The gap spaces the card's own blocks — header, stockists, partners — so no block
-  // carries a margin. At xl the range cards become subgrids and take their row gap
-  // from .order-form__cards instead, which is what keeps the three cards aligned.
-  // From tablet up all three cards share the same padding and inner gap. On mobile
-  // they do not: Figma gives the reseller card 74px of total height, which only works
-  // with ~12px of vertical padding and an 8px gap, while a range card gets 24/30 and
-  // 30px. So the mobile values live on the variants.
+  // The gap spaces the card's own blocks, so no block carries a margin. At xl the range
+  // cards subgrid and take their row gap from .order-form__cards instead, which is what
+  // keeps the three cards aligned. Mobile values live on the variants, where the frames
+  // disagree with each other.
   &__card
     @apply border border-brand-dark bg-white
     @apply flex flex-col
@@ -294,8 +187,8 @@
   &__card-title
     @apply title-card text-brand-dark
 
-  // Title and intro are 8px apart and travel together, so a card without an intro
-  // still lines up with one that has it.
+  // Title and intro travel together, so a card without an intro still lines up with
+  // one that has it.
   &__card-header
     @apply flex flex-col gap-2
 
@@ -305,18 +198,13 @@
   &__card-intro
     @apply body-text text-brand-dark
 
-  // Reseller cards: stacked at tablet, halves at desktop with the grid's own gutter.
   &__row
     @apply grid grid-cols-1 gap-6 xl:grid-cols-2 xl:gap-5
 
-  // Range cards: stacked at tablet, thirds at desktop. The 16px column gap is the
-  // design's, not the grid gutter: (1513.33 - 32) / 3 = 493.8px per card.
-  //
-  // The three rows are declared here and each card subgrids onto them, so the header,
-  // the stockists block and the partners block all start on the same line across the
-  // three cards. The 40px row gap is also what separates those blocks inside every
-  // card. Without subgrid support the cards keep their own heights — the layout
-  // degrades to what it was, nothing breaks.
+  // The 16px column gap is the design's, not the grid gutter. The rows are declared
+  // here and each card subgrids onto them, so header, stockists and partners start on
+  // the same line across the three cards. Without subgrid support the cards keep their
+  // own heights — the layout degrades, nothing breaks.
   &__cards
     @apply grid grid-cols-1 gap-6 xl:grid-cols-3 xl:gap-x-4 xl:gap-y-10
 
@@ -341,8 +229,8 @@
       grid-template-rows: subgrid
       grid-row: span 3
 
-  // Pinned rather than auto-placed: a card missing one of the blocks would otherwise
-  // pull the next one up a row and break the alignment with its neighbours.
+  // Pinned rather than auto-placed: a card missing one block would pull the next one up
+  // a row and break the alignment with its neighbours.
   &__group--stockists
     @media (min-width: 1280px)
       grid-row: 2
@@ -352,8 +240,6 @@
       grid-row: 3
 
   // -- Card content ------------------------------------------------------------
-  // 8px between a group's heading and its items; the partner links add their own
-  // 12px between each other further down.
   &__group
     @apply flex flex-col gap-2
 
@@ -366,13 +252,12 @@
     @apply body-text text-brand-dark
     @apply flex flex-col gap-0 md:gap-2
 
-  // A linked item is a full-width row so its arrow reaches the card's right edge,
-  // like the partner links below. The bullet stays outside it.
+  // Full-width row so its arrow reaches the card's right edge, like the partner links
+  // below. The bullet stays outside it.
   &__list-item &__link
     @apply w-full
 
-  // Link rows: label left, red arrow hard right. The icon inherits the arrow from
-  // weizenkorn_the_svg_icon(), which is stroke="currentColor".
+  // The icon inherits the arrow from weizenkorn_the_svg_icon(), stroke="currentColor".
   &__link
     @apply flex items-center justify-between gap-4
     @apply body-text text-brand-dark no-underline
@@ -382,22 +267,18 @@
     &:focus-visible
       @apply text-brand-red
 
-  // The arrow is drawn at 24x19 by weizenkorn_the_svg_icon(); the design uses a
-  // smaller 16x12 one on mobile, so the SVG is scaled rather than a second icon added
-  // to the helper.
+  // The helper draws the arrow at 24x19; the design uses a smaller one on mobile, so
+  // the SVG is scaled rather than a second icon added to the helper.
   &__link-icon
     @apply shrink-0 text-brand-red
 
     svg
       @apply w-4 h-3 md:w-6 md:h-[19px]
 
-  // 12px between consecutive partner links. The adjacent-sibling selector means the
-  // first one keeps only the group's own gap, so this never doubles up with it.
+  // Adjacent sibling, so the first link keeps only the group's own gap.
   &__group--partners &__link + &__link
     @apply mt-5 md:mt-3
 
-  // The design steps body copy in this section to 20/30 from tablet up, one size
-  // ahead of the shared .body-text scale.
   &__card-intro,
   &__list,
   &__link
@@ -407,23 +288,15 @@
   .wpcf7
     @apply m-0
 
-  // 10px between the card title and the fields, and between the fields themselves.
-  // The Senden row keeps the card's own 44px distance, since it is a separate block.
   .wpcf7-form
     @apply flex flex-col gap-6 md:gap-[10px]
 
-  // Name and Email share a row from md, 20px apart; everything else is full width.
   &__fields
     @apply grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-5
 
-  // Field heights are fixed by the design: 60px for every single-line control at
-  // desktop, 104px for the message box from tablet up. Set directly rather than
-  // derived from padding — box-sizing is border-box, so a padding-based height comes
-  // out 2px over once the 1px border counts. :not(textarea) keeps the 60px off the
-  // message box, which carries the class too.
-  // 14/22 on mobile: with the shared field's 12px padding and 1px border that comes
-  // to exactly the 48px of the design, so no height is needed there. The message box
-  // is 48px too on mobile — it only grows to 104px from tablet.
+  // Heights are set directly, not derived from padding: box-sizing is border-box, so a
+  // padding-based height comes out 2px over once the 1px border counts. :not(textarea)
+  // keeps it off the message box, which carries the class too.
   .form-field
     @apply text-[14px] leading-[22px] md:text-[20px] md:leading-[30px]
 
@@ -436,8 +309,8 @@
   &__actions
     @apply relative flex justify-end
 
-  // Dark bold text with a red arrow rather than the CTA form's white button — this
-  // one sits on white. The right padding clears the arrow: 24px icon + 24px gap.
+  // Dark bold text with a red arrow rather than the CTA form's white button — this one
+  // sits on white. The right padding clears the arrow.
   &__submit
     @apply bg-transparent border-0 rounded-none cursor-pointer
     @apply font-primary font-bold tracking-[0.5px] text-brand-dark
@@ -447,8 +320,7 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='19' viewBox='0 0 23.7301 18.632' fill='none'%3E%3Cpath d='M0 9.31602H22M10 17.816L22 9.31602L10 0.816024' stroke='%23E30613' stroke-width='2'/%3E%3C/svg%3E")
     background-position: right center
 
-    // Without a size the data URI renders at its natural 24x19 on every screen; the
-    // design uses a smaller arrow on mobile.
+    // Without a size the data URI renders at its natural 24x19 on every screen.
     background-size: 16px 13px
 
     @media (min-width: 768px)
@@ -458,8 +330,8 @@
     &:focus-visible
       @apply text-brand-red outline-none
 
-  // Same reason as the CTA form: CF7's JS injects the spinner as the submit's next
-  // sibling, and in flow it would reserve 24px and shift the button.
+  // CF7's JS injects the spinner as the submit's next sibling; in flow it would reserve
+  // 24px and shift the button.
   .wpcf7-spinner
     @apply absolute right-full top-1/2 -translate-y-1/2 mr-4 my-0
 

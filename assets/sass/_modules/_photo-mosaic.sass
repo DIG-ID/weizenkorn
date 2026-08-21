@@ -1,31 +1,18 @@
-// =============================================================================
 // Photo mosaic — template-parts/modules/photo-mosaic.php
-// Figma 2882:5176 desktop, 2882:5216 tablet, 2882:5226 mobile — all confirmed
-// 2026-08-17.
 //
-// The photos are direct items of the page grid, so their columns are the grid's own.
-// Only the first one is placed: it spans both rows, and auto-placement drops the rest
-// into the two columns beside it in the order they are entered. That is what makes the
-// arrangement follow the content — a sixth photo continues into a third row with no
-// rule of its own.
-// =============================================================================
+// The photos are direct items of the page grid, so their columns are the grid's own and
+// auto-placement fills the arrangement in the order the photos are entered. Only the
+// ones that differ from that flow are placed by hand below.
 
 .photo-mosaic
 
-  // Every height lives on the grid's rows rather than on the photos, because the first
-  // row differs from the ones under it at all three breakpoints: the frames give the
-  // opening photo its own size (377 / 825 / 369) and then repeat one size for
-  // everything after it (218 / 232 / 400).
+  // Heights live on the grid's rows, not on the photos: the first row differs from the
+  // ones under it at every breakpoint, and grid-auto-rows then repeats one height, so
+  // the module holds any number of photos.
   //
-  // That repeat is grid-auto-rows, so the module holds any number of photos: a sixth
-  // and a seventh come in at the same height as the rest with no rule of their own.
-  //
-  // Where the frames draw those later rows slightly differently from one another
-  // (mobile 201/200/218/217, tablet 214/232) it is hand-drawn variance, not intent —
-  // each breakpoint takes the largest of them so no row comes out shorter than the
-  // frame shows.
-  //
-  // 24px between rows below desktop, 20px at desktop, which is the grid's own gutter.
+  // Where the frames draw later rows slightly differently (mobile 201/200/218/217,
+  // tablet 214/232) each breakpoint takes the largest, so no row comes out shorter than
+  // the frame shows.
   &__grid
     @apply gap-y-6 xl:gap-y-5
 
@@ -40,9 +27,7 @@
       grid-template-rows: 369px 400px
       grid-auto-rows: 400px
 
-  // Four grid columns each — the frame's 588-591px against the grid's 593.33 — and
-  // across the full container, not the usual inset. Below that: three columns each at
-  // tablet, two up per row, and full width stacked at mobile.
+  // Full container, not the usual inset.
   &__item
     @apply relative w-full m-0 overflow-hidden h-auto
     grid-column: 1 / span 2
@@ -53,8 +38,7 @@
     @media (min-width: 1280px)
       grid-column: span 4
 
-  // The tall one. At desktop it takes both rows, which is what its 787px in the frame
-  // is — 369 + 20 + 400. At tablet it runs the full width above the others.
+  // The tall one — both rows at desktop, full width above the others at tablet.
   &__item:first-child
     @media (min-width: 768px)
       grid-column: 1 / span 6
@@ -62,3 +46,24 @@
     @media (min-width: 1280px)
       grid-column: 1 / span 4
       grid-row: span 2
+
+  // Gastronomy: same rows and gutter, different spans, so only the spans are overridden
+  // and only at desktop — mobile stacks exactly as the default does.
+  //
+  // The tall one holds columns 1-5 across both rows, which leaves the 3 and the 4 to
+  // fill row one and gives the 7-wide one nowhere to go but row two, columns 6-12.
+  &--gastronomy
+    @media (min-width: 1280px)
+      .photo-mosaic__item
+
+        &:first-child
+          grid-column: 1 / span 5
+
+        &:nth-child(2)
+          grid-column: span 3
+
+        &:nth-child(3)
+          grid-column: span 4
+
+        &:nth-child(4)
+          grid-column: span 7

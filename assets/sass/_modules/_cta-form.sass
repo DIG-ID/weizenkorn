@@ -1,23 +1,9 @@
-// =============================================================================
 // CTA form — template-parts/modules/cta-form.php
-// Figma "Noch Fragen?" — desktop (2819:1043) confirmed 2026-07-31, tablet
-// (2530:1717) and mobile (2619:54) confirmed 2026-08-12.
 //
-// Tablet takes the desktop scale, not the mobile one: 20/30 text, 80px fields, a
-// 300px message box and a 54px button. What changes is the layout — the two
-// columns stack into one and the band pays for its own inset with side padding,
-// since below xl the form no longer sits on the page grid's columns.
-//
-// The stack gap is the band's own rhythm at each breakpoint — 24 / 32 / 45px — and
-// it has to be set in three places, because the controls are not siblings: the
-// three single-line fields are a flex column, the message box is the next grid
-// item, and the button is the next child of the form. All three carry the same
-// value per breakpoint so the stack reads as one even below xl, where the two
-// columns collapse into a flat list of four controls.
-//
-// The form is Contact Form 7, so its markup comes from the form template in the
-// plugin. Paste this as the template (the wrapper divs are what give the layout;
-// the class: options put our classes on CF7's controls):
+// The form is Contact Form 7, so its markup comes from the form template in the plugin.
+// Paste this as the template — the wrapper divs are what give the layout, and only
+// classes declared in this file (plus theme-grid, from _layout/_grid.sass) work there,
+// because Tailwind never scans a template that lives in the database:
 //
 //   <div class="cta-form__row theme-grid">
 //     <div class="cta-form__col cta-form__col--fields">
@@ -37,36 +23,20 @@
 //     <div class="cta-form__actions-inner">[submit class:cta-form__submit "Senden"]</div>
 //   </div>
 //
-// Only classes declared in this file (plus theme-grid, which lives in
-// _layout/_grid.sass) may be used in the template above — see __label-text below.
-//
-// The `theme-grid` on the two wrappers is load-bearing: it is the page grid, and
-// it is what puts the fields on real columns. Do not drop it when editing the form.
-//
-// Checked against Contact Form 7 6.1.6 installed locally: the .hidden-fields-container
-// fieldset and .screen-reader-response are both out of flow (CF7 hides them), the
-// .wpcf7-form-control-wrap span really is inline and needs the block below, and the
-// spinner is injected by JS as a sibling of the submit — hence __actions-inner.
-// =============================================================================
+// The `theme-grid` on the two wrappers is load-bearing — it is what puts the fields on
+// real columns. Do not drop it when editing the form.
 
 .cta-form
 
-  // CF7 wraps the whole form in <div class="wpcf7"> with its own margins.
   .wpcf7
     @apply m-0
 
   .wpcf7-form
     @apply flex flex-col gap-6 md:gap-8 xl:gap-[45px]
 
-  // The row IS the page grid (the CF7 template puts .theme-grid on it), so the two
-  // columns are placed on real column lines: fields on 2-6, message on 7-11. Below
-  // xl they span the full width and stack — no Figma frame yet, and side by side
-  // inside a 700px tablet container would leave the message box too narrow.
-  //
-  // grid-column in a single declaration rather than col-start-* + col-span-*: those
-  // are two utilities, and the span one compiles to the `grid-column` shorthand,
-  // which resets the start. This project has been bitten by that ordering three
-  // times already.
+  // grid-column as a single declaration rather than col-start-* + col-span-*: the span
+  // utility compiles to the `grid-column` shorthand, which resets the start. This
+  // project has been bitten by that ordering three times.
   &__row
     @apply gap-y-6 md:gap-y-8 xl:gap-y-0 xl:items-start
 
@@ -83,31 +53,17 @@
       @media (min-width: 1280px)
         grid-column: 7 / span 5
 
-  // The design has no visible labels, only placeholder text — but a placeholder is
-  // not an accessible name, so each control keeps a real <label> with the text
-  // visually hidden. A <label> is inline, which would make the control's w-full
-  // resolve against the text width instead of the column. CF7's own
-  // .wpcf7-form-control-wrap span is handled in _components/_form-fields.sass.
+  // The design shows no labels, only placeholders — but a placeholder is not an
+  // accessible name, so each control keeps a real <label> with the text hidden. A
+  // <label> is inline, which would make the control's w-full resolve against the text.
   &__label
     @apply block
 
-  // Every class the CF7 template uses has to be declared in this file. Tailwind
-  // only scans the theme's own files, and that template lives in the database —
-  // so a bare utility like `sr-only` on the label text would be purged and the
-  // label would render visibly. Declaring it here instead is purge-proof.
+  // Declared here, not as a bare `sr-only` in the template: Tailwind would purge a
+  // utility it never sees and the label would render visibly.
   &__label-text
     @apply sr-only
 
-  // Field height is set by the padding rather than a height, and comes out exact
-  // because these controls have no border: 12 + 22 + 12 = the mobile design's 46px,
-  // 25 + 30 + 25 = the tablet design's 80px, 24 + 30 + 24 = the desktop design's
-  // 78px.
-  //
-  // Tablet's side padding is 28px, the same inset the Senden button uses. Figma
-  // measures 27px on the inputs and 19px on the message box, but those are text
-  // layers placed by hand rather than auto-layout padding — aligning all four
-  // controls is what the design means, and a message box inset 8px less than the
-  // fields above it would read as a mistake.
   &__control
     @apply w-full bg-white border-0 rounded-none
     @apply font-primary font-normal tracking-[0.5px] text-brand-dark
@@ -120,29 +76,15 @@
     &:focus
       @apply outline-none ring-2 ring-brand-dark ring-inset
 
-  // The message box has a height per breakpoint: 130px on mobile (Figma draws it as
-  // 12px top and 96px of empty space below a 22px line — for a real textarea only
-  // the total matters), a flat 300px at tablet, and 298px at desktop to match the
-  // three stacked fields beside it, 3 x 78 + 2 x 32.
-  //
-  // A real height, not min-height: CF7 renders the textarea with a rows attribute,
-  // so its intrinsic height is ten lines and a min-height under that does nothing.
-  // It also stops the box stretching when a validation message appears under a
-  // field and grows the desktop row.
-  //
-  // resize is off: the drag handle in the corner is browser chrome that has no place
-  // in the design, and the box is already the height it needs to be.
+  // A real height, not min-height: CF7 renders the textarea with a rows attribute, so
+  // its intrinsic height is ten lines and a min-height under that does nothing. It also
+  // stops the box stretching when a validation message grows the desktop row.
   textarea#{&}__control
     @apply resize-none h-[130px] md:h-[300px] xl:h-[298px]
 
-  // The actions wrapper is a second .theme-grid, so the button stays inside the same
-  // inset columns as the fields and is pushed to their right edge.
-  //
-  // The inner wrapper exists because CF7's JS inserts <span class="wpcf7-spinner">
-  // as the submit's next sibling. Without it that span would be a grid item too,
-  // auto-placed in column 1 — the far side of the row from the button.
-  // relative on both: the spinner is positioned against whichever of them ends up
-  // being the submit's parent.
+  // The inner wrapper exists because CF7's JS inserts the spinner as the submit's next
+  // sibling — without it that span would be a grid item too, auto-placed in column 1.
+  // relative on both, since either can end up being the submit's parent.
   &__actions
     @apply relative
 
@@ -152,13 +94,12 @@
     @media (min-width: 1280px)
       grid-column: 2 / span 10
 
-  // White button with the label and the shared arrow. The arrow has to be a
-  // background image: CF7 renders the submit as <input type="submit">, which
-  // cannot hold an inline SVG. Same path as weizenkorn_the_svg_icon('arrow-right'),
-  // with the stroke hard-coded because currentColor does not resolve in a data URI.
-  // Placed here as well as on __actions-inner, so the button lands in the right
-  // columns whether or not the CF7 template wraps it. When the wrapper is present
-  // the input is not a grid item and these two simply do nothing.
+  // The arrow has to be a background image: CF7 renders the submit as an <input>, which
+  // cannot hold an inline SVG. Same path as weizenkorn_the_svg_icon('arrow-right'), with
+  // the stroke hard-coded because currentColor does not resolve in a data URI.
+  //
+  // The columns are set here as well as on __actions-inner, so the button lands right
+  // whether or not the template wraps it; with the wrapper these do nothing.
   &__submit
     @apply col-span-2 md:col-span-6 justify-self-end
     @apply bg-white border-0 rounded-none cursor-pointer
@@ -166,19 +107,14 @@
     @apply text-[14px] leading-[22px] md:text-[20px] md:leading-[30px]
     @apply bg-no-repeat
 
-    // Padding is set per side, never with px-*: a px-* utility in a later media
-    // query would reset padding-right and drop the label on top of the arrow.
-    // Right padding clears the arrow — 16 icon + 14 gap + 16 inset on mobile,
-    // 24 + 20 + 28 from tablet up, the same at desktop. With the line height that
-    // gives the design's 38px button on mobile and 54px at tablet.
+    // Per side, never px-*: a px-* utility in a later media query would reset
+    // padding-right and drop the label on top of the arrow.
     @apply py-2 pl-4 pr-[46px] md:py-3 md:pl-7 md:pr-[72px]
 
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='19' viewBox='0 0 23.7301 18.632' fill='none'%3E%3Cpath d='M0 9.31602H22M10 17.816L22 9.31602L10 0.816024' stroke='%23252525' stroke-width='2'/%3E%3C/svg%3E")
     background-position: right 16px center
 
-    // Without a size the data URI renders at its natural 24x19 everywhere, which is
-    // oversized next to 14px text on a phone — the same thing that had to be fixed
-    // on the order form's button. The design draws it 16x12 there.
+    // Without a size the data URI renders at its natural 24x19 everywhere.
     background-size: 16px 12px
 
     @media (min-width: 768px)
@@ -192,20 +128,16 @@
     &:focus-visible
       @apply outline-none ring-2 ring-brand-dark ring-inset
 
-  // CF7 messages: keep them legible on the red band.
   .wpcf7-not-valid-tip,
   .wpcf7-response-output
     @apply font-primary text-[14px] leading-[20px] tracking-[0.5px] text-white
 
-  // CF7 styles this as `.wpcf7 form .wpcf7-response-output` (two classes and a
-  // type), which outranks a plain `.cta-form .wpcf7-response-output` — hence the
-  // deeper selector here, or its blue border and 2em margins would win.
+  // CF7 styles this as `.wpcf7 form .wpcf7-response-output`, which outranks a plain
+  // `.cta-form .wpcf7-response-output` — hence the deeper selector.
   .wpcf7 form .wpcf7-response-output
     @apply mt-0 mx-0 border-2 border-white p-4
 
-  // The spinner is only visibility:hidden while idle, so in flow it would still
-  // reserve its 24px and push the button in off the right edge. Taken out of flow
-  // and parked just left of the button instead, so it can appear during submit
-  // without moving anything.
+  // Only visibility:hidden while idle, so in flow it would still reserve its 24px and
+  // push the button off the right edge.
   .wpcf7-spinner
     @apply absolute right-full top-1/2 -translate-y-1/2 mr-4 my-0

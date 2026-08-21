@@ -1,26 +1,18 @@
-// =============================================================================
-// Form fields — shared Contact Form 7 control styling
-//
-// The design uses the same white box for every text input, select and textarea
-// across the site's forms (20/30 text, generous padding), so it lives here rather
-// than in each section. Add `class:form-field` to the CF7 form-tag:
+// Form fields — shared Contact Form 7 control styling. Add `class:form-field` to the
+// form-tag:
 //
 //   <label class="form-label"><span class="form-label-text">Name</span>
 //     [text* your-name class:form-field placeholder "Name"]</label>
 //
-// A <select> cannot carry a placeholder, so first_as_label turns its first value
-// into the unselectable prompt the design shows.
+// A <select> cannot carry a placeholder, so first_as_label turns its first value into
+// the unselectable prompt the design shows.
 //
-// Sections override what differs: the CTA form sits on the red band and drops the
-// border, and each section sets its own textarea height.
-//
-// Checked against Contact Form 7 6.1.6.
-// =============================================================================
+// Sections override what differs: the CTA form drops the border, and each section sets
+// its own textarea height.
 
-// The designs have no visible labels, only placeholder text — but a placeholder is
-// not an accessible name, so every control keeps a real <label> with its text
-// visually hidden. A <label> is inline by default, which would make the control's
-// w-full resolve against the text width instead of the column.
+// The designs show no labels, only placeholders — but a placeholder is not an accessible
+// name, so every control keeps a real <label> with the text hidden. A <label> is inline,
+// which would make the control's w-full resolve against the text width.
 .form-label
   @apply block
 
@@ -34,33 +26,29 @@
   @apply text-[16px] leading-[24px] md:text-[20px] md:leading-[30px]
   @apply px-4 py-3 md:p-4 xl:px-[22px] xl:py-[15px]
 
-  // CF7 renders the placeholder text as a real placeholder, so it needs the full
-  // text colour — the browser default is too faint against the design.
+  // The browser default is too faint against the design.
   &::placeholder
     @apply text-brand-dark opacity-100
 
   &:focus
     @apply outline-none ring-2 ring-brand-dark ring-inset
 
-  // A native <select> keeps its own arrow on some platforms even with
-  // appearance:none, and the design has the theme's own arrow-down in red. Same
-  // data-URI approach as the submit buttons: an inline SVG cannot go into a
-  // <select> that CF7 generates, and currentColor does not resolve in a data URI,
-  // so the stroke is the brand red literal.
+  // A data URI for the same reason as the submit buttons: an inline SVG cannot go into a
+  // <select> CF7 generates, and currentColor does not resolve in a data URI, so the
+  // stroke is the brand red literal.
   &--select
     @apply pr-12 xl:pr-16 bg-no-repeat cursor-pointer
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='19' height='24' viewBox='0 0 18.632 23.7301' fill='none'%3E%3Cpath d='M9.31602 0L9.31602 22M0.816024 10L9.31602 22L17.816 10' stroke='%23E30613' stroke-width='2'/%3E%3C/svg%3E")
     background-position: right 16px center
 
-    // Same as the submit buttons: without a size the data URI renders at its natural
-    // 19x24, which is oversized next to 14px text on a phone.
+    // Without a size the data URI renders at its natural 19x24.
     background-size: 12px 15px
 
     @media (min-width: 768px)
       background-position: right 22px center
       background-size: 16px 20px
 
-// Contact Form 7 wraps every control in an inline <span>, which would stop the
-// controls above from filling their column.
+// CF7 wraps every control in an inline <span>, which would stop the controls above from
+// filling their column.
 .wpcf7-form-control-wrap
   @apply block

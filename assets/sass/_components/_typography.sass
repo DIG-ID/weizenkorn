@@ -1,22 +1,7 @@
-// =============================================================================
-// Typography — Weizenkorn
-// Custom classes are built with Tailwind utilities via @apply (house style —
-// see _buttons.sass). Responsive sizes use arbitrary values with the base / md
-// (768px) / xl (1280px) breakpoints, matching the design's mobile / tablet /
-// desktop layouts. Font: DM Sans (font-primary), weights 400/500/600/700/900.
-// Sizes are the REAL Figma values (Home desktop/tablet/mobile styles, checked
-// 2026-07-23); values marked (~) are interpolated (no matching Figma token).
-// Colour is intentionally NOT set here (except inline links) — set it on the
-// container so children (incl. wpautop <p>) inherit it (see CLAUDE.md).
+// Typography — DM Sans (font-primary) throughout.
 //
-//   Hero Title : 35/45 → 45/60 → 82/100 · SemiBold 600
-//   H2 display : 36/38 → 64/74 → 112/112 · Medium 500
-//   Card title : 18/26 → 20/30 · Bold 700
-//   Hero tagline: 12/18 → 14/22 → 30/40 · Bold 700
-//   Overline   : 12/30 → 15/30 → 20/30 · Regular 400 · UPPERCASE
-//   Body/Text  : 12/20 → 14/22 → 20/30 · Regular 400
-//   Inline link: Bold 700 · underline · brand-red
-// =============================================================================
+// Colour is deliberately NOT set here, except on inline links: set it on the container
+// so children — including the <p> wpautop generates — inherit it. See CLAUDE.md.
 
 // -- Base ----------------------------------------------------------------------
 html
@@ -25,68 +10,51 @@ html
 body
   @apply font-primary text-base leading-normal tracking-[0.5px] text-brand-dark
 
-// Reset native heading sizing — headings get their look from the classes below.
 // Raw CSS: there is no Tailwind utility for font-size/line-height: inherit.
 h1, h2, h3, h4, h5, h6
   font: inherit
   margin: 0
 
-// =============================================================================
-// Display headings
-// =============================================================================
-
-// Hero title (H1) — 35 → 45 → 82px, SemiBold. Usually brand-red in the design.
+// -- Display headings ----------------------------------------------------------
 .title-hero
   @apply font-primary font-semibold tracking-[0.5px] text-[35px] leading-[45px] md:text-[45px] md:leading-[60px] xl:text-[56px] 2xl:text-[82px] xl:leading-[66px] 2xl:leading-[100px]
 
-// Big section title (H2) — 36 → 64 → 112px, Medium. The largest type on the site.
 .title-main
   @apply font-primary font-medium tracking-[0.5px] text-[36px] leading-[38px] md:text-[64px] md:leading-[74px] xl:text-[76px] 2xl:text-[112px] xl:leading-[80px] 2xl:leading-[112px]
 
-// Optional mid-level heading (e.g. "Das macht uns aus"). No Figma token — (~).
+// Mid-level heading. No design token — interpolated.
 .title-section
   @apply font-primary font-semibold tracking-[0.5px] text-[28px] leading-[34px] xl:text-[40px] xl:leading-[48px]
 
-// Card / block title — 12/20 → 14/22 → 20/30, Bold (Figma: service cards mobile/tablet/desktop).
 .title-card
   @apply font-primary font-bold tracking-[0.5px] text-[14px] leading-[20px] md:text-[14px] md:leading-[22px] xl:text-[20px] xl:leading-[30px]
 
-// Hero tagline — 12/18 → 14/22 → 30/40, Bold (Figma confirmed 2026-07-23).
 .title-tagline
   @apply font-primary font-bold tracking-[0.5px] text-[14px] leading-[18px] md:text-[14px] md:leading-[22px] xl:text-[24px] 2xl:text-[30px] xl:leading-[34px] 2xl:leading-[40px]
 
-// USP band title — 16/32 → 20/30 → 30/40, Bold.
 .title-usp
   @apply font-primary font-bold tracking-[0.5px] text-[16px] leading-[32px] md:text-[20px] md:leading-[30px] xl:text-[30px] xl:leading-[40px]
 
-// =============================================================================
-// Text styles
-// =============================================================================
+// -- Text styles ---------------------------------------------------------------
 
-// Overline / eyebrow above titles — 12 → 15 → 20px, uppercase (line-height 30 throughout).
-//
 // Named label-overline and not overline: Tailwind ships an .overline utility of its own
-// (text-decoration-line: overline), which would draw a literal rule above the text on
-// every element carrying the class. Different property, so nothing here overrides it.
+// (text-decoration-line), which would draw a literal rule above the text on every
+// element carrying the class. Different property, so nothing here overrides it.
 .label-overline
   @apply font-primary font-normal uppercase tracking-[0.5px] text-[14px] leading-[30px] md:text-[15px] xl:text-[20px]
 
-// Body copy — 12 → 14 → 20px. Apply on a wrapper so wpautop <p> children inherit.
+// Apply on a wrapper, so the <p> children wpautop generates inherit it.
 .body-text
   @apply font-primary font-normal tracking-[0.5px] text-[14px] leading-[20px] md:text-[14px] md:leading-[22px] xl:text-[18px] 2xl:text-[20px] xl:leading-[28px] 2xl:leading-[30px]
   p
     @apply mb-4 last:mb-0
 
-  // Lists written in a WYSIWYG field. _base-styles strips list markers site-wide, so a
-  // bullet list from the editor arrives as unmarked plain lines until they are put back
-  // here — which is why this belongs to the body-copy component and not to one section.
+  // _base-styles strips list markers site-wide, so a bullet list from a WYSIWYG field
+  // arrives as unmarked plain lines until they are put back here.
   //
-  // Unclassed lists only: a list the editor wrote carries no class, while the theme's
-  // own markup does (order-form__list) and has to stay unmarked. That is the whole
-  // guard, and it is why this can live in a shared class safely.
-  //
-  // The marker is a real list-style rather than a drawn pseudo-element so wrapped lines
-  // hang against the text, as the frames show, and so the list stays a list.
+  // Unclassed lists only: what the editor writes carries no class, while the theme's own
+  // markup does (order-form__list) and has to stay unmarked. That is the whole guard,
+  // and it is what makes this safe to keep in a shared class.
   ul:not([class]),
   ol:not([class])
     @apply mb-4 last:mb-0 pl-[18px]
@@ -98,20 +66,18 @@ h1, h2, h3, h4, h5, h6
   ol:not([class])
     list-style-type: decimal
 
-  // 4px between items: no frame measures this, but the frames clearly set list items
-  // tighter than paragraphs, which the 16px above would not.
+  // Tighter than paragraphs, which the 16px above would not give.
   ul:not([class]) li,
   ol:not([class]) li
     @apply mb-1 last:mb-0
 
-// Small text (captions, footer).
 .body-small
   @apply font-primary font-normal tracking-[0.5px] text-[14px] leading-[21px]
 
-// USP item label — 12/20 → 14/22 → 20/30, Bold (body scale, bold weight).
+// The body scale at a bold weight.
 .label-usp
   @apply font-primary font-bold tracking-[0.5px] text-[14px] leading-[20px] md:text-[14px] md:leading-[22px] xl:text-[20px] xl:leading-[30px]
 
-// Inline emphasised link ("mehr") — bold, underlined, brand-red.
+// The theme's own "mehr" — the one class here that does set a colour.
 .link-inline
   @apply font-primary font-bold tracking-[0.5px] text-brand-red underline underline-offset-2

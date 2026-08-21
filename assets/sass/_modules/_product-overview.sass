@@ -1,54 +1,37 @@
-// =============================================================================
 // Product overview — template-parts/modules/product-overview.php
-// Figma 2882:593, desktop confirmed 2026-08-12. Tablet and mobile have no frame
-// yet and carry interim values.
 //
-// Card widths come from the page grid, not from this file: the template puts every
-// card straight into .theme-grid with a column span, so the four-up row and the
-// three-up row below it are the grid's own columns. See the template's docblock for
-// the arithmetic.
+// Card widths come from the page grid, not from this file: the template puts every card
+// straight into .theme-grid with a column span.
 //
 // The cream bar is one element in two states. Collapsed it is the height of a single
 // title line and clips its own overflow; on hover it grows and the copy and link come
-// into view. Two thirds is the ratio the frames' expanded card gives (246 of 369 when
-// the cards were that tall), and it holds at the current 400 too.
-// =============================================================================
+// into view.
 
 .product-overview
 
-  // The shared section-heading puts its overline in a narrow column, sized for the
-  // descriptions and buttons that column normally also holds. This section's heading
-  // has neither, so at tablet that leaves the overline two of six columns — 220px —
-  // and "Kerzen-Produktübersicht" wraps. The frame has it at the container's full
-  // width. Scoped here rather than changed in the component, which other sections
-  // rely on.
+  // The component sizes its overline column for the descriptions and buttons it normally
+  // also holds. This heading has neither, so at tablet the overline gets two of six
+  // columns and the title wraps. Scoped here rather than changed in the component.
   //
-  // Bounded at both ends for the same reason as the orphan card below: unbounded,
-  // this out-specifies the component's xl:col-span-4 and would widen the overline at
-  // desktop too, where four columns is already more room than the frame uses.
+  // Bounded at both ends: unbounded it would out-specify the component's xl:col-span-4
+  // and widen the overline at desktop too.
   @media (min-width: 768px) and (max-width: 1279px)
     .section-heading__intro
       grid-column: span 6
 
-  // Three columns each; the trailing-row exception is the rule below. Below xl there
-  // is no frame: two up at tablet, one at mobile.
   &__card
     @apply relative block col-span-2 md:col-span-3 xl:col-span-3
     @apply no-underline overflow-hidden
 
-  // Rows of four at three columns each, and the last row always fills the twelve however
-  // many cards are left over: three of four columns, two of six, or one across the whole
-  // width. Ten cards therefore give 4 + 4 + 2 with the last pair wide, which is the
-  // Living Collection frame; seven give the Kerzen frame's 4 + 3.
+  // Rows of four, and the last row always fills the twelve however many cards are left
+  // over: three of four columns, two of six, or one across the whole width.
   //
-  // Each rule is a quantity query. `:nth-child(4n+1)` finds a card that starts a row,
-  // `:nth-last-child(n)` says how many are left from there to the end, and the sibling
-  // combinator picks up the rest of that row. A count divisible by four matches none of
-  // them and every card keeps its three columns.
+  // Each rule is a quantity query — `:nth-child(4n+1)` finds a card that starts a row,
+  // `:nth-last-child(n)` says how many are left from there, and the sibling combinator
+  // picks up the rest of that row. A count divisible by four matches none of them.
   //
-  // Counted in CSS and not in PHP on purpose: this follows whatever the client enters.
-  // With an index the widths would be fixed at build time and every new card would need
-  // the rules rewritten.
+  // Counted in CSS and not in PHP on purpose: with a PHP index the widths would be fixed
+  // at build time and every new card would need the rules rewritten.
   &__card:nth-child(4n+1):nth-last-child(3),
   &__card:nth-child(4n+1):nth-last-child(3) ~ &__card
     @media (min-width: 1280px)
@@ -63,14 +46,10 @@
     @media (min-width: 1280px)
       grid-column: span 12
 
-  // Tablet is two up, so an odd number of cards leaves the last one alone on its
-  // row — the frame gives it the full width rather than half a row with a gap. The
-  // media grows with it, and not by the two-up cards' ratio: 700x472 is not
-  // 340x284 scaled.
-  //
-  // Bounded at the top as well as the bottom. These are min-width queries, so a
-  // plain (min-width: 768px) would still be in force at desktop and this span would
-  // outrank the xl one above it — the last card would go full width there too.
+  // Tablet is two up, so an odd count leaves the last card alone on its row and the
+  // frame gives it the full width. Bounded at the top as well: these are min-width
+  // queries, so a plain (min-width: 768px) would still be in force at desktop and would
+  // outrank the xl span above.
   @media (min-width: 768px) and (max-width: 1279px)
     &__card:last-child:nth-child(odd)
       grid-column: span 6
@@ -78,59 +57,32 @@
     &__card:last-child:nth-child(odd) &__media
       height: 472px
 
-  // One media height for every card, not one per row: the Holzspielwaren frame gives
-  // them all 400px and that is the value the section uses everywhere now, Kerzen
-  // included. The card is 400 tall and the collapsed bar overlays its bottom 50, which
-  // is the 350px of visible image the frame measures — the bar has to overlay rather
-  // than sit under the image, or growing it on hover would push the card taller
-  // instead of opening over it.
-  //
-  // A height and not an aspect ratio: the cards come in two widths (440 and 593) and
-  // the frames give them the same height regardless, so it is the height that keeps a
-  // row level.
+  // A height and not an aspect ratio: the cards come in two widths and the frames give
+  // them the same height regardless, so the height is what keeps a row level. The
+  // collapsed bar overlays the image's bottom rather than sitting under it, or growing
+  // it on hover would push the card taller instead of opening over it.
   &__media
     @apply relative w-full m-0 overflow-hidden
     @apply h-[264px] md:h-[284px] xl:h-[400px]
 
-  // The vertical padding is what sets the collapsed bar's height, and both come
-  // straight from the frames: 8 + 22 + 8 = the tablet design's 38px, 10 + 30 + 10 =
-  // the desktop design's 50px, where 22 and 30 are .title-card's line heights at
-  // those breakpoints.
-  //
-  // Side padding is 16px at tablet, which Figma gives consistently, and 24px at
-  // desktop, where it measures 27px on some cards and 9px on others — hand-placed
-  // text layers rather than padding, so they are read as the one card padding this
-  // project uses everywhere.
-  //
-  // justify-between pins the title to the top of the panel and the link to its
-  // bottom, which is how the frames' expanded cards are built.
+  // justify-between pins the title to the top of the panel and the link to its bottom.
   &__panel
     @apply absolute inset-x-0 bottom-0 z-10
     @apply flex flex-col gap-4
     @apply bg-brand-cream
     @apply px-4 py-2 xl:px-6 xl:py-[10px]
 
-    // No height and no percentage: the panel is as tall as whatever is showing, which
-    // is what makes the three cases the content decides on their own — a card with
-    // neither copy nor link never moves, one with only a link opens just far enough for
-    // the button, one with both opens for both. The collapsed height still comes out at
-    // the frames' 38px and 50px, because that is the padding plus one title line.
+    // No height and no percentage: the panel is as tall as whatever is showing, which is
+    // what lets the content decide — a card with neither copy nor link never moves, one
+    // with only a link opens just far enough for the button.
 
   // grid-template-rows 0fr → 1fr, the same technique as .card-story: it animates to the
   // content's own height, so nothing here needs to know how tall the copy is. The child
   // needs its own overflow: hidden, or it spills out of the 0fr row.
   //
-  // The template only outputs a __reveal for a field that has content, so a card with
-  // neither copy nor link has none — and then there is nothing to open and the hover
-  // does nothing, without a rule saying so.
-  //
-  // :focus-visible and NOT :focus-within. The card is the anchor, so a plain click — or
-  // a cmd-click that opens the link in another tab — leaves focus on it, and
-  // :focus-within would hold the panel open with nothing to close it.
-  //
-  // None of this fires on a touch device, which has no hover and where the card's own
-  // tap goes to the link. That is what the mobile frame implies by drawing the same
-  // collapsed bars; if it should open on tap, that is a JS toggle, not CSS.
+  // :focus-visible and NOT :focus-within — the card is the anchor, so a plain click
+  // leaves focus on it and :focus-within would hold the panel open with nothing to close
+  // it. None of this fires on a touch device, which has no hover.
   &__reveal
     @apply grid overflow-hidden
     grid-template-rows: 0fr
@@ -143,10 +95,8 @@
   &__card:focus-visible &__reveal
     grid-template-rows: 1fr
 
-  // Title and copy are one block with no gap: in the frame the copy is the next
-  // 30px line straight after the title, not a separate paragraph. Grouping them is
-  // also what keeps the panel's justify-between from pushing the copy down to the
-  // bottom edge along with the link.
+  // Title and copy are one block with no gap, which is also what keeps the panel's
+  // justify-between from pushing the copy to the bottom edge along with the link.
   &__head
     @apply flex flex-col
 
@@ -156,9 +106,8 @@
   &__text
     @apply body-text text-brand-dark
 
-  // The design sets this in Karla; the project has one font, DM Sans, so it uses
-  // font-primary at the same weight. 14px uppercase in brand red, with the theme's
-  // download arrow scaled from its native 21x26 to the frame's 16x19.
+  // The design sets this in Karla; the project has one font, so it uses font-primary at
+  // the same weight.
   &__link
     @apply inline-flex items-center gap-3
     @apply font-primary font-medium uppercase tracking-[0.5px] text-[14px] leading-[normal]
@@ -170,8 +119,7 @@
     svg
       @apply w-4 h-[19px]
 
-  // No transition for anyone who has asked the system to stop moving things: the
-  // panel still opens, it just does not animate.
+  // The panel still opens, it just does not animate.
   @media (prefers-reduced-motion: reduce)
     &__reveal
       transition: none

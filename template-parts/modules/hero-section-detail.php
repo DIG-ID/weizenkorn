@@ -1,14 +1,12 @@
 <?php
 /**
- * Page hero (detail level) — shared hero module for "2nd level" interior
- * pages, e.g. the Schreinerei service detail pages (Figma "Innenausbau_desktop",
- * "hero-2sd-level-desktop" / "page-hero-tablet" / "page-hero-tablet" mobile).
- * Mobile/tablet are structurally identical to template-parts/modules/
- * hero-section.php (image on top, bordered title+text panel below); desktop
- * diverges into a side-by-side panel+image row instead, so both layouts are
- * rendered and toggled with responsive visibility rather than forced into one
- * fluid structure. Kept as its own module/fields (not a hero-section variant)
- * since the desktop layout genuinely differs, not just its content.
+ * Page hero (detail level) — the hero for second-level interior pages.
+ *
+ * Mobile and tablet are structurally identical to modules/hero-section.php: image on top,
+ * bordered title and text panel below. Desktop diverges into a side-by-side panel and
+ * image row, so both layouts are rendered and toggled with responsive visibility rather
+ * than forced into one fluid structure. Its own module and fields, not a hero-section
+ * variant, because the desktop layout genuinely differs and not just its content.
  *
  * ACF fields (flat, prefixed):
  *   page_hero_detail_image           (image → return ID)
@@ -34,9 +32,7 @@ $page_hero_detail_text  = get_field( 'page_hero_detail_text' );
 	<div class="theme-container">
 
 		<?php
-		// Mobile/tablet (<1280px) — same structure as section-hero.php's
-		// stacked layout, hidden from xl up where the row layout below takes
-		// over instead.
+		// The stacked layout, hidden from xl up where the row layout below takes over.
 		?>
 		<div class="xl:hidden">
 			<div class="section-page-hero-detail__media overflow-hidden mb-4 h-[176px] md:h-[256px]">
@@ -68,8 +64,7 @@ $page_hero_detail_text  = get_field( 'page_hero_detail_text' );
 		</div>
 
 		<?php
-		// Desktop (xl+) — panel (5/12) + image (7/12) side by side, same
-		// col-span split as the home hero-card (template-parts/pages/home/hero.php).
+		// Panel and image side by side, the same column split as the home hero-card.
 		?>
 		<div class="hidden xl:block">
 			<div class="theme-grid items-stretch">

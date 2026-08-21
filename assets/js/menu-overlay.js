@@ -11,11 +11,9 @@ const MOBILE_BREAKPOINT = 768;
 const ARROW_ICON = '<svg width="24" height="19" viewBox="0 0 23.7301 18.632" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0 9.31602H22M10 17.816L22 9.31602L10 0.816024" stroke="currentColor" stroke-width="2" /></svg>';
 
 /**
- * Mobile accordion (Figma "Menu_mobile_tab open"): tapping a group heading
- * expands its links. Groups with a single link (e.g. "News" > "Kontakt")
- * are always-expanded instead — reads the real sub-menu child count rather
- * than hardcoding which groups qualify, since editors can add/remove links
- * in Appearance > Menus at any time.
+ * Mobile accordion: tapping a group heading expands its links, while a group with a single
+ * link is always expanded. Reads the real sub-menu child count rather than hardcoding which
+ * groups qualify, editors being free to add and remove links at any time.
  */
 function initMobileMenuAccordion(overlay) {
   const groups = overlay.querySelectorAll('.menu-overlay__col > ul > li');
@@ -36,10 +34,8 @@ function initMobileMenuAccordion(overlay) {
 
     group.classList.add('menu-overlay__group--accordion');
 
-    // The heading's own link is repurposed below as the accordion toggle
-    // (tapping it opens/closes the group instead of navigating), so its
-    // original destination would otherwise be unreachable on mobile — add
-    // it back as the sub-menu's first entry.
+    // The heading's own link becomes the accordion toggle below, so its destination would
+    // otherwise be unreachable on mobile — added back as the sub-menu's first entry.
     const overviewItem = document.createElement('li');
     overviewItem.className = 'menu-overlay__group-overview';
     const overviewLink = document.createElement('a');
@@ -72,8 +68,8 @@ function initMobileMenuAccordion(overlay) {
     });
   });
 
-  // Resizing past mobile shouldn't leave a stale inline max-height clipping
-  // the sub-menu on tablet/desktop, where it's meant to be fully visible.
+  // A stale inline max-height would clip the sub-menu above mobile, where it is meant to
+  // be fully visible.
   window.addEventListener('resize', () => {
     if (window.innerWidth < MOBILE_BREAKPOINT) {
       return;
@@ -99,10 +95,9 @@ export function initMenuOverlay() {
   const header = document.querySelector('.header-main');
   const defaultSrc = image ? image.dataset.defaultSrc : '';
 
-  // --header-height (used by .menu-overlay's padding-top, see
-  // _menu-overlay.sass) must match the header's REAL rendered height, not a
-  // hand-calculated guess — logo aspect ratio, WPML markup, etc. can make it
-  // taller than assumed, pushing the divider/content behind the fixed header.
+  // --header-height must match the header's REAL rendered height, not a hand-calculated
+  // guess: the logo's aspect ratio and the WPML markup can make it taller than assumed,
+  // pushing the content behind the fixed header.
   const syncHeaderHeight = () => {
     if (!header) {
       return;
@@ -114,11 +109,9 @@ export function initMenuOverlay() {
   window.addEventListener('resize', syncHeaderHeight, { passive: true });
   window.addEventListener('load', syncHeaderHeight);
 
-  // Cap the image to the grid's own rendered height. CSS alone can't do this
-  // reliably here: the grid's rows are auto-sized to fit the text columns'
-  // content (needed so "row 2" aligns across columns), and a grid item's
-  // percentage height resolves against that content-sized area — not
-  // against the grid's own (possibly smaller, scrollable) visible box.
+  // Caps the image to the grid's rendered height. CSS cannot do this reliably here: the
+  // rows are auto-sized to the text columns' content, so a grid item's percentage height
+  // resolves against that content-sized area rather than the grid's visible box.
   const syncImageHeight = () => {
     if (!grid || !imageContainer) {
       return;
@@ -170,13 +163,10 @@ export function initMenuOverlay() {
     toggles.forEach((toggle) => toggle.setAttribute('aria-expanded', String(expanded)));
   };
 
-  // "Roll down" open: a clip-path tween reveals the overlay from the top
-  // edge downward, then the menu groups (and the image) fade/slide in with
-  // a stagger. Targets are the top-level <li> (each a heading + its
-  // sub-menu, one unit) and .menu-overlay__image — NOT .menu-overlay__col
-  // or its <ul>, since those become `display:contents` at xl (see
-  // _menu-overlay.sass) and opacity/transform have no effect on a
-  // `contents` box.
+  // A clip-path tween reveals the overlay from the top down, then the groups and the image
+  // stagger in. The targets are the top-level <li> and .menu-overlay__image — NOT
+  // .menu-overlay__col or its <ul>, which become display:contents at xl, and
+  // opacity/transform have no effect on a contents box.
   const revealTargets = overlay.querySelectorAll('.menu-overlay__col > ul > li, .menu-overlay__image');
 
   gsap.set(revealTargets, { autoAlpha: 0, y: -16 });
@@ -191,12 +181,9 @@ export function initMenuOverlay() {
     overlay.setAttribute('aria-hidden', 'true');
   });
 
-  // body.menu-open (_menu-overlay.sass) freezes the page via
-  // position:fixed instead of overflow:hidden, so the scrollbar never
-  // disappears/reappears (see _base-styles.sass). Fixed positioning drops
-  // the body to the top, so `top` is set to minus the saved scroll
-  // position to hold its visual place, then cleared and the real scroll
-  // position restored on close.
+  // body.menu-open freezes the page with position:fixed rather than overflow:hidden, so the
+  // scrollbar never disappears and reappears. Fixed positioning drops the body to the top,
+  // so `top` holds its visual place at minus the saved scroll position.
   let savedScrollY = 0;
 
   const openMenu = () => {

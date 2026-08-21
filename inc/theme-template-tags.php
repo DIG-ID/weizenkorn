@@ -52,8 +52,7 @@ function weizenkorn_after_post_content() {
 add_action( 'after_post_content', 'weizenkorn_after_post_content' );
 
 /**
- * Outputs the site logo.
- * Uses the WP custom logo if set; falls back to the site name as a link.
+ * Outputs the site logo, falling back to the site name as a link.
  */
 function weizenkorn_logo() {
 	if ( has_custom_logo() ) {
@@ -71,7 +70,8 @@ add_action( 'theme_logo', 'weizenkorn_logo' );
 
 /**
  * Gets the site logo attachment ID from the "Theme Options" ACF options page.
- * Shared by the header and footer (both display the same logo).
+ *
+ * Shared by the header and the footer, which show the same logo.
  *
  * @return int Attachment ID, or 0 if none is set.
  */
@@ -93,7 +93,6 @@ add_action( 'breadcrumbs', 'weizenkorn_breadcrumbs' );
 
 /**
  * Outputs social media links from the "Theme Options" ACF options page.
- * URLs are managed in the WP admin under Theme Options > General.
  */
 function weizenkorn_socials() {
 
@@ -147,10 +146,7 @@ add_action( 'socials', 'weizenkorn_socials' );
 /**
  * Outputs an inline SVG icon by name.
  *
- * Source: Figma "Design System" page, Icons > Arrows section (large variants
- * only — the smaller "mobile" variants shown underneath each arrow are not
- * used here). Uses stroke="currentColor" so the icon follows the surrounding
- * text/button color (e.g. white on a filled button, red on hover).
+ * Drawn with stroke="currentColor", so it follows the surrounding text or button colour.
  *
  * @since 1.1.0
  *
@@ -175,28 +171,21 @@ function weizenkorn_the_svg_icon( $name ) {
  * Reads a cloned "Section Title" group and returns it shaped for the
  * components/section-heading part.
  *
- * Every section that carries a heading clones the same "Section Title" group, and that
- * clone can be set to either Display in the admin. The two Displays do not read alike:
+ * The clone can be set to either Display in the admin, and the two do not read alike:
+ * Group keeps a name, so one get_field() returns the whole group, while Seamless lands
+ * its fields flat and each has to be read by name.
  *
- *   Display: Group     the clone keeps a name, so get_field( '{prefix}section_title' )
- *                      returns the whole group as one array.
- *   Display: Seamless  the clone has no name of its own and its fields land flat, so
- *                      that call returns nothing and each field has to be read by name.
- *
- * The flat read has one trap, which is why this lives in a helper instead of being
- * repeated per section. A Seamless clone stores its nested groups — `buttons`, holding
- * the two links — under a COMPOSITE field reference (field_A_field_B) that
- * acf_get_field() cannot resolve, so get_field( '{prefix}buttons' ) comes back empty
- * even though the links are in the database. It is the same failure as a cloned
+ * The flat read has one trap, which is the reason this is a helper and not repeated per
+ * section. A Seamless clone stores its nested `buttons` group under a COMPOSITE field
+ * reference that acf_get_field() cannot resolve, so get_field( '{prefix}buttons' ) comes
+ * back empty even though the links are in the database — the same failure as a cloned
  * repeater's have_rows() returning false while the admin shows the rows. The leaves keep
- * an ordinary reference, so they are read one by one and the array is rebuilt here.
+ * an ordinary reference, so they are read one by one and the array rebuilt here.
  *
- * Before this existed, each section wrote its own fallback and every one of them read
- * the title and dropped the buttons — the heading looked right and the CTA silently
- * never rendered, on any Seamless clone.
+ * Before this existed, every section's own fallback read the title and dropped the
+ * buttons: the heading looked right and the CTA silently never rendered.
  *
- * What this does NOT read is the clone's `image`, for the collision explained at the
- * flat read below.
+ * The clone's `image` is deliberately NOT read — see the flat read below.
  *
  * @since 1.6.0
  *
