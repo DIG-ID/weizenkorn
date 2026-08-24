@@ -1,0 +1,27 @@
+// =============================================================================
+// Work & Training page — template-parts/pages/work-training/
+// =============================================================================
+
+// -- Diversity slider ("Arbeitsvielfalt bei Weizenkorn") -----------------------
+// One photo per slide, no arrows at any breakpoint (the design never shows
+// any) — bullets only, same red-outline look as every other slider on the
+// site (_modules/_quote-slider.sass, _modules/_our-equipment.sass).
+.section-diversity-slider
+  &__caption
+    @apply bg-white border border-brand-red text-brand-red font-primary italic
+    @apply flex flex-col md:flex-row md:items-center gap-4 md:gap-8 px-4 py-3.5
+    @apply text-[16px] tracking-[-0.304px] md:text-[20px] md:tracking-[-0.38px]
+
+  &__pagination
+    @apply static mt-8 flex items-center justify-center gap-[30px]
+
+    // Swiper spaces its own bullets from a selector more specific than the m-0
+    // below, so that margin would win and add 8px to every gap. Zeroing its
+    // variable is the fix — same as every other slider on the site.
+    --swiper-pagination-bullet-horizontal-gap: 0px
+
+    .swiper-pagination-bullet
+      @apply w-[15px] h-[15px] m-0 rounded-full border border-brand-red bg-transparent opacity-100 transition-colors duration-300
+
+    .swiper-pagination-bullet-active
+      @apply bg-brand-red

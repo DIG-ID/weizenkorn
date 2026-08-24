@@ -171,3 +171,25 @@ export function initEquipmentSlider() {
     });
   });
 }
+
+/**
+ * Work & Training — diversity slider ("Arbeitsvielfalt bei Weizenkorn"): one
+ * photo per slide, at every breakpoint. Bullets only, no arrows — the design
+ * never shows any.
+ */
+export function initDiversitySlider() {
+  document.querySelectorAll('.js-diversity-slider').forEach((el) => {
+    const root = el.closest('.section-diversity-slider');
+
+    new Swiper(el, {
+      modules: [Pagination, A11y],
+      slidesPerView: 1,
+      observer: true,
+      observeParents: true,
+      pagination: {
+        el: root ? root.querySelector('.js-diversity-pagination') : null,
+        clickable: true,
+      },
+    });
+  });
+}

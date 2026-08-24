@@ -6,10 +6,13 @@
  * reads each child page's fields and passes them in per card.
  *
  * @param array $args {
- *     @type int    $image Attachment ID.
+ *     @type int    $image        Attachment ID.
  *     @type string $title
- *     @type string $text  Optional. Rich text (wpautop already applied).
+ *     @type string $text         Optional. Rich text (wpautop already applied).
  *     @type string $url
+ *     @type string $media_height Optional. Tailwind height classes for the media box.
+ *                                 Default: '256px' at mobile, 512px at tablet, 400px at
+ *                                 desktop — the Gastronomie/Home venue bento's own values.
  * }
  *
  * @package weizenkorn
@@ -20,9 +23,11 @@
 if ( empty( $args['image'] ) || empty( $args['url'] ) ) {
 	return;
 }
+
+$media_height = ! empty( $args['media_height'] ) ? $args['media_height'] : 'h-[256px] md:h-[512px] xl:h-[400px]';
 ?>
 <a href="<?php echo esc_url( $args['url'] ); ?>" class="card-overview group flex flex-col gap-3.5 md:gap-4">
-	<div class="card-overview__media overflow-hidden h-[256px] md:h-[512px] xl:h-[400px]">
+	<div class="card-overview__media overflow-hidden <?php echo esc_attr( $media_height ); ?>">
 		<?php
 		echo wp_get_attachment_image(
 			$args['image'],

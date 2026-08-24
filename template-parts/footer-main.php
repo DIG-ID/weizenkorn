@@ -25,7 +25,7 @@
 					?>
 				</a>
 
-			<?php // Placeholder for social icons in the footer brand block, not implemented yet. ?>
+			<?php // Social icons deliberately disabled here — do_action( 'socials' ) (weizenkorn_socials(), inc/theme-template-tags.php) is implemented and hooked; uncomment to show it in the footer brand block. ?>
 			</div>
 
 			<div class="footer-main__card footer-main__address">

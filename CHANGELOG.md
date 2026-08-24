@@ -19,7 +19,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Gastronomy venue cards: a venue without a logo now shows its name instead, styled to match (bold, 20px, 0.5px tracking) — on both pages.
 
 ### Fixed
-- Footer: a leftover commented-out `do_action( 'socials' )` call failed lint (not properly punctuated) — reworded as a plain placeholder note.
+- Footer: a leftover commented-out `do_action( 'socials' )` call failed lint (not properly punctuated) — reworded as an accurate comment (the hook itself is implemented and active, just deliberately not called in the brand block).
+
+### Added
+- Work & Training page: full page (hero, "Ihre Perspektiven bei uns" offer cards, "Zuweisende Stellen", a new diversity photo slider, the shared quote slider, and a closing contact + form section). The Figma frame's last section ("Entdecken Sie mehr") is intentionally not built yet.
+- `phone` and `mail` icons added to the shared SVG icon helper.
+- `card-overview` component: its media height is now an optional `$args` override, so a new layout can reuse it without inheriting the Gastronomie/Home venue bento's own height values.
+
+### Changed
+- `.title-hero`'s 2xl font size: 82px → 78px.
 
 ## [1.6.0] — 2026-08-19
 
