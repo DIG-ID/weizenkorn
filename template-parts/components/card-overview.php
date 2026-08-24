@@ -48,7 +48,7 @@ $media_height = ! empty( $args['media_height'] ) ? $args['media_height'] : 'h-[2
 		</div>
 
 		<?php if ( ! empty( $args['text'] ) ) : ?>
-			<div class="body-text"><?php echo wp_kses_post( $args['text'] ); ?></div>
+			<div class="body-text xl:max-w-[500px]"><?php echo wp_kses_post( $args['text'] ); ?></div>
 		<?php endif; ?>
 	</div>
 </a>

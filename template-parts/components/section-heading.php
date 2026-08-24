@@ -149,7 +149,7 @@ if ( ! $st_title && ! $st_subtitle && ! $st_left && ! $st_right && ! $st_image )
 
 			<?php if ( $show_right && $st_right ) : ?>
 				<div class="section-heading__desc col-span-2 md:col-start-4 md:col-span-3 xl:col-start-7 xl:col-span-5">
-					<div class="body-text section-heading__desc-text"><?php echo wp_kses_post( $st_right ); ?></div>
+					<div class="body-text section-heading__desc-text xl:max-w-[500px]"><?php echo wp_kses_post( $st_right ); ?></div>
 				</div>
 			<?php endif; ?>
 

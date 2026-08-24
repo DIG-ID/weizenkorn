@@ -28,6 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ### Changed
 - `.title-hero`'s 2xl font size: 82px → 78px.
+- `card-overview` and `section-heading`'s right-column text: capped at 500px wide on desktop.
+- Work & Training diversity slider: caption's category label reads in the dark text colour instead of red, with a wider gap between category and title on desktop.
 
 ## [1.6.0] — 2026-08-19
 
