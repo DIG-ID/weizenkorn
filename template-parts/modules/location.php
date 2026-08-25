@@ -38,6 +38,12 @@
  *   location_address_2      (textarea) optional. A second address beside the first, on the
  *                           four columns next to it. Events & Seminare names two venues;
  *                           leave it empty and the first keeps the row to itself.
+ *   location_schedule_text  (textarea) optional. Opening hours, where the contact page puts
+ *                           them and a second address would otherwise go. One field: the
+ *                           heading is whatever the editor marks up as <b>, which is the
+ *                           only thing that sets it apart in the design. Set in the body
+ *                           scale rather than the map address's display type, which is what
+ *                           tells the two slots apart.
  *
  * Usage:
  *   get_template_part( 'template-parts/modules/location' );
@@ -90,7 +96,8 @@ if ( ! $lc_pins ) {
 if ( ! $lc_heading
 	&& ! $lc_pins
 	&& ! get_field( $lc_prefix . 'location_address', $lc_ctx )
-	&& ! get_field( $lc_prefix . 'location_address_2', $lc_ctx ) ) {
+	&& ! get_field( $lc_prefix . 'location_address_2', $lc_ctx )
+	&& ! get_field( $lc_prefix . 'location_schedule_text', $lc_ctx ) ) {
 	return;
 }
 ?>
@@ -107,7 +114,7 @@ if ( ! $lc_heading
 		}
 		?>
 
-		<?php if ( $lc_pins || get_field( $lc_prefix . 'location_address', $lc_ctx ) || get_field( $lc_prefix . 'location_address_2', $lc_ctx ) ) : ?>
+		<?php if ( $lc_pins || get_field( $lc_prefix . 'location_address', $lc_ctx ) || get_field( $lc_prefix . 'location_address_2', $lc_ctx ) || get_field( $lc_prefix . 'location_schedule_text', $lc_ctx ) ) : ?>
 			<?php
 			// The section-heading already carries part of the gap below the rule, so the row
 			// adds only what is left. The map-to-address gap is the same distance again at
@@ -139,6 +146,19 @@ if ( ! $lc_heading
 					?>
 					<div class="location__address text-brand-dark col-span-2 md:col-start-4 md:col-span-3 xl:col-start-6 xl:col-span-4">
 						<?php echo wp_kses_post( get_field( $lc_prefix . 'location_address_2', $lc_ctx ) ); ?>
+					</div>
+				<?php endif; ?>
+
+				<?php if ( get_field( $lc_prefix . 'location_schedule_text', $lc_ctx ) ) : ?>
+					<?php
+					/*
+					 * The same slot the second address takes, and the same columns — the two are
+					 * alternatives, not neighbours. The type is what separates them: an address
+					 * is display size, the hours are the body scale.
+					 */
+					?>
+					<div class="location__schedule text-brand-dark col-span-2 md:col-start-4 md:col-span-3 xl:col-start-6 xl:col-span-4">
+						<?php echo wp_kses_post( get_field( $lc_prefix . 'location_schedule_text', $lc_ctx ) ); ?>
 					</div>
 				<?php endif; ?>
 

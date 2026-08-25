@@ -29,3 +29,16 @@
     // them, not a paragraph gap apart.
     p
       @apply mb-0
+
+  // The hours slot. The body scale and not the map address's display type — that contrast
+  // is what tells a second address from a set of opening hours in the same column.
+  //
+  // One field, so the heading is whatever the editor marks up as <b>. The paragraph gap is
+  // what separates it from the hours, which is why the paragraphs keep their margin here
+  // where the address's lose it.
+  &__schedule
+    @apply font-primary font-normal tracking-[0.5px]
+    @apply text-[16px] leading-[22px] xl:text-[20px] xl:leading-[30px]
+
+    p
+      @apply mb-5 last:mb-0

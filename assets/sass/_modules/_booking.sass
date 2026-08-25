@@ -8,8 +8,13 @@
   //
   // justify-between is what puts the arrow against the cell's right edge, which is how the
   // frames draw it. Same pattern as .section-work-training__list.
+  // min-w-full and not w-full: the cell is the floor, not the ceiling. A fixed width would
+  // clip a label longer than the column — .btn is whitespace-nowrap, so the text cannot
+  // give, and the arrow was pushed out through the right border in any container narrower
+  // than the design's 1820. This way a pair still comes out level, because their cells
+  // match, and a long label grows its button instead of breaking it.
   &__action .btn
-    @apply w-full justify-between gap-4
+    @apply min-w-full justify-between gap-4
 
   // Written out rather than taken from .label-overline, which is uppercase where the frames
   // set this in sentence case. Not an override: .label-overline is a component, so it is

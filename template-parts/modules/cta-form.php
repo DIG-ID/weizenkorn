@@ -17,6 +17,11 @@
  *   cta_title          (text) the heading when the clone is Seamless. Read only if the
  *                      above is empty.
  *   cta_shortcode      (text) optional. Overrides the form for this page or archive only.
+ *   cta_phone          (text) optional. A phone number shown above the band with the phone
+ *                      icon, linked as tel:. The icon cannot come from the heading's
+ *                      description — that field is escaped with wp_kses_post(), which
+ *                      strips <svg>.
+ *   cta_email          (text) optional. The same for an email address, linked as mailto:.
  *
  * ACF fields (theme options, unprefixed):
  *   general_cta_form_shortcode (text) the site-wide default form. Used whenever the field
@@ -71,6 +76,38 @@ if ( ! $cta_shortcode ) {
 			get_template_part( 'template-parts/components/section-heading', null, $cta_heading );
 		}
 		?>
+
+		<?php if ( get_field( $cta_prefix . 'cta_phone', $cta_ctx ) || get_field( $cta_prefix . 'cta_email', $cta_ctx ) ) : ?>
+			<?php
+			/*
+			 * On the same columns the heading gives its right-hand description, which is where
+			 * the frame puts them — and rendered here rather than typed into that field,
+			 * because wp_kses_post() would strip the icons.
+			 *
+			 * The spacing below the pair is not measured against a frame.
+			 */
+			?>
+			<div class="theme-grid mb-8 xl:mb-12">
+				<div class="cta-form__contact text-brand-dark flex flex-col gap-4 md:flex-row md:gap-10 xl:flex-col xl:gap-4 col-span-2 md:col-span-6 xl:col-start-7 xl:col-span-5">
+
+					<?php if ( get_field( $cta_prefix . 'cta_phone', $cta_ctx ) ) : ?>
+						<?php // The href keeps only digits and a leading +, which is what tel: takes. ?>
+						<a href="tel:<?php echo esc_attr( preg_replace( '/[^+0-9]/', '', get_field( $cta_prefix . 'cta_phone', $cta_ctx ) ) ); ?>" class="body-text flex items-center gap-4">
+							<span class="shrink-0" aria-hidden="true"><?php weizenkorn_the_svg_icon( 'phone' ); ?></span>
+							<?php echo esc_html( get_field( $cta_prefix . 'cta_phone', $cta_ctx ) ); ?>
+						</a>
+					<?php endif; ?>
+
+					<?php if ( get_field( $cta_prefix . 'cta_email', $cta_ctx ) ) : ?>
+						<a href="mailto:<?php echo esc_attr( get_field( $cta_prefix . 'cta_email', $cta_ctx ) ); ?>" class="body-text flex items-center gap-4">
+							<span class="shrink-0" aria-hidden="true"><?php weizenkorn_the_svg_icon( 'mail' ); ?></span>
+							<?php echo esc_html( get_field( $cta_prefix . 'cta_email', $cta_ctx ) ); ?>
+						</a>
+					<?php endif; ?>
+
+				</div>
+			</div>
+		<?php endif; ?>
 
 		<?php
 		/*

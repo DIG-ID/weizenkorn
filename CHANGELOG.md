@@ -11,6 +11,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.8.0] — 2026-08-25
+
+### Added
+- Contact page template: the standard page header, the shared enquiry form and a map with the address under it.
+- `cta-form`: optional phone and email fields, shown above the band with their icons and linked as `tel:` and `mailto:`. They are rendered by the theme rather than typed into the heading's description, which is escaped and would strip the icons.
+- `location`: an opening-hours slot beside the address, set in the body scale where a second address is display size — the two share the column and the type tells them apart.
+
+### Fixed
+- Booking button: a label longer than its column pushed the arrow out through the right border. The column is now the button's minimum width rather than its fixed one, so a long label widens the button instead of breaking it.
+
+### Changed
+- `spaces`: the heading's paragraph runs the full five columns, where the shared component caps it at 500px.
+- `spaces`: tablet and mobile measured — two tiles to a row at tablet, stacked at mobile, with their own heights and caption padding.
+
+---
+
 ## [1.7.0] — 2026-08-25
 
 ### Added
