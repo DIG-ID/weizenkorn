@@ -20,7 +20,10 @@
       zoomControl: true,
       scrollwheel: false,
       styles: mapStyle,
-      clickableIcons: false
+      clickableIcons: false,
+      // Off by default on a raster map, which rounds any fractional zoom to the nearest
+      // whole step — and the zoom adjustments below are half steps.
+      isFractionalZoomEnabled: true
     };
 
     var map = new google.maps.Map($el[0], mapArgs);
@@ -30,7 +33,7 @@
       initMarker($(this), map);
     });
 
-    centerMap(map);
+    centerMap(map, $el);
     return map;
   }
 
@@ -65,16 +68,39 @@
     return isMobile() ? zMobile : zDesktop;
   }
 
-  function centerMap(map) {
+  // How far to nudge the zoom after fitBounds, per breakpoint. Read off the element so the
+  // template owns the values, the way data-zoom already does for a single pin.
+  function getZoomAdjust($el) {
+    var aDesktop = parseFloat($el.data('zoom-adjust') || 0);
+    var aMobile  = parseFloat($el.data('zoom-adjust-mobile') || 0);
+    return isMobile() ? aMobile : aDesktop;
+  }
+
+  function centerMap(map, $el) {
     if (!map.markers.length) return;
     var bounds = new google.maps.LatLngBounds();
     map.markers.forEach(function (marker) {
       bounds.extend(marker.getPosition());
     });
+
     if (map.markers.length === 1) {
       map.setCenter(bounds.getCenter());
-    } else {
-      map.fitBounds(bounds);
+      return;
+    }
+
+    /*
+     * With two or more pins the zoom comes from the bounds, so data-zoom no longer applies.
+     * The adjustment tightens or loosens that result — fitBounds is asynchronous, hence the
+     * one-shot idle listener rather than reading the zoom straight after the call.
+     */
+    map.fitBounds(bounds);
+
+    var adjust = getZoomAdjust($el);
+
+    if (adjust) {
+      google.maps.event.addListenerOnce(map, 'idle', function () {
+        map.setZoom(map.getZoom() + adjust);
+      });
     }
   }
 

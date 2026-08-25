@@ -28,6 +28,7 @@
  * @since 1.1.0
  */
 
+$usp_ctx    = ( ! empty( $args['post_id'] ) ) ? $args['post_id'] : get_the_ID();
 $usp_prefix = ! empty( $args['prefix'] ) ? $args['prefix'] : '';
 
 if ( ! have_rows( $usp_prefix . 'usp_band_items', $usp_ctx ) ) {

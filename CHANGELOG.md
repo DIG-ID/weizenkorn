@@ -11,6 +11,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.7.0] — 2026-08-25
+
+### Added
+- Five gastronomy venue page templates: DASBREITEHOTEL, Rhyvage, Cantina e9, Our Bakery and Events & Seminare.
+- `booking` module — a title, an overline and one or two call-to-action buttons. Filling the second button changes the arrangement on its own, so a venue chooses it by filling a field.
+- `catering` module — a heading, a wide photograph and an overline paired with a paragraph opposite.
+- `location` module — a title, a Google map and the venue's address. Takes either a single pin or a repeater of them, and up to two addresses side by side.
+- `our-locations` module — one row per location: a photograph with an optional "Neu!" badge, a paragraph, and a bordered box holding the opening hours and the address. The rows alternate sides on their own.
+- `spaces` module — a bento of rooms, each photograph captioned with the room's name.
+- `teaser` module — the home page's About teaser, now a module any page can use through a field prefix.
+- `photo-mosaic`: a gastronomy arrangement — different spans, and an overline where the display title would be.
+- `product-overview`: a downloads arrangement — two cards to a row, a download arrow in the bar, and a bar that fills with red on hover.
+- Section headings can now be typeset as an overline instead of the large display title.
+- Maps frame themselves to all their pins, with a zoom adjustment per breakpoint.
+
+### Changed
+- The Google Maps API key is no longer defined in the theme. Define `WEIZENKORN_GOOGLE_MAPS_API_KEY` in each environment's `wp-config.php`; without it the section still renders and the map is an empty box.
+- Comments across the theme trimmed to what the code does not say for itself.
+- The booking section's line of copy falls back to the heading's Description Right when its Subtitle is empty, so text entered in either field shows.
+
+### Removed
+- `template-parts/pages/home/about-teaser.php` — replaced by the `teaser` module, which the home page now calls with the `about_` prefix.
+
+---
+
 ## [1.6.1] — 2026-08-20
 
 ### Changed

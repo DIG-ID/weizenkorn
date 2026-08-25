@@ -25,11 +25,20 @@
  *
  * Usage:
  *   get_template_part( 'template-parts/modules/product-overview' );
+ *   get_template_part( 'template-parts/modules/product-overview', null, array( 'title_style' => 'overline' ) );
  *
  * @param array $args {
- *     @type int|string $post_id Optional. ACF post id / options store to read from.
- *                               Default: the current post.
- *     @type string     $prefix  Optional. Prepended to every field name.
+ *     @type int|string $post_id     Optional. ACF post id / options store to read from.
+ *                                   Default: the current post.
+ *     @type string     $prefix      Optional. Prepended to every field name.
+ *     @type string     $variant     Optional. 'downloads' lays the cards two to a row on the
+ *                                   inset columns instead of four, and turns the bar red on
+ *                                   hover — Our Bakery's menu PDFs.
+ *     @type string     $title_style Optional. 'overline' typesets the title as the eyebrow
+ *                                   instead of the display heading — Our Bakery's
+ *                                   "Entdecken Sie mehr" reads that way, the same as the
+ *                                   gastronomy photo mosaic. Passed straight to the
+ *                                   section-heading component.
  * }
  *
  * @package weizenkorn
@@ -40,6 +49,9 @@
 $po_ctx    = ( ! empty( $args['post_id'] ) ) ? $args['post_id'] : get_the_ID();
 $po_prefix = ! empty( $args['prefix'] ) ? $args['prefix'] : '';
 
+// Whitelisted, so the modifier class below cannot be whatever a caller hands over.
+$po_variant = ( ! empty( $args['variant'] ) && 'downloads' === $args['variant'] ) ? 'downloads' : '';
+
 // Not a plain get_field() — see weizenkorn_get_section_heading() for why.
 $po_heading = weizenkorn_get_section_heading( $po_prefix . 'product_overview_', $po_ctx );
 
@@ -47,12 +59,18 @@ if ( ! $po_heading && ! have_rows( $po_prefix . 'product_overview_items', $po_ct
 	return;
 }
 ?>
-<section class="product-overview mb-24 md:mb-32 xl:mb-48">
+<section class="product-overview<?php echo $po_variant ? ' product-overview--' . esc_attr( $po_variant ) : ''; ?> mt-24 md:mt-32 xl:mt-48 mb-24 md:mb-32 xl:mb-48">
 	<div class="theme-container">
 
 		<?php
 		if ( $po_heading ) {
-			get_template_part( 'template-parts/components/section-heading', null, $po_heading );
+			get_template_part(
+				'template-parts/components/section-heading',
+				null,
+				! empty( $args['title_style'] )
+					? array_merge( $po_heading, array( 'title_style' => $args['title_style'] ) )
+					: $po_heading
+			);
 		}
 		?>
 
@@ -106,9 +124,23 @@ if ( ! $po_heading && ! have_rows( $po_prefix . 'product_overview_items', $po_ct
 							// why it is the second flex child and not part of this one.
 							?>
 							<div class="product-overview__head">
-								<?php if ( get_sub_field( 'title' ) ) : ?>
-									<h3 class="product-overview__title"><?php echo esc_html( get_sub_field( 'title' ) ); ?></h3>
-								<?php endif; ?>
+								<?php
+								/*
+								 * The title shares its line with the arrow in the downloads variant,
+								 * where the bar is the whole affordance and there is no "zum Produkt"
+								 * under it. In the default the row holds the title alone, so
+								 * justify-between has nothing to push and the row is inert.
+								 */
+								?>
+								<div class="product-overview__head-row">
+									<?php if ( get_sub_field( 'title' ) ) : ?>
+										<h3 class="product-overview__title"><?php echo esc_html( get_sub_field( 'title' ) ); ?></h3>
+									<?php endif; ?>
+
+									<?php if ( $po_variant && $po_url ) : ?>
+										<span class="product-overview__link-icon"><?php weizenkorn_the_svg_icon( 'arrow-download' ); ?></span>
+									<?php endif; ?>
+								</div>
 
 								<?php if ( get_sub_field( 'text' ) ) : ?>
 									<div class="product-overview__reveal">
@@ -117,7 +149,7 @@ if ( ! $po_heading && ! have_rows( $po_prefix . 'product_overview_items', $po_ct
 								<?php endif; ?>
 							</div>
 
-							<?php if ( $po_url ) : ?>
+							<?php if ( $po_url && ! $po_variant ) : ?>
 								<div class="product-overview__reveal">
 									<span class="product-overview__link">
 										<span><?php echo esc_html_x( 'zum Produkt', 'product overview card link', 'weizenkorn' ); ?></span>

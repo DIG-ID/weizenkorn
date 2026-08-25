@@ -1,0 +1,22 @@
+// Booking — template-parts/modules/booking.php
+
+.booking
+
+  // The button fills its grid cell instead of sizing to its label. .btn is inline-flex with
+  // a 64px gap, so an intrinsic button comes out wider than the two columns the frames give
+  // it — with a pair side by side they overflowed into each other and over the overline.
+  //
+  // justify-between is what puts the arrow against the cell's right edge, which is how the
+  // frames draw it. Same pattern as .section-work-training__list.
+  &__action .btn
+    @apply w-full justify-between gap-4
+
+  // Written out rather than taken from .label-overline, which is uppercase where the frames
+  // set this in sentence case. Not an override: .label-overline is a component, so it is
+  // emitted after this file and would win at equal specificity. Same reason
+  // _order-form.sass and _our-equipment.sass write their own.
+  //
+  // The scale is still the shared one — only the transform differs.
+  &__note
+    @apply font-primary font-normal tracking-[0.5px]
+    @apply text-[14px] leading-[30px] md:text-[15px] xl:text-[20px]

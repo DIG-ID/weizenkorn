@@ -1,0 +1,31 @@
+// Catering — template-parts/modules/catering.php
+
+.catering
+
+  // The frame fixes the photograph's height below desktop, where the component only caps it
+  // and lets the image's own ratio decide. h-auto at xl hands it back. Scoped here rather
+  // than changed in the component, which the other sections rely on.
+  //
+  // Both take a step off the scale: the frame's 136 rounds down to h-32 rather than carry
+  // an arbitrary value for 8px, and 224 is h-56 exactly.
+  .section-heading__image img
+    @apply h-32 md:h-56 xl:h-auto
+
+  // The component sizes its left column for the descriptions and buttons it normally also
+  // holds; this heading carries only the overline, so at tablet it gets two of six columns
+  // and the line wraps early. Three is what the frame gives it.
+  //
+  // Bounded at the top as well as the bottom: this out-specifies the component's own
+  // xl:col-span-4, so an unbounded min-width query would widen the column at desktop too.
+  @media (min-width: 768px) and (max-width: 1279px)
+    .section-heading__intro
+      grid-column: span 3
+
+  // The component gives its right-hand description five columns from column 7; this
+  // section's frame stops it at four. Tablet already matches, so only desktop is written.
+  //
+  // One grid-column declaration rather than col-start-* plus col-span-*: those are two
+  // utilities and the span one compiles to the shorthand, which resets the start.
+  @media (min-width: 1280px)
+    .section-heading__desc
+      grid-column: 7 / span 4

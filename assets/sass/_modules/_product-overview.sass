@@ -100,6 +100,10 @@
   &__head
     @apply flex flex-col
 
+  // Title left, download arrow hard right. One child in the default, so it is inert there.
+  &__head-row
+    @apply flex items-center justify-between gap-8
+
   &__title
     @apply title-card text-brand-dark m-0
 
@@ -123,3 +127,70 @@
   @media (prefers-reduced-motion: reduce)
     &__reveal
       transition: none
+
+  // -- The downloads arrangement -----------------------------------------------
+  // Figma 3686:3356 desktop, 3738:4612 tablet and 3738:4625 mobile. Each tile is a PDF
+  // download rather than a product: the bar carries the name and a download arrow, and
+  // nothing opens on hover but the colour.
+  &--downloads
+
+    // The bar is the same at every breakpoint — 24 / 14 of padding around a 22px line,
+    // which is the 50px the desktop frame draws. Only the card under it changes.
+    .product-overview__panel
+      @apply px-6 py-3.5
+
+    // 13x16 below desktop against the 24x19 the rest of the site uses; the desktop frame
+    // goes back up to 16x19.
+    .product-overview__link-icon svg
+      @apply w-[13px] h-4 xl:w-4 xl:h-[19px]
+
+    // Standing alone in the bar rather than inside a link, so it needs its own colour —
+    // brand red, like every other arrow on the site.
+    .product-overview__link-icon
+      @apply text-brand-red
+
+    // One card a row at mobile, two from tablet. The heights are the frames' own and do
+    // not scale from one another.
+    .product-overview__media
+      height: 192px
+
+    .product-overview__grid
+      row-gap: 32px
+
+    @media (min-width: 768px) and (max-width: 1279px)
+      .product-overview__grid
+        margin-top: 56px
+        row-gap: 20px
+
+      .product-overview__media
+        height: 256px
+
+    @media (min-width: 1280px)
+      .product-overview__grid
+        margin-top: 88px
+        row-gap: 80px
+
+      .product-overview__media
+        height: 400px
+
+      // The parity is what pairs them — an odd card opens a row on column 2 and the even
+      // one beside it takes column 7, which is also what makes the row break where it
+      // should.
+      .product-overview__card:nth-child(odd)
+        grid-column: 2 / span 5
+
+      .product-overview__card:nth-child(even)
+        grid-column: 7 / span 5
+
+    // The bar fills with red on hover and the type inverts. The default keeps its cream,
+    // so this stays inside the variant until a frame says otherwise for the ranges.
+    .product-overview__card:hover,
+    .product-overview__card:focus-visible
+      .product-overview__panel
+        @apply bg-brand-red
+
+      .product-overview__title,
+      .product-overview__text,
+      .product-overview__link,
+      .product-overview__link-icon
+        @apply text-white

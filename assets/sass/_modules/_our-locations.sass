@@ -1,0 +1,121 @@
+// Our locations — template-parts/modules/our-locations.php
+
+.our-locations
+
+  // 40 / 56 / 96px between rows.
+  &__list
+    @apply flex flex-col gap-10 md:gap-14 xl:gap-24
+
+  // .theme-grid carries no row gap by design, so the stack below desktop declares its own:
+  // the distance from the photograph down to the name. At desktop the two share a row and
+  // it has nothing to space.
+  &__item
+    @apply gap-y-4 md:gap-y-8
+
+  // The two halves are direct items of each row's own grid, placed with one grid-column
+  // declaration rather than col-start-* plus col-span-*: those are two utilities and the
+  // span one compiles to the shorthand, which resets the start.
+  //
+  // The parity is what alternates the sides, so adding a location keeps the rhythm without
+  // a field saying which way round it goes. Below desktop the frame stacks them: the
+  // photograph full width, then the text, then the box.
+  &__media,
+  &__text
+    grid-column: 1 / span 2
+
+    @media (min-width: 768px)
+      grid-column: 1 / span 6
+
+  @media (min-width: 1280px)
+
+    // Both halves are pinned to row 1. Without it an even row breaks in two: the
+    // photograph comes first in the source and takes the later columns, and grid's sparse
+    // auto-placement moves any item whose definite column-start is behind the cursor down
+    // a row — so the text landed under the photograph instead of beside it.
+    .our-locations__media,
+    .our-locations__text
+      grid-row: 1
+
+    .our-locations__item:nth-child(odd)
+      .our-locations__media
+        grid-column: 2 / span 5
+
+      .our-locations__text
+        grid-column: 8 / span 4
+
+    .our-locations__item:nth-child(even)
+      .our-locations__text
+        grid-column: 2 / span 4
+
+      .our-locations__media
+        grid-column: 7 / span 5
+
+  // A ratio below desktop, where the row is a stack and nothing else sets a height. At
+  // desktop the row's cells stretch to the taller of the two, so the photograph takes that
+  // height instead and the pair ends level.
+  //
+  // overflow stays visible: the badge hangs off the top-left corner.
+  &__media
+    @apply relative w-full m-0
+    aspect-ratio: 700 / 709
+
+    @media (min-width: 1280px)
+      aspect-ratio: auto
+      height: 100%
+
+  // Centred on the photograph's top-left corner below desktop — the offset is half the
+  // badge. At desktop the frame moves it down and further out instead.
+  &__badge
+    @apply absolute z-10 flex items-center justify-center rounded-full
+    @apply bg-brand-red text-white font-primary font-normal uppercase tracking-[0.5px]
+    @apply w-16 h-16 text-[14px] -left-8 -top-8
+    @apply xl:w-[140px] xl:h-[140px] xl:text-[40px] xl:-left-[68px] xl:-top-10
+
+  // A flex column, which is what lets the box below take mt-auto and sit at the bottom
+  // however long the paragraph runs.
+  &__text
+    @apply flex flex-col
+
+  &__name
+    @apply font-primary font-normal uppercase tracking-[0.5px]
+    @apply text-[14px] leading-[15px] md:text-[15px] md:leading-[30px] xl:text-[20px] xl:leading-[32px]
+    @apply mb-4 md:mb-8
+
+  &__intro
+    @apply font-primary font-normal tracking-[0.5px]
+    @apply text-[14px] leading-[22px] xl:text-[20px] xl:leading-[32px]
+
+    p
+      @apply mb-4 last:mb-0
+
+  // mt-auto is what pins it to the bottom of the column at desktop, where the two halves
+  // are side by side and the row is as tall as the photograph. Below that the row is a
+  // stack, there is no free space for auto to take, so the gap is a real margin.
+  //
+  // The minimum height is what makes every row's box the same size where they sit side by
+  // side. A minimum and not a fixed height, because the hours are editorial and a fixed
+  // one would clip a longer week.
+  &__box
+    @apply mt-4 md:mt-8 xl:mt-auto
+    @apply flex flex-col gap-8
+    @apply md:flex-row md:items-start md:justify-between
+    @apply border-2 border-brand-red bg-white p-8
+    @apply xl:min-h-[388px]
+
+  // The frame hugs each column to its content below desktop and lets justify-between
+  // spread them; at desktop it splits the box in half instead.
+  &__col
+    @apply flex flex-col min-w-0
+    @apply gap-4 md:gap-8
+    @apply xl:flex-1
+
+  &__col-title
+    @apply font-primary font-bold tracking-[0.5px]
+    @apply text-[14px] leading-[22px] md:text-[20px] md:leading-[30px] xl:leading-[32px]
+
+  &__col-body
+    @apply font-primary font-normal tracking-[0.5px]
+    @apply text-[14px] leading-[22px] md:text-[20px] md:leading-[32px]
+
+    p
+      @apply mb-0

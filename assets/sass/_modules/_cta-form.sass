@@ -28,6 +28,27 @@
 
 .cta-form
 
+  // The frame sets the line under the rule in sentence case, where .label-overline is
+  // uppercase. Two classes here against that class's one, so this wins on specificity and
+  // does not depend on which file is emitted last.
+  .section-heading__subtitle
+    @apply normal-case
+
+  // Wider than the component's own column at both breakpoints — four of six at tablet
+  // against its two, six of twelve at desktop against its four. That column is sized for a
+  // description; this heading carries only the overline, and the frame runs it wider.
+  //
+  // One grid-column declaration rather than col-start-* plus col-span-*: those are two
+  // utilities and the span one compiles to the shorthand, which resets the start. The
+  // tablet rule is bounded at the top so it cannot outrank the desktop one below it.
+  @media (min-width: 768px) and (max-width: 1279px)
+    .section-heading__intro
+      grid-column: 1 / span 4
+
+  @media (min-width: 1280px)
+    .section-heading__intro
+      grid-column: 2 / span 6
+
   .wpcf7
     @apply m-0
 
@@ -49,7 +70,11 @@
       @media (min-width: 1280px)
         grid-column: 2 / span 5
 
+    // A flex column like the one beside it, so a form that puts more than the message on
+    // this side spaces its controls the same way. With a single child it does nothing.
     &--message
+      @apply flex flex-col gap-6 md:gap-8
+
       @media (min-width: 1280px)
         grid-column: 7 / span 5
 

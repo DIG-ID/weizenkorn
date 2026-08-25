@@ -25,7 +25,7 @@ if ( have_posts() ) :
 		get_template_part( 'template-parts/pages/home/services' );
 		get_template_part( 'template-parts/pages/home/gastronomy' );
 		get_template_part( 'template-parts/pages/home/work-training' );
-		get_template_part( 'template-parts/pages/home/about-teaser' );
+		get_template_part( 'template-parts/modules/teaser', null, array( 'prefix' => 'about_' ) );
 
 		do_action( 'after_main_content' );
 

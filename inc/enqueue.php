@@ -94,9 +94,29 @@ if ( ! function_exists( 'weizenkorn_enqueue_google_maps' ) ) :
 		$has_template = ! empty( $templates ) && is_page_template( $templates );
 
 		// The same question the template asks: a map is drawn only for a pin with both
-		// coordinates.
-		$pin     = ( is_singular() && function_exists( 'get_field' ) ) ? get_field( 'location_pin', get_queried_object_id() ) : null;
-		$has_pin = is_array( $pin ) && ! empty( $pin['lat'] ) && ! empty( $pin['lng'] );
+		// coordinates, and the section takes either one pin or a repeater of them.
+		$has_pin = false;
+
+		if ( is_singular() && function_exists( 'get_field' ) ) {
+			$location_id = get_queried_object_id();
+			$pin         = get_field( 'location_pin', $location_id );
+			$has_pin     = is_array( $pin ) && ! empty( $pin['lat'] ) && ! empty( $pin['lng'] );
+
+			// get_field() and not have_rows(): this runs on wp_enqueue_scripts, outside any
+			// loop, and reading the rows as an array leaves ACF's row stack alone.
+			if ( ! $has_pin ) {
+				$rows = get_field( 'location_items', $location_id );
+
+				if ( is_array( $rows ) ) {
+					foreach ( $rows as $row ) {
+						if ( ! empty( $row['pin']['lat'] ) && ! empty( $row['pin']['lng'] ) ) {
+							$has_pin = true;
+							break;
+						}
+					}
+				}
+			}
+		}
 
 		if ( ! $has_template && ! $has_pin ) {
 			return;

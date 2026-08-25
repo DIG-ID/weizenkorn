@@ -18,7 +18,7 @@ if ( ! defined( 'WEIZENKORN_ADOBE_FONTS_ID' ) ) {
 }
 
 if ( ! defined( 'WEIZENKORN_GOOGLE_MAPS_API_KEY' ) ) {
-	define( 'WEIZENKORN_GOOGLE_MAPS_API_KEY', 'AIzaSyBAZN5TfX1aWmjodZ4e_6sOcaJV4D59jfo' );
+	define( 'WEIZENKORN_GOOGLE_MAPS_API_KEY', '' );
 }
 
 require get_template_directory() . '/inc/theme-setup.php';

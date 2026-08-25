@@ -47,12 +47,35 @@
       grid-column: 1 / span 4
       grid-row: span 2
 
-  // Gastronomy: same rows and gutter, different spans, so only the spans are overridden
-  // and only at desktop — mobile stacks exactly as the default does.
-  //
-  // The tall one holds columns 1-5 across both rows, which leaves the 3 and the 4 to
-  // fill row one and gives the 7-wide one nowhere to go but row two, columns 6-12.
+  // Gastronomy: the same gutter as the default, different spans, and its own rows at
+  // tablet. Mobile stacks exactly as the default does.
   &--gastronomy
+
+    // Tablet: one full-width photo, then two halves, then a full-width one again — where
+    // the default keeps halving every row after the first. The rows are written out
+    // because they no longer repeat one height, so grid-auto-rows cannot express them.
+    //
+    // Bounded at the top as well as the bottom: this rule out-specifies the base
+    // .photo-mosaic__grid, so an unbounded min-width query would carry these rows into
+    // desktop and override its own.
+    @media (min-width: 768px) and (max-width: 1279px)
+      // The component gives its right-hand description columns 4-6, which reads as an
+      // indent here — these pages want the copy against the container's left edge, as it
+      // already is at mobile. Scoped rather than changed in the component, which the other
+      // sections rely on, and bounded at the top so desktop keeps its own columns.
+      .section-heading__desc
+        grid-column: 1 / span 3
+
+      .photo-mosaic__grid
+        grid-template-rows: 825px 214px 263px
+
+      // The two halves auto-place into row 2 on the base rule's span; only the fourth
+      // has to be told to take the whole width again.
+      .photo-mosaic__item:nth-child(4)
+        grid-column: 1 / span 6
+
+    // Desktop: the tall one holds columns 1-5 across both rows, which leaves the 3 and
+    // the 4 to fill row one and gives the 7-wide one nowhere to go but row two.
     @media (min-width: 1280px)
       .photo-mosaic__item
 

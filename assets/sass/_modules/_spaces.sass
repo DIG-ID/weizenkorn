@@ -1,0 +1,79 @@
+// Spaces — template-parts/modules/spaces.php
+
+.spaces
+
+  // The title slot carries the overline, and .label-overline holds a 30px leading at every
+  // width where the mobile frame sets 15. Scoped rather than changed in the shared class,
+  // which 18 sections use.
+  .section-heading__title
+    @apply leading-[15px] md:leading-[30px]
+
+  // 20px between tiles, the grid's own gutter, in both directions.
+  //
+  // The heights live on the rows rather than on the tiles, because the tall one spans both
+  // and has to come out as their sum plus the gutter. grid-auto-rows repeats the second
+  // height, so a fifth room opens another row without a rule of its own.
+  &__grid
+    @apply gap-y-6
+
+    @media (min-width: 1280px)
+      grid-template-rows: 384px 364px
+      grid-auto-rows: 364px
+      row-gap: 20px
+
+  // A ratio below desktop, where nothing else sets a height: 320x264 at mobile and 340x284
+  // at tablet, both the frames' own. overflow hidden because the bar is positioned against
+  // this box.
+  &__item
+    @apply relative w-full m-0 overflow-hidden
+    aspect-ratio: 320 / 264
+    grid-column: 1 / span 2
+
+    @media (min-width: 768px)
+      grid-column: 1 / span 6
+
+    @media (min-width: 1280px)
+      aspect-ratio: auto
+      grid-column: span 4
+
+  // Tablet: two to a row, all the same size, and the paragraph takes the whole container
+  // rather than the right-hand columns the component gives it. The overline needs no rule
+  // of its own — it sits in the title's slot, which is already full width there.
+  //
+  // Bounded at the top as well as the bottom: these out-specify the base rules, so an
+  // unbounded min-width query would carry the tablet sizes into desktop.
+  @media (min-width: 768px) and (max-width: 1279px)
+    .section-heading__desc
+      grid-column: 1 / span 6
+
+    .spaces__grid
+      row-gap: 32px
+
+    .spaces__item
+      grid-column: span 3
+      aspect-ratio: 340 / 284
+
+  // The arrangement is the tile's position, so adding a room keeps the rhythm without a
+  // field saying which one is large. Auto-placement does the rest: the tall one holds
+  // columns 1-5 across both rows, the 3 and the 4 fill what is left of row one, and the
+  // 7-wide one has nowhere to go but row two.
+  @media (min-width: 1280px)
+    .spaces__item:first-child
+      grid-column: 1 / span 5
+      grid-row: span 2
+
+    .spaces__item:nth-child(2)
+      grid-column: span 3
+
+    .spaces__item:nth-child(3)
+      grid-column: span 4
+
+    .spaces__item:nth-child(4)
+      grid-column: span 7
+
+  // Over the photograph's bottom edge rather than under it, so the tile's height is the
+  // photograph's and the row stays level.
+  &__caption
+    @apply absolute inset-x-0 bottom-0 z-10
+    @apply bg-brand-cream text-brand-dark title-card
+    @apply px-4 py-2 xl:px-6 xl:py-3.5
