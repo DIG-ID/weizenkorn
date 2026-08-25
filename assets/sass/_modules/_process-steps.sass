@@ -1,0 +1,71 @@
+// Process steps — template-parts/modules/process-steps.php
+
+.process-steps
+
+  // Five equal tiles have no expression in a twelve-column grid, so this is its own — and
+  // it runs the container's full width, where every other section keeps to the inset. The
+  // gutter is the theme's constant 20px.
+  &__grid
+    @apply grid gap-x-5 gap-y-[10px] md:gap-y-8
+    grid-template-columns: 1fr
+
+    @media (min-width: 768px)
+      grid-template-columns: repeat(2, 1fr)
+
+    @media (min-width: 1280px)
+      grid-template-columns: repeat(5, 1fr)
+
+  // A ratio rather than a height, so the row stays level whatever the photographs are.
+  // overflow hidden because the caption is positioned against this box and grows inside it.
+  &__item
+    @apply relative w-full m-0 overflow-hidden
+    aspect-ratio: 320 / 297
+
+    @media (min-width: 768px)
+      aspect-ratio: 340 / 320
+
+    @media (min-width: 1280px)
+      aspect-ratio: 350 / 430
+
+  // Two to a row leaves an odd last step alone on its own, so it takes both columns and the
+  // frame's own taller shape. Bounded at the top as well as the bottom: at desktop the grid
+  // is five columns and the five steps fill it exactly, so spanning two there would break
+  // the row.
+  @media (min-width: 768px) and (max-width: 1279px)
+    .process-steps__item:last-child:nth-child(odd)
+      grid-column: span 2
+      aspect-ratio: 700 / 625
+
+  // Over the photograph's bottom edge rather than under it, so the tile's height never
+  // changes when the sentence appears. 10px of padding either side of a 30px line is the
+  // frame's 50px bar.
+  &__caption
+    @apply absolute inset-x-0 bottom-0 z-10
+    @apply flex flex-col bg-brand-cream text-brand-dark
+    @apply px-4 py-[10px]
+
+  &__title
+    @apply block title-card
+
+  // Animating to a height the content decides: a grid track goes from 0fr to 1fr, which
+  // transitions where `height: auto` cannot. The inner element is what actually gets
+  // clipped, so it needs the overflow rather than this one.
+  &__text
+    @apply grid mt-0
+    grid-template-rows: 0fr
+    transition: grid-template-rows 300ms ease, margin-top 300ms ease
+
+  &__text-inner
+    @apply body-text overflow-hidden
+
+  // A hover state is unreachable by touch, so the sentence is only hidden behind one where
+  // there is a pointer to hover with. Everywhere else the caption simply shows it.
+  @media (hover: hover)
+    .process-steps__item:hover .process-steps__text
+      @apply mt-2
+      grid-template-rows: 1fr
+
+  @media (hover: none)
+    .process-steps__text
+      @apply mt-2
+      grid-template-rows: 1fr

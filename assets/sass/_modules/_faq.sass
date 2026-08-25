@@ -1,0 +1,45 @@
+// FAQ — template-parts/modules/faq.php
+
+.faq
+
+  &__list
+    @apply m-0 p-0
+
+  // The rule runs the container's full width while the pair inside it keeps to columns
+  // 4-11, which is why it sits on this element and not on the columns.
+  //
+  // The first pair drops its top padding and the last its bottom rule, so the section opens
+  // flush under the heading's own rule and closes on the last answer rather than on a line
+  // with nothing under it.
+  // Stacked below desktop, so the row gap is what separates the question from its answer;
+  // side by side at desktop, where it does nothing.
+  &__item
+    @apply border-b border-brand-dark
+    @apply gap-y-6 pt-4 pb-4
+    @apply md:pt-6 md:pb-[34px]
+    @apply xl:pt-8 xl:pb-11
+
+    &:first-child
+      @apply pt-0
+
+    &:last-child
+      @apply pb-0 border-b-0
+
+  // Regular and uppercase, not the bold card title it resembles — the same type as the
+  // section subtitles, which is what the design calls it.
+  &__question
+    @apply label-overline text-brand-dark
+
+  // A <dd> carries a UA indent that would push the answer off its column.
+  &__answer
+    @apply body-text text-brand-dark m-0
+
+  // The shared scales carry a 30px leading on .label-overline and a 20px one on .body-text
+  // at mobile, where this frame sets 15 and 22. Scoped rather than changed in the classes
+  // themselves, which eighteen sections share.
+  @media (max-width: 767px)
+    .faq__question
+      @apply leading-[15px]
+
+    .faq__answer
+      @apply leading-[22px]

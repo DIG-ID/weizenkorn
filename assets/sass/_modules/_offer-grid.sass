@@ -1,0 +1,41 @@
+// Offer grid — template-parts/modules/offer-grid.php
+
+.offer-grid
+
+  // An odd number of offers leaves the last one alone on its row, so it takes the whole
+  // width instead of half of it — the fifth card in the frame. In CSS rather than a count
+  // in PHP: :last-child:nth-child(odd) matches only when the two are the same element, so
+  // adding or removing an offer rearranges the grid on its own.
+  //
+  // The spans are the nested grid's own columns, not the container's: the list re-divides
+  // the ten-column inset into twelve, which is what makes six of them 747px at desktop.
+  @media (min-width: 768px)
+    .offer-grid__item:last-child:nth-child(odd)
+      grid-column: span 6
+
+    // Taller than the cards beside it at this width only — at desktop every image is 400.
+    // Out-specifies the height utility the module passes the card, which is what keeps the
+    // decision about which card is wide in this one place.
+    .offer-grid__item:last-child:nth-child(odd) .card-overview__media
+      height: 278px
+
+  @media (min-width: 1280px)
+    .offer-grid__item:last-child:nth-child(odd)
+      grid-column: span 12
+
+    .offer-grid__item:last-child:nth-child(odd) .card-overview__media
+      height: 400px
+
+  // The card is shared with the Services overview, whose frames space the title and its
+  // paragraph the other way round — 10px at tablet and 16px at desktop. Scoped here rather
+  // than changed in the component, so that section keeps its own values.
+  .card-overview__text-group
+    @apply md:gap-4 xl:gap-[10px]
+
+  // The card title and its paragraph both run a 22px leading at mobile, where the shared
+  // scales set 20. Scoped rather than changed in .title-card / .body-text, which eighteen
+  // sections share — see the note in the handover about whether the base should move.
+  @media (max-width: 767px)
+    .title-card,
+    .body-text
+      @apply leading-[22px]

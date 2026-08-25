@@ -13,6 +13,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ## [1.8.1] — 2026-08-25
 
+### Added
+- Offer grid section: a heading and a grid of offer cards, two to a row, with an odd last card taking the full width. Links are optional.
+- Process steps section: a row of captioned photographs, each revealing a sentence on hover. Where there is no pointer to hover with, the sentence is shown outright.
+- FAQ section: a static list of questions and answers, each pair separated by a rule.
+- Kreativatelier page template, wiring the hero, the three new sections, the USP band, the quote slider, the map and the form.
+
+### Changed
+- Overview cards without a link are now drawn as a plain block with no arrow, instead of not being drawn at all.
+
 ### Fixed
 - Contact details in the form section sat across the full width at tablet; they now take the right-hand columns, beside the heading, and stay stacked rather than sitting side by side.
 - Opening hours in the location section were a size too large below desktop — now 14px at tablet and mobile.
