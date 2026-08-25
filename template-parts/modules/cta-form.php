@@ -88,7 +88,7 @@ if ( ! $cta_shortcode ) {
 			 */
 			?>
 			<div class="theme-grid mb-8 xl:mb-12">
-				<div class="cta-form__contact text-brand-dark flex flex-col gap-4 md:flex-row md:gap-10 xl:flex-col xl:gap-4 col-span-2 md:col-span-6 xl:col-start-7 xl:col-span-5">
+				<div class="cta-form__contact text-brand-dark flex flex-col gap-4 xl:gap-4 col-span-2 md:col-start-4 md:col-span-3 xl:col-start-7 xl:col-span-5">
 
 					<?php if ( get_field( $cta_prefix . 'cta_phone', $cta_ctx ) ) : ?>
 						<?php // The href keeps only digits and a leading +, which is what tel: takes. ?>

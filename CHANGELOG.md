@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.8.1] — 2026-08-25
+
+### Fixed
+- Contact details in the form section sat across the full width at tablet; they now take the right-hand columns, beside the heading, and stay stacked rather than sitting side by side.
+- Opening hours in the location section were a size too large below desktop — now 14px at tablet and mobile.
+
+---
+
 ## [1.8.0] — 2026-08-25
 
 ### Added
