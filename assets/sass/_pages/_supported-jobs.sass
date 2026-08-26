@@ -88,16 +88,8 @@
       @apply flex-row items-center gap-14 px-5 py-[18px]
       @apply text-[20px] tracking-[-0.38px]
 
-// -- Process steps ("Der Weg zu uns") ------------------------------------------
-// Four numbered boxes: one row at desktop (3 columns each of 12), a 2×2 grid
-// at tablet (3 columns each of 6), stacked at mobile (full width). The
-// number is prepended to the title text itself (same title-card style, same
-// line) rather than a separate element — the gap below is the large one
-// the design gives the title-to-text distance, not the container's own
-// padding rhythm.
-.card-process
-  @apply flex flex-col gap-10 md:gap-14 xl:gap-16 p-6 md:p-8 xl:p-10
-
-// FAQ ("Häufig gestellte Fragen") is the shared template-parts/modules/faq
-// module — its own styles live in _modules/_faq.sass, nothing page-specific
-// needed here.
+// "Arbeiten mit IV-Rente" (intro-cta) and "Der Weg zu uns" (numbered-steps)
+// are now the shared template-parts/modules/intro-cta.php and
+// numbered-steps.php — their styles live in _modules/, nothing page-specific
+// needed here. Same for FAQ ("Häufig gestellte Fragen"), the shared
+// template-parts/modules/faq module (_modules/_faq.sass).

@@ -19,10 +19,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - FAQ section: a static list of questions and answers, each pair separated by a rule.
 - Kreativatelier page template, wiring the hero, the three new sections, the USP band, the quote slider, the map and the form.
 - Supported Jobs page template: hero, an "Arbeiten mit IV-Rente" intro, a two-per-view diversity card carousel, a four-step "Der Weg zu uns" process section, the quote slider, a contact form and the FAQ list.
+- Supported Apprenticeships page template: hero, an intro, a programme overview, a four-step process section, the quote slider, a contact-person section with a phone/email and the FAQ list.
+- Intro + CTA section: a title with a description and a button beneath it, shared by the Supported Jobs and Supported Apprenticeships intros.
+- Numbered steps section: a row of numbered boxes with a title and text each, shared by both Supported pages' process sections.
 
 ### Changed
 - Overview cards without a link are now drawn as a plain block with no arrow, instead of not being drawn at all.
 - Work & Training's contact section now uses the shared contact-form module directly, instead of a page-specific duplicate.
+- Supported Jobs' intro section now places its button under the description, in the same column, instead of beside the title.
 
 ### Fixed
 - Contact details in the form section sat across the full width at tablet; they now take the right-hand columns, beside the heading, and stay stacked rather than sitting side by side.

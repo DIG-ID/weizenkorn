@@ -1,0 +1,33 @@
+// =============================================================================
+// Supported Apprenticeships page — template-parts/pages/supported-apprenticeships/
+// =============================================================================
+
+// -- Programme bento ("Unsere Ausbildung") -------------------------------------
+// 2×2 at desktop (each card half the row), stacked single column at
+// tablet/mobile — confirmed against the tablet frame, which has no 2-up step.
+.card-program
+  &__media
+    aspect-ratio: 320 / 192
+
+    @media (min-width: 768px)
+      aspect-ratio: 700 / 369
+
+    @media (min-width: 1280px)
+      aspect-ratio: 900 / 369
+
+  &__caption
+    @apply px-5 py-4 md:px-6 md:py-5 xl:px-8 xl:py-6
+
+// -- Contact person ("Bereit für Weizenkorn?") ---------------------------------
+// Stacked (photo above the name/phone/email) at mobile, side by side from
+// tablet up — the Figma frames agree on that break, unlike most sections here
+// which flip at xl.
+.section-contact-person
+  &__media
+    aspect-ratio: 320 / 199
+
+    @media (min-width: 768px)
+      aspect-ratio: 340 / 219
+
+    @media (min-width: 1280px)
+      aspect-ratio: 594 / 343

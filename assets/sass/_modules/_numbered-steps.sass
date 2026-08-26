@@ -1,0 +1,12 @@
+// Numbered steps — template-parts/modules/numbered-steps.php
+//
+// Four numbered boxes: one row at desktop (3 columns each of 12), a 2×2 grid at tablet
+// (3 columns each of 6), stacked at mobile (full width). The number is prepended to the
+// title text itself (same title-card style, same line) rather than a separate element.
+//
+// A fixed height (286/445 — the Figma frames' own values, same 445 at both tablet and
+// desktop) with justify-between pins the title to the top and the text to the bottom,
+// whatever either one's length: the gap between them is whatever height leaves over,
+// not a value chosen by hand.
+.card-numbered-step
+  @apply flex flex-col justify-between h-[286px] md:h-[445px] p-6 md:p-8 xl:p-10
