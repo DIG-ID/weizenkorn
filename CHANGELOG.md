@@ -18,9 +18,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Process steps section: a row of captioned photographs, each revealing a sentence on hover. Where there is no pointer to hover with, the sentence is shown outright.
 - FAQ section: a static list of questions and answers, each pair separated by a rule.
 - Kreativatelier page template, wiring the hero, the three new sections, the USP band, the quote slider, the map and the form.
+- Supported Jobs page template: hero, an "Arbeiten mit IV-Rente" intro, a two-per-view diversity card carousel, a four-step "Der Weg zu uns" process section, the quote slider, a contact form and the FAQ list.
 
 ### Changed
 - Overview cards without a link are now drawn as a plain block with no arrow, instead of not being drawn at all.
+- Work & Training's contact section now uses the shared contact-form module directly, instead of a page-specific duplicate.
 
 ### Fixed
 - Contact details in the form section sat across the full width at tablet; they now take the right-hand columns, beside the heading, and stay stacked rather than sitting side by side.

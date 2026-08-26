@@ -1,0 +1,103 @@
+// =============================================================================
+// Supported Jobs page — template-parts/pages/supported-jobs/
+// =============================================================================
+
+// -- Diversity cards slider ("Arbeitsvielfalt bei Weizenkorn") ----------------
+// Two cards per view at desktop with arrows, one full-width card per view at
+// tablet/mobile with bullets — same viewport/nav/pagination pattern as
+// _modules/_our-equipment.sass (columns 2-11 at desktop is 1513px, and two
+// five-column slides with the grid's 20px between them come to 747px each,
+// matching the design exactly with no slide width of its own).
+.section-diversity-cards
+  &__row
+    @apply gap-y-8 md:gap-y-14
+
+  &__viewport
+    grid-column: 1 / span 2
+
+    @media (min-width: 768px)
+      grid-column: 1 / span 6
+
+    @media (min-width: 1280px)
+      grid-column: 2 / span 10
+
+    // The bleed, desktop only — see _modules/_our-equipment.sass for why.
+    .swiper
+      @media (min-width: 1280px)
+        @apply overflow-visible
+
+  &__nav
+    @apply hidden items-center justify-between
+    grid-column: 11
+
+    @media (min-width: 1280px)
+      @apply flex
+
+  &__pagination
+    @apply static flex flex-wrap items-center justify-center gap-x-5 md:gap-x-[30px] gap-y-4 xl:hidden
+    grid-column: 1 / span 2
+
+    --swiper-pagination-bullet-horizontal-gap: 0px
+
+    @media (min-width: 768px)
+      grid-column: 1 / span 6
+
+    .swiper-pagination-bullet
+      @apply w-[15px] h-[15px] shrink-0 m-0 rounded-full border border-brand-red bg-transparent opacity-100 transition-colors duration-300
+
+    .swiper-pagination-bullet-active
+      @apply bg-brand-red
+
+  &__arrow
+    @apply flex items-center justify-center text-brand-red transition-opacity duration-300
+
+    &:hover,
+    &:focus-visible
+      @apply opacity-70 outline-none
+
+    &.swiper-button-disabled
+      @apply opacity-30 pointer-events-none
+
+    svg
+      @apply w-[15px] h-3 md:w-6 md:h-[19px]
+
+  .js-diversity-cards-prev svg
+    @apply -scale-x-100
+
+// -- The slide: a photo with a dark overlay (contrast for the caption) and a
+//    caption bar overlapping its bottom edge. Row layout at tablet/desktop,
+//    stacked at mobile. -----------------------------------------------------
+.card-diversity
+  aspect-ratio: 321 / 278
+
+  @media (min-width: 768px)
+    aspect-ratio: 703 / 609
+
+  @media (min-width: 1280px)
+    aspect-ratio: 747 / 650
+
+  &__media
+    @apply absolute inset-0 h-full
+
+  &__caption
+    @apply bg-white border border-brand-red font-primary italic
+    @apply flex flex-col gap-2 p-4
+    @apply text-[14px] tracking-[-0.266px]
+
+    @media (min-width: 768px)
+      @apply flex-row items-center gap-14 px-5 py-[18px]
+      @apply text-[20px] tracking-[-0.38px]
+
+// -- Process steps ("Der Weg zu uns") ------------------------------------------
+// Four numbered boxes: one row at desktop (3 columns each of 12), a 2×2 grid
+// at tablet (3 columns each of 6), stacked at mobile (full width). The
+// number is prepended to the title text itself (same title-card style, same
+// line) rather than a separate element — the gap below is the large one
+// the design gives the title-to-text distance, not the container's own
+// padding rhythm.
+.card-process
+  @apply flex flex-col gap-10 md:gap-14 xl:gap-16 p-6 md:p-8 xl:p-10
+
+// FAQ ("Häufig gestellte Fragen") is the shared template-parts/modules/faq
+// module — its own styles live in _modules/_faq.sass, nothing page-specific
+// needed here.

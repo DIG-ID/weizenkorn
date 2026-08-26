@@ -193,3 +193,34 @@ export function initDiversitySlider() {
     });
   });
 }
+
+/**
+ * Supported Jobs — diversity cards slider ("Arbeitsvielfalt bei
+ * Weizenkorn"): two 747px cards per view at desktop, one full-width card
+ * below it — same configuration as initEquipmentSlider(), a different
+ * section on a different page.
+ */
+export function initDiversityCardsSlider() {
+  document.querySelectorAll('.js-diversity-cards-slider').forEach((el) => {
+    const root = el.closest('.section-diversity-cards');
+
+    new Swiper(el, {
+      modules: [Navigation, Pagination, A11y],
+      spaceBetween: 20,
+      slidesPerView: 1,
+      breakpoints: {
+        1280: { slidesPerView: 2 },
+      },
+      observer: true,
+      observeParents: true,
+      pagination: {
+        el: root ? root.querySelector('.js-diversity-cards-pagination') : null,
+        clickable: true,
+      },
+      navigation: {
+        prevEl: root ? root.querySelector('.js-diversity-cards-prev') : null,
+        nextEl: root ? root.querySelector('.js-diversity-cards-next') : null,
+      },
+    });
+  });
+}

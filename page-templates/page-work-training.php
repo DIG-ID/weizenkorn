@@ -6,9 +6,11 @@
  * "Work & Training_desktop"): shared hero-section module, then this page's
  * own "Ihre Perspektiven bei uns" (3-card offer grid) and "Zuweisende
  * Stellen" sections, a venue-diversity slider, the shared quote-slider, and
- * a closing "Dürfen wir weiterhelfen?" contact + form section. The Figma
- * frame's last section ("Entdecken Sie mehr") is intentionally not built —
- * the page ends at the form, per the brief.
+ * a closing "Dürfen wir weiterhelfen?" contact + form section — the shared
+ * cta-form module, prefixed 'work_training_' (its own cta_phone/cta_email
+ * fields cover the contact row, no page-specific markup needed). The
+ * Figma frame's last section ("Entdecken Sie mehr") is intentionally not
+ * built — the page ends at the form, per the brief.
  *
  * @package weizenkorn
  * @subpackage Template
@@ -28,7 +30,7 @@ if ( have_posts() ) :
 		get_template_part( 'template-parts/pages/work-training/referrals' );
 		get_template_part( 'template-parts/pages/work-training/diversity-slider' );
 		get_template_part( 'template-parts/modules/quote-slider' );
-		get_template_part( 'template-parts/pages/work-training/contact-form' );
+		get_template_part( 'template-parts/modules/cta-form', null, array( 'prefix' => 'work_training_' ) );
 
 		do_action( 'after_main_content' );
 
