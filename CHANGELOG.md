@@ -11,6 +11,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.9.0] — 2026-08-27
+
+### Added
+- Service / Info / Downloads section: a heading and a row of outlined buttons, one per document. Three across at every width from tablet up, stacked at mobile.
+- Fiduciary and Schreinerei page templates.
+- Teaser: a stacked arrangement, with the photograph under the text at tablet and mobile instead of beside it. The Services pages use it; the home page and Our Bakery keep the two side by side.
+- Craft showcase: an optional video in place of the right-hand photograph, set up the way the home page's hero already was — a switch and a file per format. The section's own image becomes the video's poster and its fallback.
+- Process steps: a step opens its sentence on a click or a tap anywhere in the tile, not only on hover. The tablet and mobile frames draw the tile closed, and a hover is unreachable by touch.
+- Buttons take an explicit icon, overriding the one the style and the link would otherwise choose.
+
+### Changed
+- Body text and card titles carry a 22px line at mobile and overlines a 15px one, as the design system sets them. The three sections that were correcting this on their own no longer have to.
+- A button whose link fetches a file gets the download arrow — the one with the line under it — where it used to get the plain arrow pointing down.
+- Sections keep 192px between them at desktop; the home page's Work & Training band was the one exception.
+- Home hero: the image is repeated inside the video element, so a browser that cannot play video draws it instead, with its alt text. A poster attribute carries no accessible name.
+
+### Fixed
+- Process steps: between 1280 and 1535 the caption was already at its desktop type size in a tile a third narrower, so an open sentence covered the whole photograph and the step's title was clipped. The caption keeps the tablet scale until 1536.
+- Process steps: at tablet the wide last step kept growing past its frame as the window widened; its height now stops where the frame does.
+- Process steps: 56px between the rule and the row of tiles at tablet, where the section had 32.
+- Teaser: a top margin, so the section no longer sits flush against a band that has no bottom margin of its own.
+- Contact form: a message column carrying a field above the message now ends level with the column beside it at desktop.
+
+---
+
 ## [1.8.1] — 2026-08-25
 
 ### Added

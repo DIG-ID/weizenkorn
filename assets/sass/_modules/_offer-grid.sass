@@ -32,10 +32,3 @@
   .card-overview__text-group
     @apply md:gap-4 xl:gap-[10px]
 
-  // The card title and its paragraph both run a 22px leading at mobile, where the shared
-  // scales set 20. Scoped rather than changed in .title-card / .body-text, which eighteen
-  // sections share — see the note in the handover about whether the base should move.
-  @media (max-width: 767px)
-    .title-card,
-    .body-text
-      @apply leading-[22px]

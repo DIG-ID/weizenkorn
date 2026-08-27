@@ -13,6 +13,10 @@
  *   hero_video_mp4    (file → return array)
  *   hero_video_webm   (file → return array)
  *
+ * With a video, hero_image does two more jobs: it is the poster, which shows before the
+ * video starts and stays when autoplay is refused or the file will not play, and it is
+ * repeated inside the element as the fallback a browser without video support draws.
+ *
  * @package weizenkorn
  * @subpackage Section
  * @since 1.0.0
@@ -106,6 +110,23 @@ $weizenkorn_hero_video_webm   = $weizenkorn_hero_enable_video ? get_field( 'hero
 						<?php if ( $weizenkorn_hero_video_mp4 ) : ?>
 							<source src="<?php echo esc_url( $weizenkorn_hero_video_mp4['url'] ); ?>" type="video/mp4" />
 						<?php endif; ?>
+						<?php
+						// The fallback proper, and the only place the picture keeps its alt text:
+						// poster is an attribute and carries no accessible name. A browser that
+						// plays the video never fetches this one.
+						if ( get_field( 'hero_image' ) ) {
+							echo wp_get_attachment_image(
+								get_field( 'hero_image' ),
+								'full',
+								false,
+								array(
+									'class'         => 'w-full h-full object-cover',
+									'loading'       => 'eager',
+									'fetchpriority' => 'high',
+								)
+							);
+						}
+						?>
 					</video>
 				<?php elseif ( get_field( 'hero_image' ) ) : ?>
 					<?php

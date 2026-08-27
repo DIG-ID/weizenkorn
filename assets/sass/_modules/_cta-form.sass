@@ -23,6 +23,16 @@
 //     <div class="cta-form__actions-inner">[submit class:cta-form__submit "Senden"]</div>
 //   </div>
 //
+// A form that puts a control above the message adds one class — Treuhand's, which reads
+// Firma / Email / Telefonnummer against Name / Nachricht:
+//
+//   <div class="cta-form__col cta-form__col--message cta-form__col--message-compact">
+//     <label class="cta-form__label"><span class="cta-form__label-text">Name</span>
+//       [text* your-name autocomplete:name class:cta-form__control placeholder "Name"]</label>
+//     <label class="cta-form__label"><span class="cta-form__label-text">Nachricht</span>
+//       [textarea your-message class:cta-form__control placeholder "Nachricht"]</label>
+//   </div>
+//
 // The `theme-grid` on the two wrappers is load-bearing — it is what puts the fields on
 // real columns. Do not drop it when editing the form.
 
@@ -104,8 +114,20 @@
   // A real height, not min-height: CF7 renders the textarea with a rows attribute, so
   // its intrinsic height is ten lines and a min-height under that does nothing. It also
   // stops the box stretching when a validation message grows the desktop row.
+  //
+  // 298 at desktop is what levels the two columns: three controls of 78 with two 32px gaps
+  // is the same height. A form that puts a control above the message — Treuhand's Name —
+  // takes 110 of that back, hence the modifier below.
   textarea#{&}__control
     @apply resize-none h-[130px] md:h-[300px] xl:h-[298px]
+
+  // For a message column that carries a control above the textarea. Typed into the CF7
+  // template beside --message, the layout classes all being the form's own. Only desktop:
+  // below it the two columns are stacked and nothing has to line up.
+  &__col--message-compact
+    @media (min-width: 1280px)
+      textarea.cta-form__control
+        @apply h-[188px]
 
   // The inner wrapper exists because CF7's JS inserts the spinner as the submit's next
   // sibling — without it that span would be a grid item too, auto-placed in column 1.

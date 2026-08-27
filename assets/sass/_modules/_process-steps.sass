@@ -35,17 +35,43 @@
     .process-steps__item:last-child:nth-child(odd)
       grid-column: span 2
       aspect-ratio: 700 / 625
+      // The ratio is the frame's, measured at 834 where the tile is exactly 700 wide. Above
+      // that the row keeps growing, and by 1279 the same ratio would make this one tile over
+      // 1000px tall against 400px tiles above it — so the height stops at the frame's own
+      // and the photograph crops instead.
+      max-height: 625px
 
   // Over the photograph's bottom edge rather than under it, so the tile's height never
-  // changes when the sentence appears. 10px of padding either side of a 30px line is the
-  // frame's 50px bar.
+  // changes when the sentence appears. 10px of padding either side of the title's line is
+  // what draws the bar: 42px below 2xl (a 22px line) and the 1920 frame's 50 above it.
   &__caption
     @apply absolute inset-x-0 bottom-0 z-10
     @apply flex flex-col bg-brand-cream text-brand-dark
     @apply px-4 py-[10px]
 
+  // Not .title-card: its step to 20/30 lands at xl, where this tile is only ~220px wide —
+  // narrower than the same tile at mobile. Every caption wrapped to two lines there and the
+  // reveal then overflowed the tile, which clips it. The type therefore keeps the tablet
+  // scale through the whole xl band and only grows at 2xl, where the tile is ~348 and the
+  // 1920 frame's 50px bar (10 + 30 + 10) is what it draws.
   &__title
-    @apply block title-card
+    @apply block font-primary font-bold tracking-[0.5px]
+    @apply text-[14px] leading-[22px] 2xl:text-[20px] 2xl:leading-[30px]
+
+  // A step with a sentence opens on a click anywhere in the tile, so the whole tile reads as
+  // pressable. The modifier and not :has(), so the rule does not depend on it.
+  &__item--openable
+    @apply cursor-pointer
+
+  // The bar is a target in its own right, not just the words: on touch a 42px strip the
+  // width of the tile is what there is to tap. Inherits the caption's colour and carries no
+  // chrome of its own — the button is the affordance, the bar is what it looks like.
+  &__toggle
+    @apply block w-full text-left bg-transparent border-0 p-0 m-0 cursor-pointer
+    @apply text-inherit
+
+    &:focus-visible
+      @apply outline-none underline underline-offset-4
 
   // Animating to a height the content decides: a grid track goes from 0fr to 1fr, which
   // transitions where `height: auto` cannot. The inner element is what actually gets
@@ -55,17 +81,21 @@
     grid-template-rows: 0fr
     transition: grid-template-rows 300ms ease, margin-top 300ms ease
 
+  // Same reasoning as the title, and written out rather than @apply body-text for the same
+  // reason: that class steps up at xl. The sentence is plain escaped text, so none of the
+  // paragraph spacing body-text carries is needed here.
   &__text-inner
-    @apply body-text overflow-hidden
+    @apply overflow-hidden font-primary font-normal tracking-[0.5px]
+    @apply text-[14px] leading-[22px] 2xl:text-[20px] 2xl:leading-[30px]
 
-  // A hover state is unreachable by touch, so the sentence is only hidden behind one where
-  // there is a pointer to hover with. Everywhere else the caption simply shows it.
+  // Two ways in, and the same open state either way. The hover is gated behind a pointer,
+  // since a device without one would otherwise be left with a sentence it can never reach;
+  // .is-open is what the button sets, so touch and the keyboard get there by tapping.
   @media (hover: hover)
     .process-steps__item:hover .process-steps__text
       @apply mt-2
       grid-template-rows: 1fr
 
-  @media (hover: none)
-    .process-steps__text
-      @apply mt-2
-      grid-template-rows: 1fr
+  .process-steps__text.is-open
+    @apply mt-2
+    grid-template-rows: 1fr

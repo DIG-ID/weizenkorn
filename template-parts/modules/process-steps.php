@@ -1,17 +1,21 @@
 <?php
 /**
  * Process steps — a heading and a row of photographs, each captioned with the step it
- * shows and carrying a sentence that appears on hover.
+ * shows and carrying a sentence the reader opens.
  *
  * A module because four pages repeat it with their own steps — Kreativatelier's "So
  * entsteht Mehrwert", Sponsoring, and the two supported-work pages.
  *
- * THE HOVER TEXT
+ * OPENING THE SENTENCE
  *
- * A hover state is not reachable by touch, so the sentence is not hidden behind one where
- * there is no pointer to hover with: @media (hover: hover) is what gates it, and anywhere
- * else the caption simply shows the sentence under the step. The text is always in the
- * markup either way, so it is read out and indexed regardless of how it is revealed.
+ * Where there is a pointer the sentence follows the hover, as the desktop frame draws it.
+ * A hover is unreachable by touch, so the caption's title is also a button: a tap opens the
+ * sentence and a second tap closes it, which is what the tablet and mobile frames call for
+ * — they draw the tile closed, with the bar showing the step's name alone. The same button
+ * is what a keyboard uses, and assets/js/process-steps.js keeps one step open at a time,
+ * the way only one tile can be hovered.
+ *
+ * The text is always in the markup, so it is read out and indexed however it is revealed.
  *
  * The caption grows upward from the photograph's bottom edge rather than covering it, so
  * the tile's height never changes and the row stays level.
@@ -28,7 +32,7 @@
  *   process_steps_items          (repeater) one row per step:
  *                                → image (image → return ID) required
  *                                → title (text)
- *                                → text  (textarea) the sentence revealed on hover
+ *                                → text  (textarea) the sentence the button opens
  *
  * Usage:
  *   get_template_part( 'template-parts/modules/process-steps' );
@@ -71,8 +75,12 @@ if ( ! $ps_heading && ! have_rows( $ps_prefix . 'process_steps_items', $ps_ctx )
 			<?php
 			// Its own grid and not .theme-grid: five equal tiles have no expression in twelve
 			// columns, and the row runs the container's full width rather than the usual inset.
+			//
+			// 56px under the rule at tablet, where the sections that keep to the inset use 32 —
+			// this one is measured from its own frame. The heading's bottom margin collapses
+			// with this one rather than adding to it, so this is the whole gap.
 			?>
-			<div class="process-steps__grid mt-8 xl:mt-24">
+			<div class="process-steps__grid mt-8 md:mt-14 xl:mt-24">
 				<?php
 				while ( have_rows( $ps_prefix . 'process_steps_items', $ps_ctx ) ) :
 					the_row();
@@ -80,8 +88,12 @@ if ( ! $ps_heading && ! have_rows( $ps_prefix . 'process_steps_items', $ps_ctx )
 					if ( ! get_sub_field( 'image' ) ) {
 						continue;
 					}
+
+					$ps_title = get_sub_field( 'title' );
+					$ps_text  = get_sub_field( 'text' );
+					$ps_id    = 'process-step-' . $ps_ctx . '-' . get_row_index();
 					?>
-					<figure class="process-steps__item">
+					<figure class="process-steps__item<?php echo ( $ps_title && $ps_text ) ? ' process-steps__item--openable' : ''; ?>">
 						<?php
 						echo wp_get_attachment_image(
 							get_sub_field( 'image' ),
@@ -94,19 +106,32 @@ if ( ! $ps_heading && ! have_rows( $ps_prefix . 'process_steps_items', $ps_ctx )
 						);
 						?>
 
-						<?php if ( get_sub_field( 'title' ) || get_sub_field( 'text' ) ) : ?>
+						<?php if ( $ps_title || $ps_text ) : ?>
 							<figcaption class="process-steps__caption">
-								<?php if ( get_sub_field( 'title' ) ) : ?>
-									<span class="process-steps__title"><?php echo esc_html( get_sub_field( 'title' ) ); ?></span>
+								<?php if ( $ps_title && $ps_text ) : ?>
+									<?php
+									// The sentence is behind a pointer's hover, and behind a click or a
+									// tap everywhere else. The whole tile is the target — the photograph
+									// as much as the bar — but the control is this button, so that a
+									// keyboard reaches it and a screen reader is told what it does; the
+									// tile's own handler is what widens the target around it.
+									// The title is the button's label, so a step with a sentence and no
+									// title has nothing to press and simply shows it (below).
+									?>
+									<button type="button" class="process-steps__toggle" aria-expanded="false" aria-controls="<?php echo esc_attr( $ps_id ); ?>">
+										<span class="process-steps__title"><?php echo esc_html( $ps_title ); ?></span>
+									</button>
+								<?php elseif ( $ps_title ) : ?>
+									<span class="process-steps__title"><?php echo esc_html( $ps_title ); ?></span>
 								<?php endif; ?>
 
-								<?php if ( get_sub_field( 'text' ) ) : ?>
+								<?php if ( $ps_text ) : ?>
 									<?php
 									// Two elements because the reveal animates grid-template-rows from 0fr
 									// to 1fr — the outer one is the track, the inner one the thing clipped.
 									?>
-									<span class="process-steps__text">
-										<span class="process-steps__text-inner"><?php echo esc_html( get_sub_field( 'text' ) ); ?></span>
+									<span class="process-steps__text<?php echo $ps_title ? '' : ' is-open'; ?>" id="<?php echo esc_attr( $ps_id ); ?>">
+										<span class="process-steps__text-inner"><?php echo esc_html( $ps_text ); ?></span>
 									</span>
 								<?php endif; ?>
 							</figcaption>

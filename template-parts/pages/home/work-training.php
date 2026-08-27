@@ -13,7 +13,7 @@
  */
 
 ?>
-<section class="section-work-training mb-28 md:mb-36 xl:mb-44">
+<section class="section-work-training mb-28 md:mb-36 xl:mb-48">
 	<div class="theme-container">
 		<?php if ( have_rows( 'work_training' ) ) : ?>
 			<?php
