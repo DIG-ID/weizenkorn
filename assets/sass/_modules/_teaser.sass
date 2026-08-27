@@ -3,9 +3,16 @@
 .teaser
 
   // .theme-grid carries no row gap by design, so the stack below desktop declares its own —
-  // the distance from the button down to the photograph. At desktop the two share a row.
+  // the distance from the paragraph down to the photograph, which the tablet frame sets at
+  // 24. At desktop the two share a row and it does nothing.
   &__row
     @apply gap-y-8 xl:gap-y-0
+
+  // 16 from the paragraph down to the photograph at mobile and 24 at tablet, both from the
+  // Services frames — where the arrangement that keeps the two side by side is spacing a
+  // CTA instead, and sets 32.
+  &__row--stacked
+    @apply gap-y-4 md:gap-y-6
 
   // Written out rather than taken from .label-overline: the mobile frame sets this at
   // 14/15, where the shared class carries a 30px leading throughout. Not an override
@@ -16,6 +23,14 @@
     @apply text-[14px] leading-[15px] md:text-[15px] md:leading-[30px] xl:text-[20px] xl:leading-[30px]
 
   // A fixed height at mobile, where the frame crops the photograph rather than letting its
-  // own ratio decide. From tablet up the minimum height in the template takes over.
+  // own ratio decide. From tablet up the ratio decides, with a minimum so it never
+  // collapses beside a short paragraph.
   &__media img
-    @apply h-[300px] md:h-auto
+    @apply h-[300px] md:h-auto md:min-h-[393px]
+
+  // Stacked, the photograph runs the container's full width at tablet and the frame gives
+  // it a height of its own — where the minimum above was sized for a column beside the
+  // text. Desktop is untouched: there the two arrangements are the same.
+  &__row--stacked
+    .teaser__media img
+      @apply h-[192px] md:h-[320px] md:min-h-0 xl:h-auto xl:min-h-[393px]

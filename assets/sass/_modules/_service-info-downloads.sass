@@ -1,0 +1,59 @@
+// Service / Info / Downloads — template-parts/modules/service-info-downloads.php
+
+.service-info-downloads
+
+  // 16 between stacked buttons at mobile, from the frame. At tablet the three share a row
+  // and this only matters to a fourth button, which starts a second one.
+  &__row
+    @apply gap-y-4 md:gap-y-5
+
+    // Not the page grid at desktop — see the module's docblock. Three fixed boxes spread
+    // across the inset is what the frame draws, and it is also what survives 1280, where
+    // two of twelve columns would be narrower than the same button at tablet.
+    //
+    // The inset rather than the container: .theme-container's own padding puts the row on
+    // the container, and these margins take it in to columns 2-11.
+    @media (min-width: 1280px)
+      @apply flex flex-wrap justify-between gap-5
+      margin-left: calc((100% - 11 * 20px) / 12 + 20px)
+      margin-right: calc((100% - 11 * 20px) / 12 + 20px)
+
+  // The shared button sizes itself to its label. Here the frame gives it the column's
+  // width and a box of its own: 80 tall, which is a 20px line with 30 either side, and the
+  // label and the arrow pushed to the two edges. Scoped rather than changed in
+  // .btn-secondary, which the whole site shares.
+  //
+  // 64 tall at tablet — a 16px line with 24 either side, and the padding symmetric there.
+  // Desktop is 80: a 20px line with 30, and the frame's own asymmetry, 27 to the label
+  // against 17 to the arrow. Two classes against the component's one, so this wins
+  // wherever the files are emitted.
+  // gap-0 against the shared button's gap-16: justify-between already pushes the label and
+  // the arrow to the two edges, and a 64px gap on top of that is what pushed the arrow out
+  // through the border once a label ran long — the same way the booking button broke.
+  //
+  // 12px below desktop, which is the design system's own button size there (the
+  // `Tablet/Button` token) and what makes the longest label fit: at 14 it cannot, the box
+  // being 220 wide with 48 of padding and the arrow inside it. Desktop keeps the shared 15.
+  // tracking-normal: the body sets 0.5px for the whole site and the button inherits it,
+  // where the design system's button token is 0. Over nineteen characters that is nine
+  // pixels of label, which is the difference between the frame's 23px of air before the
+  // arrow and the label running into it.
+  .btn
+    @apply w-full justify-between gap-0 tracking-normal
+    @apply text-[12px] leading-4 px-6 h-16
+    @apply xl:text-[15px] xl:leading-[20px] xl:pl-[27px] xl:pr-[17px] xl:h-20
+
+  // A height and not vertical padding: the arrow is taller than the label's line, so
+  // padding would size the box off the icon and the frame's 80 would come out 88.
+  //
+  // The frame also draws the arrow smaller below desktop — 13x16 against 21x26 — where the
+  // shared icon is one size everywhere. Scoped here rather than changed in the component,
+  // which every button on the site shares.
+  .btn__icon svg
+    @apply w-[13px] h-4 xl:w-[21px] xl:h-[26px]
+
+  // The frame's own width, kept at every desktop size rather than recomputed from columns.
+  &__item
+    @media (min-width: 1280px)
+      @apply shrink-0 grow-0
+      width: 287px

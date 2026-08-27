@@ -176,6 +176,31 @@ function weizenkorn_the_svg_icon( $name ) {
 }
 
 /**
+ * Reads a URL out of an ACF file field, whatever shape it was set up to return.
+ *
+ * A File field can hand back an array, an attachment ID or a plain URL, and a field that
+ * holds a URL may have been typed as Text instead — the Xyloba video fields are one of
+ * each. All four end up here as a URL, so a template never has to know which.
+ *
+ * @since 1.9.0
+ *
+ * @param mixed $value Raw field value.
+ * @return string URL, or an empty string when there is nothing usable.
+ */
+function weizenkorn_get_file_url( $value ) {
+
+	if ( is_array( $value ) ) {
+		return ! empty( $value['url'] ) ? $value['url'] : '';
+	}
+
+	if ( is_numeric( $value ) ) {
+		return (string) wp_get_attachment_url( (int) $value );
+	}
+
+	return is_string( $value ) ? trim( $value ) : '';
+}
+
+/**
  * Reads a cloned "Section Title" group and returns it shaped for the
  * components/section-heading part.
  *

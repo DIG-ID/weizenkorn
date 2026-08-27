@@ -8,12 +8,6 @@
   .section-heading__desc-text
     @apply xl:max-w-none
 
-  // The title slot carries the overline, and .label-overline holds a 30px leading at every
-  // width where the mobile frame sets 15. Scoped rather than changed in the shared class,
-  // which 18 sections use.
-  .section-heading__title
-    @apply leading-[15px] md:leading-[30px]
-
   // 20px between tiles, the grid's own gutter, in both directions.
   //
   // The heights live on the rows rather than on the tiles, because the tall one spans both

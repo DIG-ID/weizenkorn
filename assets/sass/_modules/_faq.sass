@@ -34,12 +34,3 @@
   &__answer
     @apply body-text text-brand-dark m-0
 
-  // The shared scales carry a 30px leading on .label-overline and a 20px one on .body-text
-  // at mobile, where this frame sets 15 and 22. Scoped rather than changed in the classes
-  // themselves, which eighteen sections share.
-  @media (max-width: 767px)
-    .faq__question
-      @apply leading-[15px]
-
-    .faq__answer
-      @apply leading-[22px]

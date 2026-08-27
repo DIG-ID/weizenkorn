@@ -11,6 +11,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.9.1] — 2026-08-27
+
+### Added
+- For Social Offices & Partners page template: hero, an intro, an offer links section, a "Downloads & Unterlagen" document section with an editable empty-state message, a team grid, and a contact form.
+- A placeholder graphic for team member cards with no photo.
+
+### Changed
+- The "Unsere Ausbildung" programme cards' text now reveals on hover, overlapping the photo, instead of always showing.
+
+### Fixed
+- The intro + CTA section's description column was full width at tablet instead of a half-width slice, on both pages that use it.
+
+---
+
+## [1.9.0] — 2026-08-27
+
+### Added
+- Service / Info / Downloads section: a heading and a row of outlined buttons, one per document. Three across at every width from tablet up, stacked at mobile.
+- Fiduciary and Schreinerei page templates.
+- Teaser: a stacked arrangement, with the photograph under the text at tablet and mobile instead of beside it. The Services pages use it; the home page and Our Bakery keep the two side by side.
+- Craft showcase: an optional video in place of the right-hand photograph, set up the way the home page's hero already was — a switch and a file per format. The section's own image becomes the video's poster and its fallback.
+- Process steps: a step opens its sentence on a click or a tap anywhere in the tile, not only on hover. The tablet and mobile frames draw the tile closed, and a hover is unreachable by touch.
+- Buttons take an explicit icon, overriding the one the style and the link would otherwise choose.
+
+### Changed
+- Body text and card titles carry a 22px line at mobile and overlines a 15px one, as the design system sets them. The three sections that were correcting this on their own no longer have to.
+- A button whose link fetches a file gets the download arrow — the one with the line under it — where it used to get the plain arrow pointing down.
+- Sections keep 192px between them at desktop; the home page's Work & Training band was the one exception.
+- Home hero: the image is repeated inside the video element, so a browser that cannot play video draws it instead, with its alt text. A poster attribute carries no accessible name.
+
+### Fixed
+- Process steps: between 1280 and 1535 the caption was already at its desktop type size in a tile a third narrower, so an open sentence covered the whole photograph and the step's title was clipped. The caption keeps the tablet scale until 1536.
+- Process steps: at tablet the wide last step kept growing past its frame as the window widened; its height now stops where the frame does.
+- Process steps: 56px between the rule and the row of tiles at tablet, where the section had 32.
+- Teaser: a top margin, so the section no longer sits flush against a band that has no bottom margin of its own.
+- Contact form: a message column carrying a field above the message now ends level with the column beside it at desktop.
+
+---
+
 ## [1.8.1] — 2026-08-25
 
 ### Added
@@ -22,19 +61,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Supported Apprenticeships page template: hero, an intro, a programme overview, a four-step process section, the quote slider, a contact-person section with a phone/email and the FAQ list.
 - Intro + CTA section: a title with a description and a button beneath it, shared by the Supported Jobs and Supported Apprenticeships intros.
 - Numbered steps section: a row of numbered boxes with a title and text each, shared by both Supported pages' process sections.
-- For Social Offices & Partners page template: hero, an intro, an offer links section, a "Downloads & Unterlagen" document section with an editable empty-state message, a team grid, and a contact form.
-- A placeholder graphic for team member cards with no photo.
 
 ### Changed
 - Overview cards without a link are now drawn as a plain block with no arrow, instead of not being drawn at all.
 - Work & Training's contact section now uses the shared contact-form module directly, instead of a page-specific duplicate.
 - Supported Jobs' intro section now places its button under the description, in the same column, instead of beside the title.
-- The "Unsere Ausbildung" programme cards' text now reveals on hover, overlapping the photo, instead of always showing.
 
 ### Fixed
 - Contact details in the form section sat across the full width at tablet; they now take the right-hand columns, beside the heading, and stay stacked rather than sitting side by side.
 - Opening hours in the location section were a size too large below desktop — now 14px at tablet and mobile.
-- The intro + CTA section's description column was full width at tablet instead of a half-width slice, on both pages that use it.
 
 ---
 
