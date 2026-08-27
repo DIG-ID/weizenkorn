@@ -6,7 +6,10 @@
 // 2×2 at desktop (each card half the row), stacked single column at
 // tablet/mobile — confirmed against the tablet frame, which has no 2-up step.
 .card-program
+  // relative + overflow hidden: the caption is positioned against this box
+  // and grows inside it on hover, same as _modules/_process-steps.sass.
   &__media
+    @apply relative overflow-hidden
     aspect-ratio: 320 / 192
 
     @media (min-width: 768px)
@@ -15,8 +18,36 @@
     @media (min-width: 1280px)
       aspect-ratio: 900 / 369
 
+  // Over the photograph's bottom edge rather than under it, so the tile's
+  // height never changes when the text appears.
   &__caption
+    @apply absolute inset-x-0 bottom-0 z-10
     @apply px-5 py-4 md:px-6 md:py-5 xl:px-8 xl:py-6
+
+  // Animating to a height the content decides: a grid track goes from 0fr to
+  // 1fr, which transitions where height: auto cannot. The inner element is
+  // what actually gets clipped, so it needs the overflow rather than this
+  // one — same mechanic as _modules/_process-steps.sass.
+  &__text
+    @apply grid mt-0
+    grid-template-rows: 0fr
+    transition: grid-template-rows 300ms ease, margin-top 300ms ease
+
+  &__text-inner
+    @apply overflow-hidden
+
+  // A hover state is unreachable by touch, so the text is only hidden
+  // behind one where there is a pointer to hover with. Everywhere else the
+  // caption simply shows it.
+  @media (hover: hover)
+    &__media:hover .card-program__text
+      @apply mt-2
+      grid-template-rows: 1fr
+
+  @media (hover: none)
+    .card-program__text
+      @apply mt-2
+      grid-template-rows: 1fr
 
 // -- Contact person ("Bereit für Weizenkorn?") ---------------------------------
 // Stacked (photo above the name/phone/email) at mobile, side by side from

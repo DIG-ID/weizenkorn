@@ -8,7 +8,11 @@
  * but this shape keeps the left column empty and stacks the description and button
  * together on the right instead — confirmed against Figma for both pages that use it
  * (Supported Jobs' "Arbeiten mit IV-Rente", Supported Apprenticeships' "Auf der Suche
- * nach der passenden Ausbildungsstelle?").
+ * nach der passenden Ausbildungsstelle?"), and again for For Social Offices & Partners'
+ * text-only "Was uns wichtig ist" (no button — the column works with either).
+ *
+ * The column is a half-width slice at tablet too (md:col-start-4 md:col-span-3, not the
+ * full 6), confirmed against all three pages' tablet frames.
  *
  * ACF fields (flat, prefixed):
  *   {prefix}intro_title  (text)
@@ -47,7 +51,7 @@ $ic_button = get_field( $ic_prefix . 'intro_button', $ic_ctx );
 
 		<?php if ( $ic_text || $ic_button ) : ?>
 			<div class="theme-grid">
-				<div class="intro-cta__col col-span-2 md:col-span-6 xl:col-start-7 xl:col-span-5 flex flex-col gap-8">
+				<div class="intro-cta__col col-span-2 md:col-start-4 md:col-span-3 xl:col-start-7 xl:col-span-5 flex flex-col items-start gap-8">
 					<?php if ( $ic_text ) : ?>
 						<div class="body-text"><?php echo wp_kses_post( $ic_text ); ?></div>
 					<?php endif; ?>

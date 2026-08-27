@@ -1,0 +1,34 @@
+// =============================================================================
+// For Social Offices & Partners page — template-parts/pages/for-social-offices-and-partners/
+// =============================================================================
+
+// -- Download cards ("Downloads & Unterlagen") ---------------------------------
+// Same fixed-height + justify-between shape as _modules/_numbered-steps.sass
+// (title row pinned to the top, text to the bottom), but the whole card is a
+// download link rather than plain text, so it needs its own no-underline
+// reset and a block display (the default <a> is inline).
+.card-download
+  @apply flex flex-col justify-between h-[390px] xl:h-[445px] p-6 md:p-8 xl:p-10
+  @apply text-brand-dark no-underline
+
+// -- Team grid ("Wir sind für Sie da") -----------------------------------------
+// Three per row at desktop, two at tablet, one at mobile. The caption sits
+// below the photo (not overlapping it, unlike the diversity-cards slider) —
+// confirmed against Figma, where photo height + caption height sum to the
+// card's own total at every breakpoint.
+.card-team
+  &__media
+    @apply bg-[#E9E8E6]
+    aspect-ratio: 320 / 250
+
+    @media (min-width: 768px)
+      aspect-ratio: 338 / 273
+
+    @media (min-width: 1280px)
+      aspect-ratio: 489 / 358
+
+  &__placeholder svg
+    @apply w-[70px] h-auto md:w-20 xl:w-[95px]
+
+  &__caption
+    @apply flex flex-col px-4 py-3 md:px-[17px] xl:px-[17px]

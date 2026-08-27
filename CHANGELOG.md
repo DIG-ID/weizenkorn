@@ -22,15 +22,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Supported Apprenticeships page template: hero, an intro, a programme overview, a four-step process section, the quote slider, a contact-person section with a phone/email and the FAQ list.
 - Intro + CTA section: a title with a description and a button beneath it, shared by the Supported Jobs and Supported Apprenticeships intros.
 - Numbered steps section: a row of numbered boxes with a title and text each, shared by both Supported pages' process sections.
+- For Social Offices & Partners page template: hero, an intro, an offer links section, a "Downloads & Unterlagen" document section with an editable empty-state message, a team grid, and a contact form.
+- A placeholder graphic for team member cards with no photo.
 
 ### Changed
 - Overview cards without a link are now drawn as a plain block with no arrow, instead of not being drawn at all.
 - Work & Training's contact section now uses the shared contact-form module directly, instead of a page-specific duplicate.
 - Supported Jobs' intro section now places its button under the description, in the same column, instead of beside the title.
+- The "Unsere Ausbildung" programme cards' text now reveals on hover, overlapping the photo, instead of always showing.
 
 ### Fixed
 - Contact details in the form section sat across the full width at tablet; they now take the right-hand columns, beside the heading, and stay stacked rather than sitting side by side.
 - Opening hours in the location section were a size too large below desktop — now 14px at tablet and mobile.
+- The intro + CTA section's description column was full width at tablet instead of a half-width slice, on both pages that use it.
 
 ---
 

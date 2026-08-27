@@ -3,8 +3,14 @@
  * Supported Apprenticeships — "Unsere Ausbildung" section (Figma desktop
  * node 4018:7957). A 2×2 bento of programme cards at desktop, stacked
  * single column at tablet/mobile (confirmed against the tablet frame) —
- * each a photo with a cream caption band directly below it: a title, and
- * a paragraph on the one card that has one.
+ * each a photo with a cream caption band overlapping its bottom edge: a
+ * title, and a paragraph that reveals on hover rather than always
+ * showing — same mechanic as template-parts/modules/process-steps.php,
+ * including the caption's own position (absolute, over the photo, so the
+ * card's height never changes when the text appears): a grid track
+ * animates from 0fr to 1fr, which transitions where height: auto cannot,
+ * gated behind the hover media feature since that state is unreachable by
+ * touch — there the text simply shows.
  *
  * Figma's own bento is asymmetric — a taller caption band and a slightly
  * shorter photo on the one card with both title and text — but a plain
@@ -54,17 +60,19 @@ if ( ! $app_title || ! have_rows( 'apprenticeships_programs_items' ) ) {
 							)
 						);
 						?>
+
+						<?php if ( get_sub_field( 'title' ) ) : ?>
+							<div class="card-program__caption bg-brand-cream">
+								<h3 class="title-card"><?php echo esc_html( get_sub_field( 'title' ) ); ?></h3>
+
+								<?php if ( get_sub_field( 'text' ) ) : ?>
+									<div class="card-program__text">
+										<div class="card-program__text-inner body-text"><?php echo wp_kses_post( get_sub_field( 'text' ) ); ?></div>
+									</div>
+								<?php endif; ?>
+							</div>
+						<?php endif; ?>
 					</div>
-
-					<?php if ( get_sub_field( 'title' ) ) : ?>
-						<div class="card-program__caption bg-brand-cream">
-							<h3 class="title-card"><?php echo esc_html( get_sub_field( 'title' ) ); ?></h3>
-
-							<?php if ( get_sub_field( 'text' ) ) : ?>
-								<div class="body-text mt-2"><?php echo wp_kses_post( get_sub_field( 'text' ) ); ?></div>
-							<?php endif; ?>
-						</div>
-					<?php endif; ?>
 				</div>
 				<?php
 			endwhile;
