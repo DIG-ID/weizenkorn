@@ -15,3 +15,9 @@
     .card-category:nth-last-child(2):nth-child(4n+1),
     .card-category:nth-last-child(2):nth-child(4n+1) ~ .card-category
       grid-column: span 6
+
+    // The job-categories grid only. The training grid (three fixed items, always one
+    // full row) has no such floor: its row-stretch alone is enough, since every card
+    // there sits in the same one row.
+    .card-category
+      min-height: 350px
