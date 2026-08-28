@@ -49,16 +49,6 @@
       @apply mt-2
       grid-template-rows: 1fr
 
-// -- Contact person ("Bereit für Weizenkorn?") ---------------------------------
-// Stacked (photo above the name/phone/email) at mobile, side by side from
-// tablet up — the Figma frames agree on that break, unlike most sections here
-// which flip at xl.
-.section-contact-person
-  &__media
-    aspect-ratio: 320 / 199
-
-    @media (min-width: 768px)
-      aspect-ratio: 340 / 219
-
-    @media (min-width: 1280px)
-      aspect-ratio: 594 / 343
+// Contact person ("Bereit für Weizenkorn?") is now the shared
+// template-parts/modules/contact-person.php module — its own styles live
+// in _modules/_contact-person.sass, nothing page-specific needed here.

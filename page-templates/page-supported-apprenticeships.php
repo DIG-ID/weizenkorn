@@ -7,8 +7,8 @@
  * shared intro-cta module ("Auf der Suche nach der passenden
  * Ausbildungsstelle?"), this page's own "Unsere Ausbildung" programme
  * bento, the shared numbered-steps module ("Der Weg zu einem Platz bei
- * Weizenkorn in 4 Schritten"), the shared quote-slider, a closing "Bereit
- * für Weizenkorn?" contact-person + form section, and the shared faq
+ * Weizenkorn in 4 Schritten"), the shared quote-slider, the shared
+ * contact-person module ("Bereit für Weizenkorn?"), and the shared faq
  * module. The Figma frame's last section ("Das könnte Sie auch
  * interessieren") is intentionally not built — the page ends at the FAQ,
  * per the brief.
@@ -37,7 +37,7 @@ if ( have_posts() ) :
 		get_template_part( 'template-parts/pages/supported-apprenticeships/programs' );
 		get_template_part( 'template-parts/modules/numbered-steps', null, array( 'prefix' => 'apprenticeships_process_' ) );
 		get_template_part( 'template-parts/modules/quote-slider' );
-		get_template_part( 'template-parts/pages/supported-apprenticeships/contact-form' );
+		get_template_part( 'template-parts/modules/contact-person', null, array( 'prefix' => 'apprenticeships_' ) );
 		get_template_part( 'template-parts/modules/faq', null, array( 'prefix' => 'apprenticeships_' ) );
 
 		do_action( 'after_main_content' );

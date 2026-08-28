@@ -1,0 +1,14 @@
+// Contact person — template-parts/modules/contact-person.php
+//
+// Stacked (photo above the name/phone/email) at mobile, side by side from
+// tablet up — the Figma frames agree on that break, unlike most sections here
+// which flip at xl.
+.contact-person
+  &__media
+    aspect-ratio: 320 / 199
+
+    @media (min-width: 768px)
+      aspect-ratio: 340 / 219
+
+    @media (min-width: 1280px)
+      aspect-ratio: 594 / 343

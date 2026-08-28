@@ -1,0 +1,17 @@
+// Open Positions archive — template-parts/archives/offene-stellen/category-grid.php
+
+// A trailing row of exactly two cards (the job-categories grid's own case, not the
+// training one) takes half the row each instead of a quarter — the same
+// :nth-last-child trick offer-grid.php uses for its own odd-card-out
+// (_modules/_offer-grid.sass), adapted for a remainder of two instead of one.
+//
+// nth-last-child(2):nth-child(4n+1) matches an item that both starts a fresh row of
+// four (position ≡ 1 mod 4) and is second-to-last overall — which can only be true
+// when exactly two cards are left to fill that row. The `~` picks up the one card
+// after it, the actual last child. Adding or removing a category rearranges the grid
+// on its own, same as offer-grid's version.
+.category-grid--cols-4
+  @media (min-width: 1280px)
+    .card-category:nth-last-child(2):nth-child(4n+1),
+    .card-category:nth-last-child(2):nth-child(4n+1) ~ .card-category
+      grid-column: span 6

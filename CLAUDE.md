@@ -90,7 +90,7 @@ Antes de entregar código PHP, verificar com `npm run php:lint`. Usar `npm run p
 | Slug    | Descrição                                                                          |
 |---------|-------------------------------------------------------------------------------------|
 | `news`  | Notícias — ainda por criar. Pode reaproveitar o CPT `blog` do starter (renomear labels/slug) ou criar de novo; afecta slugs/traduções WPML (ver `figma-architecture-analysis.txt`, secção 9.3). |
-| `job`   | Vagas / Open Positions — ainda por criar. Sem archive próprio; listagem vive na página "Open Positions" (ver `figma-architecture-analysis.txt`, secção 6). |
+| `offene-stellen` | Vagas / Open Positions ("Aktuell offene Stellen"). Criado via ACF (post type key `offene-stellen`, público, não hierárquico). **Tem archive próprio** (ao contrário do previsto inicialmente) — permalink e archive slug ambos `ausbildung-arbeiten/offene-stellen-mit-iv`, simulando ser filho da página `ausbildung-arbeiten`. Template do archive: `archive-offene-stellen.php` (raiz do tema, secções em `template-parts/archives/offene-stellen/`). Sem contexto de post na archive, por isso os campos da página (hero, offer-links, categorias, contacto) vivem nas Theme Options com o prefixo `offene_stellen_archive_` (mesmo padrão do `products_archive_`). Template do single post ainda por construir — a secção "Aktuell offene Stellen" do archive depende dele e foi propositadamente deixada de fora por agora. |
 
 > **Nota:** tabela ainda por preencher com os slugs finais e o CPT `event` do starter (só manter se o projecto vier a precisar de eventos distintos de `news`). Actualizar esta secção à medida que os CPTs forem criados.
 
@@ -111,7 +111,7 @@ Antes de entregar código PHP, verificar com `npm run php:lint`. Usar `npm run p
 | Contexto     | Schema                  | Campos principais                              |
 |--------------|-------------------------|------------------------------------------------|
 | CPT `news`   | `schema.org/Article`    | Coberto pelo Yoast por omissão                 |
-| CPT `job`    | `schema.org/JobPosting` | A definir quando o CPT for criado              |
+| CPT `offene-stellen` | `schema.org/JobPosting` | A definir quando o template do single post for criado |
 
 > Actualizar esta tabela quando os CPTs/templates reais forem criados (ver secção "Custom Post Types" acima).
 
