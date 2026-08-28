@@ -60,7 +60,7 @@ $card_url     = ! empty( $args['url'] ) ? $args['url'] : '';
 		</div>
 
 		<?php if ( ! empty( $args['text'] ) ) : ?>
-			<div class="body-text xl:max-w-[500px]"><?php echo wp_kses_post( $args['text'] ); ?></div>
+			<div class="body-text xl:max-w-[50%]"><?php echo wp_kses_post( $args['text'] ); ?></div>
 		<?php endif; ?>
 	</div>
 

@@ -12,9 +12,15 @@
  * ACF fields (flat, prefixed):
  *   hero_section_image           (image → ID) omit to hide the image
  *   hero_section_title           (text)       falls back to the post title
+ *   hero_section_subtitle        (text)       optional — the smaller title under
+ *                                             the main one, same column
  *   hero_section_body            (textarea / wysiwyg)
  *   hero_section_seperator_logo  (image → ID) omit to hide the separator (field name
  *                                             spelled as in ACF)
+ *
+ * Heading tag, for SEO: the subtitle is the intended <h1> when it exists — the title
+ * above it becomes a <p> that keeps its own display styling regardless. Without a
+ * subtitle, the title alone is the <h1>. Either way there is exactly one <h1>.
  *
  * Usage:
  *   get_template_part( 'template-parts/modules/hero-section' );
@@ -39,8 +45,18 @@
  * @since 1.4.0
  */
 
-$hero_ctx    = ( ! empty( $args['post_id'] ) ) ? $args['post_id'] : get_the_ID();
-$hero_prefix = ! empty( $args['prefix'] ) ? $args['prefix'] : '';
+$hero_ctx      = ( ! empty( $args['post_id'] ) ) ? $args['post_id'] : get_the_ID();
+$hero_prefix   = ! empty( $args['prefix'] ) ? $args['prefix'] : '';
+$hero_subtitle = get_field( $hero_prefix . 'hero_section_subtitle', $hero_ctx );
+
+// Whichever of the two titles is last needs the mobile-only gap before the body column
+// stacks under it — the subtitle when there is one, the title itself otherwise.
+$hero_title_margin = $hero_subtitle ? 'mb-4 xl:mb-6' : 'mb-12 md:mb-0';
+
+// The subtitle is the <h1> when it exists (SEO: it's the more specific, page-relevant
+// text) and the title becomes a <p> — visually unchanged either way, since both keep
+// their own class regardless of tag. Without a subtitle, the title is the <h1>.
+$hero_title_tag = $hero_subtitle ? 'p' : 'h1';
 ?>
 <header class="hero-section mb-24 md:mb-32 xl:mb-48">
 	<div class="theme-container">
@@ -63,14 +79,25 @@ $hero_prefix = ! empty( $args['prefix'] ) ? $args['prefix'] : '';
 		<?php endif; ?>
 
 		<div class="hero-section__box border-2 border-brand-dark p-8 md:px-11 md:py-12 xl:px-0 xl:py-14 break-words">
+			<?php
+			/*
+			 * Explicit row-start on title/subtitle/body at md and xl: without it, the
+			 * subtitle (same columns as the title, placed second in the grid) advances
+			 * the browser's row-auto-placement cursor to row 2 before the body is laid
+			 * out, and that cursor never moves back up — so the body would land beside
+			 * the subtitle in row 2 instead of the title in row 1. Mobile needs none of
+			 * this: every item is col-span-2 there, so each already takes its own row in
+			 * DOM order.
+			 */
+			?>
 			<div class="theme-grid">
 
 				<?php // max-w matches the 698px title box in Figma (its column is ~747px), so the line breaks stay as designed. ?>
-				<h1 class="hero-section__title title-hero text-brand-red col-span-2 md:col-span-3 xl:col-start-2 xl:col-span-5 xl:max-w-[698px] mb-12 md:mb-0">
+				<<?php echo esc_html( $hero_title_tag ); ?> class="hero-section__title title-hero text-brand-red col-span-2 md:col-span-3 md:row-start-1 xl:col-start-2 xl:col-span-5 xl:row-start-1 <?php echo esc_attr( $hero_title_margin ); ?>">
 					<?php
 					// Falls back to the post title — or to the archive title, since
 					// get_the_title() there would return the loop's first post — so
-					// the page always has its <h1>.
+					// the page always has a title here even with nothing in the field.
 					echo wp_kses(
 						get_field( $hero_prefix . 'hero_section_title', $hero_ctx )
 							? get_field( $hero_prefix . 'hero_section_title', $hero_ctx )
@@ -78,10 +105,16 @@ $hero_prefix = ! empty( $args['prefix'] ) ? $args['prefix'] : '';
 						array( 'br' => array() )
 					);
 					?>
-				</h1>
+				</<?php echo esc_html( $hero_title_tag ); ?>>
+
+				<?php if ( $hero_subtitle ) : ?>
+					<h1 class="hero-section__subtitle title-hero-subtitle text-brand-red col-span-2 md:col-span-3 md:row-start-2 xl:col-start-2 xl:col-span-5 xl:row-start-2 mb-12 md:mb-0">
+						<?php echo esc_html( $hero_subtitle ); ?>
+					</h1>
+				<?php endif; ?>
 
 				<?php if ( get_field( $hero_prefix . 'hero_section_body', $hero_ctx ) ) : ?>
-					<div class="hero-section__body body-text text-brand-dark col-span-2 md:col-start-4 md:col-span-3 xl:col-start-7 xl:col-span-5">
+					<div class="hero-section__body body-text text-brand-dark col-span-2 md:col-start-4 md:col-span-3 md:row-start-1 xl:col-start-7 xl:col-span-5 xl:row-start-1">
 						<?php echo wp_kses_post( get_field( $hero_prefix . 'hero_section_body', $hero_ctx ) ); ?>
 					</div>
 				<?php endif; ?>
