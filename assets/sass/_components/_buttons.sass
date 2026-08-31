@@ -67,3 +67,68 @@
 
   &__icon
     @apply flex items-center justify-center shrink-0
+
+// -- Gutenberg parity ------------------------------------------------------------
+// The same 3 non-icon-only styles, registered as block style variations for the core
+// Button block (see weizenkorn_register_block_styles() in inc/theme-setup.php) so an
+// editor — Bruno, on the News posts — can pick "Weizenkorn Primary/Secondary/Black"
+// from the block's own Style panel, no code needed. This file is also the editor's
+// preview stylesheet (add_editor_style()), so what they see there is what ships.
+//
+// Colours and hover states match .btn-primary/-secondary/-black exactly. The arrow is
+// a background-image rather than button.php's inline <svg>: a block style has no
+// markup of its own to add a span into, and currentColor doesn't reach into a CSS
+// background image — so the white/red/dark arrows are separate hard-coded SVGs,
+// swapped on hover. Flat corners (rounded-none) override the block editor's own
+// default border-radius on buttons, which this theme's design never uses.
+.wp-block-button
+  &.is-style-weizenkorn-primary,
+  &.is-style-weizenkorn-secondary,
+  &.is-style-weizenkorn-black
+    .wp-block-button__link
+      @apply font-primary font-black text-[14px] xl:text-[15px] uppercase whitespace-nowrap
+      @apply inline-flex items-center gap-16 px-3 py-3.5 rounded-none no-underline
+      @apply transition-all duration-300 ease-in-out
+
+      &::after
+        content: ''
+        @apply w-6 h-[19px] shrink-0 bg-no-repeat bg-center bg-contain
+
+  &.is-style-weizenkorn-primary .wp-block-button__link
+    @apply bg-brand-red text-white border border-brand-red
+
+    &::after
+      background-image: url("data:image/svg+xml,%3Csvg width='24' height='19' viewBox='0 0 23.7301 18.632' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 9.31602H22M10 17.816L22 9.31602L10 0.816024' stroke='white' stroke-width='2'/%3E%3C/svg%3E")
+
+    &:hover,
+    &:focus
+      @apply bg-transparent text-brand-red underline
+
+      &::after
+        background-image: url("data:image/svg+xml,%3Csvg width='24' height='19' viewBox='0 0 23.7301 18.632' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 9.31602H22M10 17.816L22 9.31602L10 0.816024' stroke='%23E30613' stroke-width='2'/%3E%3C/svg%3E")
+
+  &.is-style-weizenkorn-secondary .wp-block-button__link
+    @apply bg-transparent text-brand-red border border-brand-red
+
+    &::after
+      background-image: url("data:image/svg+xml,%3Csvg width='24' height='19' viewBox='0 0 23.7301 18.632' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 9.31602H22M10 17.816L22 9.31602L10 0.816024' stroke='%23E30613' stroke-width='2'/%3E%3C/svg%3E")
+
+    &:hover,
+    &:focus
+      @apply bg-brand-red text-white underline
+
+      &::after
+        background-image: url("data:image/svg+xml,%3Csvg width='24' height='19' viewBox='0 0 23.7301 18.632' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 9.31602H22M10 17.816L22 9.31602L10 0.816024' stroke='white' stroke-width='2'/%3E%3C/svg%3E")
+
+  &.is-style-weizenkorn-black .wp-block-button__link
+    @apply bg-transparent text-brand-dark border border-brand-dark
+
+    &::after
+      background-image: url("data:image/svg+xml,%3Csvg width='24' height='19' viewBox='0 0 23.7301 18.632' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 9.31602H22M10 17.816L22 9.31602L10 0.816024' stroke='%23252525' stroke-width='2'/%3E%3C/svg%3E")
+
+    &:hover,
+    &:focus
+      @apply bg-brand-red text-white border-brand-red underline
+
+      &::after
+        background-image: url("data:image/svg+xml,%3Csvg width='24' height='19' viewBox='0 0 23.7301 18.632' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 9.31602H22M10 17.816L22 9.31602L10 0.816024' stroke='white' stroke-width='2'/%3E%3C/svg%3E")

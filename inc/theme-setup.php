@@ -30,9 +30,49 @@ function weizenkorn_theme_setup() {
 		'html5',
 		array( 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption', 'style', 'script' )
 	);
+
+	// So the block editor's own iframe renders posts/pages in the theme's fonts and
+	// colours — including the button block styles registered below — rather than core's
+	// defaults. dist/css/main.css is the same stylesheet the front-end loads, so the
+	// editor preview and the published page are never out of sync with each other.
+	add_theme_support( 'editor-styles' );
+	add_editor_style( 'dist/css/main.css' );
 }
 
 add_action( 'after_setup_theme', 'weizenkorn_theme_setup' );
+
+/**
+ * Registers the theme's button styles as block style variations for the core Button
+ * block, so an editor can pick "Weizenkorn Primary/Secondary/Black" from the block's
+ * own Style panel instead of needing custom HTML or a shortcode. Colours/hover states
+ * are defined in assets/sass/_components/_buttons.sass, alongside the .btn-* classes
+ * they mirror.
+ *
+ * 'Arrow Down' and the icon-only 'Arrow' styles are left out: those are
+ * template-parts/components/button.php's own, always rendered from a template passing
+ * $args rather than typed into a post's content, so there's no block-style need for
+ * them here.
+ */
+function weizenkorn_register_block_styles() {
+
+	$styles = array(
+		'weizenkorn-primary'   => __( 'Weizenkorn Primary', 'weizenkorn' ),
+		'weizenkorn-secondary' => __( 'Weizenkorn Secondary', 'weizenkorn' ),
+		'weizenkorn-black'     => __( 'Weizenkorn Black', 'weizenkorn' ),
+	);
+
+	foreach ( $styles as $name => $label ) {
+		register_block_style(
+			'core/button',
+			array(
+				'name'  => $name,
+				'label' => $label,
+			)
+		);
+	}
+}
+
+add_action( 'init', 'weizenkorn_register_block_styles' );
 
 /**
  * Registers widgetized areas.

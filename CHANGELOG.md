@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Offer links and Contact person sections, shared by the pages and the new archive that repeat their exact shape.
 - Login screen: the WPML language switcher.
 - Dates now read in the site's language — German by default, ready for English and French once those languages are added.
+- Three of the theme's button styles (Primary, Secondary, Black) as block style variations for the core Button block, so any post or page can use them from the block editor's own Style panel. The block editor now previews pages in the theme's own styles, so what an editor sees while writing matches the published page.
 
 ### Changed
 - The "Unsere Ausbildung" programme cards' text now reveals on hover, overlapping the photo, instead of always showing.
