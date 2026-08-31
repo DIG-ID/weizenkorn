@@ -1,0 +1,78 @@
+// Open Positions single post (single-offene-stellen.php)
+
+// -- Related jobs slider ("Weitere Stellenausschreibungen") -------------------
+// Same arrows-in-the-outer-grid-columns pattern as _modules/_stories-references.sass:
+// the arrows and the viewport are siblings in one .theme-grid, each pinned to row 1,
+// rather than an overlay with a grid of its own.
+.related-jobs
+  &__row
+    @apply items-center gap-y-9 md:gap-y-14
+
+  &__viewport
+    grid-column: 1 / span 2
+    grid-row: 1
+
+    @media (min-width: 768px)
+      grid-column: 2 / span 4
+
+    @media (min-width: 1280px)
+      grid-column: 3 / span 8
+
+  &__nav
+    @apply flex items-center justify-center text-brand-red transition-opacity duration-300
+    grid-row: 1
+
+    &:hover,
+    &:focus-visible
+      @apply opacity-70 outline-none
+
+    &.swiper-button-disabled
+      @apply opacity-30 pointer-events-none
+
+    svg
+      @apply w-[15px] h-3 md:w-[21px] md:h-[17px]
+
+  &__nav--prev
+    grid-column: 1
+    @apply -ml-[23px] md:ml-0
+
+    @media (min-width: 1280px)
+      grid-column: 2
+
+    svg
+      @apply -scale-x-100
+
+  &__nav--next
+    grid-column: 2
+    @apply -mr-[23px] md:mr-0
+
+    @media (min-width: 768px)
+      grid-column: 6
+
+    @media (min-width: 1280px)
+      grid-column: 11
+
+  &__pagination
+    @apply static flex items-center justify-center gap-[26px] md:gap-[30px]
+
+    --swiper-pagination-bullet-horizontal-gap: 0px
+    grid-row: 2
+    grid-column: 1 / span 2
+
+    @media (min-width: 768px)
+      grid-column: 1 / span 6
+
+    @media (min-width: 1280px)
+      grid-column: 1 / span 12
+
+    .swiper-pagination-bullet
+      @apply w-[15px] h-[15px] m-0 rounded-full border border-brand-red bg-transparent opacity-100 transition-colors duration-300
+
+    .swiper-pagination-bullet-active
+      @apply bg-brand-red
+
+  // Three cards fit in one view at xl, so the controls would be dead there.
+  &--fits-xl &__nav,
+  &--fits-xl &__pagination
+    @media (min-width: 1280px)
+      @apply hidden

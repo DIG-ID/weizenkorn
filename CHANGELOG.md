@@ -17,18 +17,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - For Social Offices & Partners page template: hero, an intro, an offer links section, a "Downloads & Unterlagen" document section with an editable empty-state message, a team grid, and a contact form.
 - A placeholder graphic for team member cards with no photo.
 - Open Positions archive template: hero, an offer links section, two category grids (training and job categories, each a title with a bullet-list card per category), and a contact form. The job listing cards and the closing preview section are not built yet — they need the single post template first.
+- Open Positions single post template: a hero image, a link back to the archive, the publish date, title, meta badges (employment, start date, location), a WYSIWYG body, an open-ended set of detail boxes ("Ihre Aufgaben", "Voraussetzungen", or more), a contact section, and a "Weitere Stellenausschreibungen" slider of other postings.
+- A job card, shared by the single post's related-jobs slider and, later, the archive's own job listing.
 - Hero section: an optional subtitle under the main title. When filled in, the subtitle becomes the page's `<h1>` for SEO and the title becomes a `<p>`, keeping exactly one `<h1>` either way.
 - Offer links and Contact person sections, shared by the pages and the new archive that repeat their exact shape.
 - Login screen: the WPML language switcher.
+- Dates now read in the site's language — German by default, ready for English and French once those languages are added.
 
 ### Changed
 - The "Unsere Ausbildung" programme cards' text now reveals on hover, overlapping the photo, instead of always showing.
-- Hero title size reduced from 78px to 70px at desktop.
+- Hero title size reduced from 78px to 70px at desktop; the main display title's largest size reduced from 112px to 96px.
 - Overview card text now wraps at 50% of its column, instead of a fixed 500px.
+- The job-categories grid's cards now hold a minimum height at desktop, instead of sizing purely to their own text.
 
 ### Fixed
 - The intro + CTA section's description column was full width at tablet instead of a half-width slice, on both pages that use it.
-- The intro + CTA and offer links sections' buttons stretched to their column's full width instead of sizing to their own label.
+- The intro + CTA and offer links sections' buttons stretched to their column's full width instead of sizing to their own label — the same fix applied to the Open Positions single post's two buttons.
 - Category grid cards no longer sit at uneven heights within the same row.
 - Login screen: with the WPML language switcher enabled, it floated beside the login box instead of sitting centred underneath it.
 

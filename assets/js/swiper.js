@@ -224,3 +224,35 @@ export function initDiversityCardsSlider() {
     });
   });
 }
+
+/**
+ * Open Positions single post — related jobs slider ("Weitere
+ * Stellenausschreibungen"): three job cards per view at desktop, one below
+ * it. Same configuration as initStoriesSlider() — the arrows and bullets
+ * sit outside .swiper, in the section's own grid row, so both are looked
+ * up from the section root.
+ */
+export function initRelatedJobsSlider() {
+  document.querySelectorAll('.js-related-jobs-slider').forEach((el) => {
+    const root = el.closest('.related-jobs');
+
+    new Swiper(el, {
+      modules: [Navigation, Pagination, A11y],
+      spaceBetween: 20,
+      slidesPerView: 1,
+      breakpoints: {
+        1280: { slidesPerView: 3 },
+      },
+      observer: true,
+      observeParents: true,
+      pagination: {
+        el: root ? root.querySelector('.js-related-jobs-pagination') : null,
+        clickable: true,
+      },
+      navigation: {
+        prevEl: root ? root.querySelector('.js-related-jobs-prev') : null,
+        nextEl: root ? root.querySelector('.js-related-jobs-next') : null,
+      },
+    });
+  });
+}

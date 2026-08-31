@@ -115,6 +115,22 @@
     &:focus-visible .card__reveal
       grid-template-rows: 1fr
 
+// -- Job card: a red category banner over a bordered white box, title + excerpt below
+//    it. template-parts/components/card-job.php — the Open Positions single's
+//    "Weitere Stellenausschreibungen" slider, and later the archive's own job grid. ---
+.card-job
+  @apply border border-brand-red bg-white no-underline h-full
+
+  &__category
+    @apply font-primary font-bold uppercase tracking-[0.5px] text-[14px] xl:text-[15px]
+    @apply px-5 py-4
+
+  &__body
+    @apply px-5 py-4
+
+  &__title
+    @apply m-0
+
 // -- Gastronomy: logo + arrow head over a description; red outline that blends into a
 //    cream fill on hover. -----------------------------------------------------------
 .card-venue

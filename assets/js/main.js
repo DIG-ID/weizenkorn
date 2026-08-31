@@ -1,7 +1,7 @@
 import './gsap.js';
 
 // Optional libraries — uncomment as needed per project.
-import { initGastronomySlider, initQuoteSlider, initStoriesSlider, initServicesSlider, initEquipmentSlider, initDiversitySlider, initDiversityCardsSlider } from './swiper.js';
+import { initGastronomySlider, initQuoteSlider, initStoriesSlider, initServicesSlider, initEquipmentSlider, initDiversitySlider, initDiversityCardsSlider, initRelatedJobsSlider } from './swiper.js';
 // import './fancybox.js';
 
 import { debounce, isTouchDevice } from './utils/helpers.js';
@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initEquipmentSlider();
   initDiversitySlider();
   initDiversityCardsSlider();
+  initRelatedJobsSlider();
   initStickyCta();
   initHeroFit();
   initProcessSteps();

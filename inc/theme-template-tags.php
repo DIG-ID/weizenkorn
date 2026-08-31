@@ -176,6 +176,34 @@ function weizenkorn_the_svg_icon( $name ) {
 }
 
 /**
+ * Returns the date() format string for the current WPML language.
+ *
+ * Only the day/month/year ORDER and punctuation are decided here — the month NAME itself
+ * is translated automatically by date_i18n() (what get_the_date() calls under the hood)
+ * from WordPress core's own locale files, once WPML has switched the site's locale for
+ * that language. So a German date reads "27. August 2026", and once English/French are
+ * added they read "August 27, 2026" / "27 août 2026" with no further translation work.
+ *
+ * Defaults to German (the site's only language today, and Swiss German convention) when
+ * WPML is inactive or the current language isn't one of the formats listed here.
+ *
+ * @since 1.10.0
+ *
+ * @return string A date() format string.
+ */
+function weizenkorn_get_date_format() {
+	$formats = array(
+		'de' => 'j. F Y',
+		'en' => 'F j, Y',
+		'fr' => 'j F Y',
+	);
+
+	$language = apply_filters( 'wpml_current_language', null );
+
+	return $formats[ $language ] ?? $formats['de'];
+}
+
+/**
  * Reads a URL out of an ACF file field, whatever shape it was set up to return.
  *
  * A File field can hand back an array, an attachment ID or a plain URL, and a field that
