@@ -151,12 +151,15 @@ add_action( 'socials', 'weizenkorn_socials' );
  * @since 1.1.0
  *
  * @param string $name Icon name: 'arrow-right', 'arrow-down', 'arrow-download', 'phone',
- *                     'mail' or 'avatar-placeholder'.
+ *                     'mail', 'filter' or 'avatar-placeholder'.
  */
 function weizenkorn_the_svg_icon( $name ) {
 
 	$icons = array(
 		'arrow-right'        => '<svg width="24" height="19" viewBox="0 0 23.7301 18.632" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0 9.31602H22M10 17.816L22 9.31602L10 0.816024" stroke="currentColor" stroke-width="2" /></svg>',
+		// The Open Positions archive's filter trigger (Figma node 4129:5883) — three
+		// horizontal sliders with a handle at a different point on each line.
+		'filter'             => '<svg width="24" height="18" viewBox="0 0 24 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><line x1="0" y1="2" x2="24" y2="2" stroke="currentColor" stroke-width="2" /><circle cx="15" cy="2" r="2.5" fill="currentColor" /><line x1="0" y1="9" x2="24" y2="9" stroke="currentColor" stroke-width="2" /><circle cx="7" cy="9" r="2.5" fill="currentColor" /><line x1="0" y1="16" x2="24" y2="16" stroke="currentColor" stroke-width="2" /><circle cx="18" cy="16" r="2.5" fill="currentColor" /></svg>',
 		'arrow-down'         => '<svg width="19" height="24" viewBox="0 0 18.632 23.7301" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.31602 4.33488e-08L9.31602 22M0.816024 10L9.31602 22L17.816 10" stroke="currentColor" stroke-width="2" /></svg>',
 		'arrow-download'     => '<svg width="21" height="26" viewBox="0 0 21 25.5" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M10.5 0V20.5M2 8.5L10.5 20.5L19 8.5M0 24.5H21" stroke="currentColor" stroke-width="2" /></svg>',
 		'phone'              => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>',
@@ -201,6 +204,82 @@ function weizenkorn_get_date_format() {
 	$language = apply_filters( 'wpml_current_language', null );
 
 	return $formats[ $language ] ?? $formats['de'];
+}
+
+/**
+ * Joins a post's terms in a given taxonomy into a display string.
+ *
+ * Reads straight off get_the_terms() — the core taxonomy relationship —
+ * rather than through the ACF 'taxonomy' fields on offene_stellen_anstellungsart
+ * / offene_stellen_standort (acf-exports/acf-offene-stellen-single-fields.json).
+ * get_field() only finds a field by matching its configured *name* exactly;
+ * a field renamed or left as-is while hand-edited from text to taxonomy in
+ * the admin (rather than re-imported from that JSON) would silently return
+ * nothing, even though the term relationship itself — what the taxonomy's
+ * own admin column shows — saved correctly regardless of the field's name.
+ * Going straight to core sidesteps that fragility entirely.
+ *
+ * @since 1.11.0
+ *
+ * @param int    $post_id  Post ID.
+ * @param string $taxonomy Taxonomy slug.
+ * @param string $glue     Separator between multiple term names.
+ * @return string Comma-joined term names, or '' if none are set or the taxonomy doesn't exist.
+ */
+function weizenkorn_get_post_term_names( $post_id, $taxonomy, $glue = ', ' ) {
+	$terms = get_the_terms( $post_id, $taxonomy );
+
+	if ( empty( $terms ) || is_wp_error( $terms ) ) {
+		return '';
+	}
+
+	return implode( $glue, wp_list_pluck( $terms, 'name' ) );
+}
+
+/**
+ * Renders template-parts/components/card-job.php for every post in a WP_Query.
+ *
+ * Shared by the Open Positions archive's own SSR first page
+ * (template-parts/archives/offene-stellen/job-listing.php) and its REST
+ * filter/"Mehr Laden" endpoint (inc/rest-job-filters.php), so both render
+ * identical markup for the same posts.
+ *
+ * @since 1.11.0
+ *
+ * @param WP_Query $query An offene-stellen WP_Query, not yet iterated.
+ * @return string Rendered HTML, or '' if the query has no posts.
+ */
+function weizenkorn_render_job_cards( WP_Query $query ) {
+	if ( ! $query->have_posts() ) {
+		return '';
+	}
+
+	ob_start();
+
+	while ( $query->have_posts() ) {
+		$query->the_post();
+		?>
+		<div class="xl:w-[440px]">
+			<?php
+			get_template_part(
+				'template-parts/components/card-job',
+				null,
+				array(
+					'category' => weizenkorn_get_post_term_names( get_the_ID(), 'offene_stellen_anstellungsart' ),
+					'location' => weizenkorn_get_post_term_names( get_the_ID(), 'offene_stellen_standort' ),
+					'title'    => get_the_title(),
+					'text'     => get_post()->post_excerpt,
+					'url'      => get_permalink(),
+				)
+			);
+			?>
+		</div>
+		<?php
+	}
+
+	wp_reset_postdata();
+
+	return ob_get_clean();
 }
 
 /**

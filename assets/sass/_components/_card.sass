@@ -121,15 +121,33 @@
 .card-job
   @apply border border-brand-red bg-white no-underline h-full
 
+  // Not text-transform: uppercase — Figma's own label text isn't forced to caps, so
+  // this shows whatever case the editor types into the field.
+  //
+  // Transparent bg + red text at rest; solid red + white text is a hover state, not
+  // the resting one (client's own filter-implementation reference). currentColor in
+  // the arrow SVG (theme-template-tags.php) means the color utility alone flips it
+  // too, no separate rule needed. Triggered by hovering the whole card, since the
+  // card itself is the <a> — not by hovering the banner in isolation.
+  //
+  // border-b: the transparent banner needs its own line under it to read as a
+  // header bar rather than just loose text — the solid-red version didn't need one,
+  // its own background already doing that job.
   &__category
-    @apply font-primary font-bold uppercase tracking-[0.5px] text-[14px] xl:text-[15px]
-    @apply px-5 py-4
+    @apply font-primary font-bold tracking-[0.5px] text-[14px] xl:text-[15px]
+    @apply px-5 py-4 bg-transparent text-brand-red border-b border-brand-red transition-colors duration-300
+
+  &:hover .card-job__category
+    @apply bg-brand-red text-white
 
   &__body
     @apply px-5 py-4
 
+  // mb-0 only, not m-0 — the template puts a conditional mt-24 on this element
+  // (only when a location line precedes it) and a same-specificity margin: 0
+  // here would win over it in the compiled CSS's cascade order and swallow it.
   &__title
-    @apply m-0
+    @apply mb-0
 
 // -- Gastronomy: logo + arrow head over a description; red outline that blends into a
 //    cream fill on hover. -----------------------------------------------------------

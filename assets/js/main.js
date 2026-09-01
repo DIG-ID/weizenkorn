@@ -12,6 +12,7 @@ import { initLanguageSwitcher } from './language-switcher.js';
 import { initStickyCta } from './sticky-cta.js';
 import { initHeroFit } from './hero-fit.js';
 import { initProcessSteps } from './process-steps.js';
+import { initJobFilters } from './job-filters.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -29,5 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initStickyCta();
   initHeroFit();
   initProcessSteps();
+  initJobFilters();
 
 });

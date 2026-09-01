@@ -219,6 +219,21 @@ function weizenkorn_enqueue_assets() {
 		weizenkorn_asset_version( '/js/main.js' ),
 		true
 	);
+
+	// Open Positions archive only — the REST URL and translated result-count strings
+	// assets/js/job-filters.js needs for its filter panel and "Mehr Laden" pagination
+	// (inc/rest-job-filters.php, template-parts/archives/offene-stellen/job-listing.php).
+	if ( is_post_type_archive( 'offene-stellen' ) ) {
+		wp_localize_script(
+			'theme-scripts',
+			'weizenkornJobs',
+			array(
+				'restUrl'        => rest_url( 'weizenkorn/v1/jobs' ),
+				'resultSingular' => __( 'Resultat', 'weizenkorn' ),
+				'resultPlural'   => __( 'Resultate', 'weizenkorn' ),
+			)
+		);
+	}
 }
 
 add_action( 'wp_enqueue_scripts', 'weizenkorn_enqueue_assets' );

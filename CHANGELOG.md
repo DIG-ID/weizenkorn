@@ -16,9 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 ### Added
 - For Social Offices & Partners page template: hero, an intro, an offer links section, a "Downloads & Unterlagen" document section with an editable empty-state message, a team grid, and a contact form.
 - A placeholder graphic for team member cards with no photo.
-- Open Positions archive template: hero, an offer links section, two category grids (training and job categories, each a title with a bullet-list card per category), and a contact form. The job listing cards and the closing preview section are not built yet — they need the single post template first.
+- Open Positions archive template: hero, an offer links section, two category grids (training and job categories, each a title with a bullet-list card per category), an "Aktuell offene Stellen" listing (9 postings at a time, with a "Mehr Laden" button for more) with a slide-in filter panel (Anstellungsart, Standort), and a contact form.
 - Open Positions single post template: a hero image, a link back to the archive, the publish date, title, meta badges (employment, start date, location), a WYSIWYG body, an open-ended set of detail boxes ("Ihre Aufgaben", "Voraussetzungen", or more), a contact section, and a "Weitere Stellenausschreibungen" slider of other postings.
-- A job card, shared by the single post's related-jobs slider and, later, the archive's own job listing.
+- A job card, shared by the single post's related-jobs slider and the archive's own job listing.
+- Two taxonomies for Open Positions — Anstellungsart (Arbeitsstellen / Ausbildungsplätze) and Standort (the client's own workshops, e.g. Schreinerei, DasBreiteHotel) — editable as checkboxes on the post, replacing what were free-text fields; both feed the archive's new filter.
 - Hero section: an optional subtitle under the main title. When filled in, the subtitle becomes the page's `<h1>` for SEO and the title becomes a `<p>`, keeping exactly one `<h1>` either way.
 - Offer links and Contact person sections, shared by the pages and the new archive that repeat their exact shape.
 - Login screen: the WPML language switcher.
@@ -30,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Hero title size reduced from 78px to 70px at desktop; the main display title's largest size reduced from 112px to 96px.
 - Overview card text now wraps at 50% of its column, instead of a fixed 500px.
 - The job-categories grid's cards now hold a minimum height at desktop, instead of sizing purely to their own text.
+- Job card: the category banner is no longer forced to uppercase, and only fills solid red on hover — at rest it's an outline with red text.
 
 ### Fixed
 - The intro + CTA section's description column was full width at tablet instead of a half-width slice, on both pages that use it.

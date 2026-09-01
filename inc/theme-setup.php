@@ -75,6 +75,65 @@ function weizenkorn_register_block_styles() {
 add_action( 'init', 'weizenkorn_register_block_styles' );
 
 /**
+ * Registers the two taxonomies behind the Open Positions archive's filter
+ * (template-parts/archives/offene-stellen/job-filters.php): Anstellungsart
+ * (Arbeitsstellen / Ausbildungsplätze — also the card's red category banner)
+ * and Standort (the client's own workshops — Kerzenmanufaktur, Schreinerei,
+ * DasBreiteHotel, …), both confirmed against the Figma filter panel
+ * (node 4129:5548). Replace the CPT's old offene_stellen_type_label /
+ * offene_stellen_location free-text ACF fields, now exposed on the post as
+ * ACF 'taxonomy' fields instead (acf-exports/acf-offene-stellen-single-fields.json)
+ * so tax_query can filter on them.
+ *
+ * `public => false` keeps WordPress from generating unstyled taxonomy
+ * archive URLs no Figma frame accounts for — filtering happens entirely
+ * through the archive's own REST endpoint (inc/rest-job-filters.php)
+ * instead of a taxonomy archive template. `show_ui` and `show_in_rest`
+ * stay on regardless, for the admin checkbox metabox and WPML's Taxonomy
+ * Translation screen (both need the taxonomy public or not).
+ */
+function weizenkorn_register_offene_stellen_taxonomies() {
+
+	register_taxonomy(
+		'offene_stellen_anstellungsart',
+		'offene-stellen',
+		array(
+			'labels'            => array(
+				'name'          => __( 'Anstellungsart', 'weizenkorn' ),
+				'singular_name' => __( 'Anstellungsart', 'weizenkorn' ),
+			),
+			'hierarchical'      => true,
+			'public'            => false,
+			'show_ui'           => true,
+			'show_in_rest'      => true,
+			'show_admin_column' => true,
+			'query_var'         => true,
+			'rewrite'           => false,
+		)
+	);
+
+	register_taxonomy(
+		'offene_stellen_standort',
+		'offene-stellen',
+		array(
+			'labels'            => array(
+				'name'          => __( 'Standort', 'weizenkorn' ),
+				'singular_name' => __( 'Standort', 'weizenkorn' ),
+			),
+			'hierarchical'      => true,
+			'public'            => false,
+			'show_ui'           => true,
+			'show_in_rest'      => true,
+			'show_admin_column' => true,
+			'query_var'         => true,
+			'rewrite'           => false,
+		)
+	);
+}
+
+add_action( 'init', 'weizenkorn_register_offene_stellen_taxonomies' );
+
+/**
  * Registers widgetized areas.
  */
 function weizenkorn_register_sidebars() {

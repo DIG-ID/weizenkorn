@@ -78,7 +78,8 @@ $rj_fits_xl      = ( $rj_count <= 3 );
 									'template-parts/components/card-job',
 									null,
 									array(
-										'category' => get_field( 'offene_stellen_type_label' ),
+										'category' => weizenkorn_get_post_term_names( get_the_ID(), 'offene_stellen_anstellungsart' ),
+										'location' => weizenkorn_get_post_term_names( get_the_ID(), 'offene_stellen_standort' ),
 										'title'    => get_the_title(),
 										'text'     => get_post()->post_excerpt,
 										'url'      => get_permalink(),
