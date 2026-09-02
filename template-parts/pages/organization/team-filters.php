@@ -79,8 +79,8 @@ foreach ( $tf_groups_labels as $tf_key => $tf_label ) {
 }
 ?>
 <button type="button" class="filter-panel__trigger js-filter-panel-trigger js-team-filters-trigger inline-flex items-center gap-3 text-brand-dark" aria-haspopup="dialog" aria-expanded="false" aria-controls="team-filters-panel">
-	<span class="shrink-0" aria-hidden="true"><?php weizenkorn_the_svg_icon( 'filter' ); ?></span>
 	<?php esc_html_e( 'Filter', 'weizenkorn' ); ?>
+	<span class="shrink-0" aria-hidden="true"><?php weizenkorn_the_svg_icon( 'filter' ); ?></span>
 	<span class="filter-panel__badge js-filter-panel-badge" hidden></span>
 </button>
 

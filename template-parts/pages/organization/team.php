@@ -35,13 +35,20 @@
  * own values are), cards past the twelfth start hidden, and the JS shows/
  * hides by matching those attributes against the checked filters, then
  * reveals more of the matching set on "Mehr Laden" — never a second
- * request.
+ * request. It also runs that same reveal logic once on its own init,
+ * rather than trusting this file's own initial hidden/data-team-extra
+ * markup to already match — so the two can never quietly disagree.
  *
- * The card grid's own widths (320/340/438px at mobile/tablet/desktop) are
- * fixed pixel values, not equal grid-column divisions of the inset — same
- * reasoning as job-listing.php's own .job-listing__grid: flex-wrap with a
- * fixed width per card, nested one level inside a plain theme-grid used
- * only to position it in the 10-column inset.
+ * Unlike job-listing.php's own .job-listing__grid (fixed pixel card widths,
+ * because 3 equal 12-column tracks don't divide evenly to its own card
+ * width), this grid uses real theme-grid columns: 12/4 = 3 columns per
+ * card at desktop divides exactly, so a plain xl:col-span-3 always packs
+ * 4 across regardless of the actual viewport width — a fixed pixel width
+ * only fits 4 across on a wide enough one, dropping to 3 on a narrower
+ * desktop instead of the 4 the grid itself would still have room for. Also
+ * unlike most sections, both this grid and its results/filter bar span the
+ * full 12 columns rather than the usual col-start-2/col-span-10 inset —
+ * confirmed against Figma, where this section alone runs edge to edge.
  *
  * @package weizenkorn
  * @subpackage Section
@@ -157,7 +164,7 @@ if ( ! $tm_items ) {
 		<?php get_template_part( 'template-parts/components/section-heading', null, array( 'title' => $tm_title ) ); ?>
 
 		<div class="theme-grid mt-8 xl:mt-12">
-			<div class="team__bar col-span-2 xl:col-start-2 xl:col-span-10 flex items-center justify-between">
+			<div class="team__bar col-span-2 xl:col-span-12 flex items-center justify-between">
 				<p class="team__count js-team-count body-text text-brand-dark">
 					<?php
 					printf(
@@ -181,15 +188,24 @@ if ( ! $tm_items ) {
 		</div>
 
 		<div class="theme-grid mt-8 xl:mt-12">
-			<div class="team__grid js-team-grid col-span-2 xl:col-start-2 xl:col-span-10 flex flex-col gap-y-8 md:flex-row md:flex-wrap md:gap-x-5 md:gap-y-8">
+			<div class="team__grid js-team-grid theme-grid col-span-2 xl:col-span-12 gap-y-8">
 				<?php foreach ( $tm_items as $tm_index => $tm_item ) : ?>
 					<?php $tm_is_extra = ( $tm_index >= $tm_visible_count ); ?>
+					<?php
+					/*
+					 * hidden as a plain attribute here, never baked into class="" as the Tailwind
+					 * `hidden` utility — the JS toggles visibility via the `hidden` PROPERTY
+					 * (card.hidden = …), which only ever touches the ATTRIBUTE. A class in the
+					 * markup would never get removed by that and the card could never be revealed
+					 * again once "Mehr Laden"/a filter tried to.
+					 */
+					?>
 					<div
-						class="w-full md:w-[340px] xl:w-[438px]<?php echo $tm_is_extra ? ' hidden' : ''; ?>"
+						class="col-span-2 md:col-span-3 xl:col-span-3"
 						data-team-card
 						data-bereich="<?php echo esc_attr( $tm_item['bereich'] ); ?>"
 						data-standort="<?php echo esc_attr( $tm_item['standort'] ); ?>"
-						<?php echo $tm_is_extra ? ' data-team-extra' : ''; ?>
+						<?php echo $tm_is_extra ? ' hidden data-team-extra' : ''; ?>
 					>
 						<?php
 						get_template_part(

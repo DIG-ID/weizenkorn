@@ -17,6 +17,13 @@ import { initTeamFilters } from './team-filters.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  // First, and unconditional on the rest: an uncaught error in any init below (a
+  // slider, hero-fit, ...) stops the rest of this callback dead, which would silently
+  // take the filter panels out with it purely because of list order, on pages that
+  // have nothing to do with what actually threw.
+  initJobFilters();
+  initTeamFilters();
+
   initStickyHeader();
   initMenuOverlay();
   initLanguageSwitcher();
@@ -31,7 +38,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initStickyCta();
   initHeroFit();
   initProcessSteps();
-  initJobFilters();
-  initTeamFilters();
 
 });

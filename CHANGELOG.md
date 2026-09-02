@@ -34,11 +34,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Overview card text now wraps at 50% of its column, instead of a fixed 500px.
 - The job-categories grid's cards now hold a minimum height at desktop, instead of sizing purely to their own text.
 - Job card: the category banner is no longer forced to uppercase, and only fills solid red on hover — at rest it's an outline with red text.
+- Das Weizenkorn Team's card grid now uses real grid columns instead of a fixed pixel card width, so it reliably packs 4 across at desktop (2 at tablet, 1 at mobile) regardless of the visitor's own screen width; this section (its results/filter bar included) also now runs the full width of the page instead of the usual narrower inset, matching Figma.
+- The filter icon (Open Positions archive and Das Weizenkorn Team) is Figma's own artwork instead of a hand-drawn approximation, and now sits after the word "Filter" instead of before it.
 
 ### Fixed
 - The intro + CTA section's description column was full width at tablet instead of a half-width slice, on both pages that use it.
 - The intro + CTA and offer links sections' buttons stretched to their column's full width instead of sizing to their own label — the same fix applied to the Open Positions single post's two buttons.
 - Category grid cards no longer sit at uneven heights within the same row.
+- Das Weizenkorn Team: "Mehr Laden" and the filter could leave most of the team unreachable — a member past the first 12 could never be revealed once hidden. "Mehr Laden" buttons (Open Positions archive included, same underlying cause) also stayed visibly on screen past their last page instead of disappearing.
 - Login screen: with the WPML language switcher enabled, it floated beside the login box instead of sitting centred underneath it.
 
 ---

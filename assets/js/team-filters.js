@@ -11,6 +11,15 @@ import { initFilterPanel } from './filter-panel.js';
  * the checked filters and reveals the first 12 of them; "Mehr Laden"
  * reveals 12 more of that same matching set — never a fetch.
  *
+ * render() also runs once on init, not just from Apply/Clear/Mehr Laden —
+ * this file used to trust team.php's own initial hidden/data-team-extra
+ * markup to already be correct and never re-derive it itself, which is one
+ * less thing to keep in sync by hand between two files; calling render()
+ * up front costs nothing (it reproduces exactly what the markup already
+ * shows) and means the "Mehr Laden" button's own moreWrap.hidden state
+ * comes from the same code path as every later click, not from a PHP
+ * `count() > 12` check that has to keep agreeing with it separately.
+ *
  * The panel's own open/close/backdrop/Escape/badge mechanics come from
  * filter-panel.js, shared with the Open Positions archive's filter — this
  * file only wires up what "Apply"/"Clear"/"Mehr Laden" do against this
@@ -114,4 +123,6 @@ export function initTeamFilters() {
       render();
     });
   }
+
+  render();
 }
