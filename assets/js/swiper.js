@@ -97,6 +97,40 @@ export function initStoriesSlider() {
 }
 
 /**
+ * News — the three articles a single one carries under it.
+ *
+ * Three abreast at desktop and one at a time on a phone, with six loaded so both the
+ * arrows and the bullets have somewhere to go. Same shape as the stories slider, and the
+ * same reason the controls are looked up from the section root: they sit outside the
+ * slider element — the arrows in the container's margins, the bullets under the cards.
+ */
+export function initNewsSlider() {
+  document.querySelectorAll('.js-news-slider').forEach((el) => {
+    const root = el.closest('.news-cards');
+
+    new Swiper(el, {
+      modules: [Navigation, Pagination, A11y],
+      // The grid's own gutter.
+      spaceBetween: 20,
+      slidesPerView: 1,
+      breakpoints: {
+        1280: { slidesPerView: 3 },
+      },
+      observer: true,
+      observeParents: true,
+      pagination: {
+        el: root ? root.querySelector('.js-news-pagination') : null,
+        clickable: true,
+      },
+      navigation: {
+        prevEl: root ? root.querySelector('.js-news-prev') : null,
+        nextEl: root ? root.querySelector('.js-news-next') : null,
+      },
+    });
+  });
+}
+
+/**
  * Quote slider — one testimonial per slide, at every breakpoint.
  *
  * The arrows sit in the outer grid columns rather than inside the slider element, so they

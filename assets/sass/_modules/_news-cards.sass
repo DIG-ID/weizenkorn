@@ -1,0 +1,166 @@
+// News cards — template-parts/modules/news-cards.php
+//                template-parts/components/card-news.php
+
+.news-cards
+
+  // Three to a row at desktop. The row is the container's inset — columns 2-11, where the
+  // heading above it also starts — re-divided into twelve, so a card spanning four comes
+  // out at the frame's 490.
+  // The slide the swap runs behind: out one way, in from the other, the way a carousel
+  // moves. Transform and opacity only — those two are the ones a browser can animate
+  // without laying the page out again on every frame, and the row's height changes with
+  // the cards in it, which would shift the page under the reader.
+  &__grid
+    @apply gap-y-5
+    @apply transition-[opacity,transform] duration-300 ease-out
+
+    // The step where the grid is put on the far side before coming in. It has to happen
+    // with no transition, or it would be seen travelling back across.
+    &.is-instant
+      @apply transition-none
+
+    &.is-out-next
+      @apply opacity-0
+      transform: translateX(-48px)
+
+    &.is-out-prev
+      @apply opacity-0
+      transform: translateX(48px)
+
+    &.is-in-next
+      @apply opacity-0
+      transform: translateX(48px)
+
+    &.is-in-prev
+      @apply opacity-0
+      transform: translateX(-48px)
+
+  @media (prefers-reduced-motion: reduce)
+    .news-cards__grid
+      @apply transition-none
+
+      &.is-out-next,
+      &.is-out-prev,
+      &.is-in-next,
+      &.is-in-prev
+        @apply opacity-100
+        transform: none
+
+  // The link back to the archive, between the heading's rule and the cards: 50 under the
+  // rule and 100 over them, from the frame. The bottom one collapses with the row's own
+  // top margin rather than adding to it, so it is the whole gap.
+  &__back
+    @apply mt-4 md:mt-6 xl:mt-[50px]
+    @apply mb-14 xl:mb-[100px]
+
+  &__slider-col
+    @apply relative
+
+  // The slider on its own. The arrows are placed against this and not against the column,
+  // which also holds the bullets — centring on that put them a card's date-line low.
+  &__slider-frame
+    @apply relative
+
+  // Swiper gives a slide height: 100%, and a percentage of a wrapper that has no height of
+  // its own resolves to auto — so each slide came out the size of its own card and a short
+  // article ended higher than a long one beside it. With auto here the wrapper's stretch
+  // does the work: every slide takes the tallest one's height, and the card fills it.
+  .swiper-wrapper
+    @apply items-stretch
+
+  .swiper-slide
+    @apply h-auto
+
+  // 56 under the cards at tablet and 77 at desktop, from the frames, and centred on the
+  // section either way.
+  &__pagination
+    @apply flex items-center justify-center gap-4 mt-14 xl:mt-[77px]
+
+    .swiper-pagination-bullet
+      @apply w-[15px] h-[15px] rounded-full bg-brand-red opacity-100 cursor-pointer
+      @apply border border-brand-red transition-colors duration-300
+
+    .swiper-pagination-bullet-active
+      @apply bg-transparent
+
+  // Out in the container's margins, level with the middle of a card. The frame puts them
+  // 57 inside the container's edges, which from this column — the inset — is 68 beyond it
+  // either way. Desktop only: a phone gets the bullets and the swipe.
+  &__nav-arrow
+    @apply hidden text-brand-red transition-opacity duration-300
+
+    // 46.5% and not half: the frame puts the arrows a little above the cards' middle.
+    @media (min-width: 1280px)
+      @apply block absolute -translate-y-1/2 z-10
+      top: 46.5%
+
+    &--prev
+      @apply rotate-180
+      left: -68px
+
+    &--next
+      right: -68px
+
+    &.swiper-button-disabled
+      @apply opacity-30 pointer-events-none
+
+  // 32 under the grid at mobile and 103 at desktop, from the frames, and the pair centred
+  // on the section either way. Tablet is unmeasured and follows mobile.
+  &__nav
+    @apply mt-8 xl:mt-[103px]
+
+  // The icon set has one arrow. The one that goes back is it, turned around.
+  &__arrow
+    @apply text-brand-red transition-opacity duration-300
+
+    &[aria-disabled="true"]
+      @apply opacity-30 pointer-events-none
+
+    &--prev
+      @apply rotate-180
+
+.card-news
+
+  // The grid stretches its items to the row, but the card inside one is only as tall as
+  // its own content — so the chain has to be unbroken from the item down to the box, or a
+  // card with a one-line title ends higher than the two-line card beside it.
+  @apply h-full
+
+  &__link
+    @apply h-full
+
+  // A ratio and not a height. The two frames give 490x300 and 340x208, which is the same
+  // 49:30 either way — and a ratio is what keeps it right between them, where a card four
+  // of twelve columns wide comes out at 313 near 1280 and a fixed 300 would leave the
+  // photograph almost square.
+  &__media
+    aspect-ratio: 49 / 30
+
+    img
+      @apply w-full h-full object-cover
+
+  // Only the text box is bordered — the photograph sits above it, outside the rule.
+  //
+  // 17 either side and 12 at the top, from the frame. The box grows with the card rather
+  // than holding the frame's 202, so a title that runs to two lines is not cut off; the
+  // grid row levels the cards beside it.
+  // No rule along the top: the photograph's bottom edge is the box's, and a border there
+  // would draw a line between the two that the frame does not have.
+  &__body
+    @apply flex-1 border-x border-b border-brand-red
+    @apply px-[17px] pt-3 pb-[13px]
+
+  // The date's line, with the arrow at the other end of it.
+  &__meta
+    height: 30px
+
+    @media (min-width: 1280px)
+      height: 32px
+
+  // 12 under the date's line at tablet and 15 at desktop; 8 between the title and the
+  // summary, and 10 at desktop.
+  &__text
+    @apply mt-3 xl:mt-[15px]
+
+  &__title
+    @apply mb-2 xl:mb-[10px]

@@ -1,0 +1,36 @@
+// News featured — template-parts/modules/news-featured.php
+
+.news-featured
+
+  // The rule the frame draws across the top of the block, at the container's full width,
+  // and the air under it: 16 at mobile, 24 at tablet, 54 at desktop.
+  //
+  // The row gap is the distance from the photograph down to the text where they stack,
+  // which is mobile only — from tablet up they share a row.
+  &__row
+    @apply border-t border-brand-red
+    @apply pt-4 md:pt-6 xl:pt-[54px]
+    @apply gap-y-4 md:gap-y-0
+
+  // A height rather than the picture's own ratio: the frame sets one at each width, and
+  // object-cover crops to it. At desktop it is what makes the photograph and the button
+  // end on the same line.
+  &__media
+    height: 234px
+
+    img
+      @apply w-full h-full object-cover
+
+    @media (min-width: 768px)
+      height: 346px
+
+    @media (min-width: 1280px)
+      height: 600px
+
+  // Every gap inside the text is 16 at mobile and 24 at tablet. Desktop is the frame's
+  // own: 30 under the title and 80 over the button.
+  &__title
+    @apply mb-4 md:mb-6 xl:mb-[30px]
+
+  &__excerpt
+    @apply mb-4 md:mb-6 xl:mb-20

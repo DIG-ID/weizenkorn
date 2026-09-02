@@ -36,6 +36,36 @@ function weizenkorn_theme_setup() {
 	// defaults. dist/css/main.css is the same stylesheet the front-end loads, so the
 	// editor preview and the published page are never out of sync with each other.
 	add_theme_support( 'editor-styles' );
+
+	/*
+	 * The two sizes a text can be written in, from the design's own tokens: Text at 20/30
+	 * and Intro text at 40/55 where the frames are drawn. Declaring them replaces the four
+	 * core ships with — the editor should offer the sizes the design has and no others.
+	 *
+	 * Each size is a custom property rather than a number, because the design's scale has
+	 * a step per breakpoint and a preset carries one value. Core prints the preset with
+	 * !important, so a media query on the class itself would lose; a media query on the
+	 * property wins, because there is nothing to override — the value simply changes.
+	 * The steps and the line heights are in _posts/_news-hero.sass.
+	 */
+	add_theme_support(
+		'editor-font-sizes',
+		array(
+			array(
+				'name' => __( 'Text', 'weizenkorn' ),
+				'size' => 'var(--weizenkorn-size-text)',
+				'slug' => 'text',
+			),
+			array(
+				'name' => __( 'Intro', 'weizenkorn' ),
+				'size' => 'var(--weizenkorn-size-intro)',
+				'slug' => 'intro',
+			),
+		)
+	);
+
+	// No arbitrary sizes: the design has two, and a number typed by hand is a third.
+	add_theme_support( 'disable-custom-font-sizes' );
 	add_editor_style( 'dist/css/main.css' );
 }
 

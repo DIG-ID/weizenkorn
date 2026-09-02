@@ -11,6 +11,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.10.0] — 2026-09-02
+
+### Added
+- News: a post type of its own, an archive and a single article template.
+- News archive: the most recent article featured across the top, and the rest six to a page. The arrows fetch the next six and swap them in without a page load; with JavaScript off they are ordinary links and the page reloads.
+- News article: the photograph across the container with links to the articles either side of it, the date, the title, and the body as the editor wrote it.
+- News article: the other articles under it as a slider — three abreast at desktop with arrows out in the container's margins, one at a time with bullets below on a phone.
+- News card: the photograph, the date, the title and the opening of the article, drawn once and used by the archive, the slider and the route that pages the grid.
+- Two text sizes in the editor, Text and Intro, replacing the four WordPress ships with. Each is a custom property, so the design's step per breakpoint survives.
+- Galleries and images in an article run the container's full twelve columns while the text keeps to seven.
+
+### Changed
+- Home hero: the image is repeated inside the video element, so a browser that cannot play video draws it instead, with its alt text.
+- Craft showcase: an optional video in place of the right-hand photograph, set up the way the home page's hero already was. The section's own image becomes the poster and the fallback.
+
+### Fixed
+- An empty paragraph left in the editor no longer takes a row of the article's grid, which was spending the gap above it and below it.
+
+---
+
 ## [1.9.1] — 2026-08-28
 
 ### Added

@@ -33,6 +33,8 @@ require get_template_directory() . '/inc/rest-job-filters.php';
 
 require get_template_directory() . '/inc/helpers.php';
 
+require get_template_directory() . '/inc/news.php';
+
 require get_template_directory() . '/inc/performance.php';
 
 require get_template_directory() . '/inc/security.php';
