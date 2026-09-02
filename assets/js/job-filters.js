@@ -1,3 +1,5 @@
+import { initFilterPanel } from './filter-panel.js';
+
 /**
  * Open Positions archive — filter panel + "Mehr Laden" pagination.
  *
@@ -6,6 +8,10 @@
  * job-listing.php's own grid. The panel's checkboxes are draft state until
  * "Apply Filters" commits them — "Mehr Laden" always pages against the last
  * committed filters, not whatever's ticked but not yet applied.
+ *
+ * The panel's own open/close/backdrop/Escape/badge mechanics come from
+ * filter-panel.js, shared with Das Weizenkorn Team's filter — this file only
+ * wires up what "Apply"/"Clear"/"Mehr Laden" do against this page's grid.
  *
  * weizenkornJobs (localized in inc/enqueue.php) carries the REST URL and the
  * translated result-count strings, so this file has no hardcoded German.
@@ -16,27 +22,25 @@
 
 export function initJobFilters() {
   const grid = document.querySelector('.js-job-listing-grid');
-  const panel = document.querySelector('.js-job-filters-panel');
 
-  if (!grid || !panel || !window.weizenkornJobs || !window.weizenkornJobs.restUrl) {
+  if (!grid || !window.weizenkornJobs || !window.weizenkornJobs.restUrl) {
+    return;
+  }
+
+  const filterPanel = initFilterPanel();
+
+  if (!filterPanel) {
     return;
   }
 
   const { restUrl, resultSingular, resultPlural } = window.weizenkornJobs;
+  const { inputs, applyBtn, clearBtn, close, updateBadge } = filterPanel;
 
-  const trigger = document.querySelector('.js-job-filters-trigger');
-  const closeBtn = document.querySelector('.js-job-filters-close');
-  const backdrop = document.querySelector('.js-job-filters-backdrop');
-  const applyBtn = document.querySelector('.js-job-filters-apply');
-  const clearBtn = document.querySelector('.js-job-filters-clear');
-  const badge = document.querySelector('.js-job-filters-badge');
   const countText = document.querySelector('.js-job-listing-count');
   const moreWrap = document.querySelector('.js-job-listing-more');
   const moreBtn = moreWrap ? moreWrap.querySelector('.btn') : null;
 
   let committed = { anstellungsart: [], standort: [] };
-
-  const inputs = () => Array.prototype.slice.call(panel.querySelectorAll('.job-filters__input'));
 
   const checkedValues = () => {
     const selected = { anstellungsart: [], standort: [] };
@@ -52,57 +56,6 @@ export function initJobFilters() {
 
   const totalSelected = (selected) =>
     Object.keys(selected).reduce((total, key) => total + selected[key].length, 0);
-
-  const updateBadge = (selected) => {
-    if (!badge) {
-      return;
-    }
-
-    const total = totalSelected(selected);
-    badge.hidden = total === 0;
-    badge.textContent = String(total);
-  };
-
-  const openPanel = () => {
-    panel.classList.add('is-open');
-
-    if (backdrop) {
-      backdrop.hidden = false;
-      requestAnimationFrame(() => backdrop.classList.add('is-visible'));
-    }
-
-    panel.setAttribute('aria-hidden', 'false');
-
-    if (trigger) {
-      trigger.setAttribute('aria-expanded', 'true');
-    }
-
-    document.body.classList.add('job-filters-open');
-
-    if (closeBtn) {
-      closeBtn.focus();
-    }
-  };
-
-  const closePanel = () => {
-    panel.classList.remove('is-open');
-
-    if (backdrop) {
-      backdrop.classList.remove('is-visible');
-    }
-
-    panel.setAttribute('aria-hidden', 'true');
-
-    if (trigger) {
-      trigger.setAttribute('aria-expanded', 'false');
-    }
-
-    document.body.classList.remove('job-filters-open');
-
-    if (trigger) {
-      trigger.focus();
-    }
-  };
 
   const buildUrl = (filters, page) => {
     const params = new URLSearchParams();
@@ -142,30 +95,12 @@ export function initJobFilters() {
       });
   };
 
-  if (trigger) {
-    trigger.addEventListener('click', openPanel);
-  }
-
-  if (closeBtn) {
-    closeBtn.addEventListener('click', closePanel);
-  }
-
-  if (backdrop) {
-    backdrop.addEventListener('click', closePanel);
-  }
-
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && panel.classList.contains('is-open')) {
-      closePanel();
-    }
-  });
-
   if (applyBtn) {
     applyBtn.addEventListener('click', () => {
       committed = checkedValues();
-      updateBadge(committed);
+      updateBadge(totalSelected(committed));
       load(committed, 1, false);
-      closePanel();
+      close();
     });
   }
 
@@ -175,7 +110,7 @@ export function initJobFilters() {
         input.checked = false;
       });
       committed = { anstellungsart: [], standort: [] };
-      updateBadge(committed);
+      updateBadge(0);
       load(committed, 1, false);
     });
   }

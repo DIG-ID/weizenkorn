@@ -25,6 +25,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Login screen: the WPML language switcher.
 - Dates now read in the site's language — German by default, ready for English and French once those languages are added.
 - Three of the theme's button styles (Primary, Secondary, Black) as block style variations for the core Button block, so any post or page can use them from the block editor's own Style panel. The block editor now previews pages in the theme's own styles, so what an editor sees while writing matches the published page.
+- Organization page template: hero, a "Warum Weizenkorn?" intro, an "Organigramm" section (a PDF download beside a paragraph), "Das Weizenkorn Team" (a filterable grid of team members with a slide-in filter panel — Bereiche, Standorte), a "Transparency" section (same shape as Organigramm), and a "Kommen wir ins Gespräch?" contact form.
+- The team grid's filter panel is the same slide-in design as the Open Positions archive's, sharing its styling and open/close behaviour so both look and behave identically.
 
 ### Changed
 - The "Unsere Ausbildung" programme cards' text now reveals on hover, overlapping the photo, instead of always showing.

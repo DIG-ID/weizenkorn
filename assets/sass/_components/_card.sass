@@ -149,6 +149,18 @@
   &__title
     @apply mb-0
 
+// -- Organization team card: a photo (or the Figma placeholder silhouette) over a red-
+//    bordered white box with name, role and workplace. template-parts/components/card-org-team.php
+//    — the Organization page's "Das Weizenkorn Team" grid only; not to be confused with the
+//    for-social-offices-and-partners page's own unrelated .card-team (see that component's
+//    docblock for why they're separate). -------------------------------------------------
+.card-org-team
+  &__placeholder svg
+    @apply w-[60px] h-auto md:w-[70px] xl:w-20
+
+  &__name
+    @apply text-[14px] xl:text-[15px]
+
 // -- Gastronomy: logo + arrow head over a description; red outline that blends into a
 //    cream fill on hover. -----------------------------------------------------------
 .card-venue

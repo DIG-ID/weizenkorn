@@ -1,0 +1,94 @@
+// Filter panel — a trigger button + a slide-in drawer from the right, shared by every
+// section that filters a grid of cards: template-parts/archives/offene-stellen/job-filters.php
+// (Open Positions archive) and template-parts/pages/organization/team-filters.php (Das
+// Weizenkorn Team). Both Figma frames use the identical panel (checkbox groups, footer
+// buttons) — only the checkbox terms and what "Apply" does behind it differ, which is why
+// this lives here once instead of being copied per caller.
+//
+// Full screen below `md` (mobile), a fixed width from `md` up (tablet and desktop share
+// one — the client's own spec, not a per-breakpoint Figma measurement). z-[60] clears both
+// the sticky header (z-50) and the menu overlay (z-40), the two other full-viewport layers
+// this theme already has.
+.filter-panel__trigger
+  @apply transition-colors duration-300
+
+  &:hover
+    @apply text-brand-red
+
+// A small dot with the active-filter count, hidden by the caller's JS until at least one
+// checkbox is ticked.
+.filter-panel__badge
+  @apply inline-grid place-items-center min-w-[20px] h-5 px-1.5 rounded-full bg-brand-red text-white text-[11px] font-bold
+
+.filter-panel__backdrop
+  @apply fixed inset-0 z-[60] bg-brand-dark/50 opacity-0 pointer-events-none transition-opacity duration-300
+
+  &.is-visible
+    @apply opacity-100 pointer-events-auto
+
+.filter-panel__panel
+  @apply fixed top-0 right-0 z-[60] flex h-full w-full flex-col bg-white translate-x-full transition-transform duration-300 ease-in-out
+  @apply md:w-[460px]
+
+  &.is-open
+    @apply translate-x-0
+
+.filter-panel__head
+  @apply flex items-center px-6 py-6 border-b border-brand-red
+
+.filter-panel__body
+  @apply flex-1 overflow-y-auto px-6 py-6
+
+.filter-panel__group
+  @apply border-0 m-0 p-0
+
+  & + .filter-panel__group
+    @apply mt-10
+
+.filter-panel__group-title
+  @apply block pb-2 mb-4 border-b border-brand-red
+
+.filter-panel__list
+  @apply flex flex-col gap-1 m-0 p-0 list-none
+
+.filter-panel__checkbox
+  @apply flex items-center gap-3 py-2 cursor-pointer
+
+.filter-panel__input
+  // Visually hidden, not display:none — a screen reader and the keyboard still need it.
+  @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0
+  clip: rect(0, 0, 0, 0)
+
+  &:checked + .filter-panel__box
+    @apply bg-brand-red border-brand-red
+
+    &::after
+      content: ''
+      @apply absolute left-[6px] top-[2px] w-[5px] h-[10px] border-white
+      border-style: solid
+      border-width: 0 2px 2px 0
+      transform: rotate(45deg)
+
+  &:focus-visible + .filter-panel__box
+    @apply outline outline-2 outline-offset-2 outline-brand-red
+
+.filter-panel__box
+  @apply relative shrink-0 w-[18px] h-[18px] border border-brand-red transition-colors duration-200
+
+.filter-panel__label
+  @apply flex-1 font-primary text-[14px] text-brand-dark
+
+.filter-panel__count
+  @apply font-primary text-[13px] text-brand-dark/50
+
+.filter-panel__foot
+  @apply flex gap-4 px-6 py-6 border-t border-brand-red
+
+  .btn
+    @apply flex-1 justify-center
+
+// The panel is position: fixed and already clips its own content, but the page behind it
+// can still scroll on touch — the same body-class scroll lock the mobile menu overlay uses
+// (assets/js/menu-overlay.js, body.menu-open in _modules/_menu-overlay.sass).
+body.filter-panel-open
+  @apply overflow-hidden
