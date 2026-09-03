@@ -1,0 +1,192 @@
+[
+    {
+        "key": "group_b15567800a57b",
+        "title": "News Archive",
+        "fields": [
+            {
+                "key": "field_d4d94d94b226b",
+                "label": "News Archive",
+                "name": "news_archive",
+                "aria-label": "",
+                "type": "group",
+                "instructions": "The archive has no post of its own, so its hero lives here. The template reads these with the news_archive_ prefix.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "wpml_cf_preferences": 2,
+                "layout": "block",
+                "sub_fields": [
+                    {
+                        "key": "field_75a5c64ca329a",
+                        "label": "Hero Section",
+                        "name": "hero_section",
+                        "aria-label": "",
+                        "type": "group",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "wpml_cf_preferences": 2,
+                        "layout": "block",
+                        "sub_fields": [
+                            {
+                                "key": "field_ad0f4b26a47aa",
+                                "label": "Image",
+                                "name": "image",
+                                "aria-label": "",
+                                "type": "image",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "return_format": "id",
+                                "library": "all",
+                                "min_width": "",
+                                "min_height": "",
+                                "min_size": "",
+                                "max_width": "",
+                                "max_height": "",
+                                "max_size": "",
+                                "mime_types": "",
+                                "preview_size": "thumbnail",
+                                "allow_in_bindings": 0,
+                                "wpml_cf_preferences": 1,
+                                "menu_order": 0
+                            },
+                            {
+                                "key": "field_2bc769b15c401",
+                                "label": "Title",
+                                "name": "title",
+                                "aria-label": "",
+                                "type": "text",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "default_value": "",
+                                "maxlength": "",
+                                "placeholder": "",
+                                "prepend": "",
+                                "append": "",
+                                "allow_in_bindings": 0,
+                                "wpml_cf_preferences": 2,
+                                "menu_order": 1
+                            },
+                            {
+                                "key": "field_news_archive_hero_subtitle",
+                                "label": "Subtitle",
+                                "name": "subtitle",
+                                "aria-label": "",
+                                "type": "text",
+                                "instructions": "Optional. The smaller line under the title, in red. Where it is filled it becomes the page's <h1> and the title above it drops to a paragraph — the subtitle is the more specific of the two, and there is exactly one <h1> either way.",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "default_value": "",
+                                "maxlength": "",
+                                "placeholder": "",
+                                "prepend": "",
+                                "append": "",
+                                "wpml_cf_preferences": 2,
+                                "menu_order": 2
+                            },
+                            {
+                                "key": "field_b9eb3407497d0",
+                                "label": "Body",
+                                "name": "body",
+                                "aria-label": "",
+                                "type": "textarea",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "default_value": "",
+                                "maxlength": "",
+                                "rows": "",
+                                "placeholder": "",
+                                "new_lines": "br",
+                                "allow_in_bindings": 0,
+                                "wpml_cf_preferences": 2,
+                                "menu_order": 3
+                            },
+                            {
+                                "key": "field_2f5b1bf2b4bc6",
+                                "label": "Separator Logo",
+                                "name": "seperator_logo",
+                                "aria-label": "",
+                                "type": "image",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "return_format": "id",
+                                "library": "all",
+                                "min_width": "",
+                                "min_height": "",
+                                "min_size": "",
+                                "max_width": "",
+                                "max_height": "",
+                                "max_size": "",
+                                "mime_types": "",
+                                "preview_size": "thumbnail",
+                                "allow_in_bindings": 0,
+                                "wpml_cf_preferences": 1,
+                                "menu_order": 4
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "options_page",
+                    "operator": "==",
+                    "value": "theme-options"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "Hero of the news archive. A separate group from Theme Options on purpose: that one carries clones, and re-importing it would move the fields they point at.",
+        "show_in_rest": 0,
+        "display_title": "",
+        "allow_ai_access": false,
+        "ai_description": "",
+        "acfml_field_group_mode": "advanced"
+    }
+]
