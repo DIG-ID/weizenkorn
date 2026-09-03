@@ -176,7 +176,7 @@ if ( ! $tm_items ) {
 				</p>
 				<?php
 				get_template_part(
-					'template-parts/pages/organization/team-filters',
+					'template-parts/pages/about-us-organization/team-filters',
 					null,
 					array(
 						'items'   => $tm_items,

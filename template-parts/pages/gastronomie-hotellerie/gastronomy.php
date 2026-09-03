@@ -101,6 +101,9 @@ $gastro_card_order = array(
 								<div class="card__head">
 									<?php if ( get_sub_field( 'logo' ) ) : ?>
 										<span class="card__logo"><?php echo wp_get_attachment_image( get_sub_field( 'logo' ), 'medium', false, array( 'loading' => 'lazy' ) ); ?></span>
+									<?php elseif ( get_sub_field( 'title' ) ) : ?>
+										<?php // No logo set — same text fallback as the tablet/desktop cards row below, styled the same fixed way rather than the responsive .title-card scale. ?>
+										<span class="card__logo card__logo--text font-primary font-bold text-[20px] leading-[30px] tracking-[0.5px]"><?php echo esc_html( get_sub_field( 'title' ) ); ?></span>
 									<?php endif; ?>
 									<?php if ( $g_url ) : ?>
 										<span class="card__arrow" aria-hidden="true"><?php weizenkorn_the_svg_icon( 'arrow-right' ); ?></span>

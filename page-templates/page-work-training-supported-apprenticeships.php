@@ -34,7 +34,7 @@ if ( have_posts() ) :
 
 		get_template_part( 'template-parts/modules/hero-section' );
 		get_template_part( 'template-parts/modules/intro-cta', null, array( 'prefix' => 'apprenticeships_' ) );
-		get_template_part( 'template-parts/pages/supported-apprenticeships/programs' );
+		get_template_part( 'template-parts/pages/work-training-supported-apprenticeships/programs' );
 		get_template_part( 'template-parts/modules/numbered-steps', null, array( 'prefix' => 'apprenticeships_process_' ) );
 		get_template_part( 'template-parts/modules/quote-slider' );
 		get_template_part( 'template-parts/modules/contact-person', null, array( 'prefix' => 'apprenticeships_' ) );

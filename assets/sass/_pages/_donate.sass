@@ -1,0 +1,66 @@
+// Donate page (page-templates/page-about-us-donate.php) — "Unsere Spenden-Projekte" slider.
+//
+// Same arrows-in-the-outer-grid-columns pattern as _singles/_offene-stellen.sass's own
+// .related-jobs, with one deliberate difference: there, arrows AND dots show together at
+// every width (only hidden entirely once everything fits one view). Here Figma draws
+// arrows on the desktop frame only and dots on tablet/mobile's only, so the two swap
+// instead of coexisting — .donation-projects__nav is xl-only, __pagination is
+// everything-below-xl.
+.donation-projects
+  &__row
+    @apply items-center gap-y-9 md:gap-y-14
+
+  &__viewport
+    grid-column: 1 / span 2
+    grid-row: 1
+
+    @media (min-width: 768px)
+      grid-column: 2 / span 4
+
+    @media (min-width: 1280px)
+      grid-column: 3 / span 8
+
+  &__nav
+    @apply hidden xl:flex items-center justify-center text-brand-red transition-opacity duration-300
+    grid-row: 1
+
+    &:hover,
+    &:focus-visible
+      @apply opacity-70 outline-none
+
+    &.swiper-button-disabled
+      @apply opacity-30 pointer-events-none
+
+    svg
+      @apply w-[21px] h-[17px]
+
+  &__nav--prev
+    grid-column: 2
+
+    svg
+      @apply -scale-x-100
+
+  &__nav--next
+    grid-column: 11
+
+  &__pagination
+    @apply xl:hidden static flex items-center justify-center gap-[26px] md:gap-[30px]
+    grid-column: 1 / span 2
+    grid-row: 2
+
+    --swiper-pagination-bullet-horizontal-gap: 0px
+
+    @media (min-width: 768px)
+      grid-column: 1 / span 6
+
+    .swiper-pagination-bullet
+      @apply w-[15px] h-[15px] m-0 rounded-full border border-brand-red bg-transparent opacity-100 transition-colors duration-300
+
+    .swiper-pagination-bullet-active
+      @apply bg-brand-red
+
+  // Three cards fit in one view at xl, so the nav would be pointing at nothing — hidden
+  // outright rather than left clickable-but-inert.
+  &--fits-xl &__nav
+    @media (min-width: 1280px)
+      @apply hidden

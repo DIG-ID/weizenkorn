@@ -235,11 +235,11 @@ function weizenkorn_enqueue_assets() {
 		);
 	}
 
-	// Organization page only — the translated result-count strings
+	// About Us — Organization page only — the translated result-count strings
 	// assets/js/team-filters.js needs for "Das Weizenkorn Team". No REST URL: that
 	// filter runs entirely client-side against the page's own organization_team_items
-	// repeater (see template-parts/pages/organization/team.php's own docblock for why).
-	if ( is_page_template( 'page-templates/page-organization.php' ) ) {
+	// repeater (see template-parts/pages/about-us-organization/team.php's own docblock for why).
+	if ( is_page_template( 'page-templates/page-about-us-organization.php' ) ) {
 		wp_localize_script(
 			'theme-scripts',
 			'weizenkornTeam',

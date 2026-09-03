@@ -35,44 +35,58 @@ if ( ! $wtp_title || ! have_rows( 'work_training_perspectives_items' ) ) {
 		);
 		?>
 
-		<div class="theme-grid gap-y-5 mt-8 md:mt-14 xl:mt-24">
+		<div class="theme-grid mt-8 md:mt-14 xl:mt-24">
 			<?php
-			while ( have_rows( 'work_training_perspectives_items' ) ) :
-				the_row();
-
-				$wtp_link = get_sub_field( 'page' );
-				$wtp_url  = ( is_array( $wtp_link ) && ! empty( $wtp_link['url'] ) ) ? $wtp_link['url'] : '';
-
-				if ( ! get_sub_field( 'image' ) || ! $wtp_url ) {
-					continue;
-				}
-				?>
-				<?php
-				/*
-				 * Every card spans the full row below xl (stacked); at xl the first
-				 * two sit side by side (6 of 12 each) and the third takes the full
-				 * row (12 of 12) — matches the design exactly, no row-span tricks
-				 * needed since neither card spans more than one row.
-				 */
-				?>
-				<div class="col-span-2 md:col-span-3 xl:col-span-6 last:xl:col-span-12">
-					<?php
-					get_template_part(
-						'template-parts/components/card-overview',
-						null,
-						array(
-							'image'        => get_sub_field( 'image' ),
-							'title'        => get_sub_field( 'title' ),
-							'text'         => get_sub_field( 'text' ),
-							'url'          => $wtp_url,
-							'media_height' => 'h-[200px] md:h-[224px] xl:h-[400px]',
-						)
-					);
-					?>
-				</div>
-				<?php
-			endwhile;
+			/*
+			 * The cards' own row is a SECOND, nested theme-grid rather than this
+			 * outer one's direct children — this one exists only to place that
+			 * row in the standard xl:col-start-2/col-span-10 inset (full width
+			 * below xl, same as everywhere else). Nested rather than moving the
+			 * inset onto each card individually, so the 6/6/12 split below stays
+			 * relative to the inset's own width, not the page's full 12 columns.
+			 */
 			?>
+			<div class="section-work-perspectives__grid theme-grid gap-y-5 col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-10">
+				<?php
+				while ( have_rows( 'work_training_perspectives_items' ) ) :
+					the_row();
+
+					$wtp_link = get_sub_field( 'page' );
+					$wtp_url  = ( is_array( $wtp_link ) && ! empty( $wtp_link['url'] ) ) ? $wtp_link['url'] : '';
+
+					if ( ! get_sub_field( 'image' ) || ! $wtp_url ) {
+						continue;
+					}
+					?>
+					<?php
+					/*
+					 * Every card spans the full row at mobile (stacked). At tablet two sit
+					 * side by side (3 of 6 each); the third, alone in the row below, takes
+					 * the full width instead of stopping at half of it — last:md:col-span-6.
+					 * At xl the first two sit side by side (6 of 12 each) and the third
+					 * takes the full row (12 of 12) — matches the design exactly, no
+					 * row-span tricks needed since neither card spans more than one row.
+					 */
+					?>
+					<div class="col-span-2 md:col-span-3 last:md:col-span-6 xl:col-span-6 last:xl:col-span-12">
+						<?php
+						get_template_part(
+							'template-parts/components/card-overview',
+							null,
+							array(
+								'image'        => get_sub_field( 'image' ),
+								'title'        => get_sub_field( 'title' ),
+								'text'         => get_sub_field( 'text' ),
+								'url'          => $wtp_url,
+								'media_height' => 'h-[200px] md:h-[224px] xl:h-[400px]',
+							)
+						);
+						?>
+					</div>
+					<?php
+				endwhile;
+				?>
+			</div>
 		</div>
 	</div>
 </section>

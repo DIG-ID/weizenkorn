@@ -3,13 +3,13 @@
  * Organization page team member card — a photo (or the Figma placeholder
  * silhouette on a neutral background), then a bordered box with the name,
  * role and workplace. Receives its data via $args; never calls get_field()
- * itself — the caller (template-parts/pages/organization/team.php) reads
+ * itself — the caller (template-parts/pages/about-us-organization/team.php) reads
  * the organization_team_items repeater row and resolves the bereich/
  * standort select fields' raw values to their labels before passing them
  * in (a 'select' field only ever returns its raw choice key via
  * get_sub_field(), never the label).
  *
- * Not the same component as template-parts/pages/for-social-offices-and-partners/team.php's
+ * Not the same component as template-parts/pages/work-training-for-social-offices-and-partners/team.php's
  * .card-team — that one has no third (workplace) line and a mail icon
  * instead, a different enough shape (and a name already taken) to be its
  * own component rather than a shared one bent to fit both.

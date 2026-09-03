@@ -32,7 +32,7 @@ if ( have_posts() ) :
 
 		get_template_part( 'template-parts/modules/hero-section' );
 		get_template_part( 'template-parts/modules/intro-cta', null, array( 'prefix' => 'supported_jobs_' ) );
-		get_template_part( 'template-parts/pages/supported-jobs/diversity-cards-slider' );
+		get_template_part( 'template-parts/pages/work-training-supported-jobs/diversity-cards-slider' );
 		get_template_part( 'template-parts/modules/numbered-steps', null, array( 'prefix' => 'supported_jobs_process_' ) );
 		get_template_part( 'template-parts/modules/quote-slider' );
 		get_template_part( 'template-parts/modules/cta-form', null, array( 'prefix' => 'supported_jobs_' ) );

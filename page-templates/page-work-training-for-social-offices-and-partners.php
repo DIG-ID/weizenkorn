@@ -31,8 +31,8 @@ if ( have_posts() ) :
 		get_template_part( 'template-parts/modules/hero-section' );
 		get_template_part( 'template-parts/modules/intro-cta', null, array( 'prefix' => 'social_offices_' ) );
 		get_template_part( 'template-parts/modules/offer-links', null, array( 'prefix' => 'social_offices_' ) );
-		get_template_part( 'template-parts/pages/for-social-offices-and-partners/downloads' );
-		get_template_part( 'template-parts/pages/for-social-offices-and-partners/team' );
+		get_template_part( 'template-parts/pages/work-training-for-social-offices-and-partners/downloads' );
+		get_template_part( 'template-parts/pages/work-training-for-social-offices-and-partners/team' );
 		get_template_part( 'template-parts/modules/cta-form', null, array( 'prefix' => 'social_offices_' ) );
 
 		do_action( 'after_main_content' );
