@@ -30,7 +30,15 @@ a
 
 button
   cursor: pointer
-  border: none
+  // border-width, not the "border: none" shorthand: CSS cascades each longhand
+  // separately, and that shorthand also sets border-style: none — a sub-property
+  // .btn-secondary/.btn-black never re-declare themselves (their own "border" utility
+  // only sets border-width, relying on Tailwind's preflight solid default for style).
+  // With no higher-specificity rule to win border-style back, this element's own
+  // border-style: none stood regardless of any class's border-width/-color, hiding
+  // the border on any .btn-secondary/.btn-black rendered as a <button> (an <a> never
+  // hit this, having no border reset of its own — see filter-panel__foot's buttons).
+  border-width: 0
   background: none
   padding: 0
 

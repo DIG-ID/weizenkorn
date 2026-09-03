@@ -76,7 +76,17 @@ $jh_body       = get_field( 'offene_stellen_body' );
 		</div>
 
 		<div class="theme-grid mt-8 xl:mt-12">
-			<h1 class="job-header__title title-main text-brand-dark col-span-2 xl:col-start-2 xl:col-span-10">
+			<?php
+			/*
+			 * mb-0/md:mb-8/xl:mb-16, not the flat 32/64/96px this is meant to add up
+			 * to: whichever block follows (badges or body, below) already carries its
+			 * own unconditional mt-8 (32px at every breakpoint) — margins on a grid
+			 * item never collapse out through its own .theme-grid wrapper, so that
+			 * 32px always lands on top of whatever is set here. This is the
+			 * remainder: 32-32=0, 64-32=32, 96-32=64.
+			 */
+			?>
+			<h1 class="job-header__title title-main text-brand-dark mb-0 md:mb-8 xl:mb-16 col-span-2 xl:col-start-2 xl:col-span-10">
 				<?php the_title(); ?>
 			</h1>
 		</div>

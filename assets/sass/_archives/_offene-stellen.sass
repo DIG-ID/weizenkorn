@@ -29,3 +29,14 @@
 // as any other AJAX grid.
 .job-listing__grid.is-loading
   @apply opacity-50 pointer-events-none transition-opacity duration-200
+
+// Deliberately against Figma (client request, see job-listing.php's own docblock): the
+// cards stretch to fill the grid's three equal columns at desktop instead of keeping
+// their fixed 440px width. weizenkorn_render_job_cards() wraps every card in
+// xl:w-[440px] (shared with the single post's own related-jobs slider, which keeps that
+// fixed width on purpose) — this compound selector's higher specificity overrides it
+// for this grid only, no !important needed.
+.job-listing__grid
+  @media (min-width: 1280px)
+    > div
+      width: auto

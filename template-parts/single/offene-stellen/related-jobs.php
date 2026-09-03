@@ -44,17 +44,19 @@ $rj_fits_xl      = ( $rj_count <= 3 );
 		<?php get_template_part( 'template-parts/components/section-heading', null, array( 'title' => __( 'Weitere Stellenausschreibungen', 'weizenkorn' ) ) ); ?>
 
 		<div class="theme-grid justify-items-start mt-8 xl:mt-12">
-			<?php
-			get_template_part(
-				'template-parts/components/button',
-				null,
-				array(
-					'title' => __( 'Alle offenen Stellen', 'weizenkorn' ),
-					'url'   => get_post_type_archive_link( 'offene-stellen' ),
-					'style' => 'primary',
-				)
-			);
-			?>
+			<div class="col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-10">
+				<?php
+				get_template_part(
+					'template-parts/components/button',
+					null,
+					array(
+						'title' => __( 'Alle offenen Stellen', 'weizenkorn' ),
+						'url'   => get_post_type_archive_link( 'offene-stellen' ),
+						'style' => 'primary',
+					)
+				);
+				?>
+			</div>
 		</div>
 
 		<div class="related-jobs__row theme-grid mt-8 xl:mt-12">

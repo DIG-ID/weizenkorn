@@ -61,7 +61,7 @@ if ( $jd_count <= 4 ) {
 	$jd_box_class = 'md:col-span-2 xl:col-span-3';
 }
 ?>
-<section class="job-details mt-24 md:mt-32 xl:mt-48">
+<section class="job-details mt-14 md:mt-20 xl:mt-28">
 	<div class="theme-container">
 		<div class="theme-grid">
 			<div class="col-span-2 xl:col-start-2 xl:col-span-7">

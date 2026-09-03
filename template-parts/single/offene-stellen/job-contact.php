@@ -30,7 +30,7 @@ $jc_intro = get_field( 'offene_stellen_contact_intro' );
 $jc_left  = get_field( 'offene_stellen_contact_left' );
 $jc_right = get_field( 'offene_stellen_contact_right' );
 ?>
-<section class="job-contact mt-24 md:mt-32 xl:mt-48">
+<section class="job-contact mt-10 md:mt-16 xl:mt-20">
 	<div class="theme-container">
 		<div class="theme-grid">
 			<div class="col-span-2 xl:col-start-2 xl:col-span-7">
@@ -43,14 +43,25 @@ $jc_right = get_field( 'offene_stellen_contact_right' );
 						<p class="body-text text-brand-dark mb-8"><?php echo esc_html( $jc_intro ); ?></p>
 					<?php endif; ?>
 
+					<?php
+					/*
+					 * xl:col-span-4/xl:col-start-6+col-span-5 approximate Figma's own
+					 * pixel gap between the two columns (node 4481:6973/4574:6576) — a
+					 * deliberate empty track between them, not just the grid's usual
+					 * 20px gutter, which is all md:col-span-3 alone leaves once this
+					 * grid's own xl:grid-cols-12 outgrows the tablet math it was written
+					 * for. Both columns are free-text (name/phone/email/hours vary per
+					 * posting), so this is an approximation, not an exact px match.
+					 */
+					?>
 					<?php if ( $jc_left || $jc_right ) : ?>
 						<div class="theme-grid">
 							<?php if ( $jc_left ) : ?>
-								<div class="body-text text-brand-dark col-span-2 md:col-span-3"><?php echo wp_kses_post( $jc_left ); ?></div>
+								<div class="body-text text-brand-dark col-span-2 md:col-span-3 xl:col-span-4"><?php echo wp_kses_post( $jc_left ); ?></div>
 							<?php endif; ?>
 
 							<?php if ( $jc_right ) : ?>
-								<div class="body-text text-brand-dark col-span-2 md:col-span-3"><?php echo wp_kses_post( $jc_right ); ?></div>
+								<div class="body-text text-brand-dark col-span-2 md:col-span-3 xl:col-start-6 xl:col-span-5"><?php echo wp_kses_post( $jc_right ); ?></div>
 							<?php endif; ?>
 						</div>
 					<?php endif; ?>
