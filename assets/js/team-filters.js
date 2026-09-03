@@ -28,8 +28,8 @@ import { initFilterPanel } from './filter-panel.js';
  * weizenkornTeam (localized in inc/enqueue.php) carries the translated
  * result-count strings, so this file has no hardcoded German.
  *
- * Markup: template-parts/pages/organization/team.php,
- * template-parts/pages/organization/team-filters.php.
+ * Markup: template-parts/pages/about-us-organization/team.php,
+ * template-parts/pages/about-us-organization/team-filters.php.
  */
 
 export function initTeamFilters() {

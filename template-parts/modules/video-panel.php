@@ -37,6 +37,7 @@ $vp_field  = $vp_prefix . 'video_panel_';
 
 // Not a plain get_field() — see weizenkorn_get_section_heading() for why.
 $vp_heading = weizenkorn_get_section_heading( $vp_field, $vp_ctx );
+
 /*
  * The clone stores its sub-fields flat, so the heading's `image` lands on {prefix}image —
  * the same meta row as this section's own picture field. One cell, two fields: whatever is

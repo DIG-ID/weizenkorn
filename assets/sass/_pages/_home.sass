@@ -28,6 +28,19 @@
   .swiper-pagination-bullet-active
     @apply bg-brand-red
 
+// Tablet only (md:grid-cols-2 in the template; xl switches to grid-cols-5, where the same
+// 5 cards already fill one clean row): the trailing card sits alone in the last row, so it
+// should take the row's full width instead of stopping at half of it, matching Figma.
+//
+// Not a :last-child/:nth-child(odd) trick (offer-grid.sass's own version, for a grid with
+// no reordering) — order-5 is always the visually-last card here (gastronomy.php's own
+// $gastro_card_order), but :last-child only ever sees DOM order, which order-* utilities
+// deliberately don't match. Shared by both pages that render this exact grid (Home,
+// Gastronomie und Hotellerie), same as the rest of .section-gastronomy's rules above.
+.section-gastronomy__cards .card-venue.order-5
+  @media (min-width: 768px) and (max-width: 1279px)
+    grid-column: span 2
+
 // -- Work & Training -----------------------------------------------------------
 // Equal-width link buttons in a row, each filling its cell with the label left and the
 // arrow pushed right.

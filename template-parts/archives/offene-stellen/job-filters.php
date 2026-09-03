@@ -8,7 +8,7 @@
  *
  * Markup/styling (.filter-panel__*, _components/_filter-panel.sass) and the
  * open/close mechanics (assets/js/filter-panel.js) are shared with Das
- * Weizenkorn Team's own filter (template-parts/pages/organization/team-filters.php)
+ * Weizenkorn Team's own filter (template-parts/pages/about-us-organization/team-filters.php)
  * — the same Figma panel reused for a second, unrelated grid. Only the
  * js-job-filters-* hooks below and what "Apply"/"Clear" actually do are this
  * section's own.

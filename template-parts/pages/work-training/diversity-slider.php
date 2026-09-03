@@ -31,50 +31,53 @@ if ( ! $wtd_title || ! have_rows( 'work_training_diversity_items' ) ) {
 	<div class="theme-container">
 		<?php get_template_part( 'template-parts/components/section-heading', null, array( 'title' => $wtd_title ) ); ?>
 
-		<div class="mt-8 md:mt-14 xl:mt-24">
-			<div class="swiper js-diversity-slider">
-				<div class="swiper-wrapper">
-					<?php
-					while ( have_rows( 'work_training_diversity_items' ) ) :
-						the_row();
-
-						if ( ! get_sub_field( 'image' ) ) {
-							continue;
-						}
-						?>
-						<div class="swiper-slide">
-							<figure class="section-diversity-slider__slide relative overflow-hidden">
-								<?php
-								echo wp_get_attachment_image(
-									get_sub_field( 'image' ),
-									'large',
-									false,
-									array(
-										'class'   => 'w-full h-[256px] md:h-[360px] xl:h-[767px] object-cover',
-										'loading' => 'lazy',
-									)
-								);
-								?>
-
-								<?php if ( get_sub_field( 'category' ) || get_sub_field( 'title' ) ) : ?>
-									<figcaption class="section-diversity-slider__caption absolute bottom-0 left-0 w-full">
-										<?php if ( get_sub_field( 'category' ) ) : ?>
-											<span class="uppercase text-brand-dark"><?php echo esc_html( get_sub_field( 'category' ) ); ?></span>
-										<?php endif; ?>
-										<?php if ( get_sub_field( 'title' ) ) : ?>
-											<span><?php echo esc_html( get_sub_field( 'title' ) ); ?></span>
-										<?php endif; ?>
-									</figcaption>
-								<?php endif; ?>
-							</figure>
-						</div>
+		<div class="theme-grid mt-8 md:mt-14 xl:mt-24">
+			<?php // Standard inset — full width below xl, columns 2-11 at xl, same as everywhere else. ?>
+			<div class="col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-10">
+				<div class="swiper js-diversity-slider">
+					<div class="swiper-wrapper">
 						<?php
-					endwhile;
-					?>
-				</div>
-			</div>
+						while ( have_rows( 'work_training_diversity_items' ) ) :
+							the_row();
 
-			<div class="section-diversity-slider__pagination swiper-pagination js-diversity-pagination"></div>
+							if ( ! get_sub_field( 'image' ) ) {
+								continue;
+							}
+							?>
+							<div class="swiper-slide">
+								<figure class="section-diversity-slider__slide relative overflow-hidden">
+									<?php
+									echo wp_get_attachment_image(
+										get_sub_field( 'image' ),
+										'large',
+										false,
+										array(
+											'class'   => 'w-full h-[256px] md:h-[360px] xl:h-[767px] object-cover',
+											'loading' => 'lazy',
+										)
+									);
+									?>
+
+									<?php if ( get_sub_field( 'category' ) || get_sub_field( 'title' ) ) : ?>
+										<figcaption class="section-diversity-slider__caption absolute bottom-0 left-0 w-full">
+											<?php if ( get_sub_field( 'category' ) ) : ?>
+												<span class="uppercase text-brand-dark"><?php echo esc_html( get_sub_field( 'category' ) ); ?></span>
+											<?php endif; ?>
+											<?php if ( get_sub_field( 'title' ) ) : ?>
+												<span><?php echo esc_html( get_sub_field( 'title' ) ); ?></span>
+											<?php endif; ?>
+										</figcaption>
+									<?php endif; ?>
+								</figure>
+							</div>
+							<?php
+						endwhile;
+						?>
+					</div>
+				</div>
+
+				<div class="section-diversity-slider__pagination swiper-pagination js-diversity-pagination"></div>
+			</div>
 		</div>
 	</div>
 </section>

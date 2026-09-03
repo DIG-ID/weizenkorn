@@ -26,7 +26,8 @@
 $nh_previous = get_previous_post();
 $nh_next     = get_next_post();
 
-$nh_image = get_field( 'news_hero_image' ) ?: get_post_thumbnail_id();
+$nh_override = get_field( 'news_hero_image' );
+$nh_image    = $nh_override ? $nh_override : get_post_thumbnail_id();
 ?>
 <?php
 // No top margin: the photograph opens the page, right under the site header.

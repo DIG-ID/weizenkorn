@@ -67,6 +67,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Three of the theme's button styles (Primary, Secondary, Black) as block style variations for the core Button block, so any post or page can use them from the block editor's own Style panel. The block editor now previews pages in the theme's own styles, so what an editor sees while writing matches the published page.
 - Organization page template: hero, a "Warum Weizenkorn?" intro, an "Organigramm" section (a PDF download beside a paragraph), "Das Weizenkorn Team" (a filterable grid of team members with a slide-in filter panel — Bereiche, Standorte), a "Transparency" section (same shape as Organigramm), and a "Kommen wir ins Gespräch?" contact form.
 - The team grid's filter panel is the same slide-in design as the Open Positions archive's, sharing its styling and open/close behaviour so both look and behave identically.
+- Donate page template: hero, an "Unsere Spenden-Projekte" project slider, the shared "Wirkung im Fokus" impact section, a "Jetzt Spenden" payment-info section (QR codes, bank details, tax note), and the shared FAQ.
 
 ### Changed
 - The "Unsere Ausbildung" programme cards' text now reveals on hover, overlapping the photo, instead of always showing.
@@ -83,6 +84,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Category grid cards no longer sit at uneven heights within the same row.
 - Das Weizenkorn Team: "Mehr Laden" and the filter could leave most of the team unreachable — a member past the first 12 could never be revealed once hidden. "Mehr Laden" buttons (Open Positions archive included, same underlying cause) also stayed visibly on screen past their last page instead of disappearing.
 - Login screen: with the WPML language switcher enabled, it floated beside the login box instead of sitting centred underneath it.
+- Gastronomy section (Home and Gastronomie & Hotellerie pages): a card left alone in a tablet row now spans the full row instead of stopping at half width; the mobile slider's venue cards now fall back to the venue's name when no logo is set, matching the tablet/desktop cards.
+- Work & Training page: the "Ihre Perspektiven bei uns" and "Arbeitsvielfalt bei Weizenkorn" sections now sit within the page's standard column inset instead of spanning its full width; an isolated third card in "Ihre Perspektiven bei uns" now spans the full row at tablet too, matching desktop.
 
 ---
 

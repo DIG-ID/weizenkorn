@@ -290,3 +290,36 @@ export function initRelatedJobsSlider() {
     });
   });
 }
+
+/**
+ * Donate page — "Unsere Spenden-Projekte" slider: three project cards per view at
+ * desktop, one below it. Same configuration as initRelatedJobsSlider() — the arrows
+ * and bullets sit outside .swiper, in the section's own grid row, so both are looked
+ * up from the section root — but CSS (_pages/_donate.sass) shows only the arrows at
+ * xl and only the dots below it, rather than both together, matching Figma's own
+ * desktop-arrows / tablet+mobile-dots split.
+ */
+export function initDonationProjectsSlider() {
+  document.querySelectorAll('.js-donation-projects-slider').forEach((el) => {
+    const root = el.closest('.donation-projects');
+
+    new Swiper(el, {
+      modules: [Navigation, Pagination, A11y],
+      spaceBetween: 20,
+      slidesPerView: 1,
+      breakpoints: {
+        1280: { slidesPerView: 3 },
+      },
+      observer: true,
+      observeParents: true,
+      pagination: {
+        el: root ? root.querySelector('.js-donation-projects-pagination') : null,
+        clickable: true,
+      },
+      navigation: {
+        prevEl: root ? root.querySelector('.js-donation-projects-prev') : null,
+        nextEl: root ? root.querySelector('.js-donation-projects-next') : null,
+      },
+    });
+  });
+}
