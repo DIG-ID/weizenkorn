@@ -44,7 +44,8 @@ $rj_fits_xl      = ( $rj_count <= 3 );
 		<?php get_template_part( 'template-parts/components/section-heading', null, array( 'title' => __( 'Weitere Stellenausschreibungen', 'weizenkorn' ) ) ); ?>
 
 		<div class="theme-grid justify-items-start mt-8 xl:mt-12">
-			<div class="col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-10">
+			<?php // md:col-start-2, matching where __viewport itself starts at this breakpoint (see _singles/_offene-stellen.sass) — col-span-5 rather than 6 so it still fits the grid without overflowing a 7th column. ?>
+			<div class="col-span-2 md:col-start-2 md:col-span-5 xl:col-start-2 xl:col-span-10">
 				<?php
 				get_template_part(
 					'template-parts/components/button',

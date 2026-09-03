@@ -11,6 +11,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.12.0] — 2026-09-03
+
+### Added
+- About Us — Organization page: an optional embed (e.g. a flip-book) in the "Warum Weizenkorn?" section's left column, beside the text.
+
+### Changed
+- Open Positions single post: the header, details and contact sections now use the full column width at tablet instead of a narrow sliver, and the "Alle offenen Stellen" button aligns with the related-jobs cards below it at that breakpoint too.
+
+### Fixed
+- Open Positions single post: "Ihre Aufgaben" and "Voraussetzungen" skipped a heading level (jumping from the page's title straight to a sub-heading).
+
 ## [1.11.1] — 2026-09-03
 
 ### Changed

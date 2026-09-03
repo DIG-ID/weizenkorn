@@ -64,7 +64,7 @@ if ( $jd_count <= 4 ) {
 <section class="job-details mt-14 md:mt-20 xl:mt-28">
 	<div class="theme-container">
 		<div class="theme-grid">
-			<div class="col-span-2 xl:col-start-2 xl:col-span-7">
+			<div class="col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-7">
 				<div class="theme-grid gap-y-8">
 					<?php
 					while ( have_rows( 'offene_stellen_details_items' ) ) :
@@ -75,9 +75,17 @@ if ( $jd_count <= 4 ) {
 						}
 						?>
 						<div class="card-category col-span-2 <?php echo esc_attr( $jd_box_class ); ?> flex flex-col">
-							<h3 class="card-category__title text-brand-red font-primary font-bold uppercase tracking-[0.5px] text-[14px] xl:text-[15px] mb-4">
+							<?php
+							/*
+							 * h2, not h3: nothing on this page wraps "Ihre Aufgaben"/"Voraussetzungen"
+							 * in a section heading of its own (unlike category-grid.php's own use of
+							 * this exact card shape, nested under a real h2 there) — h3 here would
+							 * skip straight from the page's h1, no h2 in between.
+							 */
+							?>
+							<h2 class="card-category__title text-brand-red font-primary font-bold uppercase tracking-[0.5px] text-[14px] xl:text-[15px] mb-4">
 								<?php echo esc_html( get_sub_field( 'title' ) ); ?>
-							</h3>
+							</h2>
 
 							<?php if ( get_sub_field( 'list' ) ) : ?>
 								<div class="card-category__list border border-brand-red body-text px-6 py-6 flex-1">

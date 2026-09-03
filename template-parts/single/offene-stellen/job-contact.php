@@ -33,7 +33,7 @@ $jc_right = get_field( 'offene_stellen_contact_right' );
 <section class="job-contact mt-10 md:mt-16 xl:mt-20">
 	<div class="theme-container">
 		<div class="theme-grid">
-			<div class="col-span-2 xl:col-start-2 xl:col-span-7">
+			<div class="col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-7">
 				<h2 class="job-contact__title text-brand-red font-primary font-bold uppercase tracking-[0.5px] text-[14px] xl:text-[15px] mb-4">
 					<?php echo esc_html( $jc_title ); ?>
 				</h2>

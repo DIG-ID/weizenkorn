@@ -63,14 +63,14 @@ $jh_body       = get_field( 'offene_stellen_body' );
 
 	<div class="theme-container">
 		<div class="theme-grid mt-8 xl:mt-12">
-			<a href="<?php echo esc_url( get_post_type_archive_link( 'offene-stellen' ) ); ?>" class="job-header__back btn btn-secondary justify-self-start col-span-2 xl:col-start-2 xl:col-span-5">
+			<a href="<?php echo esc_url( get_post_type_archive_link( 'offene-stellen' ) ); ?>" class="job-header__back btn btn-secondary justify-self-start col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-5">
 				<span class="btn__icon -scale-x-100" aria-hidden="true"><?php weizenkorn_the_svg_icon( 'arrow-right' ); ?></span>
 				<?php esc_html_e( 'Zurück zur Übersicht', 'weizenkorn' ); ?>
 			</a>
 		</div>
 
 		<div class="job-header__meta theme-grid mt-8 xl:mt-16 pb-4 border-b border-brand-red">
-			<time class="job-header__date text-brand-red col-span-2 xl:col-start-2 xl:col-span-7" datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>">
+			<time class="job-header__date text-brand-red col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-7" datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>">
 				<?php echo esc_html( get_the_date( weizenkorn_get_date_format() ) ); ?>
 			</time>
 		</div>
@@ -86,14 +86,14 @@ $jh_body       = get_field( 'offene_stellen_body' );
 			 * remainder: 32-32=0, 64-32=32, 96-32=64.
 			 */
 			?>
-			<h1 class="job-header__title title-main text-brand-dark mb-0 md:mb-8 xl:mb-16 col-span-2 xl:col-start-2 xl:col-span-10">
+			<h1 class="job-header__title title-main text-brand-dark mb-0 md:mb-8 xl:mb-16 col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-10">
 				<?php the_title(); ?>
 			</h1>
 		</div>
 
 		<?php if ( $jh_employment || $jh_start_date || $jh_location ) : ?>
 			<div class="theme-grid mt-8">
-				<div class="job-header__badges col-span-2 xl:col-start-2 xl:col-span-7 flex flex-wrap gap-4">
+				<div class="job-header__badges col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-7 flex flex-wrap gap-4">
 					<?php foreach ( array( $jh_employment, $jh_start_date, $jh_location ) as $jh_badge ) : ?>
 						<?php if ( $jh_badge ) : ?>
 							<span class="job-header__badge border border-brand-red text-brand-red font-primary font-bold text-[12px] xl:text-[14px] tracking-[0.5px] px-4 py-3">
@@ -107,7 +107,7 @@ $jh_body       = get_field( 'offene_stellen_body' );
 
 		<?php if ( $jh_body ) : ?>
 			<div class="theme-grid mt-8">
-				<div class="job-header__body body-text text-brand-dark col-span-2 xl:col-start-2 xl:col-span-7">
+				<div class="job-header__body body-text text-brand-dark col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-7">
 					<?php echo wp_kses_post( $jh_body ); ?>
 				</div>
 			</div>
