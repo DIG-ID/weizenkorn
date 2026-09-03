@@ -151,7 +151,7 @@ add_action( 'socials', 'weizenkorn_socials' );
  * @since 1.1.0
  *
  * @param string $name Icon name: 'arrow-right', 'arrow-down', 'arrow-download', 'phone',
- *                     'mail', 'filter' or 'avatar-placeholder'.
+ *                     'mail', 'filter', 'play' or 'avatar-placeholder'.
  */
 function weizenkorn_the_svg_icon( $name ) {
 
@@ -163,6 +163,9 @@ function weizenkorn_the_svg_icon( $name ) {
 		'filter'             => '<svg width="24" height="18" viewBox="0 0 40 29" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M35 21C36.8638 21 38.43 22.2748 38.874 24H40V25H39C39 27.2091 37.2091 29 35 29C32.7909 29 31 27.2091 31 25H0V24H31.126C31.57 22.2748 33.1362 21 35 21ZM20 11C21.8638 11 23.43 12.2748 23.874 14H40V15H24C24 17.2091 22.2091 19 20 19C17.7909 19 16 17.2091 16 15H0V14H16.126C16.57 12.2748 18.1362 11 20 11ZM6 0C8.20914 0 10 1.79086 10 4H40V5H9.87402C9.42998 6.72523 7.86384 8 6 8C4.13616 8 2.57002 6.72523 2.12598 5H0V4H2C2 1.79086 3.79086 0 6 0Z" fill="currentColor" /></svg>',
 		'arrow-down'         => '<svg width="19" height="24" viewBox="0 0 18.632 23.7301" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.31602 4.33488e-08L9.31602 22M0.816024 10L9.31602 22L17.816 10" stroke="currentColor" stroke-width="2" /></svg>',
 		'arrow-download'     => '<svg width="21" height="26" viewBox="0 0 21 25.5" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M10.5 0V20.5M2 8.5L10.5 20.5L19 8.5M0 24.5H21" stroke="currentColor" stroke-width="2" /></svg>',
+		// The play trigger on a video facade. Filled rather than stroked, so it reads at
+		// the small size the button draws it and needs no stroke-width of its own.
+		'play'               => '<svg width="28" height="32" viewBox="0 0 28 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M27 16L0.999999 31.0096L1 0.990379L27 16Z" fill="currentColor" /></svg>',
 		'phone'              => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>',
 		'mail'               => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="2" /><path d="M2 7l10 6 10-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>',
 		// The team section's no-photo fallback (a silhouette + the brand's wheat sprout),
@@ -306,6 +309,191 @@ function weizenkorn_get_file_url( $value ) {
 	}
 
 	return is_string( $value ) ? trim( $value ) : '';
+}
+
+/**
+ * Pulls the video id and the unlisted hash out of whatever a Vimeo field was filled with.
+ *
+ * A client hands this over in any of five shapes — the share URL, the share URL with the
+ * unlisted hash as a path segment or as ?h=, the player URL out of the embed code, or the
+ * whole <iframe> block pasted in. All of them carry the same two things.
+ *
+ * @since 1.11.0
+ *
+ * @param mixed $value Raw field value: a URL, an ID, or embed code.
+ * @return array {
+ *     Empty when no video id can be found.
+ *
+ *     @type string $id   The numeric video id.
+ *     @type string $hash The unlisted hash, or an empty string.
+ * }
+ */
+function weizenkorn_parse_vimeo( $value ) {
+
+	if ( ! is_string( $value ) && ! is_numeric( $value ) ) {
+		return array();
+	}
+
+	$value = trim( (string) $value );
+
+	if ( '' === $value ) {
+		return array();
+	}
+
+	// The id: after vimeo.com/ or /video/, or the whole value when a bare number.
+	if ( ! preg_match( '#(?:vimeo\.com/(?:video/)?|^)(\d{6,})#i', $value, $id_match ) ) {
+		return array();
+	}
+
+	// The unlisted hash, written either as ?h= / &h= or as the path segment after the id.
+	$hash = '';
+	if ( preg_match( '#[?&]h=([a-z0-9]+)#i', $value, $hash_match ) ) {
+		$hash = $hash_match[1];
+	} elseif ( preg_match( '#vimeo\.com/(?:video/)?\d{6,}/([a-z0-9]+)#i', $value, $hash_match ) ) {
+		$hash = $hash_match[1];
+	}
+
+	return array(
+		'id'   => $id_match[1],
+		'hash' => $hash,
+	);
+}
+
+/**
+ * Asks Vimeo about a video, once, and remembers the answer.
+ *
+ * Two things come back from the one request: whether the video is still there, and the
+ * thumbnail Vimeo holds for it. The facade never contacts Vimeo until someone clicks, which
+ * is what keeps the page fast and cookie-free — but it also means a video deleted, made
+ * private or re-hashed looks fine until a visitor clicks and gets Vimeo's own error inside
+ * the box. A cross-origin iframe cannot be checked from the browser: it fires no error
+ * event on a 404, and the only client-side alternative is loading Vimeo's player script,
+ * which is the very thing the facade exists to avoid.
+ *
+ * Fails OPEN on availability. A timeout, a DNS blip or an unexpected status all count as
+ * available: a problem on this end must never hide a video that is perfectly fine. Only an
+ * explicit 404 or 403 from Vimeo — gone, or no longer visible with this hash — hides it.
+ *
+ * @since 1.11.0
+ *
+ * @param mixed $value Raw field value, in any shape weizenkorn_parse_vimeo() accepts.
+ * @return array {
+ *     @type bool   $available False only when Vimeo says the video is gone.
+ *     @type string $thumbnail Vimeo's own still, or an empty string.
+ * }
+ */
+function weizenkorn_get_vimeo_data( $value ) {
+
+	$video = weizenkorn_parse_vimeo( $value );
+
+	if ( ! $video ) {
+		return array(
+			'available' => false,
+			'thumbnail' => '',
+		);
+	}
+
+	$key    = 'weizenkorn_vimeo_' . md5( $video['id'] . '/' . $video['hash'] );
+	$cached = get_transient( $key );
+
+	if ( is_array( $cached ) ) {
+		return $cached;
+	}
+
+	// oEmbed needs the share URL, and an unlisted video needs its hash on that URL too.
+	$share = 'https://vimeo.com/' . $video['id'] . ( $video['hash'] ? '/' . $video['hash'] : '' );
+
+	$response = wp_remote_get(
+		add_query_arg(
+			array(
+				// Sizes the still Vimeo hands back; the player itself is built from the
+				// embed URL, not from anything in this response.
+				'width' => 1920,
+				'url'   => rawurlencode( $share ),
+			),
+			'https://vimeo.com/api/oembed.json'
+		),
+		array(
+			'timeout'   => 3,
+			'sslverify' => true,
+		)
+	);
+
+	if ( is_wp_error( $response ) ) {
+		// Cached briefly so a Vimeo outage does not mean a request per page view.
+		$data = array(
+			'available' => true,
+			'thumbnail' => '',
+		);
+		set_transient( $key, $data, 5 * MINUTE_IN_SECONDS );
+		return $data;
+	}
+
+	$status = (int) wp_remote_retrieve_response_code( $response );
+	$gone   = in_array( $status, array( 403, 404 ), true );
+	$body   = json_decode( wp_remote_retrieve_body( $response ), true );
+
+	$data = array(
+		'available' => ! $gone,
+		// Never the *_with_play_button variant: this theme draws its own button over it.
+		'thumbnail' => ( ! $gone && ! empty( $body['thumbnail_url'] ) ) ? $body['thumbnail_url'] : '',
+	);
+
+	/*
+	 * A live video is rechecked twice a day; a missing one every hour, so a video the
+	 * client re-uploads or makes unlisted again comes back without anyone clearing a cache.
+	 */
+	set_transient( $key, $data, $gone ? HOUR_IN_SECONDS : 12 * HOUR_IN_SECONDS );
+
+	return $data;
+}
+
+/**
+ * Turns whatever a Vimeo field was filled with into a player URL this theme can embed.
+ *
+ * A client hands this over in any of five shapes — the share URL, the share URL with the
+ * unlisted hash as a path segment or as ?h=, the player URL out of the embed code, or the
+ * whole <iframe> block pasted in. All of them carry the same two things, so both are read
+ * out by pattern and the URL is rebuilt rather than passed through: a URL built here
+ * cannot arrive with parameters nobody vetted.
+ *
+ * The rebuilt URL carries dnt=1, which is what stops Vimeo setting tracking cookies — the
+ * reason a raw embed needs a consent banner and this one does not. autoplay=1 is safe
+ * because the iframe is only ever inserted by a click on the facade, never on page load.
+ *
+ * The unlisted hash matters: a video set to "unlisted" refuses to play without it.
+ *
+ * @since 1.11.0
+ *
+ * @param mixed $value Raw field value: a URL, an ID, or embed code.
+ * @return string Player URL, or an empty string when no video id can be found.
+ */
+function weizenkorn_get_vimeo_embed_url( $value ) {
+
+	$video = weizenkorn_parse_vimeo( $value );
+
+	if ( ! $video ) {
+		return '';
+	}
+
+	$video_id = $video['id'];
+	$hash     = $video['hash'];
+
+	$args = array(
+		'dnt'       => 1,
+		'autoplay'  => 1,
+		'title'     => 0,
+		'byline'    => 0,
+		'portrait'  => 0,
+		'badge'     => 0,
+		'autopause' => 0,
+	);
+
+	if ( $hash ) {
+		$args = array( 'h' => $hash ) + $args;
+	}
+
+	return add_query_arg( $args, 'https://player.vimeo.com/video/' . $video_id );
 }
 
 /**

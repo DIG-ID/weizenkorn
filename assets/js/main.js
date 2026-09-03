@@ -15,6 +15,7 @@ import { initProcessSteps } from './process-steps.js';
 import { initJobFilters } from './job-filters.js';
 import { initTeamFilters } from './team-filters.js';
 import { initNewsPagination } from './news-pagination.js';
+import { initVideoFacade } from './video-facade.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -41,5 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroFit();
   initProcessSteps();
   initNewsPagination();
+  initVideoFacade();
 
 });

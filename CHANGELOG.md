@@ -11,6 +11,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.11.0] — 2026-09-03
+
+### Added
+- About Us page template: hero, "Was uns antreibt", a grid of values, "Unser Ursprung", "So arbeiten wir", a quote slider, "Weizenkorn entdecken" with a video, "Organisation" and "Spenden".
+- Vimeo videos in the video panel. A link field replaces the uploaded video, and the page draws the still and the play button itself — nothing is requested from Vimeo until a visitor presses play, which keeps the page fast and off a cookie banner. Where the Image field is empty, Vimeo's own still stands in.
+- A video whose link no longer works falls back to the image instead of showing Vimeo's error after a click.
+- Optional hero image on a news article, for photographs the hero's fixed height would otherwise crop badly. The cards and the archive keep using the featured image.
+- "Hide from listings" on a news article: keeps it out of the archive, out of the featured slot, out of the pagination and out of the slider under other articles, while it stays published and reachable from wherever it is linked.
+- An optional wide picture in the button and text section.
+- wpml-config.xml, so the news and Open Positions post types and the two Open Positions taxonomies are translatable in every environment rather than one toggle per site.
+
+### Fixed
+- The craft showcase drew its picture twice where both the heading and the section had one.
+- In offer links, the button and the paragraph touched each other where they stack at mobile.
+- Spacing at tablet on a news article: under the previous/next links, and between the date and the rule.
+- 32 of empty space under the rule in the craft showcase at mobile, where the section has no left-hand picture.
+
+### Changed
+- The video panel puts the video across all six columns at tablet with the text under it.
+
 ## [1.10.0] — 2026-09-02
 
 ### Added

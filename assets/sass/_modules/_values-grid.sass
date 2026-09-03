@@ -1,0 +1,45 @@
+// Values grid — template-parts/modules/values-grid.php
+
+.values-grid
+
+  // 52 between a rule and the next item at tablet, 78 at desktop, from the frames.
+  &__list
+    @apply gap-y-8 md:gap-y-[52px] xl:gap-y-[78px]
+
+  // The icon sits above the text at mobile, centred over it, and beside it from tablet up.
+  // 25 between the two until desktop, where the frame opens it to 41.
+  &__item
+    @apply flex flex-col items-center gap-[25px]
+    @apply md:flex-row md:items-start
+    @apply xl:gap-[41px]
+
+    // The rule under every row but the last. One item to a row up to tablet, so there the
+    // last one drops it; two to a row at desktop, so there the last two do.
+    //
+    // The desktop rule assumes an even number of values, which is what the design has:
+    // with an odd count the last row holds one item and the one before it, in the row
+    // above, would lose its rule too. The day an odd count appears this needs the row
+    // worked out in PHP instead.
+    @apply border-b border-brand-dark pb-8 md:pb-[52px] xl:pb-[92px]
+
+    &:last-child
+      @apply border-b-0 pb-0
+
+    @media (min-width: 1280px)
+      &:nth-last-child(-n+2)
+        @apply border-b-0 pb-0
+
+  // 98 square in the frame, and it must not shrink when the paragraph is long.
+  // 72 at mobile and 98 from tablet up, and it must not shrink when the paragraph is long.
+  &__icon
+    @apply w-[72px] h-[72px] md:w-[98px] md:h-[98px]
+
+  // Title and paragraph share one rhythm: the frame's text block is four lines of 30 with
+  // nothing added between the two.
+  // Full width at mobile, where the item is a column and a flex child would otherwise
+  // shrink to its content and lose the frame's left-aligned text.
+  &__text
+    @apply w-full
+
+  &__title
+    @apply mb-0

@@ -1,0 +1,50 @@
+// Video facade — the poster and play button that stand in for a third-party player until
+// someone clicks. See template-parts/modules/video-panel.php and assets/js/video-facade.js.
+
+.video-facade
+  @apply relative block w-full h-full p-0 m-0 border-0 bg-brand-dark cursor-pointer overflow-hidden
+
+  img
+    @apply w-full h-full object-cover
+    transition: transform var(--transition-slow), opacity var(--transition-base)
+
+  &__play
+    @apply absolute grid place-items-center text-brand-cream pointer-events-none
+    top: 50%
+    left: 50%
+    width: 72px
+    height: 72px
+    transform: translate(-50%, -50%)
+    background: var(--color-brand-red, #E30613)
+    border-radius: 50%
+    transition: transform var(--transition-base)
+
+    @media (min-width: 1280px)
+      width: 96px
+      height: 96px
+
+    svg
+      // Nudged off centre: a triangle's optical centre sits left of its bounding box.
+      margin-left: 4px
+
+  &:hover,
+  &:focus-visible
+    img
+      @apply opacity-90
+      transform: scale(1.03)
+
+    .video-facade__play
+      transform: translate(-50%, -50%) scale(1.08)
+
+  // The iframe the click puts here, filling the same box the poster did.
+  iframe
+    @apply absolute inset-0 w-full h-full border-0
+
+@media (prefers-reduced-motion: reduce)
+  .video-facade
+    img,
+    &__play
+      transition: none
+
+    &:hover img
+      transform: none

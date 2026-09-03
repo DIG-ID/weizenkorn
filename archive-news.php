@@ -39,6 +39,8 @@ $weizenkorn_latest = get_posts(
 		'post_status'      => 'publish',
 		'numberposts'      => 1,
 		'suppress_filters' => false,
+		// An article hidden from listings must not become the featured one either.
+		'meta_query'       => weizenkorn_news_listing_meta_query(), // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- see the helper.
 	)
 );
 

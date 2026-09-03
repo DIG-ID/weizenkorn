@@ -1,0 +1,27 @@
+// Video panel — template-parts/modules/video-panel.php
+
+.video-panel
+
+  // The two stack below xl — the video across all six columns at tablet with the text
+  // under it — so the row gap holds until desktop, where they share a row instead.
+  &__row
+    @apply gap-y-4 xl:gap-y-0
+
+  // One ratio at every width, which is what the three frames agree on: 320x234 at mobile,
+  // 341x249.5 at tablet and 820x600 at desktop are all 41:30.
+  &__media
+    aspect-ratio: 41 / 30
+
+    img,
+    video
+      @apply w-full h-full object-cover
+
+  // A Vimeo film is 16:9 and cannot be cropped to the frame's box without cutting the
+  // picture, so the box follows the film. The paragraph beside it aligns to the bottom of
+  // the row, so a shorter box only shortens the row.
+  &__media--embed
+    aspect-ratio: 16 / 9
+
+  // 16 under the overline at mobile, 24 at tablet and 32 at desktop, from the frames.
+  &__overline
+    @apply mb-4 md:mb-6 xl:mb-8

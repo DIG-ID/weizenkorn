@@ -1,0 +1,74 @@
+[
+    {
+        "key": "group_news_single_post",
+        "title": "News - Single Post",
+        "fields": [
+            {
+                "key": "field_news_hero_image",
+                "label": "Hero image",
+                "name": "news_hero_image",
+                "aria-label": "",
+                "type": "image",
+                "instructions": "Optional. Drawn instead of the featured image in the hero, and only there — the cards and the archive keep using the featured image. The hero is a fixed height (160 at mobile, 256 at tablet, 519 at desktop) across the container's full width, so a portrait or tightly framed picture loses its subject to the crop. Upload the same photograph cropped wider, and it fills the band without cutting anything out.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "id",
+                "library": "all",
+                "preview_size": "medium",
+                "min_width": "",
+                "min_height": "",
+                "min_size": "",
+                "max_width": "",
+                "max_height": "",
+                "max_size": "",
+                "mime_types": "",
+                "menu_order": 0,
+                "wpml_cf_preferences": 3
+            },
+            {
+                "key": "field_news_hide_from_lists",
+                "label": "Hide from listings",
+                "name": "news_hide_from_lists",
+                "aria-label": "",
+                "type": "true_false",
+                "instructions": "Keeps this article out of the news archive, out of the featured slot at the top of it, and out of the slider under other articles. It stays published and keeps its own URL, so it still opens wherever it is linked from — use this for articles that belong to a specific page rather than to the news stream.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 0,
+                "ui": 1,
+                "ui_on_text": "",
+                "ui_off_text": "",
+                "menu_order": 1,
+                "wpml_cf_preferences": 1
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "news"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "side",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "Fields for a single news article."
+    }
+]

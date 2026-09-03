@@ -17,6 +17,10 @@
       height: 519px
 
   // 25 under the photograph at mobile, 44 at tablet and 50 at desktop, from the frames.
+  //
+  // What follows the nav is the header's date, and that gap is the section's own bottom
+  // margin — 84/72/192. The tablet frame gives 72 where the theme's rhythm would have put
+  // 128, which is why the middle value is written out rather than taken from the scale.
   &__nav
     @apply mt-[25px] md:mt-11 xl:mt-[50px]
 
@@ -67,13 +71,14 @@
 
 .news-header
 
-  // 16 under the date at mobile and 32 at desktop, from the frames. The rule runs the
-  // container's width while the date and the title keep to the inset.
+  // 16/24/32 under the date, from the three frames — the scale this theme uses for most of
+  // its small gaps. The rule runs the container's width while the date and the title keep
+  // to the inset.
   &__rule
-    @apply mt-4 xl:mt-8
+    @apply mt-4 md:mt-6 xl:mt-8
 
-  // 96 under the rule at mobile and 88 at desktop — the mobile frame gives the title more
-  // air, not less. Tablet is unmeasured and follows mobile.
+  // 96 under the rule at mobile and at tablet, 88 at desktop — the narrower frames give the
+  // title more air, not less. All three measured.
   &__title
     @apply mt-24 xl:mt-[88px]
 

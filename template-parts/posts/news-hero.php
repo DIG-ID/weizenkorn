@@ -10,6 +10,14 @@
  * older one — and the row still holds its ends, so the remaining button stays where the
  * frame puts it.
  *
+ * ACF fields:
+ *   news_hero_image (image → ID) optional. Drawn instead of the featured image.
+ *
+ * The photograph is a fixed height at each width, so a portrait or a tightly framed
+ * featured image loses its subject to object-cover. The field is the way out: the same
+ * picture cropped wider, or a different one, without touching what the cards and the
+ * archive use — those keep reading the featured image.
+ *
  * @package weizenkorn
  * @subpackage Section
  * @since 1.10.0
@@ -17,6 +25,8 @@
 
 $nh_previous = get_previous_post();
 $nh_next     = get_next_post();
+
+$nh_image = get_field( 'news_hero_image' ) ?: get_post_thumbnail_id();
 ?>
 <?php
 // No top margin: the photograph opens the page, right under the site header.
@@ -24,18 +34,23 @@ $nh_next     = get_next_post();
 // 84 under it at mobile, which the frame annotates rather than the theme's own 96 — the
 // only place in this page where the two differ. Tablet and desktop keep the rhythm.
 ?>
-<section class="news-hero mb-[84px] md:mb-32 xl:mb-48">
+<section class="news-hero mb-[84px] md:mb-[72px] xl:mb-48">
 
-	<?php if ( has_post_thumbnail() ) : ?>
+	<?php if ( $nh_image ) : ?>
 		<div class="theme-container">
 			<div class="news-hero__media overflow-hidden">
 				<?php
-				the_post_thumbnail(
+				// eager and fetchpriority because this is the page's LCP — the one image on
+				// the site that must not wait for the lazy loader.
+				echo wp_get_attachment_image(
+					$nh_image,
 					'full',
+					false,
 					array(
 						'class'         => 'w-full h-full object-cover',
 						'loading'       => 'eager',
 						'fetchpriority' => 'high',
+						'alt'           => the_title_attribute( array( 'echo' => false ) ),
 					)
 				);
 				?>

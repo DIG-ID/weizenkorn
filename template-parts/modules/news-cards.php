@@ -62,6 +62,7 @@ $nc_query = new WP_Query(
 		'paged'               => $nc_page,
 		'post__not_in'        => $nc_exclude ? array( $nc_exclude ) : array(),
 		'ignore_sticky_posts' => true,
+		'meta_query'          => weizenkorn_news_listing_meta_query(), // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- see the helper: a listing has to exclude hidden articles.
 	)
 );
 

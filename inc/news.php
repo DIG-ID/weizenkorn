@@ -74,6 +74,80 @@ endif;
 
 add_action( 'rest_api_init', 'weizenkorn_register_news_routes' );
 
+if ( ! function_exists( 'weizenkorn_news_listing_meta_query' ) ) :
+	/**
+	 * The meta_query that keeps articles marked "hide from listings" out of a listing.
+	 *
+	 * An article hidden this way is still published and still has its own URL — it is
+	 * reachable from wherever it is linked, and by anyone with the address. It is only kept
+	 * out of the places that assemble a list of their own: the archive's featured article,
+	 * the archive grid (and the REST route that pages it), and the slider under a single.
+	 *
+	 * The OR is not optional. A true/false field writes no row until the post is saved once,
+	 * so an article that predates the field has no meta at all — testing only for '!= 1'
+	 * would silently drop every one of them.
+	 *
+	 * @since 1.11.0
+	 *
+	 * @return array A meta_query array.
+	 */
+	function weizenkorn_news_listing_meta_query() {
+		return array(
+			'relation' => 'OR',
+			array(
+				'key'     => 'news_hide_from_lists',
+				'compare' => 'NOT EXISTS',
+			),
+			array(
+				'key'     => 'news_hide_from_lists',
+				'value'   => '1',
+				'compare' => '!=',
+			),
+		);
+	}
+endif;
+
+if ( ! function_exists( 'weizenkorn_news_adjacent_post_where' ) ) :
+	/**
+	 * Keeps articles marked "hide from listings" out of the previous/next links too.
+	 *
+	 * Every other listing takes a meta_query — get_adjacent_post() does not, it builds one
+	 * SQL string and hands it to a filter, so the same rule has to be written as SQL here.
+	 * Without it a reader walking the articles with those two buttons lands on an article
+	 * the archive deliberately leaves out.
+	 *
+	 * The subquery is the whole condition rather than a JOIN: the posts with the flag are a
+	 * short list, and a JOIN on postmeta would have to be LEFT to keep the articles that
+	 * have no row at all — the same trap the meta_query's NOT EXISTS avoids.
+	 *
+	 * @since 1.11.0
+	 *
+	 * @param string  $where          The WHERE clause, whose posts table is aliased `p`.
+	 * @param bool    $in_same_term   Unused.
+	 * @param array   $excluded_terms Unused.
+	 * @param string  $taxonomy       Unused.
+	 * @param WP_Post $post           The post the adjacent one is being found for.
+	 * @return string The WHERE clause.
+	 */
+	function weizenkorn_news_adjacent_post_where( $where, $in_same_term, $excluded_terms, $taxonomy, $post ) {
+		if ( ! $post instanceof WP_Post || 'news' !== $post->post_type ) {
+			return $where;
+		}
+
+		global $wpdb;
+
+		$where .= $wpdb->prepare(
+			" AND p.ID NOT IN ( SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = %s AND meta_value = %s )",
+			'news_hide_from_lists',
+			'1'
+		);
+
+		return $where;
+	}
+	add_filter( 'get_previous_post_where', 'weizenkorn_news_adjacent_post_where', 10, 5 );
+	add_filter( 'get_next_post_where', 'weizenkorn_news_adjacent_post_where', 10, 5 );
+endif;
+
 if ( ! function_exists( 'weizenkorn_rest_news_page' ) ) :
 	/**
 	 * Returns one page of news cards, as the markup the grid already holds.
@@ -96,6 +170,7 @@ if ( ! function_exists( 'weizenkorn_rest_news_page' ) ) :
 				'paged'               => $page,
 				'post__not_in'        => $exclude ? array( $exclude ) : array(),
 				'ignore_sticky_posts' => true,
+				'meta_query'          => weizenkorn_news_listing_meta_query(), // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- the listing has to exclude hidden articles, and the alternative is over-fetching and filtering in PHP, which breaks paging.
 			)
 		);
 
