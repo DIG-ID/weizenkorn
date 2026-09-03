@@ -1,0 +1,14 @@
+// Button + text — template-parts/modules/button-text.php
+//
+// Only the optional picture has styling of its own; everything else the module does with
+// utilities in its template.
+
+.button-text
+
+  // A ratio and not a height, so it holds at every width the ten columns come out at. The
+  // frame gives 1514x450 across the inset.
+  &__media
+    aspect-ratio: 1514 / 450
+
+    img
+      @apply w-full h-full object-cover

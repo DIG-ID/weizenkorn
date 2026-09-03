@@ -1,0 +1,26 @@
+<wpml-config>
+	<!--
+		Translation defaults for the theme's own post types and taxonomies.
+
+		WPML reads this on load, so a post type declared here is translatable in every
+		environment without anyone opening the settings — which is the point: the same
+		toggle clicked by hand has to be clicked again on staging, on production, and after
+		every database copy.
+
+		The two `offene_stellen_*` taxonomies are registered in inc/theme-setup.php, and the
+		post types come from ACF Post Types. Custom fields are deliberately absent: the ACF
+		field groups are in Expert mode, so ACFML already carries a per-field preference for
+		each one, and declaring them twice would put two sources of truth in play.
+	-->
+	<custom-types>
+		<custom-type translate="1">news</custom-type>
+		<custom-type translate="1">offene-stellen</custom-type>
+	</custom-types>
+
+	<taxonomies>
+		<!-- Arbeitsstellen / Ausbildungsplätze — the red banner on a job card. -->
+		<taxonomy translate="1">offene_stellen_anstellungsart</taxonomy>
+		<!-- The client's own workshops: Schreinerei, DasBreiteHotel, and so on. -->
+		<taxonomy translate="1">offene_stellen_standort</taxonomy>
+	</taxonomies>
+</wpml-config>

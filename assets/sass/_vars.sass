@@ -31,3 +31,25 @@
   --radius-sm: 4px
   --radius-md: 8px
   --radius-lg: 16px
+
+// -- Editor font sizes ---------------------------------------------------------
+// The two sizes the block editor offers, declared in inc/theme-setup.php as custom
+// properties so the design's step per breakpoint survives the !important core prints
+// the preset with. Text is the theme's body scale; Intro is the design's "Intro text".
+:root
+  --weizenkorn-size-text: 14px
+  --weizenkorn-size-intro: 24px
+
+// The Intro does not step: the tablet frame uses the same "Desktop/Intro text" token as
+// the desktop one, so 40/55 from tablet up. Mobile is still unmeasured.
+@media (min-width: 768px)
+  :root
+    --weizenkorn-size-intro: 40px
+
+@media (min-width: 1280px)
+  :root
+    --weizenkorn-size-text: 18px
+
+@media (min-width: 1536px)
+  :root
+    --weizenkorn-size-text: 20px

@@ -1,0 +1,136 @@
+// News hero — template-parts/posts/news-hero.php
+
+.news-hero
+
+  // The photograph runs the container's width, not the inset, and the frame gives it a
+  // height rather than letting its own ratio decide.
+  &__media
+    height: 160px
+
+    img
+      @apply w-full h-full object-cover
+
+    @media (min-width: 768px)
+      height: 256px
+
+    @media (min-width: 1280px)
+      height: 519px
+
+  // 25 under the photograph at mobile, 44 at tablet and 50 at desktop, from the frames.
+  //
+  // What follows the nav is the header's date, and that gap is the section's own bottom
+  // margin — 84/72/192. The tablet frame gives 72 where the theme's rhythm would have put
+  // 128, which is why the middle value is written out rather than taken from the scale.
+  &__nav
+    @apply mt-[25px] md:mt-11 xl:mt-[50px]
+
+  // Stacked at mobile, where the two side by side are wider than the container, and the
+  // frame puts the newer article on top against the right edge with the older one under it
+  // on the left. Reversing the column is what does that without moving the two out of
+  // reading order in the markup.
+  &__nav-inner
+    @apply flex flex-col-reverse items-start gap-y-[25px]
+    @apply md:flex-row md:items-center md:justify-between md:gap-y-0 md:gap-4
+
+  &__next
+    @apply self-end md:self-auto
+
+  // The shared button's gap-16 is 64px of air between the label and the arrow, which is
+  // what made these come out at 251 and 269 against the frame's 207. With the frame's own
+  // gap they fit, and the minimum width is what makes the shorter label's button match the
+  // longer one's.
+  //
+  // The minimum only from tablet up: at mobile two buttons of 207 are wider than the
+  // container, and they would run off the screen.
+  .btn
+    @apply justify-center gap-4
+    height: 46px
+
+    @media (min-width: 768px)
+      height: 48px
+
+    @media (min-width: 768px)
+      min-width: 207px
+
+    @media (min-width: 1280px)
+      height: 50px
+
+  // The frame draws the arrow smaller at mobile, where the shared icon is one size.
+  .btn__icon svg
+    @apply w-4 h-[13px] md:w-6 md:h-[19px]
+
+  // The arrow leads the label on the way back, and points the way it goes.
+  &__prev
+    .btn
+      @apply flex-row-reverse
+
+    .btn__icon
+      @apply rotate-180
+
+// News header and content — template-parts/posts/news-header.php, news-content.php
+
+.news-header
+
+  // 16/24/32 under the date, from the three frames — the scale this theme uses for most of
+  // its small gaps. The rule runs the container's width while the date and the title keep
+  // to the inset.
+  &__rule
+    @apply mt-4 md:mt-6 xl:mt-8
+
+  // 96 under the rule at mobile and at tablet, 88 at desktop — the narrower frames give the
+  // title more air, not less. All three measured.
+  &__title
+    @apply mt-24 xl:mt-[88px]
+
+.news-content
+
+  // 88 under the title. On the block and not on its first child, so an article that opens
+  // with a gallery or a button gets the same gap as one that opens with a paragraph.
+  //
+  // The header above declares no bottom margin, so this is the whole gap: 32 at mobile,
+  // 72 at tablet and 88 at desktop.
+  @apply mt-8 md:mt-[72px] xl:mt-[88px]
+
+  // The body IS the grid, so every block the editor writes can be placed on it. Anything
+  // that is not told otherwise keeps to the text's seven columns; a gallery takes all
+  // twelve. Below desktop there is one column of content and nothing to choose.
+  &__body
+    > *
+      @apply col-span-2 md:col-span-6
+
+      @media (min-width: 1280px)
+        grid-column: 2 / span 7
+
+    > .wp-block-gallery,
+    > .wp-block-image
+      @media (min-width: 1280px)
+        grid-column: 1 / -1
+
+    // The grid puts the blocks in rows, so the space between them is the row gap and not
+    // each block's own margin — one value instead of a margin per block type. 56 at tablet
+    // and 50 at desktop, both from the frames' gap between the opening paragraph and the
+    // body; the frame's larger gap before the buttons is not a row gap the editor can set.
+    @apply gap-y-8 md:gap-y-[56px] xl:gap-y-[50px]
+
+    > p
+      @apply mb-0
+
+    // An empty paragraph is a row of the grid like any other, so one left behind in the
+    // editor spends the gap above it and the gap below it — which is what a stray block at
+    // the top of an article looked like: twice the distance under the title. Blocks are
+    // written by hand and an empty one is a slip, not a spacer.
+    > p:empty
+      @apply hidden
+
+  // Core prints the chosen size as font-size: var(--weizenkorn-size-*) !important, so the
+  // steps live on the properties — see the note in inc/theme-setup.php. Line height it
+  // does not set, which is why that is here on the classes.
+  .has-text-font-size
+    @apply leading-[22px] xl:leading-[28px] 2xl:leading-[30px]
+
+  .has-intro-font-size
+    @apply leading-[34px] md:leading-[55px]
+
+  // Everything the editor writes is the theme's font, whatever size it is set in.
+  &__body
+    @apply font-primary font-normal tracking-[0.5px] text-brand-dark

@@ -11,6 +11,22 @@
  * Open Positions archive's "Weizenkorn mitgestalten" (one link) — both the
  * same shape, confirmed against Figma.
  *
+ * .theme-grid sets gap-x only, so the two columns touch where they stack — the paragraph
+ * carries the 16 the frame puts between it and the button, dropped again from tablet up
+ * where the two share a row.
+ * *
+ * TWO SPACING SCALES
+ * The module held one value at every breakpoint for the gap under the rule and the gap
+ * between a label and its button. About Us's "Spenden" frames give both as a step —
+ * 16/32/32 and 16/24/32, the latter the same scale the video panel's overline already uses
+ * — which a single value cannot match at more than one width. That is the 'stepped'
+ * variant, and it is opt-in: the two sections that came first were built against frames
+ * this file has never seen, so they keep what they were built with until someone checks
+ * them.
+ *
+ * The gap under the rule is written in full rather than as a difference from the heading's
+ * own bottom margin: the two are adjacent siblings, so they collapse to the larger of the
+ * pair, and anything smaller than the heading's simply vanishes.
  * ACF fields (flat, prefixed):
  *   {prefix}offers_title (text)
  *   {prefix}offers_items (repeater) → title (text), link (link)
@@ -23,6 +39,7 @@
  *     @type int|string $post_id Optional. ACF post id / options store to read from.
  *                               Default: the current post.
  *     @type string     $prefix  Optional. Prepended to every field name.
+ *     @type string     $variant Optional. 'stepped' for the spacing scale above.
  * }
  *
  * @package weizenkorn
@@ -32,6 +49,12 @@
 
 $ol_ctx    = ! empty( $args['post_id'] ) ? $args['post_id'] : get_the_ID();
 $ol_prefix = ! empty( $args['prefix'] ) ? $args['prefix'] : '';
+
+$ol_stepped = ( ! empty( $args['variant'] ) && 'stepped' === $args['variant'] );
+
+// Written out rather than composed: Tailwind scans this file for whole class names.
+$ol_row_margin = $ol_stepped ? 'mt-4 md:mt-8 xl:mt-8' : 'mt-8 xl:mt-12';
+$ol_item_gap   = $ol_stepped ? 'gap-4 md:gap-6 xl:gap-8' : 'gap-6';
 
 $ol_title = get_field( $ol_prefix . 'offers_title', $ol_ctx );
 
@@ -46,7 +69,7 @@ $ol_text = get_field( $ol_prefix . 'offers_text', $ol_ctx );
 		<?php get_template_part( 'template-parts/components/section-heading', null, array( 'title' => $ol_title ) ); ?>
 
 		<?php if ( have_rows( $ol_prefix . 'offers_items', $ol_ctx ) || $ol_text ) : ?>
-			<div class="theme-grid mt-8 xl:mt-12">
+			<div class="theme-grid <?php echo esc_attr( $ol_row_margin ); ?>">
 				<?php if ( have_rows( $ol_prefix . 'offers_items', $ol_ctx ) ) : ?>
 					<div class="offer-links__list col-span-2 md:col-start-1 md:col-span-3 xl:col-start-2 xl:col-span-5 flex flex-col items-start xl:flex-row gap-8 xl:gap-16">
 						<?php
@@ -59,7 +82,7 @@ $ol_text = get_field( $ol_prefix . 'offers_text', $ol_ctx );
 								continue;
 							}
 							?>
-							<div class="offer-links__item flex flex-col items-start gap-6">
+							<div class="offer-links__item flex flex-col items-start <?php echo esc_attr( $ol_item_gap ); ?>">
 								<?php if ( get_sub_field( 'title' ) ) : ?>
 									<p class="label-overline"><?php echo esc_html( get_sub_field( 'title' ) ); ?></p>
 								<?php endif; ?>
@@ -75,7 +98,7 @@ $ol_text = get_field( $ol_prefix . 'offers_text', $ol_ctx );
 				<?php endif; ?>
 
 				<?php if ( $ol_text ) : ?>
-					<div class="col-span-2 md:col-start-4 md:col-span-3 xl:col-start-7 xl:col-span-5">
+					<div class="col-span-2 mt-4 md:mt-0 md:col-start-4 md:col-span-3 xl:col-start-7 xl:col-span-5">
 						<div class="body-text"><?php echo wp_kses_post( $ol_text ); ?></div>
 					</div>
 				<?php endif; ?>

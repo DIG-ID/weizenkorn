@@ -1,0 +1,1289 @@
+[
+    {
+        "key": "group_about_us_page",
+        "title": "About Us Page",
+        "fields": [
+            {
+                "key": "field_au_drive_tab",
+                "label": "Intro CTA (Was uns antreibt)",
+                "name": "",
+                "aria-label": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "menu_order": 0,
+                "placement": "top",
+                "endpoint": 0,
+                "selected": 0,
+                "wpml_cf_preferences": 0
+            },
+            {
+                "key": "field_au_drive_grp",
+                "label": "Intro CTA (Was uns antreibt)",
+                "name": "drive_intro",
+                "aria-label": "",
+                "type": "group",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "menu_order": 1,
+                "layout": "block",
+                "wpml_cf_preferences": 2,
+                "sub_fields": [
+                    {
+                        "key": "field_au_drive_title",
+                        "label": "Title",
+                        "name": "title",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 0,
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "wpml_cf_preferences": 2
+                    },
+                    {
+                        "key": "field_au_drive_text",
+                        "label": "Text",
+                        "name": "text",
+                        "aria-label": "",
+                        "type": "textarea",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 1,
+                        "default_value": "",
+                        "maxlength": "",
+                        "rows": 5,
+                        "placeholder": "",
+                        "new_lines": "wpautop",
+                        "wpml_cf_preferences": 2
+                    },
+                    {
+                        "key": "field_au_drive_button",
+                        "label": "Button",
+                        "name": "button",
+                        "aria-label": "",
+                        "type": "link",
+                        "instructions": "Optional. Leave empty for a title-and-text section.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 2,
+                        "return_format": "array",
+                        "wpml_cf_preferences": 3
+                    }
+                ]
+            },
+            {
+                "key": "field_au_vg_tab",
+                "label": "Values Grid (Unsere Werte)",
+                "name": "",
+                "aria-label": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "menu_order": 2,
+                "placement": "top",
+                "endpoint": 0,
+                "selected": 0,
+                "wpml_cf_preferences": 0
+            },
+            {
+                "key": "field_au_vg_grp",
+                "label": "Values Grid",
+                "name": "values_grid",
+                "aria-label": "",
+                "type": "group",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "menu_order": 3,
+                "layout": "block",
+                "wpml_cf_preferences": 2,
+                "sub_fields": [
+                    {
+                        "key": "field_au_vg_title",
+                        "label": "Section Title",
+                        "name": "section_title",
+                        "aria-label": "",
+                        "type": "clone",
+                        "instructions": "Title only. The clone's own image and description are not drawn here.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 0,
+                        "clone": [
+                            "group_6a4fb434d42e9"
+                        ],
+                        "display": "group",
+                        "layout": "block",
+                        "prefix_label": 0,
+                        "prefix_name": 0,
+                        "wpml_cf_preferences": 2
+                    },
+                    {
+                        "key": "field_au_vg_items",
+                        "label": "Items",
+                        "name": "items",
+                        "aria-label": "",
+                        "type": "repeater",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 1,
+                        "layout": "block",
+                        "button_label": "Add value",
+                        "min": 0,
+                        "max": 0,
+                        "rows_per_page": 20,
+                        "collapsed": "",
+                        "sub_fields": [
+                            {
+                                "key": "field_au_vg_icon",
+                                "label": "Icon",
+                                "name": "icon",
+                                "aria-label": "",
+                                "type": "image",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "menu_order": 0,
+                                "return_format": "id",
+                                "library": "all",
+                                "preview_size": "medium",
+                                "min_width": "",
+                                "min_height": "",
+                                "min_size": "",
+                                "max_width": "",
+                                "max_height": "",
+                                "max_size": "",
+                                "mime_types": ""
+                            },
+                            {
+                                "key": "field_au_vg_item_title",
+                                "label": "Title",
+                                "name": "title",
+                                "aria-label": "",
+                                "type": "text",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "menu_order": 1,
+                                "default_value": "",
+                                "maxlength": "",
+                                "placeholder": "",
+                                "prepend": "",
+                                "append": "",
+                                "wpml_cf_preferences": 2
+                            },
+                            {
+                                "key": "field_au_vg_item_text",
+                                "label": "Text",
+                                "name": "text",
+                                "aria-label": "",
+                                "type": "textarea",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "menu_order": 2,
+                                "default_value": "",
+                                "maxlength": "",
+                                "rows": 3,
+                                "placeholder": "",
+                                "new_lines": "wpautop",
+                                "wpml_cf_preferences": 2
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "key": "field_au_origin_tab",
+                "label": "Intro CTA (Unser Ursprung)",
+                "name": "",
+                "aria-label": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "menu_order": 4,
+                "placement": "top",
+                "endpoint": 0,
+                "selected": 0,
+                "wpml_cf_preferences": 0
+            },
+            {
+                "key": "field_au_origin_grp",
+                "label": "Intro CTA (Unser Ursprung)",
+                "name": "origin_intro",
+                "aria-label": "",
+                "type": "group",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "menu_order": 5,
+                "layout": "block",
+                "wpml_cf_preferences": 2,
+                "sub_fields": [
+                    {
+                        "key": "field_au_origin_title",
+                        "label": "Title",
+                        "name": "title",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 0,
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "wpml_cf_preferences": 2
+                    },
+                    {
+                        "key": "field_au_origin_text",
+                        "label": "Text",
+                        "name": "text",
+                        "aria-label": "",
+                        "type": "textarea",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 1,
+                        "default_value": "",
+                        "maxlength": "",
+                        "rows": 5,
+                        "placeholder": "",
+                        "new_lines": "wpautop",
+                        "wpml_cf_preferences": 2
+                    },
+                    {
+                        "key": "field_au_origin_button",
+                        "label": "Button",
+                        "name": "button",
+                        "aria-label": "",
+                        "type": "link",
+                        "instructions": "Optional. Leave empty for a title-and-text section.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 2,
+                        "return_format": "array",
+                        "wpml_cf_preferences": 3
+                    }
+                ]
+            },
+            {
+                "key": "field_au_cs_tab",
+                "label": "Craft Showcase",
+                "name": "",
+                "aria-label": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "menu_order": 6,
+                "placement": "top",
+                "endpoint": 0,
+                "selected": 0,
+                "wpml_cf_preferences": 0
+            },
+            {
+                "key": "field_au_cs_grp",
+                "label": "Craft Showcase",
+                "name": "craft_showcase",
+                "aria-label": "",
+                "type": "group",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "menu_order": 7,
+                "layout": "block",
+                "wpml_cf_preferences": 2,
+                "sub_fields": [
+                    {
+                        "key": "field_au_cs_title",
+                        "label": "Section Title",
+                        "name": "section_title",
+                        "aria-label": "",
+                        "type": "clone",
+                        "instructions": "Title only on this page. Leave the clone's own image and description empty — the picture and the paragraph below are what this section draws.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 0,
+                        "clone": [
+                            "group_6a4fb434d42e9"
+                        ],
+                        "display": "group",
+                        "layout": "block",
+                        "prefix_label": 0,
+                        "prefix_name": 0,
+                        "wpml_cf_preferences": 2
+                    },
+                    {
+                        "key": "field_au_cs_image",
+                        "label": "Image",
+                        "name": "image",
+                        "aria-label": "",
+                        "type": "image",
+                        "instructions": "Optional picture above the paragraph, on the left. The About Us frame has none: leave it empty and the paragraph sits on its own beside the right-hand picture.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 1,
+                        "return_format": "id",
+                        "library": "all",
+                        "preview_size": "medium",
+                        "min_width": "",
+                        "min_height": "",
+                        "min_size": "",
+                        "max_width": "",
+                        "max_height": "",
+                        "max_size": "",
+                        "mime_types": ""
+                    },
+                    {
+                        "key": "field_au_cs_text",
+                        "label": "Text",
+                        "name": "text",
+                        "aria-label": "",
+                        "type": "textarea",
+                        "instructions": "The paragraph on the left, columns 2-5.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 2,
+                        "default_value": "",
+                        "maxlength": "",
+                        "rows": 5,
+                        "placeholder": "",
+                        "new_lines": "wpautop",
+                        "wpml_cf_preferences": 2
+                    },
+                    {
+                        "key": "field_au_cs_image2",
+                        "label": "Secondary image",
+                        "name": "image_secondary",
+                        "aria-label": "",
+                        "type": "image",
+                        "instructions": "The picture on the right, columns 7-11, running the full height of the section. This is the one the About Us frame shows.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 3,
+                        "return_format": "id",
+                        "library": "all",
+                        "preview_size": "medium",
+                        "min_width": "",
+                        "min_height": "",
+                        "min_size": "",
+                        "max_width": "",
+                        "max_height": "",
+                        "max_size": "",
+                        "mime_types": ""
+                    },
+                    {
+                        "key": "field_au_cs_enable",
+                        "label": "Enable video",
+                        "name": "enable_video",
+                        "aria-label": "",
+                        "type": "true_false",
+                        "instructions": "When on, the video takes the right column's place.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 4,
+                        "message": "",
+                        "default_value": 0,
+                        "ui": 1,
+                        "ui_on_text": "",
+                        "ui_off_text": ""
+                    },
+                    {
+                        "key": "field_au_cs_webm",
+                        "label": "Video (webm)",
+                        "name": "video_webm",
+                        "aria-label": "",
+                        "type": "file",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_au_cs_enable",
+                                    "operator": "==",
+                                    "value": "1"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 5,
+                        "return_format": "array",
+                        "library": "all",
+                        "min_size": "",
+                        "max_size": "",
+                        "mime_types": "mp4,webm"
+                    },
+                    {
+                        "key": "field_au_cs_mp4",
+                        "label": "Video (mp4)",
+                        "name": "video_mp4",
+                        "aria-label": "",
+                        "type": "file",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_au_cs_enable",
+                                    "operator": "==",
+                                    "value": "1"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 6,
+                        "return_format": "array",
+                        "library": "all",
+                        "min_size": "",
+                        "max_size": "",
+                        "mime_types": "mp4,webm"
+                    }
+                ]
+            },
+            {
+                "key": "field_au_qs_tab",
+                "label": "Quote Slider",
+                "name": "",
+                "aria-label": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "menu_order": 8,
+                "placement": "top",
+                "endpoint": 0,
+                "selected": 0,
+                "wpml_cf_preferences": 0
+            },
+            {
+                "key": "field_au_qs_grp",
+                "label": "Quote Slider",
+                "name": "quote_slider",
+                "aria-label": "",
+                "type": "group",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "menu_order": 9,
+                "layout": "block",
+                "wpml_cf_preferences": 2,
+                "sub_fields": [
+                    {
+                        "key": "field_au_qs_items",
+                        "label": "Items",
+                        "name": "items",
+                        "aria-label": "",
+                        "type": "repeater",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 0,
+                        "layout": "block",
+                        "button_label": "Add quote",
+                        "min": 0,
+                        "max": 0,
+                        "rows_per_page": 20,
+                        "collapsed": "",
+                        "sub_fields": [
+                            {
+                                "key": "field_au_qs_quote",
+                                "label": "Quote",
+                                "name": "quote",
+                                "aria-label": "",
+                                "type": "textarea",
+                                "instructions": "Guillemets included.",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "menu_order": 0,
+                                "default_value": "",
+                                "maxlength": "",
+                                "rows": 5,
+                                "placeholder": "",
+                                "new_lines": "br",
+                                "wpml_cf_preferences": 2
+                            },
+                            {
+                                "key": "field_au_qs_author",
+                                "label": "Author",
+                                "name": "author",
+                                "aria-label": "",
+                                "type": "text",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "menu_order": 1,
+                                "default_value": "",
+                                "maxlength": "",
+                                "placeholder": "",
+                                "prepend": "",
+                                "append": "",
+                                "wpml_cf_preferences": 2
+                            },
+                            {
+                                "key": "field_au_qs_role",
+                                "label": "Role",
+                                "name": "role",
+                                "aria-label": "",
+                                "type": "text",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "menu_order": 2,
+                                "default_value": "",
+                                "maxlength": "",
+                                "placeholder": "",
+                                "prepend": "",
+                                "append": "",
+                                "wpml_cf_preferences": 2
+                            },
+                            {
+                                "key": "field_au_qs_image",
+                                "label": "Image",
+                                "name": "image",
+                                "aria-label": "",
+                                "type": "image",
+                                "instructions": "Optional panel beside the quote.",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "menu_order": 3,
+                                "return_format": "id",
+                                "library": "all",
+                                "preview_size": "medium",
+                                "min_width": "",
+                                "min_height": "",
+                                "min_size": "",
+                                "max_width": "",
+                                "max_height": "",
+                                "max_size": "",
+                                "mime_types": ""
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "key": "field_au_vp_tab",
+                "label": "Video Panel (Weizenkorn entdecken)",
+                "name": "",
+                "aria-label": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "menu_order": 10,
+                "placement": "top",
+                "endpoint": 0,
+                "selected": 0,
+                "wpml_cf_preferences": 0
+            },
+            {
+                "key": "field_au_vp_grp",
+                "label": "Video Panel",
+                "name": "video_panel",
+                "aria-label": "",
+                "type": "group",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "menu_order": 11,
+                "layout": "block",
+                "wpml_cf_preferences": 2,
+                "sub_fields": [
+                    {
+                        "key": "field_au_vp_title",
+                        "label": "Section Title",
+                        "name": "section_title",
+                        "aria-label": "",
+                        "type": "clone",
+                        "instructions": "Title only. The clone's own image and description are not drawn here — the video and the text below are.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 0,
+                        "clone": [
+                            "group_6a4fb434d42e9"
+                        ],
+                        "display": "group",
+                        "layout": "block",
+                        "prefix_label": 0,
+                        "prefix_name": 0,
+                        "wpml_cf_preferences": 2
+                    },
+                    {
+                        "key": "field_au_vp_image",
+                        "label": "Image",
+                        "name": "image",
+                        "aria-label": "",
+                        "type": "image",
+                        "instructions": "The poster while the video loads, the fallback if it cannot play, and the picture itself when there is no video.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 1,
+                        "return_format": "id",
+                        "library": "all",
+                        "preview_size": "medium",
+                        "min_width": "",
+                        "min_height": "",
+                        "min_size": "",
+                        "max_width": "",
+                        "max_height": "",
+                        "max_size": "",
+                        "mime_types": ""
+                    },
+                    {
+                        "key": "field_au_vp_vimeo",
+                        "label": "Vimeo link",
+                        "name": "vimeo",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "Paste the Vimeo share link, the player link, or the whole embed code — all of them work. Use this for anything longer than a few seconds: a file in the media library is served at one bitrate to everyone, where Vimeo adapts to the connection. Filled, it replaces the uploaded video below, the box follows the film's 16:9, and the Image above becomes the poster behind a play button — Vimeo is only contacted once a visitor presses it.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "https://vimeo.com/1223075005?h=…",
+                        "prepend": "",
+                        "append": "",
+                        "wpml_cf_preferences": 3,
+                        "menu_order": 2
+                    },
+                    {
+                        "key": "field_au_vp_enable",
+                        "label": "Enable video",
+                        "name": "enable_video",
+                        "aria-label": "",
+                        "type": "true_false",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_au_vp_vimeo",
+                                    "operator": "==",
+                                    "value": ""
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 3,
+                        "message": "",
+                        "default_value": 0,
+                        "ui": 1,
+                        "ui_on_text": "",
+                        "ui_off_text": ""
+                    },
+                    {
+                        "key": "field_au_vp_webm",
+                        "label": "Video (webm)",
+                        "name": "video_webm",
+                        "aria-label": "",
+                        "type": "file",
+                        "instructions": "The smaller of the two. Upload the file itself — a Drive or YouTube link is a page, not a video.",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_au_vp_vimeo",
+                                    "operator": "==",
+                                    "value": ""
+                                },
+                                {
+                                    "field": "field_au_vp_enable",
+                                    "operator": "==",
+                                    "value": "1"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 4,
+                        "return_format": "array",
+                        "library": "all",
+                        "min_size": "",
+                        "max_size": "",
+                        "mime_types": "mp4,webm"
+                    },
+                    {
+                        "key": "field_au_vp_mp4",
+                        "label": "Video (mp4)",
+                        "name": "video_mp4",
+                        "aria-label": "",
+                        "type": "file",
+                        "instructions": "The one every browser plays.",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_au_vp_vimeo",
+                                    "operator": "==",
+                                    "value": ""
+                                },
+                                {
+                                    "field": "field_au_vp_enable",
+                                    "operator": "==",
+                                    "value": "1"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 5,
+                        "return_format": "array",
+                        "library": "all",
+                        "min_size": "",
+                        "max_size": "",
+                        "mime_types": "mp4,webm"
+                    },
+                    {
+                        "key": "field_au_vp_overline",
+                        "label": "Overline",
+                        "name": "overline",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 6,
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "wpml_cf_preferences": 2
+                    },
+                    {
+                        "key": "field_au_vp_text",
+                        "label": "Text",
+                        "name": "text",
+                        "aria-label": "",
+                        "type": "textarea",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 7,
+                        "default_value": "",
+                        "maxlength": "",
+                        "rows": 5,
+                        "placeholder": "",
+                        "new_lines": "wpautop",
+                        "wpml_cf_preferences": 2
+                    }
+                ]
+            },
+            {
+                "key": "field_au_bt_tab",
+                "label": "Button Text (Organisation)",
+                "name": "",
+                "aria-label": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "menu_order": 12,
+                "placement": "top",
+                "endpoint": 0,
+                "selected": 0,
+                "wpml_cf_preferences": 0
+            },
+            {
+                "key": "field_au_bt_grp",
+                "label": "Organisation",
+                "name": "organisation_bt",
+                "aria-label": "",
+                "type": "group",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "menu_order": 13,
+                "layout": "block",
+                "wpml_cf_preferences": 2,
+                "sub_fields": [
+                    {
+                        "key": "field_au_bt_title",
+                        "label": "Title",
+                        "name": "title",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 0,
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "wpml_cf_preferences": 2
+                    },
+                    {
+                        "key": "field_au_bt_image",
+                        "label": "Image",
+                        "name": "image",
+                        "aria-label": "",
+                        "type": "image",
+                        "instructions": "Optional. Spans the section's ten columns at a 1514x450 ratio.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 1,
+                        "return_format": "id",
+                        "library": "all",
+                        "preview_size": "medium",
+                        "min_width": "",
+                        "min_height": "",
+                        "min_size": "",
+                        "max_width": "",
+                        "max_height": "",
+                        "max_size": "",
+                        "mime_types": ""
+                    },
+                    {
+                        "key": "field_au_bt_button",
+                        "label": "Button",
+                        "name": "button",
+                        "aria-label": "",
+                        "type": "link",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 2,
+                        "return_format": "array",
+                        "wpml_cf_preferences": 3
+                    },
+                    {
+                        "key": "field_au_bt_text",
+                        "label": "Text",
+                        "name": "text",
+                        "aria-label": "",
+                        "type": "textarea",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 3,
+                        "default_value": "",
+                        "maxlength": "",
+                        "rows": 5,
+                        "placeholder": "",
+                        "new_lines": "wpautop",
+                        "wpml_cf_preferences": 2
+                    }
+                ]
+            },
+            {
+                "key": "field_au_ol_tab",
+                "label": "Offer Links (Donations)",
+                "name": "",
+                "aria-label": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "menu_order": 14,
+                "placement": "top",
+                "endpoint": 0,
+                "selected": 0,
+                "wpml_cf_preferences": 0
+            },
+            {
+                "key": "field_au_ol_grp",
+                "label": "Donations",
+                "name": "donation_offers",
+                "aria-label": "",
+                "type": "group",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "menu_order": 15,
+                "layout": "block",
+                "wpml_cf_preferences": 2,
+                "sub_fields": [
+                    {
+                        "key": "field_au_ol_title",
+                        "label": "Title",
+                        "name": "title",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 0,
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "wpml_cf_preferences": 2
+                    },
+                    {
+                        "key": "field_au_ol_items",
+                        "label": "Items",
+                        "name": "items",
+                        "aria-label": "",
+                        "type": "repeater",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 1,
+                        "layout": "block",
+                        "button_label": "Add link",
+                        "min": 0,
+                        "max": 0,
+                        "rows_per_page": 20,
+                        "collapsed": "",
+                        "sub_fields": [
+                            {
+                                "key": "field_au_ol_item_title",
+                                "label": "Overline",
+                                "name": "title",
+                                "aria-label": "",
+                                "type": "text",
+                                "instructions": "The small label above the button.",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "menu_order": 0,
+                                "default_value": "",
+                                "maxlength": "",
+                                "placeholder": "",
+                                "prepend": "",
+                                "append": "",
+                                "wpml_cf_preferences": 2
+                            },
+                            {
+                                "key": "field_au_ol_item_link",
+                                "label": "Link",
+                                "name": "link",
+                                "aria-label": "",
+                                "type": "link",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "menu_order": 1,
+                                "return_format": "array",
+                                "wpml_cf_preferences": 3
+                            }
+                        ]
+                    },
+                    {
+                        "key": "field_au_ol_text",
+                        "label": "Text",
+                        "name": "text",
+                        "aria-label": "",
+                        "type": "textarea",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "menu_order": 2,
+                        "default_value": "",
+                        "maxlength": "",
+                        "rows": 5,
+                        "placeholder": "",
+                        "new_lines": "wpautop",
+                        "wpml_cf_preferences": 2
+                    }
+                ]
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "page_template",
+                    "operator": "==",
+                    "value": "page-templates/page-about-us.php"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "About Us page sections. The hero comes from the shared \"Hero Section\" group, which already covers every page template but the home."
+    }
+]

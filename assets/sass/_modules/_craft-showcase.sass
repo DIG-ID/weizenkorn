@@ -41,6 +41,46 @@
 
   // No height of its own at desktop: spanning both rows makes it exactly as tall as the
   // pair beside it. Below xl it is the third block in the stack, with its own ratio.
+  // The 'pair' arrangement: no left image, so the paragraph and the picture share a row
+  // from tablet up. Desktop already does this — the paragraph's row 2 and the picture's
+  // row 1/span 2 put them side by side and end them on the same line — so only tablet
+  // needs saying, where the default stacks all three blocks full width.
+  //
+  // The picture keeps the ratio it has at desktop: 339.5x206 at tablet and 741x450 at
+  // desktop are the same 1.647, so one value covers both frames.
+  &__row--pair
+
+    // Rows 1 and 2, not the 2 and 3 the three-block default leaves them on. With no left
+    // image row 1 is empty, and an empty row still takes its share of the row gap — 32 of
+    // dead space under the rule before anything is drawn.
+    //
+    // The frame stacks the paragraph over the picture with 20 between them, against the 32
+    // the three-block default uses, and keeps the picture on the 1.647 it has at the other
+    // two breakpoints rather than the wider 320x223 the default draws here.
+    @media (max-width: 767px)
+      @apply gap-y-5
+
+      .craft-showcase__text
+        grid-row: 1
+
+      .craft-showcase__media--side
+        grid-row: 2
+        aspect-ratio: 741 / 450
+
+    @media (min-width: 768px) and (max-width: 1279px)
+
+      .craft-showcase__text
+        grid-column: 1 / span 3
+        grid-row: 1
+        // The frame ends the paragraph and the picture on the same line, and the paragraph
+        // is the shorter of the two.
+        align-self: end
+
+      .craft-showcase__media--side
+        grid-column: 4 / span 3
+        grid-row: 1
+        aspect-ratio: 741 / 450
+
   &__media--side
     aspect-ratio: 320 / 223
     grid-column: 1 / span 2

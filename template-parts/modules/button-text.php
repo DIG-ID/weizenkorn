@@ -16,8 +16,13 @@
  * a style, so Organigramm needs no icon override for its own button to get
  * the right one automatically.
  *
+ * An optional wide picture sits between the rule and that row — About Us's
+ * "Organisation" has one, Organigramm and Transparency do not, and with the
+ * field empty the section is exactly what it was before.
+ *
  * ACF fields (flat, prefixed):
  *   {prefix}bt_title  (text)
+ *   {prefix}bt_image  (image → ID) optional. The inset's full width.
  *   {prefix}bt_button (link)
  *   {prefix}bt_text   (textarea / wpautop)
  *
@@ -46,13 +51,42 @@ if ( ! $bt_title ) {
 
 $bt_button = get_field( $bt_prefix . 'bt_button', $bt_ctx );
 $bt_text   = get_field( $bt_prefix . 'bt_text', $bt_ctx );
+$bt_image  = get_field( $bt_prefix . 'bt_image', $bt_ctx );
+
+/*
+ * Spacing below the picture is the picture's own, so the two image-less sections keep the
+ * gaps they were built with. The row sits 16/32/32 under a picture against the 32/32/48 it
+ * takes under the rule, and where the button and the text stack at mobile the About Us
+ * frame puts 16 between them where the Organization ones put 32. Written out rather than
+ * composed: Tailwind scans this file for whole class names.
+ */
+$bt_row_margin  = $bt_image ? 'mt-4 md:mt-8' : 'mt-8 xl:mt-12';
+$bt_text_margin = $bt_image ? 'mt-4' : 'mt-8';
 ?>
 <section class="button-text mt-24 md:mt-32 xl:mt-48 mb-24 md:mb-32 xl:mb-48">
 	<div class="theme-container">
 		<?php get_template_part( 'template-parts/components/section-heading', null, array( 'title' => $bt_title ) ); ?>
 
+		<?php if ( $bt_image ) : ?>
+			<div class="theme-grid mt-4 md:mt-6 xl:mt-[56px]">
+				<div class="button-text__media col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-10 overflow-hidden">
+					<?php
+					echo wp_get_attachment_image(
+						$bt_image,
+						'full',
+						false,
+						array(
+							'class'   => 'w-full h-full object-cover',
+							'loading' => 'lazy',
+						)
+					);
+					?>
+				</div>
+			</div>
+		<?php endif; ?>
+
 		<?php if ( $bt_button || $bt_text ) : ?>
-			<div class="theme-grid mt-8 xl:mt-12">
+			<div class="theme-grid <?php echo esc_attr( $bt_row_margin ); ?>">
 				<?php if ( $bt_button ) : ?>
 					<div class="button-text__button col-span-2 md:col-span-2 xl:col-start-2 xl:col-span-2">
 						<?php get_template_part( 'template-parts/components/button', null, array_merge( $bt_button, array( 'style' => 'primary' ) ) ); ?>
@@ -60,7 +94,7 @@ $bt_text   = get_field( $bt_prefix . 'bt_text', $bt_ctx );
 				<?php endif; ?>
 
 				<?php if ( $bt_text ) : ?>
-					<div class="button-text__text body-text text-brand-dark col-span-2 mt-8 md:col-start-4 md:col-span-3 md:mt-0 xl:col-start-7 xl:col-span-5">
+					<div class="button-text__text body-text text-brand-dark col-span-2 <?php echo esc_attr( $bt_text_margin ); ?> md:col-start-4 md:col-span-3 md:mt-0 xl:col-start-7 xl:col-span-5">
 						<?php echo wp_kses_post( $bt_text ); ?>
 					</div>
 				<?php endif; ?>

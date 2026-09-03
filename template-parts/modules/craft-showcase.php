@@ -12,6 +12,16 @@
  * inside a cell. At desktop the second image comes out level with the left pair by
  * spanning their two rows rather than carrying a height.
  *
+ * TWO ARRANGEMENTS
+ * Default: the left image, the paragraph under it, and the second image beside the pair —
+ * three blocks that stack full width below xl. 'pair': no left image, so the paragraph and
+ * the picture sit side by side from tablet up, on three columns each at tablet and on 2-5
+ * and 7-11 at desktop, ending on the same line. About Us's "So arbeiten wir" is the pair.
+ *
+ * The variant is passed rather than inferred from the empty image field: Xyloba also
+ * leaves that field empty and its frames draw the default, so the two cannot be told apart
+ * by content.
+ *
  * ACF fields (flat, prefixed) — the `craft_showcase` group. The group name produces the
  * prefix, so renaming it orphans whatever is stored:
  *   craft_showcase_section_title    (clone of "Section Title") the heading.
@@ -46,6 +56,7 @@
  *     @type int|string $post_id Optional. ACF post id / options store to read from.
  *                               Default: the current post.
  *     @type string     $prefix  Optional. Prepended to every field name.
+ *     @type string     $variant Optional. 'pair' for the two-block arrangement above.
  * }
  *
  * @package weizenkorn
@@ -58,6 +69,30 @@ $cs_prefix = ! empty( $args['prefix'] ) ? $args['prefix'] : '';
 
 // Not a plain get_field() — see weizenkorn_get_section_heading() for why.
 $cs_heading = weizenkorn_get_section_heading( $cs_prefix . 'craft_showcase_', $cs_ctx );
+
+$cs_pair = ( ! empty( $args['variant'] ) && 'pair' === $args['variant'] );
+
+/*
+ * The gap under the rule, in full — NOT the difference from the heading's own 16/24/32
+ * bottom margin. The two are adjacent siblings, so their margins collapse to the larger of
+ * the pair rather than adding up, and anything smaller than the heading's simply vanishes.
+ * The pair's frames give 16/24/52, so only desktop needs a value of its own.
+ *
+ * Written out rather than composed: Tailwind scans this file for whole class names.
+ */
+$cs_row_margin = $cs_pair ? 'mt-4 md:mt-0 xl:mt-[52px]' : 'mt-4 md:mt-2 xl:mt-0';
+
+/*
+ * The clone stores its sub-fields flat, so the heading's `image` lands on {prefix}image —
+ * the same meta row as this section's own picture field. One cell, two fields: whatever is
+ * set draws twice, once wide under the rule and once in its column. The section's own
+ * field owns that key here, so the heading gives the image up.
+ *
+ * Only the modules that have an image field of their own need this. trust and catering do
+ * the mirror of it, reading the key as the heading's because they have none.
+ */
+unset( $cs_heading['image'] );
+
 
 if ( ! $cs_heading
 	&& ! get_field( $cs_prefix . 'craft_showcase_image', $cs_ctx )
@@ -93,11 +128,7 @@ $cs_poster     = $cs_side_image ? wp_get_attachment_image_url( $cs_side_image, '
 		}
 		?>
 
-		<?php
-		// The section-heading already carries part of this gap, so only the difference is
-		// added — nothing at desktop, where its own margin is the whole gap.
-		?>
-		<div class="craft-showcase__row theme-grid mt-4 md:mt-2 xl:mt-0">
+		<div class="craft-showcase__row <?php echo $cs_pair ? 'craft-showcase__row--pair ' : ''; ?>theme-grid <?php echo esc_attr( $cs_row_margin ); ?>">
 
 			<?php if ( get_field( $cs_prefix . 'craft_showcase_image', $cs_ctx ) ) : ?>
 				<figure class="craft-showcase__media">

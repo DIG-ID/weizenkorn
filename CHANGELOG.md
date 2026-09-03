@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
-## [1.9.2] — 2026-09-03
+## [1.11.1] — 2026-09-03
 
 ### Changed
 - Open Positions archive: the "Aktuell offene Stellen" job cards now stretch to fill the full column inset at desktop instead of keeping a fixed width with empty space beside them.
@@ -22,6 +22,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Job card typography (title, category banner, excerpt text) now matches the design's own scale at desktop instead of a bolder, smaller one shared with unrelated cards.
 - Filter panel buttons ("Filter zurücksetzen", both the Open Positions archive's and Das Weizenkorn Team's) were missing their border.
 - Open Positions single post: the "Weitere Stellenausschreibungen" related-jobs row was misaligned with the rest of the page's content, and its cards sat narrower than intended.
+
+## [1.11.0] — 2026-09-03
+
+### Added
+- About Us page template: hero, "Was uns antreibt", a grid of values, "Unser Ursprung", "So arbeiten wir", a quote slider, "Weizenkorn entdecken" with a video, "Organisation" and "Spenden".
+- Vimeo videos in the video panel. A link field replaces the uploaded video, and the page draws the still and the play button itself — nothing is requested from Vimeo until a visitor presses play, which keeps the page fast and off a cookie banner. Where the Image field is empty, Vimeo's own still stands in.
+- A video whose link no longer works falls back to the image instead of showing Vimeo's error after a click.
+- Optional hero image on a news article, for photographs the hero's fixed height would otherwise crop badly. The cards and the archive keep using the featured image.
+- "Hide from listings" on a news article: keeps it out of the archive, out of the featured slot, out of the pagination and out of the slider under other articles, while it stays published and reachable from wherever it is linked.
+- An optional wide picture in the button and text section.
+- wpml-config.xml, so the news and Open Positions post types and the two Open Positions taxonomies are translatable in every environment rather than one toggle per site.
+
+### Fixed
+- The craft showcase drew its picture twice where both the heading and the section had one.
+- In offer links, the button and the paragraph touched each other where they stack at mobile.
+- Spacing at tablet on a news article: under the previous/next links, and between the date and the rule.
+- 32 of empty space under the rule in the craft showcase at mobile, where the section has no left-hand picture.
+
+### Changed
+- The video panel puts the video across all six columns at tablet with the text under it.
+
+## [1.10.0] — 2026-09-02
+
+### Added
+- News: a post type of its own, an archive and a single article template.
+- News archive: the most recent article featured across the top, and the rest six to a page. The arrows fetch the next six and swap them in without a page load; with JavaScript off they are ordinary links and the page reloads.
+- News article: the photograph across the container with links to the articles either side of it, the date, the title, and the body as the editor wrote it.
+- News article: the other articles under it as a slider — three abreast at desktop with arrows out in the container's margins, one at a time with bullets below on a phone.
+- News card: the photograph, the date, the title and the opening of the article, drawn once and used by the archive, the slider and the route that pages the grid.
+- Two text sizes in the editor, Text and Intro, replacing the four WordPress ships with. Each is a custom property, so the design's step per breakpoint survives.
+- Galleries and images in an article run the container's full twelve columns while the text keeps to seven.
+
+### Changed
+- Home hero: the image is repeated inside the video element, so a browser that cannot play video draws it instead, with its alt text.
+- Craft showcase: an optional video in place of the right-hand photograph, set up the way the home page's hero already was. The section's own image becomes the poster and the fallback.
+
+### Fixed
+- An empty paragraph left in the editor no longer takes a row of the article's grid, which was spending the gap above it and below it.
 
 ---
 

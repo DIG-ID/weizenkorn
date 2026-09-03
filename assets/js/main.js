@@ -1,7 +1,7 @@
 import './gsap.js';
 
 // Optional libraries — uncomment as needed per project.
-import { initGastronomySlider, initQuoteSlider, initStoriesSlider, initServicesSlider, initEquipmentSlider, initDiversitySlider, initDiversityCardsSlider, initRelatedJobsSlider, initDonationProjectsSlider } from './swiper.js';
+import { initGastronomySlider, initQuoteSlider, initStoriesSlider, initServicesSlider, initEquipmentSlider, initDiversitySlider, initDiversityCardsSlider, initRelatedJobsSlider, initNewsSlider, initDonationProjectsSlider } from './swiper.js';
 // import './fancybox.js';
 
 import { debounce, isTouchDevice } from './utils/helpers.js';
@@ -14,6 +14,8 @@ import { initHeroFit } from './hero-fit.js';
 import { initProcessSteps } from './process-steps.js';
 import { initJobFilters } from './job-filters.js';
 import { initTeamFilters } from './team-filters.js';
+import { initNewsPagination } from './news-pagination.js';
+import { initVideoFacade } from './video-facade.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -35,9 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
   initDiversitySlider();
   initDiversityCardsSlider();
   initRelatedJobsSlider();
+  initNewsSlider();
   initDonationProjectsSlider();
   initStickyCta();
   initHeroFit();
   initProcessSteps();
+  initNewsPagination();
+  initVideoFacade();
 
 });
