@@ -58,10 +58,10 @@ if ( empty( $args['title'] ) || empty( $args['url'] ) ) {
 		 */
 		$card_job_title_margin = ! empty( $args['location'] ) ? 'mt-24' : 'mt-0';
 		?>
-		<h3 class="card-job__title title-card text-brand-dark <?php echo esc_attr( $card_job_title_margin ); ?>"><?php echo esc_html( $args['title'] ); ?></h3>
+		<h3 class="card-job__title text-brand-dark <?php echo esc_attr( $card_job_title_margin ); ?>"><?php echo esc_html( $args['title'] ); ?></h3>
 
 		<?php if ( ! empty( $args['text'] ) ) : ?>
-			<p class="card-job__text body-text text-brand-dark mt-5"><?php echo esc_html( $args['text'] ); ?></p>
+			<p class="card-job__text text-brand-dark mt-5"><?php echo esc_html( $args['text'] ); ?></p>
 		<?php endif; ?>
 	</div>
 </a>

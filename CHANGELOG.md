@@ -11,6 +11,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.12.0] — 2026-09-03
+
+### Added
+- About Us — Organization page: an optional embed (e.g. a flip-book) in the "Warum Weizenkorn?" section's left column, beside the text.
+
+### Changed
+- Open Positions single post: the header, details and contact sections now use the full column width at tablet instead of a narrow sliver, and the "Alle offenen Stellen" button aligns with the related-jobs cards below it at that breakpoint too.
+
+### Fixed
+- Open Positions single post: "Ihre Aufgaben" and "Voraussetzungen" skipped a heading level (jumping from the page's title straight to a sub-heading).
+
+## [1.11.1] — 2026-09-03
+
+### Changed
+- Open Positions archive: the "Aktuell offene Stellen" job cards now stretch to fill the full column inset at desktop instead of keeping a fixed width with empty space beside them.
+- Open Positions single post: more spacing between the two contact-detail columns and below the title; reduced top spacing on the details and contact sections.
+
+### Fixed
+- Open Positions archive: the two category grids ("Schaffen Perspektiven...", "Sinnstiftend vielfältig...") now sit within the page's standard column inset instead of spanning its full width.
+- Job card typography (title, category banner, excerpt text) now matches the design's own scale at desktop instead of a bolder, smaller one shared with unrelated cards.
+- Filter panel buttons ("Filter zurücksetzen", both the Open Positions archive's and Das Weizenkorn Team's) were missing their border.
+- Open Positions single post: the "Weitere Stellenausschreibungen" related-jobs row was misaligned with the rest of the page's content, and its cards sat narrower than intended.
+
 ## [1.11.0] — 2026-09-03
 
 ### Added

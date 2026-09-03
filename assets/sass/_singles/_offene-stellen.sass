@@ -15,8 +15,14 @@
     @media (min-width: 768px)
       grid-column: 2 / span 4
 
+    // Starts at column 2 — the same standard inset every other section on this
+    // page uses — with &__nav--prev in column 1 rather than sharing this edge.
+    // Span 9, not 8: 3 slides at slidesPerView:3 (assets/js/swiper.js) divide
+    // this container evenly, and 9 columns is what makes each of the 3 cards
+    // come out to 3 columns wide instead of ~2.67. Ends one column further
+    // right than before (column 10, so &__nav--next moves out to column 11).
     @media (min-width: 1280px)
-      grid-column: 3 / span 8
+      grid-column: 2 / span 9
 
   &__nav
     @apply flex items-center justify-center text-brand-red transition-opacity duration-300
@@ -32,12 +38,12 @@
     svg
       @apply w-[15px] h-3 md:w-[21px] md:h-[17px]
 
+  // Column 1 at every breakpoint (no xl override needed) — outside the standard
+  // 10-column inset entirely now, rather than sharing its left edge with the
+  // viewport.
   &__nav--prev
     grid-column: 1
     @apply -ml-[23px] md:ml-0
-
-    @media (min-width: 1280px)
-      grid-column: 2
 
     svg
       @apply -scale-x-100
@@ -76,3 +82,13 @@
   &--fits-xl &__pagination
     @media (min-width: 1280px)
       @apply hidden
+
+  // ...and with no arrows to leave room for, the viewport reclaims their two
+  // columns too — the standard 10-column inset (2 / span 10, matching the "Alle
+  // offenen Stellen" button above it) instead of the 8 columns left between them.
+  // Without this the cards sat visibly narrower and shifted right of the button,
+  // confirmed against Figma (which never shows this state — 3 fixed postings
+  // never need to scroll — so there's no frame to match here, just a sane default).
+  &--fits-xl &__viewport
+    @media (min-width: 1280px)
+      grid-column: 2 / span 10

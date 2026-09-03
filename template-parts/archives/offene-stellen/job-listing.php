@@ -68,21 +68,24 @@ if ( ! $jl_query->have_posts() ) {
 
 		<?php
 		/*
-		 * theme-grid's own col-span-4 tracks divide the full 1610px inset into three
-		 * ~523px columns — wider than the 440px card Figma draws, and centring the card
-		 * in each still leaves a wide gap between cards, not the flush 20px one Figma
-		 * shows. The nested .job-listing__grid below carries its own flex/grid instead of
-		 * theme-grid's, with the card's own fixed width at xl: three 440px cards plus two
-		 * 20px gaps pack to 1360px and sit flush against each other, left-aligned in the
-		 * inset rather than stretched to fill it. It stays nested one level inside a plain
-		 * theme-grid (used only to position it in the 10-column inset) rather than sharing
-		 * a single element with theme-grid itself — theme-grid and a flex/grid utility on
-		 * the very same element fight at equal specificity and the utility loses.
+		 * Deliberately against Figma (client request): the frame's own cards stay a
+		 * fixed 440px, flush left with empty space to the right of the third one at
+		 * desktop — here they instead stretch to fill the full 10-column inset, three
+		 * equal columns with no leftover gap. xl:grid-cols-3 replaces the flex-wrap
+		 * layout that used to size each card to its own fixed width; the fixed width
+		 * itself (weizenkorn_render_job_cards()'s xl:w-[440px] wrapper, shared with the
+		 * single post's own related-jobs slider, which keeps it) is neutralised for
+		 * this grid only in _archives/_offene-stellen.sass.
+		 *
+		 * The nested .job-listing__grid below stays one level inside a plain theme-grid
+		 * (used only to position it in the 10-column inset) rather than sharing a single
+		 * element with theme-grid itself — theme-grid and a grid utility on the very
+		 * same element fight at equal specificity and the utility loses.
 		 */
 		?>
 		<div class="theme-grid mt-8 xl:mt-12">
 			<div
-				class="job-listing__grid js-job-listing-grid col-span-2 xl:col-start-2 xl:col-span-10 flex flex-col gap-y-8 md:grid md:grid-cols-2 md:gap-x-5 md:gap-y-8 xl:flex xl:flex-row xl:flex-wrap xl:gap-x-5 xl:gap-y-8"
+				class="job-listing__grid js-job-listing-grid col-span-2 xl:col-start-2 xl:col-span-10 flex flex-col gap-y-8 md:grid md:grid-cols-2 md:gap-x-5 md:gap-y-8 xl:grid xl:grid-cols-3 xl:gap-x-5 xl:gap-y-8"
 				data-page="1"
 				data-max-pages="<?php echo esc_attr( $jl_query->max_num_pages ); ?>"
 			>

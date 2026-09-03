@@ -88,29 +88,42 @@ $cg_item_column = $cg_three_cols ? 'xl:col-span-4' : 'xl:col-span-3';
 		 */
 		?>
 		<?php if ( have_rows( $cg_prefix . 'items', $cg_ctx ) ) : ?>
-			<div class="theme-grid mt-8 md:mt-14 xl:mt-16 gap-y-8">
-				<?php
-				while ( have_rows( $cg_prefix . 'items', $cg_ctx ) ) :
-					the_row();
-
-					if ( ! get_sub_field( 'title' ) ) {
-						continue;
-					}
-					?>
-					<div class="card-category col-span-2 md:col-span-6 <?php echo esc_attr( $cg_item_column ); ?> flex flex-col">
-						<h3 class="card-category__title text-brand-red font-primary font-bold uppercase tracking-[0.5px] text-[14px] xl:text-[15px] mb-4">
-							<?php echo esc_html( get_sub_field( 'title' ) ); ?>
-						</h3>
-
-						<?php if ( get_sub_field( 'list' ) ) : ?>
-							<div class="card-category__list border border-brand-red body-text px-6 py-6 flex-1">
-								<?php echo wp_kses_post( get_sub_field( 'list' ) ); ?>
-							</div>
-						<?php endif; ?>
-					</div>
+			<?php
+			/*
+			 * The cards' own row is a SECOND, nested theme-grid rather than this outer
+			 * one's direct children — this one exists only to place that row in the
+			 * standard xl:col-start-2/col-span-10 inset (full width below xl, same as
+			 * everywhere else). Nested rather than moving the inset onto each card
+			 * individually, so the 3/4-across split (and the trailing-pair CSS in
+			 * _offene-stellen.sass) stays relative to the inset's own 12-column grid,
+			 * not the page's full width.
+			 */
+			?>
+			<div class="theme-grid mt-8 md:mt-14 xl:mt-16">
+				<div class="category-grid__grid theme-grid gap-y-8 col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-10">
 					<?php
-				endwhile;
-				?>
+					while ( have_rows( $cg_prefix . 'items', $cg_ctx ) ) :
+						the_row();
+
+						if ( ! get_sub_field( 'title' ) ) {
+							continue;
+						}
+						?>
+						<div class="card-category col-span-2 md:col-span-6 <?php echo esc_attr( $cg_item_column ); ?> flex flex-col">
+							<h3 class="card-category__title text-brand-red font-primary font-bold uppercase tracking-[0.5px] text-[14px] xl:text-[15px] mb-4">
+								<?php echo esc_html( get_sub_field( 'title' ) ); ?>
+							</h3>
+
+							<?php if ( get_sub_field( 'list' ) ) : ?>
+								<div class="card-category__list border border-brand-red body-text px-6 py-6 flex-1">
+									<?php echo wp_kses_post( get_sub_field( 'list' ) ); ?>
+								</div>
+							<?php endif; ?>
+						</div>
+						<?php
+					endwhile;
+					?>
+				</div>
 			</div>
 		<?php endif; ?>
 	</div>
