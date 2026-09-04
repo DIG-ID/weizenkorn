@@ -78,10 +78,15 @@ if ( ! $services_overview_title ) {
 								'template-parts/components/card-overview',
 								null,
 								array(
-									'image' => $sc_image,
-									'title' => get_sub_field( 'title' ),
-									'text'  => get_sub_field( 'text' ),
-									'url'   => $sc_link ? $sc_link['url'] : '',
+									'image'          => $sc_image,
+									'title'          => get_sub_field( 'title' ),
+									'text'           => get_sub_field( 'text' ),
+									'url'            => $sc_link ? $sc_link['url'] : '',
+									// The default 50% cap is for card-overview's wider callers
+									// (offer-grid.php, perspectives.php's half/full-row cards) —
+									// at 1 of 3 columns this card is already narrow, so the text
+									// should fill it rather than shrink to a sliver of a sliver.
+									'text_max_width' => '',
 								)
 							);
 							?>

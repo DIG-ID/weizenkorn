@@ -9,13 +9,20 @@
  * not clickable.
  *
  * @param array $args {
- *     @type int    $image        Attachment ID. Required — nothing is drawn without it.
+ *     @type int    $image          Attachment ID. Required — nothing is drawn without it.
  *     @type string $title
- *     @type string $text         Optional. Rich text (wpautop already applied).
- *     @type string $url          Optional. Omit for a card that links nowhere.
- *     @type string $media_height Optional. Tailwind height classes for the media box.
- *                                 Default: 256px at mobile, 512px at tablet, 400px at
- *                                 desktop — the Gastronomie/Home venue bento's own values.
+ *     @type string $text           Optional. Rich text (wpautop already applied).
+ *     @type string $url            Optional. Omit for a card that links nowhere.
+ *     @type string $media_height   Optional. Tailwind height classes for the media box.
+ *                                  Default: 256px at mobile, 512px at tablet, 400px at
+ *                                  desktop — the Gastronomie/Home venue bento's own values.
+ *     @type string $text_max_width Optional. Tailwind max-width class(es) for the text at
+ *                                  desktop. Default: xl:max-w-[50%] — right for the wide
+ *                                  (half/full-row) cards offer-grid.php and perspectives.php
+ *                                  use, where an uncapped line would run too long. Pass ''
+ *                                  to let the text fill the card instead, for a narrower
+ *                                  card (e.g. Services overview's own 1-of-3 columns) where
+ *                                  the same 50% cap shrinks it to a sliver of the card.
  * }
  *
  * @package weizenkorn
@@ -27,8 +34,9 @@ if ( empty( $args['image'] ) ) {
 	return;
 }
 
-$media_height = ! empty( $args['media_height'] ) ? $args['media_height'] : 'h-[256px] md:h-[512px] xl:h-[400px]';
-$card_url     = ! empty( $args['url'] ) ? $args['url'] : '';
+$media_height   = ! empty( $args['media_height'] ) ? $args['media_height'] : 'h-[256px] md:h-[512px] xl:h-[400px]';
+$text_max_width = isset( $args['text_max_width'] ) ? $args['text_max_width'] : 'xl:max-w-[50%]';
+$card_url       = ! empty( $args['url'] ) ? $args['url'] : '';
 ?>
 <?php if ( $card_url ) : ?>
 <a href="<?php echo esc_url( $card_url ); ?>" class="card-overview group flex flex-col gap-3.5 md:gap-4">
@@ -60,7 +68,7 @@ $card_url     = ! empty( $args['url'] ) ? $args['url'] : '';
 		</div>
 
 		<?php if ( ! empty( $args['text'] ) ) : ?>
-			<div class="body-text xl:max-w-[50%]"><?php echo wp_kses_post( $args['text'] ); ?></div>
+			<div class="body-text <?php echo esc_attr( $text_max_width ); ?>"><?php echo wp_kses_post( $args['text'] ); ?></div>
 		<?php endif; ?>
 	</div>
 

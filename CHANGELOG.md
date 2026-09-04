@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - About Us — Organization page: the "Warum Weizenkorn?" iframe and text columns overlapped at tablet; the "Das Weizenkorn Team" results bar and grid now use the full tablet width instead of a narrow sliver.
 - Donate page: the "Unsere Spenden-Projekte" cards showed literal "<p>" tags in their text; the slider now spans the full column width at tablet and aligns with the rest of the page at desktop.
 - Footer newsletter form: spacing between the Name/E-Mail fields and the submit button at desktop.
+- Services page: the overview cards' text was capped to half the card's width at desktop, leaving it cramped in a narrower card than that limit was designed for.
 
 ## [1.12.0] — 2026-09-03
 
