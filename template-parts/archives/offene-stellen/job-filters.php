@@ -61,7 +61,7 @@ $jf_groups = array(
 	<div class="filter-panel__head">
 		<button type="button" class="filter-panel__close js-filter-panel-close inline-flex items-center gap-2 text-brand-red">
 			<span class="-scale-x-100 shrink-0" aria-hidden="true"><?php weizenkorn_the_svg_icon( 'arrow-right' ); ?></span>
-			<?php esc_html_e( 'Close Filters', 'weizenkorn' ); ?>
+			<?php esc_html_e( 'Filter schliessen', 'weizenkorn' ); ?>
 		</button>
 	</div>
 

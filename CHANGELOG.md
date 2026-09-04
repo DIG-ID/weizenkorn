@@ -11,6 +11,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.12.1] — 2026-09-03
+
+### Changed
+- Das Weizenkorn Team: members now list alphabetically by name.
+- Main display title (used across the site) sized down at mobile and tablet.
+- The filter panel's "Close Filters" button (Open Positions archive and Das Weizenkorn Team) reads "Filter schliessen" by default, matching the site's primary language.
+
+### Removed
+- About Us — Organization page: the "Transparency" section is temporarily hidden at the client's own request.
+
 ## [1.12.0] — 2026-09-03
 
 ### Added
