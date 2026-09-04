@@ -13,10 +13,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ## [1.12.1] — 2026-09-03
 
+### Added
+- Services page: a "Dürfen wir Sie beraten?" contact form section.
+
 ### Changed
 - Das Weizenkorn Team: members now list alphabetically by name.
 - Main display title (used across the site) sized down at mobile and tablet.
 - The filter panel's "Close Filters" button (Open Positions archive and Das Weizenkorn Team) reads "Filter schliessen" by default, matching the site's primary language.
+- Services page: the 3 overview cards (Schreinerei, Kreativatelier, Treuhand) are now edited directly on the page instead of on each category page.
 
 ### Removed
 - About Us — Organization page: the "Transparency" section is temporarily hidden at the client's own request.
