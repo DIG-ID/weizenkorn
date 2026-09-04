@@ -74,7 +74,16 @@
   // by adding those classes in MC4WP's own form editor, not in theme code.
   &__newsletter
     .mc4wp-form-fields
-      @apply flex flex-col gap-6
+      @apply flex flex-col gap-6 xl:gap-0
+
+      // Desktop-only spacing: 56px between Name/E-Mail, 60px between E-Mail/submit —
+      // two different gaps, so nth-child margins replace the uniform gap-6 above
+      // (a flex `gap` can't vary per pair). Below xl the shared gap-6 still applies.
+      p:nth-child(1)
+        @apply xl:mb-[56px]
+
+      p:nth-child(2)
+        @apply xl:mb-[60px]
 
     input[type="text"],
     input[type="email"]

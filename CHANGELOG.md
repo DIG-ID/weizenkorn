@@ -21,6 +21,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 ### Removed
 - About Us — Organization page: the "Transparency" section is temporarily hidden at the client's own request.
 
+### Fixed
+- About Us — Organization page: the "Warum Weizenkorn?" iframe and text columns overlapped at tablet; the "Das Weizenkorn Team" results bar and grid now use the full tablet width instead of a narrow sliver.
+- Donate page: the "Unsere Spenden-Projekte" cards showed literal "<p>" tags in their text; the slider now spans the full column width at tablet and aligns with the rest of the page at desktop.
+- Footer newsletter form: spacing between the Name/E-Mail fields and the submit button at desktop.
+
 ## [1.12.0] — 2026-09-03
 
 ### Added

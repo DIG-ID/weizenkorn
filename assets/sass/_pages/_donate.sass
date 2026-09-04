@@ -14,11 +14,16 @@
     grid-column: 1 / span 2
     grid-row: 1
 
+    // Full width at tablet — the arrows are hidden below xl (dots show instead, in
+    // their own row below), so there's no side column to leave room for here.
     @media (min-width: 768px)
-      grid-column: 2 / span 4
+      grid-column: 1 / span 6
 
+    // The standard 10-column inset (2 / span 10) — the arrows sit fully outside it
+    // (columns 1 and 12), so unlike _singles/_offene-stellen.sass's own related-jobs,
+    // there's no "reclaim the arrow's column" case to handle when --fits-xl hides them.
     @media (min-width: 1280px)
-      grid-column: 3 / span 8
+      grid-column: 2 / span 10
 
   &__nav
     @apply hidden xl:flex items-center justify-center text-brand-red transition-opacity duration-300
@@ -34,14 +39,16 @@
     svg
       @apply w-[21px] h-[17px]
 
+  // Column 1 and 12 — the grid's own outermost columns, outside the 10-column inset
+  // __viewport uses — rather than sharing an edge column with it.
   &__nav--prev
-    grid-column: 2
+    grid-column: 1
 
     svg
       @apply -scale-x-100
 
   &__nav--next
-    grid-column: 11
+    grid-column: 12
 
   &__pagination
     @apply xl:hidden static flex items-center justify-center gap-[26px] md:gap-[30px]

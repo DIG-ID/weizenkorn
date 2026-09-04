@@ -12,10 +12,12 @@
  * so the embed is a one-off for this page only, not a new option on the
  * shared shape.
  *
- * The left/right column spans mirror each other around the grid's centre
- * (md:col-start-2/col-span-3 + md:col-start-4/col-span-3 at tablet,
- * xl:col-start-2/col-span-5 + xl:col-start-7/col-span-5 at desktop), the
- * same split the shared module's own right-hand column already uses.
+ * At tablet both columns are a plain md:col-span-3 (no col-start) — 3 of 6
+ * each, auto-flowing side by side to fill the whole tablet grid edge to
+ * edge, rather than mirroring desktop's inset positioning. At desktop they
+ * mirror each other around the grid's centre (xl:col-start-2/col-span-5 +
+ * xl:col-start-7/col-span-5), the same split the shared module's own
+ * right-hand column already uses.
  *
  * ACF fields (flat, prefixed):
  *   organization_why_intro_title  (text)
@@ -45,7 +47,7 @@ $oic_iframe = get_field( 'organization_why_iframe_url' );
 		<?php if ( $oic_iframe || $oic_text || $oic_button ) : ?>
 			<div class="theme-grid gap-y-8">
 				<?php if ( $oic_iframe ) : ?>
-					<div class="intro-cta__iframe col-span-2 md:col-start-2 md:col-span-3 xl:col-start-2 xl:col-span-5">
+					<div class="intro-cta__iframe col-span-2 md:col-span-3 xl:col-start-2 xl:col-span-5">
 						<?php
 						/*
 						 * Attributes fixed here rather than left to a raw-HTML field: only the
@@ -66,7 +68,7 @@ $oic_iframe = get_field( 'organization_why_iframe_url' );
 				<?php endif; ?>
 
 				<?php if ( $oic_text || $oic_button ) : ?>
-					<div class="intro-cta__col col-span-2 md:col-start-4 md:col-span-3 xl:col-start-7 xl:col-span-5 flex flex-col items-start gap-8">
+					<div class="intro-cta__col col-span-2 md:col-span-3 xl:col-start-7 xl:col-span-5 flex flex-col items-start gap-8">
 						<?php if ( $oic_text ) : ?>
 							<div class="body-text"><?php echo wp_kses_post( $oic_text ); ?></div>
 						<?php endif; ?>
