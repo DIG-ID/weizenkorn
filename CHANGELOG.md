@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.13.0] — 2026-09-04
+
+### Added
+- Custom Schema.org structured data via the Yoast Schema API: JobPosting on every Open Positions post (Google for Jobs eligibility), and FAQPage on every page using the shared FAQ section (Donate, Fiduciary, Kreativatelier, Schreinerei, Supported Jobs, Supported Apprenticeships).
+
+### Fixed
+- Removed a leftover inline WebSite microdata attribute from the header — schema is now handled entirely through the Yoast Schema API, with nothing duplicating it manually.
+
 ## [1.12.1] — 2026-09-03
 
 ### Added

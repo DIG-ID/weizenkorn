@@ -46,7 +46,7 @@ if ( have_posts() ) :
 		get_template_part( 'template-parts/modules/button-text', null, array( 'prefix' => 'organigramm_' ) );
 		get_template_part( 'template-parts/pages/about-us-organization/team' );
 		// Transparency is temporarily hidden — client's own request, no date to restore it yet.
-		// get_template_part( 'template-parts/modules/button-text', null, array( 'prefix' => 'organization_transparency_' ) );
+		/* get_template_part( 'template-parts/modules/button-text', null, array( 'prefix' => 'organization_transparency_' ) ); */
 		get_template_part( 'template-parts/modules/cta-form', null, array( 'prefix' => 'organization_' ) );
 
 		do_action( 'after_main_content' );

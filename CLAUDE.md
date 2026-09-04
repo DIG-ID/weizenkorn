@@ -111,8 +111,11 @@ Antes de entregar código PHP, verificar com `npm run php:lint`. Usar `npm run p
 | Contexto     | Schema                  | Campos principais                              |
 |--------------|-------------------------|------------------------------------------------|
 | CPT `news`   | `schema.org/Article`    | Coberto pelo Yoast por omissão                 |
-| CPT `offene-stellen` | `schema.org/JobPosting` | A definir quando o template do single post for criado |
+| CPT `offene-stellen` (single) | `schema.org/JobPosting` | Custom (`inc/schema/class-weizenkorn-schema-jobposting.php`, desde 1.13.0) — title, description, datePosted, hiringOrganization, jobLocation (morada fixa da Stiftung), employmentType só quando inferível com confiança (Ausbildungsplätze → INTERN) |
+| Páginas com o módulo `template-parts/modules/faq.php` | `schema.org/FAQPage` | Custom (`inc/schema/class-weizenkorn-schema-faq.php`, desde 1.13.0) — lista de prefixos ACF conhecidos no próprio ficheiro; actualizar ao adicionar uma página nova que use o módulo com um prefixo diferente |
 
+> Candidato futuro: `LocalBusiness`/`Restaurant`/`Bakery` para as páginas Gastronomie (Rhyvage, DasBreiteHotel, Cantina E9, padaria, events-seminare) — bloqueado por falta de campos reais de morada/telefone/horário por local, não por falta de código.
+>
 > Actualizar esta tabela quando os CPTs/templates reais forem criados (ver secção "Custom Post Types" acima).
 
 ---
