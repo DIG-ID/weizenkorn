@@ -13,7 +13,10 @@
  * (the shared cta-form module, prefixed 'social_offices_'). The Figma
  * frame has no quote-slider or FAQ section, unlike the other Supported
  * pages. Its last section ("Das könnte Sie auch interessieren") is
- * intentionally not built — the page ends at the form, per the brief.
+ * intentionally not built — the shared preview-cards module ("Entdecken
+ * Sie mehr"), unprefixed like every other use of it, closes the page
+ * instead; see the module's own docblock for the two ACF Clone fields it
+ * expects.
  *
  * @package weizenkorn
  * @subpackage Template
@@ -34,6 +37,7 @@ if ( have_posts() ) :
 		get_template_part( 'template-parts/pages/work-training-for-social-offices-and-partners/downloads' );
 		get_template_part( 'template-parts/pages/work-training-for-social-offices-and-partners/team' );
 		get_template_part( 'template-parts/modules/cta-form', null, array( 'prefix' => 'social_offices_' ) );
+		get_template_part( 'template-parts/modules/preview-cards' );
 
 		do_action( 'after_main_content' );
 

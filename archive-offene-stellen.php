@@ -13,9 +13,10 @@
  * published posting in one page for now; see
  * template-parts/archives/offene-stellen/job-listing.php.
  *
- * The trailing "Das könnte Sie auch interessieren" preview section is not
- * built — it isn't in this archive's Figma frame at all (unlike the page
- * templates, which do have one).
+ * The trailing "Das könnte Sie auch interessieren" preview section, closing the archive, is
+ * the shared preview-cards module — same 'option' + prefix pattern as every other section
+ * here (prefix 'offene_stellen_archive_'); see the module's own docblock for the two ACF
+ * Clone fields it expects.
  *
  * An archive has no post context, so its page-level fields live in the
  * theme options under the `offene_stellen_archive_` prefix, and every
@@ -68,6 +69,14 @@ get_template_part(
 );
 get_template_part(
 	'template-parts/modules/contact-person',
+	null,
+	array(
+		'post_id' => 'option',
+		'prefix'  => 'offene_stellen_archive_',
+	)
+);
+get_template_part(
+	'template-parts/modules/preview-cards',
 	null,
 	array(
 		'post_id' => 'option',

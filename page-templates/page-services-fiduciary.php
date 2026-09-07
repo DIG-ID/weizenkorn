@@ -18,6 +18,8 @@
  *   6. location        shared module, the map
  *   7. cta-form        shared module
  *   8. faq             shared module
+ *   9. preview-cards   shared module, unprefixed like every other use of it — see the
+ *                      module's own docblock for the two ACF Clone fields it expects
  *
  * The teaser is prefixed rather than plain because its field names (title, body, image)
  * are generic enough to collide; `intro_` names the section's job on this page. Not
@@ -57,6 +59,7 @@ if ( have_posts() ) :
 		get_template_part( 'template-parts/modules/location' );
 		get_template_part( 'template-parts/modules/cta-form' );
 		get_template_part( 'template-parts/modules/faq' );
+		get_template_part( 'template-parts/modules/preview-cards' );
 
 		do_action( 'after_main_content' );
 

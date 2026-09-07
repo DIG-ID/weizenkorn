@@ -13,7 +13,9 @@
  *
  * "Das könnte Sie auch interessieren" is the one section from the Figma
  * frame deliberately not built here — never built on any page in this
- * theme, not in this task's scope either.
+ * theme, not in this task's scope either. preview-cards, unprefixed like
+ * every other use of it, closes the page instead — see the module's own
+ * docblock for the two ACF Clone fields it expects.
  *
  * @package weizenkorn
  * @subpackage Template
@@ -33,6 +35,7 @@ if ( have_posts() ) :
 		get_template_part( 'template-parts/modules/usp-band', null, array( 'prefix' => 'donate_' ) );
 		get_template_part( 'template-parts/pages/about-us-donate/payment-info' );
 		get_template_part( 'template-parts/modules/faq', null, array( 'prefix' => 'donate_' ) );
+		get_template_part( 'template-parts/modules/preview-cards' );
 
 		do_action( 'after_main_content' );
 

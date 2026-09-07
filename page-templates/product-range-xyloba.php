@@ -7,7 +7,9 @@
  * explicit and not single-products-{slug}.php, and for how to attach it to a post.
  *
  * SECTIONS, in order: hero-section, photo-mosaic, usp-band, craft-showcase,
- * quote-slider, stories-references, order-form ('split' variant), cta-form.
+ * quote-slider, stories-references, order-form ('split' variant), cta-form, preview-cards
+ * (unprefixed, like every other use of it — see the module's own docblock for the two ACF
+ * Clone fields it expects).
  *
  * Two configuration notes for this page:
  *
@@ -51,6 +53,7 @@ if ( have_posts() ) :
 			array( 'variant' => 'split' )
 		);
 		get_template_part( 'template-parts/modules/cta-form' );
+		get_template_part( 'template-parts/modules/preview-cards' );
 
 		do_action( 'after_main_content' );
 

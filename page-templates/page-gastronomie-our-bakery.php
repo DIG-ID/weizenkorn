@@ -18,6 +18,8 @@
  *   7. social            modules/teaser with the `social_` prefix — the same section as
  *                        the home page's "Lerne uns kennen"
  *   8. cta-form          shared module
+ *   9. preview-cards     shared module, unprefixed like every other use of it — see the
+ *                        module's own docblock for the two ACF Clone fields it expects
  *
  * ACF. On a page there is a post context, so every module reads the current post with no
  * prefix. Clone the GROUP per section, never a repeater inside one: a cloned repeater
@@ -52,6 +54,7 @@ if ( have_posts() ) :
 		get_template_part( 'template-parts/modules/catering' );
 		get_template_part( 'template-parts/modules/teaser', null, array( 'prefix' => 'social_' ) );
 		get_template_part( 'template-parts/modules/cta-form' );
+		get_template_part( 'template-parts/modules/preview-cards' );
 
 		do_action( 'after_main_content' );
 

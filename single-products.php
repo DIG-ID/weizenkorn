@@ -12,6 +12,11 @@
  * The sections a range does NOT share belong to its own template. Do not add them here and
  * switch on the slug — that is the conditional soup the per-range templates exist to avoid.
  *
+ * preview-cards ("Entdecken Sie mehr") is the fourth section every range shares (the five
+ * product-range-*.php templates each already call it too), unprefixed like every other
+ * page/single use of it — see the module's own docblock for the two ACF Clone fields it
+ * expects.
+ *
  * @package weizenkorn
  * @subpackage Template
  * @since 1.5.0
@@ -28,6 +33,7 @@ if ( have_posts() ) :
 		get_template_part( 'template-parts/modules/hero-section' );
 		get_template_part( 'template-parts/modules/usp-band' );
 		get_template_part( 'template-parts/modules/cta-form' );
+		get_template_part( 'template-parts/modules/preview-cards' );
 
 		do_action( 'after_main_content' );
 

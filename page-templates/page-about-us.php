@@ -27,6 +27,9 @@
  *                     paragraph opposite — the same one-link shape the Open Positions
  *                     archive uses, in its 'stepped' spacing — the two sections that came
  *                     before it hold one value at every width and keep it.
+ *  10. preview-cards  shared module — "Entdecken Sie mehr". Unprefixed, like every other
+ *                     use of it; see the module's own docblock for the two ACF Clone
+ *                     fields it expects.
  *
  * The About Us frames put 32 above the row and between the overline and the button where
  * the module carries the theme's 48 and 24. Left as the module has them: the two pages it
@@ -89,6 +92,7 @@ if ( have_posts() ) :
 				'variant' => 'stepped',
 			)
 		);
+		get_template_part( 'template-parts/modules/preview-cards' );
 
 		do_action( 'after_main_content' );
 

@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.14.0] — 2026-09-07
+
+### Added
+- Shared "Preview Cards" module ("Entdecken Sie mehr") — an image/title card that expands on hover (desktop) or tap (tablet/mobile) to reveal a short text and a link. Each page picks up to 3 other pages to feature via a relationship field, and every page carries its own dedicated title/image/text for how it should look when featured elsewhere. Rolled out across nearly every page template, the Open Positions and Products archives, and their single templates.
+
 ## [1.13.0] — 2026-09-04
 
 ### Added

@@ -20,7 +20,9 @@
  *
  * "Das könnte Sie auch interessieren" is the one section from the Figma
  * frame deliberately not built here — never built on any page in this
- * theme, not in this task's scope either.
+ * theme, not in this task's scope either. preview-cards, unprefixed like
+ * every other use of it, closes the page instead — see the module's own
+ * docblock for the two ACF Clone fields it expects.
  *
  * Organigramm and Transparency both used to be the shared intro-cta module
  * too, until it turned out Transparency's button sits in its own left
@@ -48,6 +50,7 @@ if ( have_posts() ) :
 		// Transparency is temporarily hidden — client's own request, no date to restore it yet.
 		/* get_template_part( 'template-parts/modules/button-text', null, array( 'prefix' => 'organization_transparency_' ) ); */
 		get_template_part( 'template-parts/modules/cta-form', null, array( 'prefix' => 'organization_' ) );
+		get_template_part( 'template-parts/modules/preview-cards' );
 
 		do_action( 'after_main_content' );
 
