@@ -6,7 +6,8 @@
  * a venue whose design diverges is changed on its own file and nowhere else.
  *
  * SECTIONS, in order: hero-section, usp-band, spaces, quote-slider, catering, location,
- * cta-form.
+ * cta-form, preview-cards (unprefixed, like every other use of it — see the module's own
+ * docblock for the two ACF Clone fields it expects).
  *
  * Every one is a shared module, so a sibling venue repeats the page by calling the same
  * parts in its own template.
@@ -37,6 +38,7 @@ if ( have_posts() ) :
 		get_template_part( 'template-parts/modules/catering' );
 		get_template_part( 'template-parts/modules/location' );
 		get_template_part( 'template-parts/modules/cta-form' );
+		get_template_part( 'template-parts/modules/preview-cards' );
 
 		do_action( 'after_main_content' );
 

@@ -9,7 +9,8 @@
 
 $weizenkorn_logo_id = weizenkorn_get_logo_id();
 ?>
-<header id="header-main" class="header-main" itemscope itemtype="http://schema.org/WebSite">
+<?php // No inline microdata here — Yoast's own WebSite schema graph piece already covers this (CLAUDE.md: schema always via the Yoast Schema API, never itemscope/itemtype in markup). ?>
+<header id="header-main" class="header-main">
 	<div class="theme-container">
 		<div class="header-main__row">
 			<?php get_template_part( 'template-parts/components/header-nav', null, array( 'logo_id' => $weizenkorn_logo_id ) ); ?>

@@ -16,6 +16,7 @@ import { initJobFilters } from './job-filters.js';
 import { initTeamFilters } from './team-filters.js';
 import { initNewsPagination } from './news-pagination.js';
 import { initVideoFacade } from './video-facade.js';
+import { initPreviewCards } from './preview-cards.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -44,5 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initProcessSteps();
   initNewsPagination();
   initVideoFacade();
+  initPreviewCards();
 
 });

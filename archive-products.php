@@ -2,9 +2,9 @@
 /**
  * The template for the products archive.
  *
- * The hero, USP band, quote slider and the two forms are shared modules, the product-range
- * pages repeating the same stack. No intro-panel: the hero already carries the page title
- * and the intro paragraph.
+ * The hero, USP band, quote slider, the two forms and the closing preview-cards
+ * ("Entdecken Sie mehr") are shared modules, the product-range pages repeating the same
+ * stack. No intro-panel: the hero already carries the page title and the intro paragraph.
  *
  * An archive has no post context, so its page-level fields live in the theme options under
  * the `products_archive_` prefix, and every section is told to read from there via $args.
@@ -63,6 +63,14 @@ get_template_part(
 );
 get_template_part(
 	'template-parts/modules/cta-form',
+	null,
+	array(
+		'post_id' => 'option',
+		'prefix'  => 'products_archive_',
+	)
+);
+get_template_part(
+	'template-parts/modules/preview-cards',
 	null,
 	array(
 		'post_id' => 'option',

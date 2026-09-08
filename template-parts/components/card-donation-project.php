@@ -62,8 +62,17 @@ $cdp_href = ! empty( $args['url'] ) ? ' href="' . esc_url( $args['url'] ) . '"' 
 
 		<h3 class="card-donation-project__title title-card text-brand-dark m-0"><?php echo esc_html( $args['title'] ); ?></h3>
 
+		<?php
+		/*
+		 * div, not p, and wp_kses_post(), not esc_html(): the ACF textarea field
+		 * (new_lines: wpautop) already wraps its value in <p> tags — esc_html() was
+		 * escaping those into literal visible "<p>" text instead of rendering them,
+		 * and re-wrapping wpautop's own <p> in another <p> here would be invalid
+		 * markup anyway (see CLAUDE.md's own note on this exact pitfall).
+		 */
+		?>
 		<?php if ( ! empty( $args['text'] ) ) : ?>
-			<p class="card-donation-project__text body-text text-brand-dark m-0"><?php echo esc_html( $args['text'] ); ?></p>
+			<div class="card-donation-project__text body-text text-brand-dark m-0"><?php echo wp_kses_post( $args['text'] ); ?></div>
 		<?php endif; ?>
 	</div>
 

@@ -8,10 +8,11 @@
  * Ausbildungsstelle?"), this page's own "Unsere Ausbildung" programme
  * bento, the shared numbered-steps module ("Der Weg zu einem Platz bei
  * Weizenkorn in 4 Schritten"), the shared quote-slider, the shared
- * contact-person module ("Bereit für Weizenkorn?"), and the shared faq
- * module. The Figma frame's last section ("Das könnte Sie auch
- * interessieren") is intentionally not built — the page ends at the FAQ,
- * per the brief.
+ * contact-person module ("Bereit für Weizenkorn?"), the shared faq
+ * module, and the shared preview-cards module ("Entdecken Sie mehr"),
+ * unprefixed like every other use of it — see the module's own docblock
+ * for the two ACF Clone fields it expects. The Figma frame's "Das könnte
+ * Sie auch interessieren" section is intentionally not built.
  *
  * "Einblicke unserer Auszubildenden" (a card carousel, the same shape as
  * Supported Jobs' diversity-cards-slider) sits between the intro and
@@ -39,6 +40,7 @@ if ( have_posts() ) :
 		get_template_part( 'template-parts/modules/quote-slider' );
 		get_template_part( 'template-parts/modules/contact-person', null, array( 'prefix' => 'apprenticeships_' ) );
 		get_template_part( 'template-parts/modules/faq', null, array( 'prefix' => 'apprenticeships_' ) );
+		get_template_part( 'template-parts/modules/preview-cards' );
 
 		do_action( 'after_main_content' );
 

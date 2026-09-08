@@ -8,7 +8,9 @@
  *
  * SECTIONS, in order: hero-section, product-overview, usp-band, craft-showcase,
  * "Jetzt aktuell" (product-overview again, through the `latest_` prefix), quote-slider,
- * stories-references, order-form ('split' variant), cta-form.
+ * stories-references, order-form ('split' variant), cta-form, preview-cards (unprefixed,
+ * like every other use of it — see the module's own docblock for the two ACF Clone fields
+ * it expects).
  *
  * ACF. On a single there is a post context, so every module reads the current post with
  * no prefix. Clone the GROUP per section, never a repeater inside one: a cloned repeater
@@ -52,6 +54,7 @@ if ( have_posts() ) :
 			array( 'variant' => 'split' )
 		);
 		get_template_part( 'template-parts/modules/cta-form' );
+		get_template_part( 'template-parts/modules/preview-cards' );
 
 		do_action( 'after_main_content' );
 

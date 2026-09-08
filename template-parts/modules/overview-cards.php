@@ -1,8 +1,16 @@
 <?php
 /**
  * Overview cards — a grid of preview cards for a page's own child pages, with the image,
- * title and text pulled from each child's own "Overview Card" fields. Reused by any hub
- * page that needs to list its children.
+ * title and text pulled from each child's own "Overview Card" fields. Meant to be reused
+ * by any hub page that needs to list its children this way.
+ *
+ * No active caller right now: the Services overview page used this until the client asked
+ * for its 3 cards to be editable on the page itself instead of on each child page — see
+ * template-parts/pages/services/services-overview.php's own docblock. Left in place rather
+ * than deleted, since the get_children()-driven approach is still the right shape for a
+ * future hub page that actually wants it; acf-overview-card-fields.json (the "Overview
+ * Card" group this reads) was retired along with the Services page's own use of it, so a
+ * new caller would need that field group re-created too.
  *
  * Expects to be called from inside an already-open .theme-container — it renders the
  * grid-inset row of cards and no section or container wrapper of its own. Query and field

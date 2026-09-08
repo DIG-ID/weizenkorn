@@ -2,9 +2,15 @@
 /**
  * Organization page — "Das Weizenkorn Team" section (Figma desktop node
  * 4065:6258, filter panel node 4144:6561). A title, a results count with
- * the filter trigger beside it, a grid of the first 12 team members — four
- * across at desktop, two at tablet, one at mobile — and a "Mehr Laden"
- * button.
+ * the filter trigger beside it, a grid of the first 12 team members
+ * (alphabetical by name) — four across at desktop, three from lg to xl, two
+ * from md to lg, one at mobile — and a "Mehr Laden" button.
+ *
+ * The lg step exists because this grid stays a flat 6 columns the whole
+ * md-to-xl range (.theme-grid's own breakpoints, not this section's) — 2
+ * per row (md:col-span-3) reads too narrow on a wider tablet/small laptop,
+ * so lg:col-span-2 packs 3 per row instead, still evenly, before xl's own
+ * 12-column grid takes over at 4 per row.
  *
  * Not a post type: organization_team_items is a plain ACF repeater on this
  * page (see acf-exports/acf-organization-fields.json), so there's no
@@ -158,13 +164,32 @@ while ( have_rows( 'organization_team_items' ) ) {
 if ( ! $tm_items ) {
 	return;
 }
+
+/*
+ * Alphabetical by name, not repeater row order — Collator does proper locale
+ * collation (ä sorts next to a, not after z, as a byte-order strcmp() would),
+ * falling back to strcasecmp() on a build without the intl extension. "Mehr
+ * Laden" and the filter (assets/js/team-filters.js) both just show/hide
+ * these already-rendered cards, so sorting here is also what decides which
+ * 12 show first and the order "Mehr Laden" reveals the rest in.
+ */
+$tm_collator = class_exists( 'Collator' ) ? new Collator( get_locale() ) : null;
+
+usort(
+	$tm_items,
+	static function ( $a, $b ) use ( $tm_collator ) {
+		return $tm_collator
+			? $tm_collator->compare( $a['name'], $b['name'] )
+			: strcasecmp( $a['name'], $b['name'] );
+	}
+);
 ?>
 <section class="team mt-24 md:mt-32 xl:mt-48 mb-24 md:mb-32 xl:mb-48">
 	<div class="theme-container">
 		<?php get_template_part( 'template-parts/components/section-heading', null, array( 'title' => $tm_title ) ); ?>
 
 		<div class="theme-grid mt-8 xl:mt-12">
-			<div class="team__bar col-span-2 xl:col-span-12 flex items-center justify-between">
+			<div class="team__bar col-span-2 md:col-span-6 xl:col-span-12 flex items-center justify-between">
 				<p class="team__count js-team-count body-text text-brand-dark">
 					<?php
 					printf(
@@ -188,7 +213,7 @@ if ( ! $tm_items ) {
 		</div>
 
 		<div class="theme-grid mt-8 xl:mt-12">
-			<div class="team__grid js-team-grid theme-grid col-span-2 xl:col-span-12 gap-y-8">
+			<div class="team__grid js-team-grid theme-grid col-span-2 md:col-span-6 xl:col-span-12 gap-y-8">
 				<?php foreach ( $tm_items as $tm_index => $tm_item ) : ?>
 					<?php $tm_is_extra = ( $tm_index >= $tm_visible_count ); ?>
 					<?php
@@ -201,7 +226,7 @@ if ( ! $tm_items ) {
 					 */
 					?>
 					<div
-						class="col-span-2 md:col-span-3 xl:col-span-3"
+						class="col-span-2 md:col-span-3 lg:col-span-2 xl:col-span-3"
 						data-team-card
 						data-bereich="<?php echo esc_attr( $tm_item['bereich'] ); ?>"
 						data-standort="<?php echo esc_attr( $tm_item['standort'] ); ?>"

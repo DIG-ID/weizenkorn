@@ -7,7 +7,8 @@
  * explicit and not single-products-{slug}.php, and for how to attach it to a post.
  *
  * SECTIONS, in order: hero-section, product-overview, usp-band, quote-slider,
- * our-equipment, trust, cta-form.
+ * our-equipment, trust, cta-form, preview-cards (unprefixed, like every other use of it —
+ * see the module's own docblock for the two ACF Clone fields it expects).
  *
  * The only range with no order-form and no stories-references — the design has neither.
  *
@@ -38,6 +39,7 @@ if ( have_posts() ) :
 		get_template_part( 'template-parts/modules/quote-slider' );
 		get_template_part( 'template-parts/modules/trust' );
 		get_template_part( 'template-parts/modules/cta-form' );
+		get_template_part( 'template-parts/modules/preview-cards' );
 
 		do_action( 'after_main_content' );
 

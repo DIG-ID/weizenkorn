@@ -11,6 +11,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.14.0] — 2026-09-07
+
+### Added
+- Shared "Preview Cards" module ("Entdecken Sie mehr") — an image/title card that expands on hover (desktop) or tap (tablet/mobile) to reveal a short text and a link. Each page picks up to 3 other pages to feature via a relationship field, and every page carries its own dedicated title/image/text for how it should look when featured elsewhere. Rolled out across nearly every page template, the Open Positions and Products archives, and their single templates.
+- Preview Cards can now also feature the Products and Open Positions archives themselves (not just individual pages), via two toggles with their own dedicated title/image/text.
+
+## [1.13.0] — 2026-09-04
+
+### Added
+- Custom Schema.org structured data via the Yoast Schema API: JobPosting on every Open Positions post (Google for Jobs eligibility), and FAQPage on every page using the shared FAQ section (Donate, Fiduciary, Kreativatelier, Schreinerei, Supported Jobs, Supported Apprenticeships).
+
+### Fixed
+- Removed a leftover inline WebSite microdata attribute from the header — schema is now handled entirely through the Yoast Schema API, with nothing duplicating it manually.
+
+## [1.12.1] — 2026-09-03
+
+### Added
+- Services page: a "Dürfen wir Sie beraten?" contact form section.
+
+### Changed
+- Das Weizenkorn Team: members now list alphabetically by name.
+- Main display title (used across the site) sized down at mobile and tablet.
+- The filter panel's "Close Filters" button (Open Positions archive and Das Weizenkorn Team) reads "Filter schliessen" by default, matching the site's primary language.
+- Services page: the 3 overview cards (Schreinerei, Kreativatelier, Treuhand) are now edited directly on the page instead of on each category page.
+
+### Removed
+- About Us — Organization page: the "Transparency" section is temporarily hidden at the client's own request.
+
+### Fixed
+- About Us — Organization page: the "Warum Weizenkorn?" iframe and text columns overlapped at tablet; the "Das Weizenkorn Team" results bar and grid now use the full tablet width instead of a narrow sliver.
+- Donate page: the "Unsere Spenden-Projekte" cards showed literal "<p>" tags in their text; the slider now spans the full column width at tablet and aligns with the rest of the page at desktop.
+- Footer newsletter form: spacing between the Name/E-Mail fields and the submit button at desktop.
+- Services page: the overview cards' text was capped to half the card's width at desktop, leaving it cramped in a narrower card than that limit was designed for.
+
 ## [1.12.0] — 2026-09-03
 
 ### Added

@@ -67,7 +67,7 @@
 			<?php if ( get_field( 'general_newsletter_shortcode', 'option' ) ) : ?>
 				<div class="footer-main__card footer-main__newsletter">
 					<h2 class="footer-main__heading"><?php esc_html_e( 'Newsletter', 'weizenkorn' ); ?></h2>
-					<div class="newsletter-form__wrapper px-4 xl:px-0">
+					<div class="newsletter-form__wrapper px-0">
 						<?php echo do_shortcode( get_field( 'general_newsletter_shortcode', 'option' ) ); ?>
 					</div>
 				</div>

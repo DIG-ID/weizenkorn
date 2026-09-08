@@ -168,6 +168,13 @@ function weizenkorn_the_svg_icon( $name ) {
 		'play'               => '<svg width="28" height="32" viewBox="0 0 28 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M27 16L0.999999 31.0096L1 0.990379L27 16Z" fill="currentColor" /></svg>',
 		'phone'              => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>',
 		'mail'               => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="2" /><path d="M2 7l10 6 10-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>',
+		// Preview card's tablet/mobile tap-to-expand toggle (Figma "sum" icon, node
+		// 3429:4794 and its "-" pair 3429:4814) — a plus/minus in one icon, traced as
+		// two bars instead of Figma's own single unioned path, so CSS/JS can rotate just
+		// the vertical one away on open instead of swapping two separate SVGs. Desktop
+		// never shows this — that breakpoint opens on hover, per the Design System's own
+		// "Default"/"hover" variants, which carry no icon at all.
+		'toggle'             => '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="0" y="7.38" width="16" height="1.23" fill="currentColor" /><rect class="icon-toggle__vertical" x="7.38" y="0" width="1.23" height="16" fill="currentColor" /></svg>',
 		// The team section's no-photo fallback (a silhouette + the brand's wheat sprout),
 		// traced from the Figma placeholder asset — cropped to its own bounds and coloured
 		// via currentColor rather than the original's hardcoded white, so the caller sets

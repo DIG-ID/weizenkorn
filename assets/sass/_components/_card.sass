@@ -115,6 +115,72 @@
     &:focus-visible .card__reveal
       grid-template-rows: 1fr
 
+// -- Preview card: an image with a title bar over its bottom edge, expanding to reveal a
+//    short text and a "mehr" link. template-parts/components/card-preview.php — the
+//    shared preview-cards module, used on Services' own "Entdecken Sie mehr" first.
+//    Unlike .card-service this overlay is the shape at EVERY breakpoint, not just xl —
+//    confirmed against Figma's own mobile/tablet/desktop frames for that section, all
+//    three drawing the panel over the image rather than stacked under it. -----------------
+.card-preview
+  @apply relative block w-full overflow-hidden bg-brand-cream no-underline
+
+  &__media
+    @apply absolute inset-0
+
+  &__panel
+    @apply absolute inset-x-0 bottom-0 z-10 bg-brand-cream px-4 py-3.5 xl:px-6 xl:py-[14px]
+
+  &__head
+    @apply flex items-center justify-between gap-8
+
+  &__title
+    @apply title-card text-brand-dark m-0
+
+  // The toggle only exists below xl (see card-preview.php) — text-brand-red matches the
+  // Design System's own red +/− rather than inheriting card__title's dark colour.
+  &__toggle
+    @apply shrink-0 text-brand-red
+
+    .icon-toggle__vertical
+      transition: transform var(--transition-slow), opacity var(--transition-slow)
+      transform-origin: center
+
+  // Same 0fr → 1fr trick as .card-service's own &__reveal — see that block's own comment
+  // for why grid-template-rows over a guessed max-height, and why the bare child <div>
+  // (padding/margin the collapsed row can't zero, only the content it wraps can).
+  &__reveal
+    @apply grid overflow-hidden mt-4
+    grid-template-rows: 0fr
+    transition: grid-template-rows var(--transition-slow)
+
+    > *
+      @apply overflow-hidden
+
+  &__text
+    @apply body-text text-brand-dark
+
+  &__more
+    @apply link-inline inline-flex items-center gap-2 mt-4
+
+  // Desktop: hover or keyboard focus anywhere in the card opens it — :focus-within, not
+  // :focus-visible, because the "mehr" link is a real focusable child sitting inside the
+  // (collapsed) reveal itself; a keyboard user tabbing to it needs the panel to already be
+  // open, not just to open once it's reached.
+  @media (min-width: 1280px)
+    &:hover &__reveal,
+    &:focus-within &__reveal
+      grid-template-rows: 1fr
+
+  // Below xl: no reliable hover, so assets/js/preview-cards.js toggles this class instead
+  // (and the toggle button's own aria-expanded) — see card-preview.php's own docblock.
+  &.is-open
+    .card-preview__reveal
+      grid-template-rows: 1fr
+
+    .icon-toggle__vertical
+      @apply opacity-0
+      transform: rotate(90deg)
+
 // -- Job card: a red category banner over a bordered white box, title + excerpt below
 //    it. template-parts/components/card-job.php — the Open Positions single's
 //    "Weitere Stellenausschreibungen" slider, and later the archive's own job grid. ---

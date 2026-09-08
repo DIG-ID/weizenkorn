@@ -19,6 +19,11 @@ commitar. Nunca deixar `dist/` de desenvolvimento ir para produção.
 
 1. **Pré-check**
    - Confirmar que a branch actual é `main` (`git rev-parse --abbrev-ref HEAD`).
+   - Correr `git fetch` e comparar com `origin/main` (`git status` depois do
+     fetch, ou `git rev-list --count main..origin/main`). Se houver commits
+     novos no remoto (um colega fez push entretanto), parar e avisar o
+     utilizador — fazer `git pull`/merge desses commits antes de continuar,
+     nunca ignorar nem sobrepor com um push a seguir.
    - Correr `git status` e perceber a working tree. Se houver alterações **não
      relacionadas** misturadas, alertar e sugerir separá-las antes de continuar.
    - Lembrar o utilizador: **push a `main` = site live imediato**.
@@ -80,6 +85,9 @@ commitar. Nunca deixar `dist/` de desenvolvimento ir para produção.
 
 ## Regras
 
+- **Sempre** começar por `git fetch` e verificar se `origin/main` tem commits
+  que a branch local não tem — nunca arrancar o processo (nem o build) sobre
+  uma `main` desactualizada.
 - **Nunca** fazer `git push` (nem tag com push) sem confirmação explícita do
   utilizador — na `main`, push publica o site.
 - **Sempre** correr `npm run prod` antes do commit de go-live; não deixar `dist/`
