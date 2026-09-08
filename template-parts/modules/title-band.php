@@ -21,10 +21,10 @@
 ?>
 <?php
 // No top margin, the same as hero-section: the space above the first section comes from
-// the header, not from the section itself. Below it the frames measure 96px at mobile and
-// 192px at both tablet and desktop — tablet does not take an intermediate step here.
+// the header, not from the section itself. Below it: 96px at mobile, 128 at tablet, 192 at
+// desktop.
 ?>
-<header class="title-band mb-24 md:mb-48">
+<header class="title-band mb-24 md:mb-32 xl:mb-48">
 	<div class="theme-container">
 		<div class="title-band__box border-2 border-brand-red flex items-center justify-center px-6 py-4 md:py-[34px] xl:px-8 xl:py-[50px]">
 			<h1 class="title-band__title"><?php the_title(); ?></h1>

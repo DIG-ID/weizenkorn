@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.14.3] — 2026-09-08
+
+### Changed
+- Legal pages at tablet: more air above each section's rule, and a shorter gap between the title band and the content below it.
+
 ## [1.14.2] — 2026-09-08
 
 ### Fixed
