@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.14.1] — 2026-09-08
+
+### Fixed
+- Preview cards showed extra empty space under the closed title bar — a margin meant only for the expanded text sat outside the collapse mechanism, so it stayed even when closed.
+
 ## [1.14.0] — 2026-09-07
 
 ### Added
