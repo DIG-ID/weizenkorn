@@ -12,12 +12,12 @@
  *   3. values-grid    module, new to this page — "Unsere Werte"
  *   4. intro-cta      with the `origin_` prefix — "Unser Ursprung". Same module as (2),
  *                     a second prefix rather than a second section.
- *   5. craft-showcase shared module in its 'pair' variant — "So arbeiten wir". No left
- *                     image, so the paragraph and the picture sit side by side.
- *   6. quote-slider   shared module
- *   7. video-panel    module, new to this page — "Weizenkorn entdecken". The video fills
+ *   5. video-panel    module, new to this page — "Weizenkorn entdecken". The video fills
  *                     the left six columns and the text sits in 8-12, the two ending on
  *                     the same line.
+ *   6. craft-showcase shared module in its 'pair' variant — "So arbeiten wir". No left
+ *                     image, so the paragraph and the picture sit side by side.
+ *   7. quote-slider   shared module
  *   8. button-text    with the `organisation_` prefix — "Organisation". Daniel's module
  *                     off the Organization page, which already pairs a button on the left
  *                     with a paragraph on the right; here it also carries the wide picture
@@ -70,14 +70,14 @@ if ( have_posts() ) :
 			array( 'prefix' => 'origin_' )
 		);
 
+		get_template_part( 'template-parts/modules/video-panel' );
+
 		get_template_part(
 			'template-parts/modules/craft-showcase',
 			null,
 			array( 'variant' => 'pair' )
 		);
 		get_template_part( 'template-parts/modules/quote-slider' );
-		get_template_part( 'template-parts/modules/video-panel' );
-
 		get_template_part(
 			'template-parts/modules/button-text',
 			null,

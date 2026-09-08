@@ -26,6 +26,19 @@ h1, h2, h3, h4, h5, h6
 .title-main
   @apply font-primary font-medium tracking-[0.5px] text-[28px] leading-[34px] md:text-[56px] md:leading-[60px] xl:text-[76px] xl:leading-[80px] 2xl:text-[96px]  2xl:leading-[96px]
 
+// The centred title on the legal pages (AGB, Datenschutz, Impressum). Its own scale, not
+// a variant of .title-hero: the two agree at the 1920 canvas by coincidence of leading and
+// part company everywhere else — 40/48 here against the hero's 45/60 at tablet.
+//
+// The design gives mobile, tablet and the 1920 canvas (which lands on 2xl). The xl step is
+// interpolated at four fifths of the 2xl value, the ratio .title-hero and .title-main both
+// use between those two breakpoints — without it a 40px title would sit in an 1820 container.
+//
+// No colour and no alignment here, as with every other title in this file: the section that
+// draws it sets text-brand-red and text-center.
+.title-legal
+  @apply font-primary font-semibold tracking-[0.5px] text-[18px] leading-[26px] md:text-[40px] md:leading-[48px] xl:text-[66px] xl:leading-[80px] 2xl:text-[82px] 2xl:leading-[100px]
+
 // Mid-level heading. No design token — interpolated.
 .title-section
   @apply font-primary font-semibold tracking-[0.5px] text-[28px] leading-[34px] xl:text-[40px] xl:leading-[48px]

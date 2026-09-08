@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.14.1] — 2026-09-08
+
+### Changed
+- About Us page: the "Weizenkorn entdecken" video section now comes before "So arbeiten wir" and the quote slider.
+
 ## [1.14.0] — 2026-09-07
 
 ### Added
