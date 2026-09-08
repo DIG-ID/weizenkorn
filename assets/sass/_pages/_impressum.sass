@@ -26,6 +26,17 @@
   &__text
     @apply body-text
 
+    // The theme resets <a> to inherit its colour and drop its underline, so a link typed in
+    // the editor is indistinguishable from the text around it. The frames show no link
+    // colour here, so the underline alone marks them and the red is kept for the hover —
+    // discoverable without introducing a colour the design does not have.
+    a
+      @apply underline underline-offset-2
+
+      &:hover,
+      &:focus-visible
+        @apply text-brand-red
+
   // The rule shape. The heading carries the rule and the gap under it, so the two are one
   // element and cannot drift apart.
   &__cell--rule

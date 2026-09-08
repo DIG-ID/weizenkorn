@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.14.2] — 2026-09-08
+
+### Fixed
+- Links inside the legal pages' text looked exactly like the text around them — the theme resets anchors to inherit their colour and drop their underline. They now carry an underline, and turn red on hover.
+
 ## [1.14.1] — 2026-09-08
 
 ### Added

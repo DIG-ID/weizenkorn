@@ -41,6 +41,18 @@
     ol:not([class])
       padding-left: 2.25em
 
+
+    // The theme resets <a> to inherit its colour and drop its underline, so a link typed in
+    // the editor is indistinguishable from the text around it. The frames show no link
+    // colour here, so the underline alone marks them and the red is kept for the hover —
+    // discoverable without introducing a colour the design does not have.
+    a
+      @apply underline underline-offset-2
+
+      &:hover,
+      &:focus-visible
+        @apply text-brand-red
+
     h3
       @apply font-bold
       font-size: inherit
