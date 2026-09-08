@@ -1,0 +1,53 @@
+// Impressum — template-parts/pages/impressum/details.php
+
+.impressum-details
+
+  // Three equal columns of its own rather than .theme-grid's twelve: a third of the
+  // ten-column inset is not a whole number of columns. One column below desktop, where the
+  // frames stack the cells.
+  //
+  // The 56px row gap is the distance inside a group. The wider distance between the two
+  // groups is the first one's bottom padding, below — that is what the two wrappers buy.
+  &__group
+    @apply grid gap-x-5 gap-y-14
+
+    @media (min-width: 1280px)
+      grid-template-columns: repeat(3, 1fr)
+
+  &__group--details
+    @apply pb-24 md:pb-32 xl:pb-48
+
+  &__cell
+    @apply text-brand-dark
+
+  &__heading
+    @apply label-overline
+
+  &__text
+    @apply body-text
+
+  // The rule shape. The heading carries the rule and the gap under it, so the two are one
+  // element and cannot drift apart.
+  &__cell--rule
+    .impressum-details__heading
+      @apply border-b border-brand-red pb-3 mb-8 md:mb-11
+
+    // A display scale of this page's own. It matches .location__address at tablet and
+    // desktop but not at mobile — 22/36 here against that one's 16/22 — so the two are near
+    // neighbours rather than the same token, and sharing a class would be wrong.
+    .impressum-details__text
+      @apply text-[22px] leading-[36px] md:text-[24px] md:leading-[42px] xl:text-[40px] xl:leading-[55px]
+
+      // Address lines, not prose: one leading apart, the way the frame sets them.
+      p
+        @apply mb-0
+
+  // The boxed shape. A minimum and not a fixed height, so a longer notice grows the panel
+  // instead of overflowing it.
+  &__cell--box
+    .impressum-details__heading
+      @apply mb-5
+
+    .impressum-details__box
+      @apply border border-brand-red px-[26px] py-6
+      @apply md:min-h-[106px] xl:min-h-[220px]

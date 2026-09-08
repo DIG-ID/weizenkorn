@@ -13,6 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ## [1.14.1] — 2026-09-08
 
+### Added
+- Legal pages: AGB and Datenschutzerklärung share a template with a heading beside its text, one block per section, each under a rule.
+- Impressum template: labelled cells three to a row, half of them under a rule and half inside a bordered panel.
+- Title band: the page title centred in a bordered band, used by all three legal pages in place of a hero.
+- Editor stylesheet, so lists and sub-headings show their markers inside the editor instead of rendering flat.
+
 ### Fixed
 - Preview cards showed extra empty space under the closed title bar — a margin meant only for the expanded text sat outside the collapse mechanism, so it stayed even when closed.
 

@@ -1,0 +1,40 @@
+// Editor content — what TinyMCE's iframe gets on top of the front-end stylesheet.
+//
+// add_editor_style() loads dist/css/main.css into the editor so the author sees the real
+// typography. That sheet carries Tailwind's preflight, which resets
+// `ol, ul { list-style: none; padding: 0 }`. On the front end the markers come back through
+// .body-text; inside the editor there is no such wrapper, so a list renders with no bullets
+// and no indent at all — the author cannot see that a paragraph ended up inside an <li>.
+//
+// So these put the markers back. They are for reading structure while writing, not for
+// matching the front end pixel for pixel.
+
+body#tinymce
+
+  ul,
+  ol
+    margin: 0 0 1em
+    padding-left: 2.25em
+
+  ul
+    list-style: disc outside
+
+  ol
+    list-style: decimal outside
+
+  ul ul
+    list-style-type: circle
+
+  ol ol
+    list-style-type: lower-alpha
+
+  li
+    margin-bottom: 0.25em
+
+  // The preflight resets headings to the body's size and weight, so an h3 is
+  // indistinguishable from a paragraph here — and in the legal fields the h3 is exactly what
+  // the author has to choose deliberately. Bold and spaced, as it renders on the front end.
+  h3
+    font-weight: 700
+    font-size: 1em
+    margin: 1.5em 0 0

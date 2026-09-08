@@ -1,0 +1,14 @@
+// Title band — template-parts/modules/title-band.php
+
+.title-band
+
+  // Its own display size rather than .title-hero, which steps to 70/84 at this width. The
+  // band's height is this leading plus its padding, so the shared scale would draw the band
+  // 16px shorter than the frame.
+  //
+  // Allowed to wrap, unlike the frame's whitespace-nowrap. The three real titles fit on one
+  // line at every width anyway, so this changes nothing you can see — it only keeps a longer
+  // title from running out of the band.
+  &__title
+    @apply font-primary font-semibold tracking-[0.5px] text-center text-brand-red
+    @apply text-[18px] leading-[26px] md:text-[40px] md:leading-[48px] xl:text-[82px] xl:leading-[100px]

@@ -37,6 +37,7 @@ mix
   .sass('assets/sass/admin-login.sass', 'css')
   .sass('assets/sass/admin-dashboard.sass', 'css')
   .sass('assets/sass/admin-bar.sass', 'css')
+  .sass('assets/sass/editor.sass', 'css')
   .options({
     postCss: [ tailwindcss('./tailwind.config.js') ],
     processCssUrls: false,

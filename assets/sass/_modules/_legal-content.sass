@@ -1,0 +1,52 @@
+// Legal content — template-parts/modules/legal-content.php
+
+.legal-content
+
+  // The rule runs the container's full width while the two columns keep to the inset, so it
+  // belongs to the block rather than to either column. Above rather than below, which is
+  // what closes the last block without a line hanging under it.
+  &__block
+    @apply border-t border-brand-dark text-brand-dark
+    @apply gap-y-6 py-8 xl:py-[46px]
+
+  // The overline type, not a display heading — an <h2> here reads as a label beside its
+  // text, which is what the design sets it as.
+  &__heading
+    @apply label-overline
+
+  // The frame gives every paragraph and list a zero margin and puts a single blank line
+  // above each sub-heading — that is its whole vertical rhythm. So the rich-text margins
+  // .body-text carries are dropped here and the space is moved onto the sub-heading, which
+  // is the one thing the author can actually mark up. A blank paragraph would be the literal
+  // equivalent, but wpautop strips those, so it cannot be authored.
+  //
+  // Sub-headings must therefore be Heading 3 in the editor, not a bold paragraph.
+  &__text
+    @apply body-text
+
+    // The list selectors mirror .body-text's own, :not([class]) included: a plain `li` is
+    // less specific than the `ul:not([class]) li` it carries, so it would lose.
+    p,
+    ul:not([class]),
+    ol:not([class]),
+    ul:not([class]) li,
+    ol:not([class]) li
+      @apply mb-0
+
+    // The frame indents the list inside the text: marker at 1.5em from the column edge and
+    // the item's text at 2.25em. With outside markers that is one padding — the marker lands
+    // just before the content box. In em rather than the shared .body-text's flat 18px, so it
+    // tracks the font from 14px at mobile to 20px at desktop.
+    ul:not([class]),
+    ol:not([class])
+      padding-left: 2.25em
+
+    h3
+      @apply font-bold
+      font-size: inherit
+      line-height: inherit
+      margin-top: 22px
+      margin-bottom: 0
+
+      @media (min-width: 1280px)
+        margin-top: 30px
