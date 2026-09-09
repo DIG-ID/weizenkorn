@@ -12,7 +12,8 @@
   &-primary,
   &-secondary,
   &-black,
-  &-arrow-down
+  &-arrow-down,
+  &-white
     @apply gap-16 px-3 py-3.5
 
   &-arrow
@@ -44,6 +45,18 @@
     &:hover,
     &:active
       @apply bg-brand-red text-white border-brand-red
+
+    &:active
+      @apply underline
+
+  // For a button sitting on the red band — the 404 panel, and anywhere else the background
+  // is brand-red. Inverts the same way primary does: filled, then hollow on hover.
+  &-white
+    @apply bg-white text-brand-red border border-white
+
+    &:hover,
+    &:active
+      @apply bg-transparent text-white
 
     &:active
       @apply underline

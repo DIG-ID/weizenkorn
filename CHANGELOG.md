@@ -11,6 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.15.0] — 2026-09-09
+
+### Added
+- 404 page: a red panel with the overline, the code, a button back to the home page and the message, ruled across at desktop.
+- White button style, for buttons sitting on the red band.
+- Projekte & Referenzen slider on the Schreinerei page.
+
 ## [1.14.4] — 2026-09-09
 
 ### Fixed

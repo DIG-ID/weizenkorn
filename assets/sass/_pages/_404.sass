@@ -1,1 +1,56 @@
-// 404 page styles
+// 404 — 404.php
+
+.error-404
+
+  // The frame draws two rules across the panel at desktop and none below it, so they are
+  // the inner box's borders only from xl up — and the panel's padding changes with them.
+  &__panel
+    @apply py-[50px] md:py-[76px] xl:py-[109px]
+
+  &__inner
+    @apply flex flex-col items-center text-center
+    @apply gap-[42px] md:gap-10 xl:gap-[52px]
+    @apply xl:border-y xl:border-white xl:py-[50px]
+
+  // A size used nowhere else. Unitless leading rather than a pixel value, so the number
+  // keeps its proportions at both sizes.
+  &__code
+    @apply font-primary font-medium tracking-[0.5px]
+    @apply text-[110px] xl:text-[230px]
+    line-height: 0.74
+
+  // The page's <h1>: on a 404 the message is the heading, not the status code.
+  &__text
+    @apply font-primary font-normal tracking-[0.5px]
+    @apply text-[16px] leading-[24px] md:text-[18px] md:leading-[26px] xl:text-[40px] xl:leading-[55px]
+    @apply max-w-[256px] md:max-w-[542px] xl:max-w-[1206px]
+
+  // The type comes from .btn — the design's own Mobile/Button and Tablet/Button styles are
+  // DM Sans Black uppercase, the same token. What differs is the box: the frame fixes its
+  // width and pushes the arrow to the far edge, rather than letting it size to its label.
+  //
+  // Tablet keeps the mobile box on purpose. The frame draws it smaller there than at mobile
+  // — 162x36 against 190x41, and 12px against 14px — but all three ratios come to ~0.86, so
+  // it is the mobile button scaled down rather than a size of its own. At the 14px .btn
+  // gives, the label and the arrow do not fit 162px comfortably.
+  // No vertical padding of its own: .btn's own py-3.5 sets the height, the same as every
+  // other button on the site. The frame draws an 80px box at desktop, but that was sized
+  // around a broken 25px text node — at the 15px .btn really gives, it left the label
+  // floating in the middle of an over-tall button.
+  //
+  // The width and the horizontal padding do stay from the frame: with a fixed width and the
+  // arrow pushed to the far edge, they are what place the label and the arrow.
+  &__button
+    @apply justify-between gap-0
+    @apply w-[190px] px-4
+    @apply xl:w-[250px] xl:px-[29px]
+
+    // The 64px gap .btn carries is for a button that sizes to its content. Here the width is
+    // fixed and justify-between already pushes the label and the arrow apart, so the gap only
+    // overflowed the arrow past the white box — where, being brand-red on brand-red, it
+    // vanished rather than looking broken.
+    //
+    // The icon renders at its desktop size, 24x19. The frames draw the smaller one below xl,
+    // which is also what makes the label and the arrow fit the narrower box.
+    svg
+      @apply w-4 h-[13px] xl:w-6 xl:h-[19px]
