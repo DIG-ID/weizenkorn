@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.15.3] — 2026-09-09
+
+### Changed
+- Section headings: the right-hand paragraph no longer stops at 500px on desktop and runs the full five columns, on every section that has one.
+
 ## [1.15.2] — 2026-09-09
 
 ### Fixed
