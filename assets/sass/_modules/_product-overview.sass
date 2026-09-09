@@ -161,6 +161,13 @@
     .product-overview__media img
       @apply object-cover
 
+    // At mobile the card is at its squarest, so cover crops the most — and centred it took
+    // the crop off the top, where the faces are. Anchoring to the top spends the whole crop
+    // on the counter at the bottom instead.
+    @media (max-width: 767px)
+      .product-overview__media img
+        @apply object-top
+
     .product-overview__grid
       row-gap: 32px
 

@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.15.2] — 2026-09-09
+
+### Fixed
+- Bakery product images cropped people's heads at mobile; the crop now falls at the bottom of the photo instead.
+
 ## [1.15.1] — 2026-09-09
 
 ### Fixed
