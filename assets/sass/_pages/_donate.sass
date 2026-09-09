@@ -15,12 +15,18 @@
     grid-row: 1
 
     // Equal-height cards, all 3 matching the tallest: card-donation-project.php already
-    // carries h-full, and Swiper's own core CSS gives .swiper-wrapper/.swiper-slide
-    // height: 100% — but with autoHeight left off (on purpose, or every slide would size
-    // to ITS OWN content instead) that 100% has nothing definite to resolve against, so
-    // align-items needs setting explicitly rather than relying on the flex default.
+    // carries h-full to fill whatever height its slide ends up with. items-stretch alone
+    // was not enough: Swiper's own core CSS gives .swiper-slide height: 100%, and align-
+    // items: stretch only stretches a flex item whose OWN cross-size computes to auto —
+    // a percentage still counts as "set" even though .swiper (its containing block) has
+    // no definite height for it to resolve against, so it silently blocks the stretch.
+    // Overriding it back to auto (autoHeight stays off, or every slide would instead size
+    // to ITS OWN content) is what lets stretch actually apply.
     .swiper-wrapper
       @apply items-stretch
+
+    .swiper-slide
+      @apply h-auto
 
     // Full width at tablet — the arrows are hidden below xl (dots show instead, in
     // their own row below), so there's no side column to leave room for here.
