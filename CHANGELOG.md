@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.14.4] — 2026-09-09
+
+### Fixed
+- Donate page: the "Unsere Spenden-Projekte" slider's cards now all match the tallest one instead of each keeping its own height.
+
+### Changed
+- Products is now declared translatable in the theme's own WPML config, so the setting survives a fresh environment or database copy instead of needing to be toggled by hand each time.
+
 ## [1.14.3] — 2026-09-08
 
 ### Added

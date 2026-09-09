@@ -15,6 +15,7 @@
 	<custom-types>
 		<custom-type translate="1">news</custom-type>
 		<custom-type translate="1">offene-stellen</custom-type>
+		<custom-type translate="1">products</custom-type>
 	</custom-types>
 
 	<taxonomies>
