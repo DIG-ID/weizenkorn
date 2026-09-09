@@ -17,6 +17,7 @@ import { initTeamFilters } from './team-filters.js';
 import { initNewsPagination } from './news-pagination.js';
 import { initVideoFacade } from './video-facade.js';
 import { initPreviewCards } from './preview-cards.js';
+import { initAnchorScroll } from './anchor-scroll.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -46,5 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initNewsPagination();
   initVideoFacade();
   initPreviewCards();
+  initAnchorScroll();
 
 });

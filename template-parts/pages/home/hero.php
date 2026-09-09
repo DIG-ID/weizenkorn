@@ -26,7 +26,7 @@ $weizenkorn_hero_enable_video = get_field( 'hero_enable_video' );
 $weizenkorn_hero_video_mp4    = $weizenkorn_hero_enable_video ? get_field( 'hero_video_mp4' ) : null;
 $weizenkorn_hero_video_webm   = $weizenkorn_hero_enable_video ? get_field( 'hero_video_webm' ) : null;
 ?>
-<section class="section-hero pb-[60px] xl:pb-[120px]">
+<section id="section-hero" class="section-hero pb-[60px] xl:pb-[120px]">
 	<?php
 	// No explicit height or min-height on purpose: the section is always naturally sized to
 	// its content, so it never gets stretched taller than the content needs — that

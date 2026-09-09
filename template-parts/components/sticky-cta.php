@@ -5,21 +5,24 @@
  * Home only for now, included from header.php behind an is_front_page() check.
  *
  * ACF fields (flat, "Sticky CTA" group):
- *   sticky_cta_title (text)
- *   sticky_cta_text  (textarea)
- *   sticky_cta_link  (text) a plain URL — the whole box is the link, so it needs no title
- *                    or target of its own
+ *   sticky_cta_active (true_false) the on/off switch — the content fields below stay
+ *                      filled in either way, so turning it back on needs no retyping
+ *   sticky_cta_title  (text)
+ *   sticky_cta_text   (textarea)
+ *   sticky_cta_link   (text) a plain URL — the whole box is the link, so it needs no
+ *                     title or target of its own
  *
  * @package weizenkorn
  * @subpackage Component
  * @since 1.4.0
  */
 
-$weizenkorn_sticky_cta_title = get_field( 'sticky_cta_title' );
-$weizenkorn_sticky_cta_text  = get_field( 'sticky_cta_text' );
-$weizenkorn_sticky_cta_link  = get_field( 'sticky_cta_link' );
+$weizenkorn_sticky_cta_active = get_field( 'sticky_cta_active' );
+$weizenkorn_sticky_cta_title  = get_field( 'sticky_cta_title' );
+$weizenkorn_sticky_cta_text   = get_field( 'sticky_cta_text' );
+$weizenkorn_sticky_cta_link   = get_field( 'sticky_cta_link' );
 
-if ( ! $weizenkorn_sticky_cta_title || ! $weizenkorn_sticky_cta_link ) {
+if ( ! $weizenkorn_sticky_cta_active || ! $weizenkorn_sticky_cta_title || ! $weizenkorn_sticky_cta_link ) {
 	return;
 }
 ?>

@@ -23,7 +23,7 @@
  */
 
 ?>
-<section class="section-services my-24 md:my-32 xl:my-48">
+<section id="section-services" class="section-services my-24 md:my-32 xl:my-48">
 	<div class="theme-container">
 		<?php if ( have_rows( 'services' ) ) : ?>
 			<?php

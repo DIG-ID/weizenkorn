@@ -13,8 +13,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ## [1.14.3] — 2026-09-08
 
+### Added
+- Smooth-scrolling anchor links on the home page, matching the rest of the page's scroll feel instead of jumping instantly.
+- Sticky CTA: an "Active" switch to turn the widget on or off without losing its title/text/link.
+
 ### Changed
 - Legal pages at tablet: more air above each section's rule, and a shorter gap between the title band and the content below it.
+- Home page sections now carry stable HTML ids, for anchor links to target.
 
 ## [1.14.2] — 2026-09-08
 

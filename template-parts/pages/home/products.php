@@ -17,7 +17,7 @@
  */
 
 ?>
-<section class="section-products mb-24 md:mb-32 xl:mb-48">
+<section id="section-products" class="section-products mb-24 md:mb-32 xl:mb-48">
 	<div class="theme-container">
 		<?php if ( have_rows( 'products' ) ) : ?>
 			<?php
