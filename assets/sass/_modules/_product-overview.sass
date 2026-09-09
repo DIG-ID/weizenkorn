@@ -154,6 +154,13 @@
     .product-overview__media
       height: 192px
 
+    // cover, not the contain the module sets from xl up. These are photographs of a full
+    // counter, not products on white, so filling the card reads better than fitting the whole
+    // frame inside it and leaving a band either side. The four product-range pages keep
+    // contain, where a crop would cut into the product itself.
+    .product-overview__media img
+      @apply object-cover
+
     .product-overview__grid
       row-gap: 32px
 

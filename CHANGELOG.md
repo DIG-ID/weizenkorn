@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.15.1] — 2026-09-09
+
+### Fixed
+- Bakery product images sat inside their card with a band either side; they now fill it.
+
 ## [1.15.0] — 2026-09-09
 
 ### Added
