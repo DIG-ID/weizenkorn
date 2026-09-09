@@ -14,10 +14,14 @@
  *   buttons            array   { prmary: link, secondary: link }  [sic]
  *   image              int     optional heading image (attachment ID)
  *
- * One key is the caller's own and not the group's:
+ * Two keys are the caller's own and not the group's:
  *   title_style        string  'overline' typesets the title as the eyebrow instead of the
  *                              display heading — the gastronomy venues' photo mosaic,
  *                              which has no display title at all.
+ *   hide_secondary     bool    drops the secondary button while its link stays filled, for
+ *                              a CTA that comes and goes without the editor having to empty
+ *                              and retype it. Only the Home products section passes it; a
+ *                              caller that does not is unaffected.
  *
  * Usage:
  *   $st = get_field( 'products_section_title' );
@@ -60,7 +64,14 @@ $st_intro_span = ( $show_left && $st_left )
 	: 'md:col-span-2 xl:col-start-2 xl:col-span-4';
 
 $btn_primary   = ! empty( $st_buttons['prmary'] ) ? $st_buttons['prmary'] : null;
-$btn_secondary = ! empty( $st_buttons['secondary'] ) ? $st_buttons['secondary'] : null;
+// Nulled here rather than checked at the render, so the row wrapper and the has-row test
+// below both see the button as absent — a heading whose only button is a hidden one keeps
+// no empty button row.
+$st_hide_secondary = ! empty( $args['hide_secondary'] );
+
+$btn_secondary = ( ! empty( $st_buttons['secondary'] ) && ! $st_hide_secondary )
+	? $st_buttons['secondary']
+	: null;
 
 // Only render the intro/description row when there is something to show, so the
 // component can be reused for a title-only heading (title + rule) — e.g. the

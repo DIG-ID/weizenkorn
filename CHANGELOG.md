@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.16.0] — 2026-09-09
+
+### Added
+- The home page's Products section can hide its second heading button without emptying its link, so a seasonal call to action can be switched off and back on.
+
 ## [1.15.3] — 2026-09-09
 
 ### Changed

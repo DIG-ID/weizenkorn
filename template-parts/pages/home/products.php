@@ -8,6 +8,10 @@
  *
  * ACF structure (group "products"):
  *   section_title (clone → "Section Title") fed to the section-heading component
+ *   hide_secondary_button (true/false) hides the heading's second button without emptying
+ *                 its Link, so a seasonal CTA can be switched off and back on. Only this
+ *                 section has it — the shared clone deliberately does not, which is what
+ *                 keeps the checkbox out of the other seventeen sections' admin.
  *   ranges        (repeater) → image (image, ID), title (text), text (textarea),
  *                              page (link)
  *
@@ -25,7 +29,16 @@
 				the_row();
 				?>
 				<?php if ( get_sub_field( 'section_title' ) ) : ?>
-					<?php get_template_part( 'template-parts/components/section-heading', null, get_sub_field( 'section_title' ) ); ?>
+					<?php
+					get_template_part(
+						'template-parts/components/section-heading',
+						null,
+						array_merge(
+							get_sub_field( 'section_title' ),
+							array( 'hide_secondary' => (bool) get_sub_field( 'hide_secondary_button' ) )
+						)
+					);
+					?>
 				<?php endif; ?>
 
 				<?php if ( get_sub_field( 'ranges' ) ) : ?>
