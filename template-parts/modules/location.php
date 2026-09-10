@@ -94,7 +94,10 @@ if ( ! $lc_pins ) {
 	$lc_single = get_field( $lc_prefix . 'location_pin', $lc_ctx );
 
 	if ( is_array( $lc_single ) && ! empty( $lc_single['lat'] ) && ! empty( $lc_single['lng'] ) ) {
-		$lc_pins[] = $lc_single;
+		// Same shape as a repeater row: one pin has nothing to tell apart, so it never has a
+		// label — but the markup below reads the key either way.
+		$lc_single['label'] = '';
+		$lc_pins[]          = $lc_single;
 	}
 }
 
@@ -130,7 +133,7 @@ if ( ! $lc_heading
 				<?php if ( $lc_pins ) : ?>
 					<div class="location__map acf-map col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-10" data-zoom="16" data-zoom-adjust="-0.5" data-zoom-adjust-mobile="-0.5">
 						<?php foreach ( $lc_pins as $lc_pin ) : ?>
-							<div class="marker" data-lat="<?php echo esc_attr( $lc_pin['lat'] ); ?>" data-lng="<?php echo esc_attr( $lc_pin['lng'] ); ?>"><?php echo $lc_pin['label'] ? esc_html( $lc_pin['label'] ) : ''; ?></div>
+							<div class="marker" data-lat="<?php echo esc_attr( $lc_pin['lat'] ); ?>" data-lng="<?php echo esc_attr( $lc_pin['lng'] ); ?>"><?php echo ! empty( $lc_pin['label'] ) ? esc_html( $lc_pin['label'] ) : ''; ?></div>
 						<?php endforeach; ?>
 					</div>
 				<?php endif; ?>

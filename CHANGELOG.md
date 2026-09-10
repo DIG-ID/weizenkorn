@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.17.2] — 2026-09-10
+
+### Fixed
+- Pages with a single map pin raised a PHP warning: the pin label added in 1.17.0 was only set on the multi-pin path, and the map markup read it on both.
+
 ## [1.17.1] — 2026-09-10
 
 ### Fixed
