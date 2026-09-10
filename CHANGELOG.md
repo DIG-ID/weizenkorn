@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.16.2] — 2026-09-10
+
+### Fixed
+- Mega menu images flashed the previous photo for a frame before settling, and moving the pointer quickly across the links could leave the wrong one showing. The swap now waits for the new image to be ready before revealing it, and only the last link hovered wins.
+- Mega menu images are loaded when the menu opens, so the first pass over a link no longer waits on the network.
+
 ## [1.16.1] — 2026-09-10
 
 ### Added
