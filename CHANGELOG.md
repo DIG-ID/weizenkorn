@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.16.3] — 2026-09-10
+
+### Fixed
+- Jahresbericht report buttons: a long label now grows the button past its grid cell instead of risking the icon overlapping the text.
+
 ## [1.16.2] — 2026-09-10
 
 ### Fixed

@@ -105,8 +105,11 @@ $oj_buttons = have_rows( 'organization_jahresbericht_buttons' );
 							if ( ! $oj_button ) {
 								continue;
 							}
-
-							get_template_part( 'template-parts/components/button', null, array_merge( $oj_button, array( 'style' => 'primary' ) ) );
+							?>
+							<div class="jahresbericht__button">
+								<?php get_template_part( 'template-parts/components/button', null, array_merge( $oj_button, array( 'style' => 'primary' ) ) ); ?>
+							</div>
+							<?php
 						endwhile;
 						?>
 					</div>

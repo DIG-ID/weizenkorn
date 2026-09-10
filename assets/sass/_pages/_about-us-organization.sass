@@ -1,0 +1,20 @@
+// About Us — Organization page — template-parts/pages/about-us-organization/
+
+// -- "Jahresbericht - Rückblick mit Ausblick": the report-download buttons sit in a
+//    2-up grid inside a narrow xl:col-span-4 column, so at some widths (a long label
+//    like "Jahresbericht 2021" in a ~240px cell) .btn's own gap-16 — a fixed 64px
+//    minimum between label and icon, fine everywhere else since those buttons are
+//    sized to their own content — left no room for the label and pushed the icon past
+//    the button's own edge instead of the two ever sitting flush.
+//
+//    min-w-full instead of the grid's own default stretch, same pattern as
+//    _modules/_booking.sass's own .booking__action .btn (and the same reasoning): the
+//    grid cell (.jahresbericht__button, a plain wrapper — .btn itself is not the grid
+//    item here, so it isn't capped at the cell's own width) is the FLOOR, not the
+//    ceiling. A button whose label is short fills the cell exactly, same as before;
+//    one whose label runs long grows past its own cell instead of squeezing or
+//    overflowing through the icon, since .btn is whitespace-nowrap and the text cannot
+//    give. gap-4 (not gap-16, and not gap-0) matches booking.php's own value — a small
+//    reserved minimum, not the 64px that caused this in the first place. -------------
+.jahresbericht__button .btn
+  @apply min-w-full gap-4
