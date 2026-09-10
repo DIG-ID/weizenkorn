@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.17.0] — 2026-09-10
+
+### Added
+- Map pins can carry a label, shown when the pin is clicked — on a map with several venues there was no way to tell them apart.
+
+### Fixed
+- The hero separator logo stayed at its file's own size instead of growing to the size the design gives it.
+
 ## [1.16.6] — 2026-09-10
 
 ### Fixed

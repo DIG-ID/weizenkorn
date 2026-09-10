@@ -10,8 +10,9 @@
  * per pin, each with data-lat / data-lng. The script reads data-zoom and drops two levels
  * below 1280px unless data-zoom-mobile says otherwise — but only for a single pin: with two
  * or more it calls fitBounds() instead, so the framing and the zoom come from the pins
- * themselves. A marker with inner HTML would become an info window on click; these are
- * empty, the address being written under the map when there is one.
+ * themselves. A marker's inner HTML becomes its info window, which is how a labelled pin
+ * says which venue it is — the script only builds one when there is something in there, so
+ * an unlabelled pin stays silent with no flag to pass.
  *
  * Two things have to be true for the map to appear, both outside this file:
  *   1. WEIZENKORN_GOOGLE_MAPS_API_KEY is set in functions.php.
@@ -29,7 +30,10 @@
  *                           the GROUP, never a repeater inside one.
  *   location_pin            (Google Map) the venue's coordinates, for a section with one
  *   location_items          (repeater) for a section with several — one row per pin:
- *                           → pin  (Google Map)
+ *                           → pin    (Google Map)
+ *                           → label  (text) optional. What the pin is, shown in an info
+ *                                    window on click. With several pins on one map there is
+ *                                    otherwise no way to tell them apart.
  *                           Read first; the single field above is the fallback, so the
  *                           venues that already have it keep working untouched.
  *   location_address        (textarea) optional. The name and address under the map — Our
@@ -80,7 +84,8 @@ if ( have_rows( $lc_prefix . 'location_items', $lc_ctx ) ) {
 		$lc_row = get_sub_field( 'pin' );
 
 		if ( is_array( $lc_row ) && ! empty( $lc_row['lat'] ) && ! empty( $lc_row['lng'] ) ) {
-			$lc_pins[] = $lc_row;
+			$lc_row['label'] = (string) get_sub_field( 'label' );
+			$lc_pins[]       = $lc_row;
 		}
 	}
 }
@@ -125,7 +130,7 @@ if ( ! $lc_heading
 				<?php if ( $lc_pins ) : ?>
 					<div class="location__map acf-map col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-10" data-zoom="16" data-zoom-adjust="-0.5" data-zoom-adjust-mobile="-0.5">
 						<?php foreach ( $lc_pins as $lc_pin ) : ?>
-							<div class="marker" data-lat="<?php echo esc_attr( $lc_pin['lat'] ); ?>" data-lng="<?php echo esc_attr( $lc_pin['lng'] ); ?>"></div>
+							<div class="marker" data-lat="<?php echo esc_attr( $lc_pin['lat'] ); ?>" data-lng="<?php echo esc_attr( $lc_pin['lng'] ); ?>"><?php echo $lc_pin['label'] ? esc_html( $lc_pin['label'] ) : ''; ?></div>
 						<?php endforeach; ?>
 					</div>
 				<?php endif; ?>
