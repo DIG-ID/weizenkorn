@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.16.5] — 2026-09-10
+
+### Changed
+- The logo that separates a page hero from the section below it is a quarter larger at every width.
+
 ## [1.16.4] — 2026-09-10
 
 ### Changed
