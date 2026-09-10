@@ -29,9 +29,14 @@
  *   get_template_part( 'template-parts/modules/offer-grid' );
  *
  * @param array $args {
- *     @type int|string $post_id Optional. ACF post id / options store to read from.
- *                               Default: the current post.
- *     @type string     $prefix  Optional. Prepended to every field name.
+ *     @type int|string $post_id        Optional. ACF post id / options store to read from.
+ *                                      Default: the current post.
+ *     @type string     $prefix         Optional. Prepended to every field name.
+ *     @type string     $text_max_width Optional. Passed straight to every card — the reading
+ *                                      measure its paragraph is capped at on desktop. Left
+ *                                      out, the card keeps its own default. Per caller and
+ *                                      not per row: it is a property of the layout, and the
+ *                                      cards in one grid all have the same width.
  * }
  *
  * @package weizenkorn
@@ -41,6 +46,10 @@
 
 $og_ctx    = ( ! empty( $args['post_id'] ) ) ? $args['post_id'] : get_the_ID();
 $og_prefix = ! empty( $args['prefix'] ) ? $args['prefix'] : '';
+
+// Only forwarded when the caller sets it, so a page that says nothing leaves the card's own
+// default alone rather than overriding it with an empty string.
+$og_text_max_width = isset( $args['text_max_width'] ) ? $args['text_max_width'] : null;
 
 // Not a plain get_field() — see weizenkorn_get_section_heading() for why.
 $og_heading = weizenkorn_get_section_heading( $og_prefix . 'offer_grid_', $og_ctx );
@@ -71,6 +80,10 @@ if ( have_rows( $og_prefix . 'offer_grid_items', $og_ctx ) ) {
 			// the same selector that widens it, so nothing here has to know which card it is.
 			'media_height' => 'h-[192px] xl:h-[400px]',
 		);
+
+		if ( null !== $og_text_max_width ) {
+			$og_cards[ count( $og_cards ) - 1 ]['text_max_width'] = $og_text_max_width;
+		}
 	}
 }
 

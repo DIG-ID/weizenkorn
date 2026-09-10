@@ -8,7 +8,8 @@
  * SECTIONS, in order:
  *
  *   1. hero-section    shared module
- *   2. offer-grid      module, new to this page — "Gestalten mit Kopf, Herz und Hand"
+ *   2. offer-grid      module — "Gestalten mit Kopf, Herz und Hand", with its card text
+ *                      capped wider than the component's default
  *   3. usp-band        shared module
  *   4. process-steps   module, new to this page — "So entsteht Mehrwert"
  *   5. quote-slider    shared module
@@ -37,7 +38,13 @@ if ( have_posts() ) :
 		do_action( 'before_main_content' );
 
 		get_template_part( 'template-parts/modules/hero-section' );
-		get_template_part( 'template-parts/modules/offer-grid' );
+		get_template_part(
+			'template-parts/modules/offer-grid',
+			null,
+			// Wider than the card's default measure, which this page's copy needs — the other
+			// three offer-grid pages keep it.
+			array( 'text_max_width' => 'xl:max-w-[80%]' )
+		);
 		get_template_part( 'template-parts/modules/usp-band' );
 		get_template_part( 'template-parts/modules/process-steps' );
 		get_template_part( 'template-parts/modules/quote-slider' );

@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.16.4] — 2026-09-10
+
+### Changed
+- Kreativatelier: the offer cards' text runs wider before wrapping. The other pages using the same cards are unchanged.
+
 ## [1.16.3] — 2026-09-10
 
 ### Fixed
