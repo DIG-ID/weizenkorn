@@ -56,3 +56,19 @@
   .gm-style-iw .gm-ui-hover-effect,
   .gm-style-iw-chr
     display: none !important
+
+  // Even padding around the label. Hiding the header row above took the top spacing with it,
+  // so Google's own padding left the text against the top edge and loose at the bottom.
+  //
+  // The inner wrapper gives up its scroll box as well: it carries a max-height and overflow
+  // auto for long content, which on a one-line label only risks a scrollbar appearing over
+  // the text. The same 10px at every width — these bubbles are not in the design, so there
+  // is no per-breakpoint value to match, and one line of type needs no more room on a phone.
+  .gm-style-iw-c
+    padding: 10px !important
+
+  .gm-style-iw-d
+    max-height: none !important
+    overflow: hidden !important
+    padding: 0 !important
+

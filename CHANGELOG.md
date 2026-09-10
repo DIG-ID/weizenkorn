@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.17.5] — 2026-09-10
+
+### Fixed
+- Map pin labels sat against the top of their box: the padding is now even, and the label no longer risks a scrollbar of its own.
+
 ## [1.17.4] — 2026-09-10
 
 ### Fixed
