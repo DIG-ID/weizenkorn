@@ -60,8 +60,8 @@ if ( have_posts() ) :
 				'variant' => 'stacked',
 			)
 		);
-		get_template_part( 'template-parts/modules/location' );
 		get_template_part( 'template-parts/modules/service-info-downloads' );
+		get_template_part( 'template-parts/modules/location' );
 		get_template_part( 'template-parts/modules/cta-form' );
 		get_template_part( 'template-parts/modules/faq' );
 		get_template_part( 'template-parts/modules/preview-cards' );

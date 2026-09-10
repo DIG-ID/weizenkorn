@@ -93,7 +93,7 @@ $weizenkorn_hero_video_webm   = $weizenkorn_hero_enable_video ? get_field( 'hero
 			// max-height and not height, because object-cover simply crops a wide image to fit
 			// shorter — nothing is lost, unlike in the text column.
 			?>
-			<div class="col-span-2 md:col-span-3 xl:col-span-7 section-hero__media overflow-hidden order-1 md:order-none xl:max-h-[calc(100vh-var(--header-height)-48px)]">
+			<div class="col-span-2 md:col-span-3 xl:col-span-7 section-hero__media overflow-hidden order-1 md:order-none xl:max-h-[calc(100vh-var(--header-height)-48px)] mb-4 md:mb-0">
 				<?php if ( $weizenkorn_hero_video_mp4 || $weizenkorn_hero_video_webm ) : ?>
 					<video
 						class="w-full h-full object-cover"

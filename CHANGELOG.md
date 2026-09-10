@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.17.1] — 2026-09-10
+
+### Fixed
+- Home hero: the image sat flush against the heading on mobile; it now keeps a gap below it, unchanged from tablet up.
+
+### Changed
+- Schreinerei page: the service information and downloads section now comes before the location section.
+
 ## [1.17.0] — 2026-09-10
 
 ### Added
