@@ -11,6 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.17.4] — 2026-09-10
+
+### Fixed
+- Map pin labels still showed a close button, which had nothing to reopen them with.
+- Bakery product images cropped people's heads at every width, not only at mobile.
+- Hero separator logos are sized by height rather than width, so a tall mark and a wide one sit on the same line instead of the tall one being blown up to the wide one's width.
+
 ## [1.17.3] — 2026-09-10
 
 ### Changed

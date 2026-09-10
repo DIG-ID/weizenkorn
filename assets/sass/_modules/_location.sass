@@ -43,11 +43,16 @@
     p
       @apply mb-5 last:mb-0
 
-  // The info window's close button. Google gives no option to omit it, so it goes here —
-  // the label is opened on load and nothing would reopen it, so a visitor who dismissed one
-  // would have no way to get the venue's name back.
+  // The info window's close button. Google gives no option to omit it, so it goes here — the
+  // label opens on load and nothing would reopen it, so a visitor who dismissed one would
+  // have no way to get the venue's name back.
   //
-  // Coupled to a Google internal class name, which is the cost of using their window rather
-  // than drawing our own overlay. If the close buttons ever reappear, this selector is why.
-  .gm-style .gm-ui-hover-effect
-    @apply hidden
+  // Two selectors because the button moved: older Maps put it loose in the window as
+  // .gm-ui-hover-effect, newer ones wrap it in a header row, .gm-style-iw-chr, whose only
+  // content it is. !important because Google styles these inline, which a class cannot beat.
+  //
+  // Coupled to their internal class names either way — the cost of using their window rather
+  // than drawing an overlay of our own. If the close buttons ever come back, this is why.
+  .gm-style-iw .gm-ui-hover-effect,
+  .gm-style-iw-chr
+    display: none !important

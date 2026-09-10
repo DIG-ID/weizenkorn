@@ -158,15 +158,14 @@
     // counter, not products on white, so filling the card reads better than fitting the whole
     // frame inside it and leaving a band either side. The four product-range pages keep
     // contain, where a crop would cut into the product itself.
+    // Anchored to the top at every width, not centred: cover has to crop these photographs
+    // vertically, and centred it takes half that crop off the top — which is where the faces
+    // and the top of the display are. From the top, the whole crop falls on the counter.
+    //
+    // It goes away when the photographs arrive at the card's own proportions, roughly 1.87:1
+    // with the subject centred; until then this is the least bad of the two edges.
     .product-overview__media img
-      @apply object-cover
-
-    // At mobile the card is at its squarest, so cover crops the most — and centred it took
-    // the crop off the top, where the faces are. Anchoring to the top spends the whole crop
-    // on the counter at the bottom instead.
-    @media (max-width: 767px)
-      .product-overview__media img
-        @apply object-top
+      @apply object-cover object-top
 
     .product-overview__grid
       row-gap: 32px
