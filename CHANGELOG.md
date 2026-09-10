@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.17.3] — 2026-09-10
+
+### Changed
+- Map pin labels are shown as soon as the map loads, instead of waiting for a click, and can no longer be dismissed — on a map of several venues the names are the point.
+
 ## [1.17.2] — 2026-09-10
 
 ### Fixed

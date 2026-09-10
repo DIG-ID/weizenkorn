@@ -50,11 +50,23 @@
 
     map.markers.push(marker);
 
+    /*
+     * A labelled pin says which venue it is without being clicked: several identical pins on
+     * one map are useless until something names them, and asking for a click hides that
+     * behind an interaction most visitors never try.
+     *
+     * disableAutoPan matters here — the default pans the map to fit each window as it opens,
+     * so three of them would fight over the framing and undo the fitBounds() below. The
+     * close button is hidden in CSS (_modules/_location.sass): there is nothing to reopen a
+     * window with, so letting it be dismissed would lose the label for good.
+     */
     if ($marker.html()) {
-      var infowindow = new google.maps.InfoWindow({ content: $marker.html() });
-      google.maps.event.addListener(marker, 'click', function () {
-        infowindow.open(map, marker);
+      var infowindow = new google.maps.InfoWindow({
+        content: $marker.html(),
+        disableAutoPan: true,
       });
+
+      infowindow.open(map, marker);
     }
   }
 
