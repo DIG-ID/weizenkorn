@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.16.6] — 2026-09-10
+
+### Fixed
+- The hero separator logo was drawn smaller than the design at desktop; it now matches.
+
 ## [1.16.5] — 2026-09-10
 
 ### Changed
