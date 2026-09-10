@@ -79,7 +79,7 @@ $cp_email = get_field( $cp_prefix . 'contact_email', $cp_ctx );
 							<?php endif; ?>
 
 							<?php if ( $cp_phone ) : ?>
-								<a href="tel:<?php echo esc_attr( preg_replace( '/[^+0-9]/', '', $cp_phone ) ); ?>" class="body-text flex items-center gap-4">
+								<a href="tel:<?php echo esc_attr( weizenkorn_phone_to_tel( $cp_phone ) ); ?>" class="body-text flex items-center gap-4">
 									<span class="shrink-0" aria-hidden="true"><?php weizenkorn_the_svg_icon( 'phone' ); ?></span>
 									<?php echo esc_html( $cp_phone ); ?>
 								</a>

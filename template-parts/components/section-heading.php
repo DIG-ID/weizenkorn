@@ -63,7 +63,7 @@ $st_intro_span = ( $show_left && $st_left )
 	? 'md:col-span-6 xl:col-start-2 xl:col-span-5'
 	: 'md:col-span-2 xl:col-start-2 xl:col-span-4';
 
-$btn_primary   = ! empty( $st_buttons['prmary'] ) ? $st_buttons['prmary'] : null;
+$btn_primary = ! empty( $st_buttons['prmary'] ) ? $st_buttons['prmary'] : null;
 // Nulled here rather than checked at the render, so the row wrapper and the has-row test
 // below both see the button as absent — a heading whose only button is a hidden one keeps
 // no empty button row.

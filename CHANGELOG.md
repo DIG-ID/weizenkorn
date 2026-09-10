@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.16.1] — 2026-09-10
+
+### Fixed
+- Phone numbers written with a "(0)" domestic dialling prefix (e.g. "+41 (0)61 686 91 31") produced an undialable tel: link — the 0 no longer carries through.
+
+### Changed
+- The mega menu and the sticky header bar now use the site's cream background instead of white; the normal header also switches to it while the mega menu is open.
+
 ## [1.16.0] — 2026-09-09
 
 ### Added

@@ -38,7 +38,7 @@
 
 					<?php if ( get_field( 'general_phone', 'option' ) ) : ?>
 						<p class="footer-main__contact-line">
-							<a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', get_field( 'general_phone', 'option' ) ) ); ?>"><?php echo esc_html( get_field( 'general_phone', 'option' ) ); ?></a>
+							<a href="tel:<?php echo esc_attr( weizenkorn_phone_to_tel( get_field( 'general_phone', 'option' ) ) ); ?>"><?php echo esc_html( get_field( 'general_phone', 'option' ) ); ?></a>
 						</p>
 					<?php endif; ?>
 
