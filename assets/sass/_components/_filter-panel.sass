@@ -16,9 +16,11 @@
     @apply text-brand-red
 
 // A small dot with the active-filter count, hidden by the caller's JS until at least one
-// checkbox is ticked.
-.filter-panel__badge
-  @apply inline-grid place-items-center min-w-[20px] h-5 px-1.5 rounded-full bg-brand-red text-white text-[11px] font-bold
+// checkbox is ticked. Not in Figma — commented out at the client's own request rather
+// than removed; the markup that used this class is commented the same way in both
+// job-filters.php and team-filters.php, so re-enabling is just uncommenting both sides.
+// .filter-panel__badge
+//   @apply inline-grid place-items-center min-w-[20px] h-5 px-1.5 rounded-full bg-brand-red text-white text-[11px] font-bold
 
 .filter-panel__backdrop
   @apply fixed inset-0 z-[60] bg-brand-dark/50 opacity-0 pointer-events-none transition-opacity duration-300

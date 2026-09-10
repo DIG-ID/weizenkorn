@@ -7,7 +7,13 @@
 // Font size: 12px up to tablet (<1280px), 15px on desktop (1280px+ — matches
 // Tailwind's default `xl` breakpoint exactly).
 .btn
-  @apply inline-flex items-center font-primary font-black text-[14px] xl:text-[15px] uppercase whitespace-nowrap transition-all duration-300 ease-in-out
+  // justify-between: a no-op wherever .btn is left to its own inline-flex content width
+  // (gap-16 already keeps the icon a fixed distance from the label there) — it only
+  // does something once something else stretches the button wider than its content, e.g.
+  // a full-width grid cell (jahresbericht.php's own report buttons). Without it the label
+  // and icon stayed packed together at the flex start, leaving the icon stranded short of
+  // the button's own trailing edge instead of pinned to it.
+  @apply inline-flex items-center justify-between font-primary font-black text-[14px] xl:text-[15px] uppercase whitespace-nowrap transition-all duration-300 ease-in-out
 
   &-primary,
   &-secondary,

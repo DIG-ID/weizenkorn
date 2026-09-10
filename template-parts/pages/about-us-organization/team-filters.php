@@ -81,7 +81,8 @@ foreach ( $tf_groups_labels as $tf_key => $tf_label ) {
 <button type="button" class="filter-panel__trigger js-filter-panel-trigger js-team-filters-trigger inline-flex items-center gap-3 text-brand-dark" aria-haspopup="dialog" aria-expanded="false" aria-controls="team-filters-panel">
 	<?php esc_html_e( 'Filter', 'weizenkorn' ); ?>
 	<span class="shrink-0" aria-hidden="true"><?php weizenkorn_the_svg_icon( 'filter' ); ?></span>
-	<span class="filter-panel__badge js-filter-panel-badge" hidden></span>
+	<?php // Active-filter count dot — not in Figma, client's own call. Kept commented rather than removed: assets/js/filter-panel.js's updateBadge() already no-ops safely with the markup gone, so re-enabling this is just uncommenting the span. ?>
+	<?php /* <span class="filter-panel__badge js-filter-panel-badge" hidden></span> */ ?>
 </button>
 
 <div class="filter-panel__backdrop js-filter-panel-backdrop" hidden></div>

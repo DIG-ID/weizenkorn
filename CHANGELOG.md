@@ -13,11 +13,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ## [1.16.1] — 2026-09-10
 
+### Added
+- Organization page: a new "Jahresbericht - Rückblick mit Ausblick" section, with a repeater of report-download buttons an editor can add to or remove from freely.
+
 ### Fixed
 - Phone numbers written with a "(0)" domestic dialling prefix (e.g. "+41 (0)61 686 91 31") produced an undialable tel: link — the 0 no longer carries through.
+- A full-width button's icon sat stranded near its label instead of pinned to the button's own trailing edge.
 
 ### Changed
 - The mega menu and the sticky header bar now use the site's cream background instead of white; the normal header also switches to it while the mega menu is open.
+- Organization page: the "Warum Weizenkorn?" embedded document moved into the new Jahresbericht section below it.
+- The active-filter count dot on the Open Positions archive and Das Weizenkorn Team's Filter button is hidden — not part of the design.
 
 ## [1.16.0] — 2026-09-09
 
