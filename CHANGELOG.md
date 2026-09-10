@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.17.6] — 2026-09-10
+
+### Changed
+- About Us: the video now comes before the craft showcase rather than after the quote slider.
+
 ## [1.17.5] — 2026-09-10
 
 ### Fixed
