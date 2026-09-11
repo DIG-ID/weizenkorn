@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.17.7] — 2026-09-11
+
+### Changed
+- Impressum: links are unmarked until the pointer is over them, rather than underlined throughout.
+
 ## [1.17.6] — 2026-09-10
 
 ### Changed

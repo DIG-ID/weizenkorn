@@ -26,16 +26,18 @@
   &__text
     @apply body-text
 
-    // The theme resets <a> to inherit its colour and drop its underline, so a link typed in
-    // the editor is indistinguishable from the text around it. The frames show no link
-    // colour here, so the underline alone marks them and the red is kept for the hover —
-    // discoverable without introducing a colour the design does not have.
+    // Links carry no mark at rest and pick one up on hover, which is what the page asks for.
+    // The theme already resets <a> to inherit its colour and drop its underline, so nothing
+    // has to be removed — only the hover state is added.
+    //
+    // Worth knowing: at rest these are then indistinguishable from the text around them, so
+    // a reader has no way to tell the phone number is callable without moving a pointer over
+    // it — and on a touch screen there is no hover at all. The frames show no link styling
+    // to follow here, so this is a choice rather than a reading of the design.
     a
-      @apply underline underline-offset-2
-
       &:hover,
       &:focus-visible
-        @apply text-brand-red
+        @apply underline underline-offset-2 text-brand-red
 
   // The rule shape. The heading carries the rule and the gap under it, so the two are one
   // element and cannot drift apart.
