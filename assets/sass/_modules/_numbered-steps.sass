@@ -9,4 +9,13 @@
 // whatever either one's length: the gap between them is whatever height leaves over,
 // not a value chosen by hand.
 .card-numbered-step
-  @apply flex flex-col justify-between h-[286px] md:h-[445px] p-6 md:p-8 xl:p-10
+  // pt/px rather than the p-* shorthand: p-* sets all four sides, so a breakpoint's own
+  // p-* would reset pb-* back to its own bottom value instead of leaving it alone.
+  @apply flex flex-col justify-between h-[286px] md:h-[445px]
+  @apply pt-6 px-6 md:pt-8 md:px-8 xl:pt-10 xl:px-10
+  @apply pb-10 xl:pb-14
+
+  // Scoped here rather than added to .title-card itself, which every other card sharing
+  // that style keeps in sentence case.
+  &__title
+    @apply uppercase

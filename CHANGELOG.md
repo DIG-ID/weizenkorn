@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.17.9] — 2026-09-11
+
+### Changed
+- Numbered steps (Supported Jobs, Supported Apprenticeships): box titles are uppercase, and the bottom padding is now 40px (mobile/tablet) / 56px (desktop) independent of the other sides.
+- Diversity card/slider captions (Supported Jobs, Work & Training): the title reads in brand red on both, the gap between category and title matches at desktop, and neither uses italic any more.
+
 ## [1.17.8] — 2026-09-11
 
 ### Changed

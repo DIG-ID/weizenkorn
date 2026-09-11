@@ -14,8 +14,9 @@
  * contrast.
  *
  * The caption's "Inria Sans" font in Figma is a one-off outside the site's
- * single-typeface rule (CLAUDE.md) — approximated with italic DM Sans,
- * matching the diversity-slider's own substitution.
+ * single-typeface rule (CLAUDE.md) — approximated with plain DM Sans (no
+ * italic, dropped as a client request), matching the diversity-slider's own
+ * substitution. The title span is text-brand-red, matching that section too.
  *
  * ACF fields (flat, prefixed):
  *   supported_jobs_diversity_title (text)
@@ -72,7 +73,7 @@ if ( ! $sjd_title || ! have_rows( 'supported_jobs_diversity_items' ) ) {
 												<span class="uppercase text-brand-dark"><?php echo esc_html( get_sub_field( 'category' ) ); ?></span>
 											<?php endif; ?>
 											<?php if ( get_sub_field( 'title' ) ) : ?>
-												<span><?php echo esc_html( get_sub_field( 'title' ) ); ?></span>
+												<span class="text-brand-red"><?php echo esc_html( get_sub_field( 'title' ) ); ?></span>
 											<?php endif; ?>
 										</figcaption>
 									<?php endif; ?>
