@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.17.8] — 2026-09-11
+
+### Changed
+- AGB, Datenschutzerklärung and Impressum: space above the title band, growing from mobile to desktop.
+- 404: the red panel keeps its space below it only at desktop; below that it runs straight into what follows.
+
 ## [1.17.7] — 2026-09-11
 
 ### Changed

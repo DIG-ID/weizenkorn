@@ -16,7 +16,7 @@
 get_header();
 do_action( 'before_main_content' );
 ?>
-<section class="error-404 mb-24 md:mb-32 xl:mb-48">
+<section class="error-404 xl:mb-20">
 	<div class="theme-container">
 		<div class="error-404__panel bg-brand-red text-white">
 			<?php
