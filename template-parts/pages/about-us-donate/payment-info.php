@@ -45,7 +45,7 @@ $pi_has_methods  = have_rows( 'donate_payment_methods' );
 		<?php get_template_part( 'template-parts/components/section-heading', null, array( 'title' => $pi_title ) ); ?>
 
 		<?php if ( $pi_has_methods || $pi_bank_details || $pi_tax_note ) : ?>
-			<div class="theme-grid mt-8 xl:mt-12">
+			<div class="theme-grid mt-8">
 				<?php if ( $pi_has_methods ) : ?>
 					<div class="payment-info__methods col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-5 flex flex-col md:flex-row gap-8 md:gap-6">
 						<?php
