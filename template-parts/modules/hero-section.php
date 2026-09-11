@@ -130,7 +130,7 @@ $hero_title_tag = $hero_subtitle ? 'p' : 'h1';
 					'full',
 					false,
 					array(
-						'class'   => 'w-auto h-[32px] md:h-[71px] xl:h-[101px] max-w-full',
+						'class'   => 'w-auto h-[32px] md:h-[71px] xl:h-auto max-w-full',
 						'loading' => 'lazy',
 					)
 				);

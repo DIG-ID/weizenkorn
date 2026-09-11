@@ -155,7 +155,7 @@ $weizenkorn_hero_video_webm   = $weizenkorn_hero_enable_video ? get_field( 'hero
 					'full',
 					false,
 					array(
-						'class'   => 'max-w-[96px] md:max-w-[212px] xl:max-w-[244px] h-auto',
+						'class'   => 'w-auto h-[32px] md:h-[71px] xl:h-auto max-w-full',
 						'loading' => 'lazy',
 					)
 				);

@@ -130,8 +130,9 @@
 
   // -- The downloads arrangement -----------------------------------------------
   // Figma 3686:3356 desktop, 3738:4612 tablet and 3738:4625 mobile. Each tile is a PDF
-  // download rather than a product: the bar carries the name and a download arrow, and
-  // nothing opens on hover but the colour.
+  // download rather than a product: the bar carries the name and a download arrow. The
+  // hover is the shared one — the bar grows to show the copy and keeps its cream, the
+  // same as the product ranges.
   &--downloads
 
     // The bar is the same at every breakpoint — 24 / 14 of padding around a 22px line,
@@ -195,15 +196,3 @@
       .product-overview__card:nth-child(even)
         grid-column: 7 / span 5
 
-    // The bar fills with red on hover and the type inverts. The default keeps its cream,
-    // so this stays inside the variant until a frame says otherwise for the ranges.
-    .product-overview__card:hover,
-    .product-overview__card:focus-visible
-      .product-overview__panel
-        @apply bg-brand-red
-
-      .product-overview__title,
-      .product-overview__text,
-      .product-overview__link,
-      .product-overview__link-icon
-        @apply text-white
