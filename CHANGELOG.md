@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ## [1.18.1] — 2026-09-11
 
+### Added
+- The diversity slider advances on its own every five seconds.
+
 ### Changed
 - Hero separator logos are sized the same way on every page, the home page included, and take their own size at desktop.
 - Bakery download cards no longer turn red on hover — they open the same way the product ranges do.

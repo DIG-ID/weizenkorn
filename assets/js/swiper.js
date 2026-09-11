@@ -1,5 +1,5 @@
 import Swiper from 'swiper';
-import { Navigation, Pagination, A11y } from 'swiper/modules';
+import { Navigation, Pagination, A11y, Autoplay } from 'swiper/modules';
 
 /**
  * Gastronomy venues — Swiper on mobile only.
@@ -216,7 +216,10 @@ export function initDiversitySlider() {
     const root = el.closest('.section-diversity-slider');
 
     new Swiper(el, {
-      modules: [Pagination, A11y],
+      autoplay: {
+        delay: 5000,
+      },
+      modules: [Pagination, A11y, Autoplay],
       slidesPerView: 1,
       observer: true,
       observeParents: true,
