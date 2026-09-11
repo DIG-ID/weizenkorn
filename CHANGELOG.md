@@ -21,7 +21,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 ### Added
 - For Social Offices & Partners: "Angebote im Überblick" now has its own layout — a narrower text column and the two buttons each on their own grid position, matching this page's own design instead of the shared one.
 - Card titles (.title-card, used across most of the site's cards) now step up to their desktop size already at tablet, not just at desktop.
-- Contact forms can now show a Firma field beside Name (Organization's own form).
 
 ### Changed
 - Contact person section (Supported Apprenticeships, Open Positions archive): tighter spacing below it, the contact block aligned to the bottom of its photo, and a wider gap between the two at desktop.

@@ -33,23 +33,6 @@
 //       [textarea your-message class:cta-form__control placeholder "Nachricht"]</label>
 //   </div>
 //
-// A form with an optional Firma field beside Name, both sharing one row instead of
-// stacking — Organization's own contact form (that page's own exclusive CF7 template,
-// per its own docblock):
-//
-//   <div class="cta-form__col cta-form__col--fields">
-//     <div class="cta-form__fields-pair">
-//       <label class="cta-form__label"><span class="cta-form__label-text">Firma</span>
-//         [text your-firma class:cta-form__control placeholder "Firma"]</label>
-//       <label class="cta-form__label"><span class="cta-form__label-text">Name</span>
-//         [text* your-name autocomplete:name class:cta-form__control placeholder "Name"]</label>
-//     </div>
-//     <label class="cta-form__label"><span class="cta-form__label-text">Email</span>
-//       [email* your-email autocomplete:email class:cta-form__control placeholder "Email"]</label>
-//     <label class="cta-form__label"><span class="cta-form__label-text">Telefonnummer</span>
-//       [tel your-phone autocomplete:tel class:cta-form__control placeholder "Telefonnummer"]</label>
-//   </div>
-//
 // The `theme-grid` on the two wrappers is load-bearing — it is what puts the fields on
 // real columns. Do not drop it when editing the form.
 
@@ -104,16 +87,6 @@
 
       @media (min-width: 1280px)
         grid-column: 7 / span 5
-
-  // Firma beside Name in one row instead of stacking — Organization's own contact form
-  // (see this file's own top comment for the HTML). Sits INSIDE .cta-form__col--fields as
-  // a single flex child, so it takes up one slot in that column's own gap-6/md:gap-8
-  // vertical rhythm rather than a whole extra row.
-  &__fields-pair
-    @apply flex gap-6 md:gap-8
-
-    .cta-form__label
-      @apply flex-1 min-w-0
 
   // The design shows no labels, only placeholders — but a placeholder is not an
   // accessible name, so each control keeps a real <label> with the text hidden. A
