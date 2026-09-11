@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.18.0] — 2026-09-11
+
+### Added
+- A map with a single pin can label it too, the way a map with several already could.
+
 ## [1.17.9] — 2026-09-11
 
 ### Added

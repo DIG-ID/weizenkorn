@@ -29,6 +29,10 @@
  *   location_section_title  (clone of "Section Title") the title and its red rule. Clone
  *                           the GROUP, never a repeater inside one.
  *   location_pin            (Google Map) the venue's coordinates, for a section with one
+ *   location_label          (text) optional. The single pin's label. Named `label` in ACF,
+ *                           the same as the repeater's sub-field — but a field outside a
+ *                           repeater takes the group's prefix and nothing else, so the key
+ *                           is location_label and not location_pin_label.
  *   location_items          (repeater) for a section with several — one row per pin:
  *                           → pin    (Google Map)
  *                           → label  (text) optional. What the pin is, shown in an info
@@ -94,9 +98,10 @@ if ( ! $lc_pins ) {
 	$lc_single = get_field( $lc_prefix . 'location_pin', $lc_ctx );
 
 	if ( is_array( $lc_single ) && ! empty( $lc_single['lat'] ) && ! empty( $lc_single['lng'] ) ) {
-		// Same shape as a repeater row: one pin has nothing to tell apart, so it never has a
-		// label — but the markup below reads the key either way.
-		$lc_single['label'] = '';
+		// Same shape as a repeater row, so the markup below reads one key either way. Its own
+		// field rather than the repeater's: these are two different ACF shapes, and a venue
+		// with one pin never opens the repeater at all.
+		$lc_single['label'] = (string) get_field( $lc_prefix . 'location_label', $lc_ctx );
 		$lc_pins[]          = $lc_single;
 	}
 }
