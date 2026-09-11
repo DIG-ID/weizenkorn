@@ -94,7 +94,7 @@ $jf_groups = array(
 			<?php esc_html_e( 'Filter zurücksetzen', 'weizenkorn' ); ?>
 		</button>
 		<button type="button" class="js-filter-panel-apply js-job-filters-apply btn btn-primary">
-			<?php esc_html_e( 'Apply Filters', 'weizenkorn' ); ?>
+			<?php esc_html_e( 'Filter anwenden', 'weizenkorn' ); ?>
 		</button>
 	</div>
 </aside>

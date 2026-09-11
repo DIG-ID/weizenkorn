@@ -13,7 +13,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ## [1.17.9] — 2026-09-11
 
+### Added
+- For Social Offices & Partners: "Angebote im Überblick" now has its own layout — a narrower text column and the two buttons each on their own grid position, matching this page's own design instead of the shared one.
+- Card titles (.title-card, used across most of the site's cards) now step up to their desktop size already at tablet, not just at desktop.
+
 ### Changed
+- Contact person section (Supported Apprenticeships, Open Positions archive): tighter spacing below it, the contact block aligned to the bottom of its photo, and a wider gap between the two at desktop.
+- For Social Offices & Partners: the "no downloads yet" message now sits in the same narrow column the cards would have used, instead of the full width.
+- Open Positions archive category cards: bigger title at desktop, and more room between each list line.
+- The "Apply Filters" button (Open Positions archive, Das Weizenkorn Team) now reads "Filter anwenden" by default, matching the site's primary language.
 - Numbered steps (Supported Jobs, Supported Apprenticeships): box titles are uppercase, and the bottom padding is now 40px (mobile/tablet) / 56px (desktop) independent of the other sides.
 - Diversity card/slider captions (Supported Jobs, Work & Training): the title reads in brand red on both, the gap between category and title matches at desktop, and neither uses italic any more.
 

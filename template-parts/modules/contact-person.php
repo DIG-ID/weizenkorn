@@ -4,7 +4,11 @@
  * phone/email) — richer than the plain phone/email row
  * template-parts/modules/cta-form.php renders on its own (Work & Training,
  * Supported Jobs) — then the shared cta-form module for the red form band
- * below it, called with no title of its own so only the band renders.
+ * below it, called with no title of its own so only the band renders. Its
+ * own margin_top is overridden to match this section's mb-* below — the two
+ * are adjoining siblings, so their margins would otherwise collapse to
+ * cta-form's own (larger) default and this section's spacing would have no
+ * visible effect.
  *
  * Shared by Supported Apprenticeships' and the Open Positions archive's own
  * "Bereit für Weizenkorn?" / "Dürfen wir weiterhelfen?" sections — the same
@@ -49,13 +53,13 @@ $cp_name  = get_field( $cp_prefix . 'contact_name', $cp_ctx );
 $cp_phone = get_field( $cp_prefix . 'contact_phone', $cp_ctx );
 $cp_email = get_field( $cp_prefix . 'contact_email', $cp_ctx );
 ?>
-<section class="contact-person mt-24 md:mt-32 xl:mt-48 mb-24 md:mb-32 xl:mb-48">
+<section class="contact-person mt-24 md:mt-32 xl:mt-48 mb-4 md:mb-6 xl:mb-14">
 	<div class="theme-container">
 		<?php get_template_part( 'template-parts/components/section-heading', null, array( 'title' => $cp_title ) ); ?>
 
 		<?php if ( $cp_image || $cp_name || $cp_phone || $cp_email ) : ?>
 			<div class="theme-grid mt-8 xl:mt-12">
-				<div class="contact-person__row col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-8 flex flex-col md:flex-row gap-6 md:gap-8 xl:gap-10">
+				<div class="contact-person__row col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-8 flex flex-col md:flex-row gap-6 md:gap-5 xl:gap-40">
 					<?php if ( $cp_image ) : ?>
 						<div class="contact-person__media shrink-0 w-full md:w-[340px] xl:w-[594px] overflow-hidden">
 							<?php
@@ -73,7 +77,7 @@ $cp_email = get_field( $cp_prefix . 'contact_email', $cp_ctx );
 					<?php endif; ?>
 
 					<?php if ( $cp_name || $cp_phone || $cp_email ) : ?>
-						<div class="flex flex-col justify-center gap-4">
+						<div class="flex flex-col justify-end gap-4">
 							<?php if ( $cp_name ) : ?>
 								<p class="label-overline"><?php echo esc_html( $cp_name ); ?></p>
 							<?php endif; ?>
@@ -99,11 +103,20 @@ $cp_email = get_field( $cp_prefix . 'contact_email', $cp_ctx );
 	</div>
 </section>
 
+<?php
+/*
+ * margin_top matches this section's own mb-* above rather than cta-form's own default —
+ * adjoining siblings' vertical margins collapse to the LARGER of the two, so leaving
+ * cta-form's default (bigger) margin-top in place would have swallowed the smaller
+ * margin-bottom just set on .contact-person with no visible effect.
+ */
+?>
 <?php get_template_part(
 	'template-parts/modules/cta-form',
 	null,
 	array(
-		'post_id' => $cp_ctx,
-		'prefix'  => $cp_prefix,
+		'post_id'    => $cp_ctx,
+		'prefix'     => $cp_prefix,
+		'margin_top' => 'mt-4 md:mt-6 xl:mt-14',
 	)
 ); ?>

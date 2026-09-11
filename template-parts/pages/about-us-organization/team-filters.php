@@ -120,7 +120,7 @@ foreach ( $tf_groups_labels as $tf_key => $tf_label ) {
 			<?php esc_html_e( 'Filter zurücksetzen', 'weizenkorn' ); ?>
 		</button>
 		<button type="button" class="js-filter-panel-apply js-team-filters-apply btn btn-primary">
-			<?php esc_html_e( 'Apply Filters', 'weizenkorn' ); ?>
+			<?php esc_html_e( 'Filter anwenden', 'weizenkorn' ); ?>
 		</button>
 	</div>
 </aside>

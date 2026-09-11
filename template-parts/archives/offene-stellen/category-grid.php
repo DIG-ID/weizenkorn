@@ -110,7 +110,7 @@ $cg_item_column = $cg_three_cols ? 'xl:col-span-4' : 'xl:col-span-3';
 						}
 						?>
 						<div class="card-category col-span-2 md:col-span-6 <?php echo esc_attr( $cg_item_column ); ?> flex flex-col">
-							<h3 class="card-category__title text-brand-red font-primary font-bold uppercase tracking-[0.5px] text-[14px] xl:text-[15px] mb-4">
+							<h3 class="card-category__title text-brand-red font-primary font-bold uppercase tracking-[0.5px] text-[14px] xl:text-[20px] mb-4">
 								<?php echo esc_html( get_sub_field( 'title' ) ); ?>
 							</h3>
 

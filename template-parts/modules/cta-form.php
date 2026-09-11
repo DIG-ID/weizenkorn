@@ -38,9 +38,15 @@
  *   );
  *
  * @param array $args {
- *     @type int|string $post_id Optional. ACF post id / options store to read the fields
- *                               from. Default: the current post.
- *     @type string     $prefix  Optional. Prepended to every field name.
+ *     @type int|string $post_id    Optional. ACF post id / options store to read the
+ *                                  fields from. Default: the current post.
+ *     @type string     $prefix     Optional. Prepended to every field name.
+ *     @type string     $margin_top Optional. Tailwind margin-top class(es), overriding the
+ *                                  section's own default. Needed because an adjoining
+ *                                  sibling's margin collapses to the LARGER of the two —
+ *                                  contact-person.php calls this module right after its own
+ *                                  section and passes a smaller value here, or its own
+ *                                  margin-bottom would have no visible effect.
  * }
  *
  * @package weizenkorn
@@ -50,6 +56,8 @@
 
 $cta_ctx    = ( ! empty( $args['post_id'] ) ) ? $args['post_id'] : get_the_ID();
 $cta_prefix = ! empty( $args['prefix'] ) ? $args['prefix'] : '';
+
+$cta_margin_top = ! empty( $args['margin_top'] ) ? $args['margin_top'] : 'mt-20 md:mt-32 xl:mt-48';
 
 // Never hard-coded: the CF7 form id differs between local and production, so it lives in
 // a field and each environment keeps its own value. Per-context field first, then the
@@ -65,7 +73,7 @@ if ( ! $cta_shortcode ) {
 	return;
 }
 ?>
-<section class="cta-form mt-20 mb-28 md:mb-32 md:mt-32 xl:mb-48 xl:mt-48">
+<section class="cta-form mb-28 md:mb-32 xl:mb-48 <?php echo esc_attr( $cta_margin_top ); ?>">
 	<div class="theme-container">
 
 		<?php
