@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.18.2] — 2026-09-14
+
+### Changed
+- Impressum: the labelled detail text is smaller at desktop, 28px in place of 40px.
+
 ## [1.18.1] — 2026-09-11
 
 ### Added
