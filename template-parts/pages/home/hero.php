@@ -48,21 +48,21 @@ $weizenkorn_hero_video_webm   = $weizenkorn_hero_enable_video ? get_field( 'hero
 			// text spills past its border. This box must never be smaller than its own content
 			// needs, so it stays purely naturally sized.
 			?>
-			<div class="col-span-2 md:col-span-3 xl:col-span-5 section-hero__content border-2 border-brand-dark order-2 md:order-none pt-4 xl:pt-[clamp(24px,100vh_-_884px,64px)] px-4 xl:pl-8 2xl:pl-16">
+			<div class="col-span-2 md:col-span-3 xl:col-span-5 section-hero__content border-2 border-brand-dark order-2 md:order-none py-8 xl:pt-[clamp(24px,100vh_-_884px,64px)] px-8 xl:pl-8 2xl:pl-16">
 				<?php if ( get_field( 'hero_title' ) ) : ?>
-					<div class="section-hero__title mb-12 md:mb-14 xl:mb-[clamp(40px,100vh_-_820px,128px)]">
+					<div class="section-hero__title mb-8 md:mb-14 xl:mb-[clamp(40px,100vh_-_820px,128px)]">
 						<h1 class="title-hero xl:max-w-2xl"><?php the_field( 'hero_title' ); ?></h1>
 					</div>
 				<?php endif; ?>
 
 				<?php if ( get_field( 'hero_tagline' ) ) : ?>
-					<div class="section-hero__tagline mb-5 xl:mb-[clamp(8px,100vh_-_932px,16px)]">
+					<div class="section-hero__tagline mb-4 xl:mb-[clamp(8px,100vh_-_932px,16px)]">
 						<p class="title-tagline"><?php the_field( 'hero_tagline' ); ?></p>
 					</div>
 				<?php endif; ?>
 
 				<?php if ( get_field( 'hero_body' ) ) : ?>
-					<div class="section-hero__body mb-12 md:mb-24 xl:mb-[clamp(24px,100vh_-_884px,64px)]">
+					<div class="section-hero__body mb-8 md:mb-24 xl:mb-[clamp(24px,100vh_-_884px,64px)]">
 						<div class="body-text"><?php the_field( 'hero_body' ); ?></div>
 					</div>
 				<?php endif; ?>

@@ -11,6 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.18.5] — 2026-09-14
+
+### Added
+- The home page's services slider advances on its own every five seconds, as the diversity slider already did.
+
+### Changed
+- Home hero: more breathing room inside the bordered panel on mobile, with the title, tagline and body text sitting closer together.
+- Page hero subtitles hold their 26px size through the narrower desktop widths and only step up to 48px on a wide screen, instead of jumping at 1280px.
+
 ## [1.18.4] — 2026-09-14
 
 ### Fixed

@@ -46,7 +46,10 @@ export function initServicesSlider() {
     const root = el.closest('.section-services');
 
     new Swiper(el, {
-      modules: [Pagination, A11y],
+      modules: [Pagination, A11y, Autoplay],
+      autoplay: {
+        delay: 5000,
+      },
       spaceBetween: 20,
       slidesPerView: 1,
       breakpoints: {
