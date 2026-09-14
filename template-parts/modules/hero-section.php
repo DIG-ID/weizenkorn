@@ -11,6 +11,8 @@
  *
  * ACF fields (flat, prefixed):
  *   hero_section_image           (image → ID) omit to hide the image
+ *   hero_section_image_mobile    (image → ID) optional — a different crop below 768px;
+ *                                             without it the main image serves every width
  *   hero_section_title           (text)       falls back to the post title
  *   hero_section_subtitle        (text)       optional — the smaller title under
  *                                             the main one, same column
@@ -57,24 +59,64 @@ $hero_title_margin = $hero_subtitle ? 'mb-4 xl:mb-6' : 'mb-12 md:mb-0';
 // text) and the title becomes a <p> — visually unchanged either way, since both keep
 // their own class regardless of tag. Without a subtitle, the title is the <h1>.
 $hero_title_tag = $hero_subtitle ? 'p' : 'h1';
+
+// An attachment id whose file was deleted stays in the field and still passes a truthy check,
+// and wp_get_attachment_image() then returns '' — leaving an empty box at the media's fixed
+// height. Asking for a real URL is what rules that out.
+$hero_image        = get_field( $hero_prefix . 'hero_section_image', $hero_ctx );
+$hero_image        = ( $hero_image && wp_get_attachment_image_url( $hero_image, 'full' ) ) ? $hero_image : 0;
+$hero_image_mobile = get_field( $hero_prefix . 'hero_section_image_mobile', $hero_ctx );
+
+/*
+ * The <source> is only worth emitting for a genuinely different mobile crop — the same id in
+ * both fields, or an empty mobile field, leaves the main image serving every width on its own.
+ * srcset is false when the attachment has no size metadata (an SVG, or a file smaller than the
+ * first registered size), where the plain URL still works, and false again for a deleted file,
+ * where the empty result simply drops the <source> — so the orphan case needs no check of its own.
+ */
+$hero_mobile_srcset = '';
+if ( $hero_image_mobile && (int) $hero_image_mobile !== (int) $hero_image ) {
+	$hero_mobile_srcset = wp_get_attachment_image_srcset( $hero_image_mobile, 'full' );
+
+	if ( ! $hero_mobile_srcset ) {
+		$hero_mobile_srcset = wp_get_attachment_image_url( $hero_image_mobile, 'full' );
+	}
+}
+
+// This image is the page's LCP element, at every width.
+$hero_image_atts = array(
+	'class'         => 'w-full h-full object-cover',
+	'loading'       => 'eager',
+	'fetchpriority' => 'high',
+);
 ?>
 <header class="hero-section mb-24 md:mb-32 xl:mb-48">
 	<div class="theme-container">
 
-		<?php if ( get_field( $hero_prefix . 'hero_section_image', $hero_ctx ) ) : ?>
+		<?php if ( $hero_image ) : ?>
 			<div class="hero-section__media h-[176px] md:h-[256px] xl:h-[519px] mb-4 xl:mb-[26px] overflow-hidden">
 				<?php
-				echo wp_get_attachment_image(
-					get_field( $hero_prefix . 'hero_section_image', $hero_ctx ),
-					'full',
-					false,
-					array(
-						'class'         => 'w-full h-full object-cover',
-						'loading'       => 'eager',
-						'fetchpriority' => 'high',
-					)
-				);
+				/*
+				 * <picture> is here whether or not a mobile crop is: with no <source> to match it
+				 * behaves exactly as the bare <img> would, so the markup stays the same shape
+				 * either way. It is inline by default and would give the img inside it no height
+				 * to resolve h-full against, hence it carrying the box's dimensions itself.
+				 */
 				?>
+				<picture class="block w-full h-full">
+					<?php if ( $hero_mobile_srcset ) : ?>
+						<?php
+						// sizes subtracts .theme-container's 37px of side padding at each edge: the
+						// image is never the full viewport width, and 100vw would pull a needlessly
+						// large candidate on exactly the devices that can least afford it.
+						?>
+						<source
+							media="(max-width: 767px)"
+							srcset="<?php echo esc_attr( $hero_mobile_srcset ); ?>"
+							sizes="calc(100vw - 74px)">
+					<?php endif; ?>
+					<?php echo wp_get_attachment_image( $hero_image, 'full', false, $hero_image_atts ); ?>
+				</picture>
 			</div>
 		<?php endif; ?>
 
