@@ -16,8 +16,8 @@
   // height depends on that same content is circular — CSS treats it as auto again rather
   // than solving it, so the stretch never actually reaches the box. assets/js/swiper.js's
   // own equalizeQuoteBoxHeights() sidesteps that entirely: it measures every box's
-  // natural height in JS and sets the tallest one explicitly, mobile only per the
-  // client's own request (tablet and desktop already read fine as they are).
+  // natural height in JS and sets the tallest one explicitly, below xl (desktop's own
+  // generous xl:min-h-[650px] already reads fine on its own, no measuring needed there).
   //
   // .theme-grid has no row gap by design. Nothing reserves the image row: a slide
   // without an image puts its card in row 1.
@@ -32,7 +32,7 @@
   // from the area gives 87.5% + 7.5px — a percentage of its own grid area, exact at any
   // container width.
   //
-  // justify-between at mobile too (already there from md via the template's own
+  // justify-between at mobile too (tablet already gets it from the template's own
   // md:justify-between): once JS gives the box an explicit height taller than its own
   // content needs (see the module docblock above), this is what pins &__author to its
   // bottom edge instead of leaving it wherever the gap-[60px] below the quote lands.

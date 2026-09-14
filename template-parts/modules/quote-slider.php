@@ -6,10 +6,11 @@
  * Heights are min-heights, so a longer quote grows the box rather than overflowing it,
  * and every slide matches the height of the tallest one — assets/js/swiper.js runs no
  * autoHeight — so swiping between a short quote and a long one never resizes the
- * slider. At mobile the box's own border reaches that same height too, measured and set
+ * slider. Below xl the box's own border reaches that same height too, measured and set
  * in JS rather than through CSS (see assets/js/swiper.js's own equalizeQuoteBoxHeights()
- * for why). The image is per slide and optional; a slide without one keeps the box at
- * its designed width and centres it.
+ * for why); desktop's own generous min-height already reads fine without it. The image
+ * is per slide and optional; a slide without one keeps the box at its designed width
+ * and centres it.
  *
  * With a single quote there is nothing to navigate: Swiper is not initialised at all, so
  * the card cannot be swiped, and neither the bullets nor the arrows are rendered. The

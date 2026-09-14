@@ -132,9 +132,12 @@ export function initNewsSlider() {
 }
 
 /**
- * Below md, matches every .quote-slider__box in a slider to the tallest one's own
+ * Below xl, matches every .quote-slider__box in a slider to the tallest one's own
  * natural height, so the border reaches the bottom of whatever the tallest slide needs
- * rather than leaving blank space above the pagination on a shorter one.
+ * rather than leaving blank space above the pagination on a shorter one. At tablet,
+ * where the box sits beside the image rather than stacked above it, this alone also
+ * squares the image away: it stretches to match by itself (md:h-auto, the grid row's
+ * default align-self:stretch) once the row is as tall as the box's own new height.
  *
  * Plain CSS can't do this: the box would need its height as a percentage of an
  * ancestor (.theme-container, then .swiper-slide) whose OWN auto height depends on
@@ -144,10 +147,10 @@ export function initNewsSlider() {
  * .quote-slider__box's own justify-between (already there from md up) is what then
  * pins &__author to the bottom of that taller box.
  *
- * Heights are reset to auto before every measurement, mobile or not: a previous run's
+ * Heights are reset to auto before every measurement, at xl or not: a previous run's
  * inline height would otherwise report itself back as this run's "natural" one, and
- * never shrink again once a resize (say, a rotated phone that now wraps the same quote
- * onto fewer lines) makes the tallest box shorter than a stale value.
+ * never shrink again once a resize (crossing into xl, or a rotated phone that now wraps
+ * the same quote onto fewer lines) makes the tallest box shorter than a stale value.
  *
  * @param {Element|null} root .quote-slider section element.
  */
@@ -162,7 +165,7 @@ function equalizeQuoteBoxHeights(root) {
     box.style.height = '';
   });
 
-  if (!window.matchMedia('(max-width: 767px)').matches) {
+  if (!window.matchMedia('(max-width: 1279px)').matches) {
     return;
   }
 
@@ -189,7 +192,7 @@ export function initQuoteSlider() {
     // No autoHeight, at any breakpoint: every slide matches the tallest one instead of
     // the viewport resizing to whichever is active — see equalizeQuoteBoxHeights() above
     // for what makes the card itself, not just the slide around it, match that height
-    // below md.
+    // below xl.
     new Swiper(el, {
       modules: [Navigation, Pagination, A11y],
       slidesPerView: 1,
