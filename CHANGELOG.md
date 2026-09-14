@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ### Changed
 - Impressum: the labelled detail text is smaller at desktop, 28px in place of 40px.
+- Display headings are smaller on mobile: the hero title reads 32px in place of 35px, the main section title 30px in place of 34px. Tablet and desktop keep the sizes they had.
+- Display headings are set tighter: the hero title below desktop, where it keeps its original spacing, and the main section title at every width.
+- Donate page: tighter spacing around each payment method's label at desktop.
 
 ## [1.18.1] — 2026-09-11
 

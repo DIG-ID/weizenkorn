@@ -58,7 +58,7 @@ $pi_has_methods  = have_rows( 'donate_payment_methods' );
 								continue;
 							}
 							?>
-							<div class="payment-info__method flex flex-col items-center xl:flex-row xl:items-start gap-4 mb-4">
+							<div class="payment-info__method flex flex-col items-center xl:flex-row xl:items-start gap-4">
 								<?php
 								echo wp_get_attachment_image(
 									$pi_qr,
@@ -68,7 +68,7 @@ $pi_has_methods  = have_rows( 'donate_payment_methods' );
 								);
 								?>
 								<?php if ( get_sub_field( 'label' ) ) : ?>
-									<span class="body-text text-brand-dark !font-bold uppercase"><?php echo esc_html( get_sub_field( 'label' ) ); ?></span>
+									<span class="body-text text-brand-dark !font-bold uppercase xl:mt-1"><?php echo esc_html( get_sub_field( 'label' ) ); ?></span>
 								<?php endif; ?>
 							</div>
 							<?php
