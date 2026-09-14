@@ -9,38 +9,20 @@
 
 .quote-slider
 
-  // assets/js/swiper.js runs this slider with no autoHeight, so every .swiper-slide
-  // already matches the tallest one via plain CSS — a row flex container sized to its
-  // tallest child by default, the rest stretched to match. That stretch stops at
-  // .swiper-slide itself, though: .theme-container and this grid are plain block/grid
-  // boxes below it, sized to their own content regardless of their now-taller ancestor,
-  // so a shorter slide's box still fell short of the tallest one's border by default —
-  // hence the height chain below, mobile only per the client's own request (tablet and
-  // desktop already read fine as they are).
+  // assets/js/swiper.js runs this slider with no autoHeight, but that alone doesn't put
+  // every slide at the tallest one's height: .quote-slider__box's height would have to
+  // reach it via a chain of percentage heights back up through .theme-container and
+  // .swiper-slide, and a percentage height that traces back to an ancestor whose OWN
+  // height depends on that same content is circular — CSS treats it as auto again rather
+  // than solving it, so the stretch never actually reaches the box. assets/js/swiper.js's
+  // own equalizeQuoteBoxHeights() sidesteps that entirely: it measures every box's
+  // natural height in JS and sets the tallest one explicitly, mobile only per the
+  // client's own request (tablet and desktop already read fine as they are).
   //
   // .theme-grid has no row gap by design. Nothing reserves the image row: a slide
   // without an image puts its card in row 1.
   &__grid
     @apply gap-y-[14px] md:gap-y-0
-
-    @media (max-width: 767px)
-      @apply h-full
-
-  // Only for a slide WITH an image (see &--has-image below): media keeps its own fixed
-  // height (auto row) while the box absorbs 100% of whatever extra height the tallest
-  // sibling slide added (1fr row) — content-stretch alone would split that extra height
-  // between both rows instead, stretching the photo's row into blank space around it.
-  // A slide with no image has only the one row, which content-stretch already grows to
-  // fill on its own, so it needs no override here.
-  &__grid--has-image
-    @media (max-width: 767px)
-      grid-template-rows: auto minmax(0, 1fr)
-
-  // Chains the tallest slide's height on down from .swiper-slide (see &__grid above) —
-  // scoped to this component's own slides, not the shared .theme-container class itself.
-  .swiper-slide > .theme-container
-    @media (max-width: 767px)
-      @apply h-full
 
   // Tablet splits the container at the MIDDLE of column 4 — 3.5 columns for the box,
   // 2.5 for the image — which no col-span can express. So both panels are placed on
@@ -51,9 +33,9 @@
   // container width.
   //
   // justify-between at mobile too (already there from md via the template's own
-  // md:justify-between): once the box can actually grow past its own min-height (the
-  // height chain above), this is what pins &__author to its bottom edge instead of
-  // leaving it wherever the gap-[60px] below the quote happens to land.
+  // md:justify-between): once JS gives the box an explicit height taller than its own
+  // content needs (see the module docblock above), this is what pins &__author to its
+  // bottom edge instead of leaving it wherever the gap-[60px] below the quote lands.
   &__box
     @media (max-width: 767px)
       @apply justify-between

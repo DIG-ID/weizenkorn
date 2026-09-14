@@ -1,5 +1,6 @@
 import Swiper from 'swiper';
 import { Navigation, Pagination, A11y, Autoplay } from 'swiper/modules';
+import { debounce } from './utils/helpers.js';
 
 /**
  * Gastronomy venues — Swiper on mobile only.
@@ -131,6 +132,48 @@ export function initNewsSlider() {
 }
 
 /**
+ * Below md, matches every .quote-slider__box in a slider to the tallest one's own
+ * natural height, so the border reaches the bottom of whatever the tallest slide needs
+ * rather than leaving blank space above the pagination on a shorter one.
+ *
+ * Plain CSS can't do this: the box would need its height as a percentage of an
+ * ancestor (.theme-container, then .swiper-slide) whose OWN auto height depends on
+ * that same box's content — a circular reference a browser resolves by treating the
+ * percentage as auto again, so the stretch never actually lands. Measuring here
+ * sidesteps that entirely. See _modules/_quote-slider.sass's own docblock for why
+ * .quote-slider__box's own justify-between (already there from md up) is what then
+ * pins &__author to the bottom of that taller box.
+ *
+ * Heights are reset to auto before every measurement, mobile or not: a previous run's
+ * inline height would otherwise report itself back as this run's "natural" one, and
+ * never shrink again once a resize (say, a rotated phone that now wraps the same quote
+ * onto fewer lines) makes the tallest box shorter than a stale value.
+ *
+ * @param {Element|null} root .quote-slider section element.
+ */
+function equalizeQuoteBoxHeights(root) {
+  const boxes = root ? Array.from(root.querySelectorAll('.quote-slider__box')) : [];
+
+  if (!boxes.length) {
+    return;
+  }
+
+  boxes.forEach((box) => {
+    box.style.height = '';
+  });
+
+  if (!window.matchMedia('(max-width: 767px)').matches) {
+    return;
+  }
+
+  const tallest = Math.max(...boxes.map((box) => box.offsetHeight));
+
+  boxes.forEach((box) => {
+    box.style.height = `${tallest}px`;
+  });
+}
+
+/**
  * Quote slider — one testimonial per slide, at every breakpoint.
  *
  * The arrows sit in the outer grid columns rather than inside the slider element, so they
@@ -144,12 +187,9 @@ export function initQuoteSlider() {
     // needs no re-init.
     //
     // No autoHeight, at any breakpoint: every slide matches the tallest one instead of
-    // the viewport resizing to whichever is active. Swiper leaves .swiper-wrapper's own
-    // height to plain CSS this way — a row flex container sized to its tallest child by
-    // default, every .swiper-slide then stretched to match — and content-stretch on
-    // .quote-slider__grid (_modules/_quote-slider.sass) is what carries that height down
-    // into the card and image themselves rather than leaving blank space under a shorter
-    // one, at every breakpoint that class applies.
+    // the viewport resizing to whichever is active — see equalizeQuoteBoxHeights() above
+    // for what makes the card itself, not just the slide around it, match that height
+    // below md.
     new Swiper(el, {
       modules: [Navigation, Pagination, A11y],
       slidesPerView: 1,
@@ -164,6 +204,13 @@ export function initQuoteSlider() {
         prevEl: root ? root.querySelector('.js-quote-prev') : null,
         nextEl: root ? root.querySelector('.js-quote-next') : null,
       },
+      on: {
+        init: () => equalizeQuoteBoxHeights(root),
+      },
+    });
+
+    window.addEventListener('resize', debounce(() => equalizeQuoteBoxHeights(root)), {
+      passive: true,
     });
   });
 }
