@@ -33,11 +33,28 @@
     @media (min-width: 1280px)
       @apply flex
 
+  // Mobile only: ten bullets at their own original gap-x-5 ran a few px past the
+  // mobile container's own width. Rather than tightening that gap, the row stays
+  // nowrap + scrollable instead — flex-wrap/justify-center come back at md, where
+  // there's room to spare and nothing to scroll. justify-start, not justify-center,
+  // while it's scrollable: centering an overflowing flex row leaves its start
+  // unreachable by scroll in some browsers (the row simply clips there instead),
+  // a known flexbox quirk — starting flush left keeps every bullet reachable.
   &__pagination
-    @apply static flex flex-wrap items-center justify-center gap-x-5 md:gap-x-[30px] gap-y-4 xl:hidden
+    @apply static flex flex-nowrap items-center justify-start overflow-x-auto gap-x-5 xl:hidden
+    @apply md:flex-wrap md:justify-center md:overflow-visible md:gap-x-[30px] md:gap-y-4
     grid-column: 1 / span 2
 
     --swiper-pagination-bullet-horizontal-gap: 0px
+
+    // The bullets already show scroll position via Swiper's own active-bullet paint;
+    // a visible native scrollbar under a row of 15px dots would read as a stray UI
+    // element rather than a real control.
+    scrollbar-width: none
+    -ms-overflow-style: none
+
+    &::-webkit-scrollbar
+      display: none
 
     @media (min-width: 768px)
       grid-column: 1 / span 6

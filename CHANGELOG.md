@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Donate page: at desktop the payment details now sit as close to the section heading as they already did at narrower widths.
 - Organization page: the Jahresbericht report-download buttons match their Figma size at desktop instead of stretching to fill their column, with a wider column in between so they never overlap.
 - Organization page: tighter, more consistent spacing around the Jahresbericht iframe on tablet and mobile.
+- Open Positions archive: the job cards and category cards no longer run too narrow on tablet, and show three across from a wider tablet width up instead of only at desktop.
+- Supported Jobs and Product Range — Holzmanufaktur: the slide pagination dots stay on one line and scroll instead of wrapping when there are many of them on mobile, and the active dot scrolls into view as the slide changes.
 
 ## [1.18.0] — 2026-09-11
 

@@ -21,7 +21,10 @@
  * whose job-categories grid does this for its 14 items (12 + a wide pair).
  * Stacked at both tablet and mobile regardless of column count — confirmed
  * against the tablet frame, which has no 2-up step for this grid (unlike
- * most card grids in this theme).
+ * most card grids in this theme). At tablet each card is only five of the
+ * inner grid's own six columns, though, not the full row — confirmed
+ * against the same frame, which leaves the sixth bare rather than
+ * stretching the card into it.
  *
  * ACF fields (flat, prefixed):
  *   {prefix}title (text)
@@ -109,7 +112,7 @@ $cg_item_column = $cg_three_cols ? 'xl:col-span-4' : 'xl:col-span-3';
 							continue;
 						}
 						?>
-						<div class="card-category col-span-2 md:col-span-6 <?php echo esc_attr( $cg_item_column ); ?> flex flex-col">
+						<div class="card-category col-span-2 md:col-span-5 <?php echo esc_attr( $cg_item_column ); ?> flex flex-col">
 							<h3 class="card-category__title text-brand-red font-primary font-bold uppercase tracking-[0.5px] text-[14px] xl:text-[20px] mb-4">
 								<?php echo esc_html( get_sub_field( 'title' ) ); ?>
 							</h3>

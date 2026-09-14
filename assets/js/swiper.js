@@ -184,6 +184,25 @@ export function initQuoteSlider() {
 export function initEquipmentSlider() {
   document.querySelectorAll('.js-equipment-slider').forEach((el) => {
     const root = el.closest('.our-equipment');
+    const paginationEl = root ? root.querySelector('.js-equipment-pagination') : null;
+
+    // Below md the row is nowrap + overflow-x-auto instead of wrapping (see
+    // _modules/_our-equipment.sass's own __pagination) — this keeps the active bullet
+    // scrolled into the centre of that row as the slide changes. Same as
+    // initDiversityCardsSlider()'s own centerActiveBullet(); kept as its own small copy
+    // rather than a shared helper since each closure captures a different pagination
+    // element and root.
+    const centerActiveBullet = () => {
+      if (!paginationEl || !window.matchMedia('(max-width: 767px)').matches) {
+        return;
+      }
+
+      const activeBullet = paginationEl.querySelector('.swiper-pagination-bullet-active');
+
+      if (activeBullet) {
+        activeBullet.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    };
 
     new Swiper(el, {
       modules: [Navigation, Pagination, A11y],
@@ -195,12 +214,15 @@ export function initEquipmentSlider() {
       observer: true,
       observeParents: true,
       pagination: {
-        el: root ? root.querySelector('.js-equipment-pagination') : null,
+        el: paginationEl,
         clickable: true,
       },
       navigation: {
         prevEl: root ? root.querySelector('.js-equipment-prev') : null,
         nextEl: root ? root.querySelector('.js-equipment-next') : null,
+      },
+      on: {
+        slideChange: centerActiveBullet,
       },
     });
   });
@@ -240,6 +262,24 @@ export function initDiversitySlider() {
 export function initDiversityCardsSlider() {
   document.querySelectorAll('.js-diversity-cards-slider').forEach((el) => {
     const root = el.closest('.section-diversity-cards');
+    const paginationEl = root ? root.querySelector('.js-diversity-cards-pagination') : null;
+
+    // Below md the row is nowrap + overflow-x-auto instead of wrapping (see
+    // _pages/_supported-jobs.sass's own __pagination) — this keeps the active bullet
+    // scrolled into the centre of that row as the slide changes. matchMedia guards it:
+    // from md up the row wraps with nothing to scroll, so centring would be a no-op at
+    // best and an unwanted scroll-into-view of an already-visible bullet at worst.
+    const centerActiveBullet = () => {
+      if (!paginationEl || !window.matchMedia('(max-width: 767px)').matches) {
+        return;
+      }
+
+      const activeBullet = paginationEl.querySelector('.swiper-pagination-bullet-active');
+
+      if (activeBullet) {
+        activeBullet.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    };
 
     new Swiper(el, {
       modules: [Navigation, Pagination, A11y],
@@ -251,12 +291,15 @@ export function initDiversityCardsSlider() {
       observer: true,
       observeParents: true,
       pagination: {
-        el: root ? root.querySelector('.js-diversity-cards-pagination') : null,
+        el: paginationEl,
         clickable: true,
       },
       navigation: {
         prevEl: root ? root.querySelector('.js-diversity-cards-prev') : null,
         nextEl: root ? root.querySelector('.js-diversity-cards-next') : null,
+      },
+      on: {
+        slideChange: centerActiveBullet,
       },
     });
   });
