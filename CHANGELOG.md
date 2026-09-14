@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Product range cards on a touch screen: the first tap opens the card's description and only "zum Produkt" follows the link, instead of leaving the page before the description could be read.
 - Offer grid cards: the description runs wider before wrapping, on all three pages that use the grid rather than only Kreativatelier.
 - Donate page: at desktop the payment details now sit as close to the section heading as they already did at narrower widths.
+- Donate page: at desktop each payment method sets its QR code beside its label instead of above it, in a narrower column, and the label reads bold and uppercase.
 - Organization page: the Jahresbericht report-download buttons match their Figma size at desktop instead of stretching to fill their column, with a wider column in between so they never overlap.
 - Organization page: tighter, more consistent spacing around the Jahresbericht iframe on tablet and mobile.
 - Open Positions archive: the job cards and category cards no longer run too narrow on tablet, and show three across from a wider tablet width up instead of only at desktop.
