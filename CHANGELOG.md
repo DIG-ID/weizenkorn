@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.18.3] — 2026-09-14
+
+### Fixed
+- Hero separator logos are back to one height at desktop across the whole site. Each was taking its size from the uploaded file instead, so the marks ranged from 31px on Rhyvage to well over twice that on the bakery page.
+
 ## [1.18.2] — 2026-09-14
 
 ### Changed

@@ -187,7 +187,7 @@ $hero_image_atts = array(
 					'full',
 					false,
 					array(
-						'class'   => 'w-auto h-[32px] md:h-[71px] xl:h-auto max-w-full',
+						'class'   => 'w-auto h-[32px] md:h-[71px] xl:h-[101px] max-w-full',
 						'loading' => 'lazy',
 					)
 				);
