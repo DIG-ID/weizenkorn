@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Page heroes take an optional separate image for mobile, so a photo framed for the wide desktop banner can be swapped for one composed for the short mobile one. Pages that leave it empty are unchanged.
 
 ### Changed
+- 404 page: on mobile the red panel runs to the edges of the screen and the "Ups, hier sind wir auf dem Holzweg..." line breaks over two lines.
 - About Us: the "Unsere Werte" values are centred under their icon on mobile, as in the design, and stay left-aligned beside the icon from tablet up.
 - Hero separator logos are sized the same way on every page, the home page included, and take their own size at desktop.
 - Bakery download cards no longer turn red on hover — they open the same way the product ranges do.

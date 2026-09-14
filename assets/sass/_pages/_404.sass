@@ -2,10 +2,26 @@
 
 .error-404
 
+  // Mobile: the red panel runs to the viewport edges, so the container drops its own
+  // margins below tablet and takes them back from md up. Scoped to the container rather
+  // than pulled back with a negative margin on the panel, which would have to restate the
+  // 37px the container sets and go stale the day that number moves.
+  > .theme-container
+    @media (max-width: 767px)
+      padding-inline: 0
+
   // The frame draws two rules across the panel at desktop and none below it, so they are
   // the inner box's borders only from xl up — and the panel's padding changes with them.
   &__panel
     @apply py-[50px] md:py-[76px] xl:py-[109px]
+
+  // Two lines at mobile. .label-overline's 15px leading is sized for the single line it
+  // used to be — at 14px type it leaves two lines all but touching — so mobile takes the
+  // 22px the theme gives 14px text everywhere else. text-balance splits the two lines
+  // evenly instead of leaving one word stranded below.
+  &__overline
+    @apply max-w-[256px] text-balance leading-[22px]
+    @apply md:max-w-none md:[text-wrap:wrap]
 
   &__inner
     @apply flex flex-col items-center text-center
