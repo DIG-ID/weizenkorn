@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.18.4] — 2026-09-14
+
+### Fixed
+- Contact forms: a field's "please fill out this field" notice no longer pushes the fields under it down the page. It now sits in the space already left between controls.
+
 ## [1.18.3] — 2026-09-14
 
 ### Fixed

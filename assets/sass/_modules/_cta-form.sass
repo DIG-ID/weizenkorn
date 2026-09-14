@@ -179,6 +179,20 @@
   .wpcf7-response-output
     @apply font-primary text-[14px] leading-[20px] tracking-[0.5px] text-white
 
+  // CF7 injects the tip into the flow inside the control wrap, so a field that fails
+  // validation pushed everything below it down — and since the three controls in the left
+  // column fail together, the whole column jumped. Out of the flow it sits in the gap the
+  // column already leaves between controls: a 20px line in the 24px gap at mobile, 32px
+  // from tablet up. The response output below the form stays in flow, hence the split.
+  //
+  // Not applied to .order-form, which sets gaps as tight as 8px in places — there the tip
+  // would land on the next control instead of between the two.
+  .wpcf7-form-control-wrap
+    @apply relative
+
+  .wpcf7-not-valid-tip
+    @apply absolute left-0 top-full
+
   // CF7 styles this as `.wpcf7 form .wpcf7-response-output`, which outranks a plain
   // `.cta-form .wpcf7-response-output` — hence the deeper selector.
   .wpcf7 form .wpcf7-response-output
