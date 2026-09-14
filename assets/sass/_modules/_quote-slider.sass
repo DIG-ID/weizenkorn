@@ -9,9 +9,18 @@
 
 .quote-slider
 
+  // assets/js/swiper.js runs this slider with no autoHeight, but that alone doesn't put
+  // every slide at the tallest one's height: .quote-slider__box's height would have to
+  // reach it via a chain of percentage heights back up through .theme-container and
+  // .swiper-slide, and a percentage height that traces back to an ancestor whose OWN
+  // height depends on that same content is circular — CSS treats it as auto again rather
+  // than solving it, so the stretch never actually reaches the box. assets/js/swiper.js's
+  // own equalizeQuoteBoxHeights() sidesteps that entirely: it measures every box's
+  // natural height in JS and sets the tallest one explicitly, below xl (desktop's own
+  // generous xl:min-h-[650px] already reads fine on its own, no measuring needed there).
+  //
   // .theme-grid has no row gap by design. Nothing reserves the image row: a slide
-  // without an image puts its card in row 1. content-start (set in the template) keeps
-  // the card at its own height instead of stretching to the tallest slide's.
+  // without an image puts its card in row 1.
   &__grid
     @apply gap-y-[14px] md:gap-y-0
 
@@ -22,7 +31,15 @@
   // Placed on columns 1-4, area 4c + 3g, target 3.5c + 3g, so it loses c/2. Solving c
   // from the area gives 87.5% + 7.5px — a percentage of its own grid area, exact at any
   // container width.
+  //
+  // justify-between at mobile too (tablet already gets it from the template's own
+  // md:justify-between): once JS gives the box an explicit height taller than its own
+  // content needs (see the module docblock above), this is what pins &__author to its
+  // bottom edge instead of leaving it wherever the gap-[60px] below the quote lands.
   &__box
+    @media (max-width: 767px)
+      @apply justify-between
+
     @media (min-width: 768px) and (max-width: 1279px)
       width: calc(87.5% + 7.5px)
 
@@ -75,17 +92,31 @@
   // `static` undoes Swiper's absolute positioning: a block below the slider. A single
   // quote renders no pagination at all — the template only outputs it for two or more.
   //
-  // The margin is measured from the card, not the section: Swiper runs with autoHeight
-  // up to tablet, so the viewport ends where the active slide's card ends.
+  // flex-nowrap + overflow-x-auto, not wrap: this list follows however many quotes are
+  // in the repeater, and unlike _pages/_supported-jobs.sass's own __pagination
+  // (confirmed overflowing at a known item count) there's no confirmed break here yet —
+  // scrolling is a quiet fallback if the count ever runs past the row's own width,
+  // without changing today's centred look for the common case that still fits.
+  // shrink-0 below is what actually matters either way: without it the bullets would
+  // squeeze down to slivers instead of scrolling once they no longer fit.
   &__pagination
-    @apply static mt-8 md:mt-10 flex items-center justify-center gap-[30px]
+    @apply static mt-8 md:mt-10 flex flex-nowrap items-center justify-center overflow-x-auto gap-[30px]
 
     // Swiper spaces its own bullets from a selector more specific than the m-0 below, so
     // that margin would win and add 8px to every gap. Zeroing its variable is the fix.
     --swiper-pagination-bullet-horizontal-gap: 0px
 
+    // The bullets already show scroll position via Swiper's own active-bullet paint; a
+    // visible native scrollbar under a row of 15px dots would read as a stray UI
+    // element rather than a real control.
+    scrollbar-width: none
+    -ms-overflow-style: none
+
+    &::-webkit-scrollbar
+      display: none
+
     .swiper-pagination-bullet
-      @apply w-[15px] h-[15px] m-0 rounded-full border border-brand-red bg-transparent opacity-100 transition-colors duration-300
+      @apply w-[15px] h-[15px] shrink-0 m-0 rounded-full border border-brand-red bg-transparent opacity-100 transition-colors duration-300
 
     .swiper-pagination-bullet-active
       @apply bg-brand-red

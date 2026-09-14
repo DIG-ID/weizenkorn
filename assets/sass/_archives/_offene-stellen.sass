@@ -22,6 +22,13 @@
     .card-category
       min-height: 350px
 
+// 24px between each bullet's own line, wider than .body-text's shared 4px (mb-1) for a
+// WYSIWYG list elsewhere on the site. .card-category__list already carries .body-text
+// itself, so the extra class here is what wins the specificity fight against that
+// shared rule (0,3,2 vs 0,2,2) instead of !important.
+.card-category__list.body-text ul:not([class]) li
+  @apply mb-6 last:mb-0
+
 // -- "Aktuell offene Stellen" filter results grid (template-parts/archives/offene-stellen/
 //    job-filters.php uses the shared .filter-panel__* classes instead of its own — see
 //    _components/_filter-panel.sass). -----------------------------------------------------

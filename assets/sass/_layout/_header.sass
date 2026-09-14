@@ -2,10 +2,12 @@
 .header-main
   @apply relative z-50 bg-white
 
-  // Pinned while the mega menu is open. Instant, unlike the sticky bar below: the menu
-  // state is a deliberate toggle, not a scroll position.
+  // Pinned while the mega menu is open, and swapped to the same brand-cream as
+  // .menu-overlay itself so the header reads as part of the open menu rather than a
+  // separate white bar sitting on top of it. Instant, unlike the sticky bar below: the
+  // menu state is a deliberate toggle, not a scroll position.
   body.menu-open &
-    @apply fixed top-0 inset-x-0
+    @apply fixed top-0 inset-x-0 bg-brand-cream
 
   &__row
     @apply grid grid-cols-[auto_1fr_auto] items-center py-4 xl:py-[26px]
@@ -17,7 +19,7 @@
   // Shown after scrolling past the normal header (assets/js/sticky-header.js).
   // visibility, not just opacity, so it stays out of the tab order while hidden.
   &__sticky
-    @apply fixed top-0 inset-x-0 z-50 bg-white shadow-md invisible opacity-0 -translate-y-full transition-all duration-300 ease-out
+    @apply fixed top-0 inset-x-0 z-50 bg-brand-cream shadow-md invisible opacity-0 -translate-y-full transition-all duration-300 ease-out
 
     &.is-visible
       @apply visible opacity-100 translate-y-0

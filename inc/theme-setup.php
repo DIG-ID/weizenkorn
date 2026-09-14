@@ -66,7 +66,12 @@ function weizenkorn_theme_setup() {
 
 	// No arbitrary sizes: the design has two, and a number typed by hand is a third.
 	add_theme_support( 'disable-custom-font-sizes' );
-	add_editor_style( 'dist/css/main.css' );
+
+	/*
+	 * main.css first so the editor shows the real typography, then editor.css to put
+	 * back what Tailwind's preflight strips inside the iframe — list markers above all.
+	 */
+	add_editor_style( array( 'dist/css/main.css', 'dist/css/editor.css' ) );
 }
 
 add_action( 'after_setup_theme', 'weizenkorn_theme_setup' );

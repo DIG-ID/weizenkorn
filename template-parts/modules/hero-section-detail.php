@@ -108,7 +108,7 @@ $page_hero_detail_text  = get_field( 'page_hero_detail_text' );
 					'full',
 					false,
 					array(
-						'class'   => 'max-w-[96px] md:max-w-[212px] xl:max-w-[244px] h-auto',
+						'class'   => 'w-auto h-[32px] md:h-[71px] xl:h-auto max-w-full',
 						'loading' => 'lazy',
 					)
 				);

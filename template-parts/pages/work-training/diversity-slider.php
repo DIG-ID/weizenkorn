@@ -8,8 +8,9 @@
  * this slide shape (image height 256/360/767px) yet.
  *
  * The caption's "Inria Sans" font in Figma is a one-off outside the site's
- * single-typeface rule (CLAUDE.md) — approximated with italic DM Sans
- * instead of loading a second font family for one small label.
+ * single-typeface rule (CLAUDE.md) — approximated with plain DM Sans (no
+ * italic, dropped as a client request) instead of loading a second font
+ * family for one small label.
  *
  * ACF fields (flat, prefixed):
  *   work_training_diversity_title (text)

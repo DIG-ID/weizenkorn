@@ -48,16 +48,30 @@
   // `static` undoes Swiper's absolute positioning: this is a block in the row, not an
   // overlay on the slides.
   //
-  // The count follows the content, so mobile takes a 20px gap where tablet keeps the
-  // frames' 30 — nine bullets at 30 would overflow a 321px container. flex-wrap is the
-  // fallback for a count that outgrows even that.
+  // Below md the row is nowrap + overflow-x-auto rather than wrapping to a second line
+  // once the bullet count outgrows the container — same fix, same reasoning, as
+  // _pages/_supported-jobs.sass's own .section-diversity-cards__pagination. justify-start
+  // and not justify-center while it's scrollable: centring an overflowing flex row
+  // leaves its start unreachable by scroll in some browsers, a known flexbox quirk —
+  // starting flush left keeps every bullet reachable. flex-wrap/justify-center come back
+  // from md, where there's room to spare and nothing to scroll.
   &__pagination
-    @apply static flex flex-wrap items-center justify-center gap-x-5 md:gap-x-[30px] gap-y-4 xl:hidden
+    @apply static flex flex-nowrap items-center justify-start overflow-x-auto gap-x-5 xl:hidden
+    @apply md:flex-wrap md:justify-center md:overflow-visible md:gap-x-[30px] md:gap-y-4
     grid-column: 1 / span 2
 
     // Swiper spaces its own bullets from a selector more specific than the m-0 below, so
     // that margin would win and add 8px to every gap. Zeroing its variable is the fix.
     --swiper-pagination-bullet-horizontal-gap: 0px
+
+    // The bullets already show scroll position via Swiper's own active-bullet paint; a
+    // visible native scrollbar under a row of 15px dots would read as a stray UI element
+    // rather than a real control.
+    scrollbar-width: none
+    -ms-overflow-style: none
+
+    &::-webkit-scrollbar
+      display: none
 
     @media (min-width: 768px)
       grid-column: 1 / span 6

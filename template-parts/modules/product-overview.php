@@ -153,7 +153,12 @@ if ( ! $po_heading && ! have_rows( $po_prefix . 'product_overview_items', $po_ct
 								<div class="product-overview__reveal">
 									<span class="product-overview__link">
 										<span><?php echo esc_html_x( 'zum Produkt', 'product overview card link', 'weizenkorn' ); ?></span>
-										<span class="product-overview__link-icon" aria-hidden="true"><?php weizenkorn_the_svg_icon( 'arrow-download' ); ?></span>
+										<?php
+										// Sideways and not the downloads variant's download arrow: this
+										// card links to a product page, and the two arrows are what tell
+										// a reader whether a file is about to land on their machine.
+										?>
+										<span class="product-overview__link-icon" aria-hidden="true"><?php weizenkorn_the_svg_icon( 'arrow-right' ); ?></span>
 									</span>
 								</div>
 							<?php endif; ?>

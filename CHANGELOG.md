@@ -11,10 +11,214 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
-## [1.14.1] — 2026-09-08
+## [1.18.1] — 2026-09-11
+
+### Added
+- The diversity slider advances on its own every five seconds.
+- Supported Apprenticeships: the "Unsere Ausbildung" programme cards get a tap-to-expand +/- toggle on tablet and mobile, matching the preview cards used elsewhere on the site, instead of always showing their description.
+- Page heroes take an optional separate image for mobile, so a photo framed for the wide desktop banner can be swapped for one composed for the short mobile one. Pages that leave it empty are unchanged.
+- Titles can break a line at some screen sizes and not others. A `<br>` in a page hero title or a section heading takes a class saying where it applies: `xl:hidden` breaks on tablet and mobile, `hidden md:inline xl:hidden` on tablet only, `md:hidden` on mobile only. A plain `<br>` still breaks the line at every size.
 
 ### Changed
-- About Us page: the "Weizenkorn entdecken" video section now comes before "So arbeiten wir" and the quote slider.
+- Page heroes: the bordered intro box takes a tighter padding on narrow tablets, so a long title such as "Perspektiven schaffen" no longer breaks in the middle of a word. From 1024px up it keeps the padding it had.
+- Product range cards: a tap opens the card's description reliably before the card's link is followed, on every touch device rather than only the ones the browser reports as having no mouse.
+- 404 page: on mobile the red panel runs to the edges of the screen and the "Ups, hier sind wir auf dem Holzweg..." line breaks over two lines.
+- About Us: the "Unsere Werte" values are centred under their icon on mobile, as in the design, and stay left-aligned beside the icon from tablet up.
+- Hero separator logos are sized the same way on every page, the home page included, and take their own size at desktop.
+- Bakery download cards no longer turn red on hover — they open the same way the product ranges do.
+- Product range cards: the "zum Produkt" link shows a sideways arrow instead of a download one — it opens a page, not a file. The bakery's download cards keep the download arrow.
+- Product range cards on a touch screen: the first tap opens the card's description and only "zum Produkt" follows the link, instead of leaving the page before the description could be read.
+- Offer grid cards: the description runs wider before wrapping, on all three pages that use the grid rather than only Kreativatelier.
+- Donate page: at desktop the payment details now sit as close to the section heading as they already did at narrower widths.
+- Donate page: at desktop each payment method sets its QR code beside its label instead of above it, in a narrower column, and the label reads bold and uppercase.
+- Organization page: the Jahresbericht report-download buttons match their Figma size at desktop instead of stretching to fill their column, with a wider column in between so they never overlap.
+- Organization page: tighter, more consistent spacing around the Jahresbericht iframe on tablet and mobile.
+- Open Positions archive: the job cards and category cards no longer run too narrow on tablet, and show three across from a wider tablet width up instead of only at desktop.
+- Supported Jobs and Product Range — Holzmanufaktur: the slide pagination dots stay on one line and scroll instead of wrapping when there are many of them on mobile, and the active dot scrolls into view as the slide changes.
+- Quote slider: every slide now matches the height of the tallest one on mobile and tablet too, so swiping between a short quote and a long one no longer resizes the slider — on mobile the card's own border reaches that same height too, with its attribution pinned to the bottom.
+- Footer newsletter: space above the sign-up confirmation/error message.
+- Mega menu: the item order on mobile now matches the design instead of the order the menu items happen to be in across the three admin menus that build it. Tablet and desktop are unchanged.
+- Work & Training's diversity slider: the pagination dots stay round and scroll instead of shrinking to fit when there are many of them on mobile, and the active dot scrolls into view as the slide changes.
+- Slider pagination: centring the active dot now scrolls only the row of dots, not the page. On the Work & Training diversity slider, which advances on its own, the page was being pulled down to the slider every few seconds while the reader was somewhere else entirely.
+- Slide pagination dots (Home's gastronomy and services sliders, stories & references, donation projects, related jobs, quote slider) no longer risk shrinking to slivers if their item count ever grows — the same fix already applied elsewhere on the site.
+- Main page titles (.title-main) are a little larger on mobile.
+
+### Removed
+- The header's language switcher is hidden for now — the site launches German-only.
+
+## [1.18.0] — 2026-09-11
+
+### Added
+- A map with a single pin can label it too, the way a map with several already could.
+
+## [1.17.9] — 2026-09-11
+
+### Added
+- For Social Offices & Partners: "Angebote im Überblick" now has its own layout — a narrower text column and the two buttons each on their own grid position, matching this page's own design instead of the shared one.
+- Card titles (.title-card, used across most of the site's cards) now step up to their desktop size already at tablet, not just at desktop.
+
+### Changed
+- Contact person section (Supported Apprenticeships, Open Positions archive): tighter spacing below it, the contact block aligned to the bottom of its photo, and a wider gap between the two at desktop.
+- For Social Offices & Partners: the "no downloads yet" message now sits in the same narrow column the cards would have used, instead of the full width.
+- Open Positions archive category cards: bigger title at desktop, and more room between each list line.
+- The "Apply Filters" button (Open Positions archive, Das Weizenkorn Team) now reads "Filter anwenden" by default, matching the site's primary language.
+- Numbered steps (Supported Jobs, Supported Apprenticeships): box titles are uppercase, and the bottom padding is now 40px (mobile/tablet) / 56px (desktop) independent of the other sides.
+- Diversity card/slider captions (Supported Jobs, Work & Training): the title reads in brand red on both, the gap between category and title matches at desktop, and neither uses italic any more.
+
+## [1.17.8] — 2026-09-11
+
+### Changed
+- AGB, Datenschutzerklärung and Impressum: space above the title band, growing from mobile to desktop.
+- 404: the red panel keeps its space below it only at desktop; below that it runs straight into what follows.
+
+## [1.17.7] — 2026-09-11
+
+### Changed
+- Impressum: links are unmarked until the pointer is over them, rather than underlined throughout.
+
+## [1.17.6] — 2026-09-10
+
+### Changed
+- About Us: the video now comes before the craft showcase rather than after the quote slider.
+
+## [1.17.5] — 2026-09-10
+
+### Fixed
+- Map pin labels sat against the top of their box: the padding is now even, and the label no longer risks a scrollbar of its own.
+
+## [1.17.4] — 2026-09-10
+
+### Fixed
+- Map pin labels still showed a close button, which had nothing to reopen them with.
+- Bakery product images cropped people's heads at every width, not only at mobile.
+- Hero separator logos are sized by height rather than width, so a tall mark and a wide one sit on the same line instead of the tall one being blown up to the wide one's width.
+
+## [1.17.3] — 2026-09-10
+
+### Changed
+- Map pin labels are shown as soon as the map loads, instead of waiting for a click, and can no longer be dismissed — on a map of several venues the names are the point.
+
+## [1.17.2] — 2026-09-10
+
+### Fixed
+- Pages with a single map pin raised a PHP warning: the pin label added in 1.17.0 was only set on the multi-pin path, and the map markup read it on both.
+
+## [1.17.1] — 2026-09-10
+
+### Fixed
+- Home hero: the image sat flush against the heading on mobile; it now keeps a gap below it, unchanged from tablet up.
+
+### Changed
+- Schreinerei page: the service information and downloads section now comes before the location section.
+
+## [1.17.0] — 2026-09-10
+
+### Added
+- Map pins can carry a label, shown when the pin is clicked — on a map with several venues there was no way to tell them apart.
+
+### Fixed
+- The hero separator logo stayed at its file's own size instead of growing to the size the design gives it.
+
+## [1.16.6] — 2026-09-10
+
+### Fixed
+- The hero separator logo was drawn smaller than the design at desktop; it now matches.
+
+## [1.16.5] — 2026-09-10
+
+### Changed
+- The logo that separates a page hero from the section below it is a quarter larger at every width.
+
+## [1.16.4] — 2026-09-10
+
+### Changed
+- Kreativatelier: the offer cards' text runs wider before wrapping. The other pages using the same cards are unchanged.
+
+## [1.16.3] — 2026-09-10
+
+### Fixed
+- Jahresbericht report buttons: a long label now grows the button past its grid cell instead of risking the icon overlapping the text.
+
+## [1.16.2] — 2026-09-10
+
+### Fixed
+- Mega menu images flashed the previous photo for a frame before settling, and moving the pointer quickly across the links could leave the wrong one showing. The swap now waits for the new image to be ready before revealing it, and only the last link hovered wins.
+- Mega menu images are loaded when the menu opens, so the first pass over a link no longer waits on the network.
+
+## [1.16.1] — 2026-09-10
+
+### Added
+- Organization page: a new "Jahresbericht - Rückblick mit Ausblick" section, with a repeater of report-download buttons an editor can add to or remove from freely.
+
+### Fixed
+- Phone numbers written with a "(0)" domestic dialling prefix (e.g. "+41 (0)61 686 91 31") produced an undialable tel: link — the 0 no longer carries through.
+- A full-width button's icon sat stranded near its label instead of pinned to the button's own trailing edge.
+
+### Changed
+- The mega menu and the sticky header bar now use the site's cream background instead of white; the normal header also switches to it while the mega menu is open.
+- Organization page: the "Warum Weizenkorn?" embedded document moved into the new Jahresbericht section below it.
+- The active-filter count dot on the Open Positions archive and Das Weizenkorn Team's Filter button is hidden — not part of the design.
+
+## [1.16.0] — 2026-09-09
+
+### Added
+- The home page's Products section can hide its second heading button without emptying its link, so a seasonal call to action can be switched off and back on.
+
+## [1.15.3] — 2026-09-09
+
+### Changed
+- Section headings: the right-hand paragraph no longer stops at 500px on desktop and runs the full five columns, on every section that has one.
+
+## [1.15.2] — 2026-09-09
+
+### Fixed
+- Bakery product images cropped people's heads at mobile; the crop now falls at the bottom of the photo instead.
+
+## [1.15.1] — 2026-09-09
+
+### Fixed
+- Bakery product images sat inside their card with a band either side; they now fill it.
+
+## [1.15.0] — 2026-09-09
+
+### Added
+- 404 page: a red panel with the overline, the code, a button back to the home page and the message, ruled across at desktop.
+- White button style, for buttons sitting on the red band.
+- Projekte & Referenzen slider on the Schreinerei page.
+
+## [1.14.4] — 2026-09-09
+
+### Fixed
+- Donate page: the "Unsere Spenden-Projekte" slider's cards now all match the tallest one instead of each keeping its own height.
+
+### Changed
+- Products is now declared translatable in the theme's own WPML config, so the setting survives a fresh environment or database copy instead of needing to be toggled by hand each time.
+
+## [1.14.3] — 2026-09-08
+
+### Added
+- Smooth-scrolling anchor links on the home page, matching the rest of the page's scroll feel instead of jumping instantly.
+- Sticky CTA: an "Active" switch to turn the widget on or off without losing its title/text/link.
+
+### Changed
+- Legal pages at tablet: more air above each section's rule, and a shorter gap between the title band and the content below it.
+- Home page sections now carry stable HTML ids, for anchor links to target.
+
+## [1.14.2] — 2026-09-08
+
+### Fixed
+- Links inside the legal pages' text looked exactly like the text around them — the theme resets anchors to inherit their colour and drop their underline. They now carry an underline, and turn red on hover.
+
+## [1.14.1] — 2026-09-08
+
+### Added
+- Legal pages: AGB and Datenschutzerklärung share a template with a heading beside its text, one block per section, each under a rule.
+- Impressum template: labelled cells three to a row, half of them under a rule and half inside a bordered panel.
+- Title band: the page title centred in a bordered band, used by all three legal pages in place of a hero.
+- Editor stylesheet, so lists and sub-headings show their markers inside the editor instead of rendering flat.
+
+### Fixed
+- Preview cards showed extra empty space under the closed title bar — a margin meant only for the expanded text sat outside the collapse mechanism, so it stayed even when closed.
 
 ## [1.14.0] — 2026-09-07
 

@@ -17,6 +17,9 @@ import { initTeamFilters } from './team-filters.js';
 import { initNewsPagination } from './news-pagination.js';
 import { initVideoFacade } from './video-facade.js';
 import { initPreviewCards } from './preview-cards.js';
+import { initCardProgram } from './card-program.js';
+import { initProductOverview } from './product-overview.js';
+import { initAnchorScroll } from './anchor-scroll.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -46,5 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initNewsPagination();
   initVideoFacade();
   initPreviewCards();
+  initCardProgram();
+  initProductOverview();
+  initAnchorScroll();
 
 });

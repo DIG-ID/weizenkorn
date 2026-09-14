@@ -7,6 +7,10 @@
 import { gsap } from './gsap.js';
 
 const IMAGE_FADE_MS = 200;
+
+// Sentinel for aborting an image swap that a newer hover has replaced. A plain object and
+// not a Symbol, which would pull a polyfill in for no gain — it never leaves this module.
+const SWAP_SUPERSEDED = {};
 const MOBILE_BREAKPOINT = 768;
 const ARROW_ICON = '<svg width="24" height="19" viewBox="0 0 23.7301 18.632" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0 9.31602H22M10 17.816L22 9.31602L10 0.816024" stroke="currentColor" stroke-width="2" /></svg>';
 
@@ -124,17 +128,102 @@ export function initMenuOverlay() {
 
   initMobileMenuAccordion(overlay);
 
+  /*
+   * Image swap. Three things have to hold when the pointer crosses several links quickly:
+   * only the last link may win, the outgoing image holds the frame until the incoming one
+   * can be painted, and no frame of the outgoing image is ever shown at full opacity.
+   *
+   * `swapToken` is what makes a superseded swap harmless: every step re-checks it and bails,
+   * so an abandoned swap never touches the src. `intendedSrc` is compared instead of the
+   * element's own src, which still holds the outgoing image while a swap is in flight — that
+   * is what let A -> B -> A settle on B, the swap to B finishing after the pointer was
+   * already back on A.
+   */
+  const preloads = new Map();
+
+  const preload = (src) => {
+    if (!preloads.has(src)) {
+      preloads.set(
+        src,
+        new Promise((resolve) => {
+          const loader = new Image();
+          // Resolves either way: a broken URL must not leave the image faded out for good.
+          loader.onload = resolve;
+          loader.onerror = resolve;
+          loader.src = src;
+        })
+      );
+    }
+
+    return preloads.get(src);
+  };
+
+  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  let swapToken = 0;
+  let intendedSrc = defaultSrc;
+
   const setImage = (src) => {
-    if (!image || !src || image.getAttribute('src') === src) {
+    if (!image || !src || src === intendedSrc) {
       return;
     }
 
-    image.classList.add('is-fading');
+    intendedSrc = src;
+    const token = ++swapToken;
 
-    setTimeout(() => {
-      image.setAttribute('src', src);
-      image.classList.remove('is-fading');
-    }, IMAGE_FADE_MS);
+    // Thrown to abort the chain below rather than checked at every step, which would have to
+    // thread a skip flag through all of them. Deliberately not async/await: one async
+    // function pulls 5.6KB of regenerator runtime into main.js, on every page of the site.
+    const abortIfSuperseded = () => {
+      if (token !== swapToken) {
+        throw SWAP_SUPERSEDED;
+      }
+    };
+
+    // Fetch before fading, so the outgoing image stays up while the new one downloads
+    // rather than the box going blank on a slow connection.
+    preload(src)
+      .then(abortIfSuperseded)
+      .then(() => {
+        image.classList.add('is-fading');
+        return wait(IMAGE_FADE_MS);
+      })
+      .then(abortIfSuperseded)
+      .then(() => {
+        image.src = src;
+
+        /*
+         * Decoding is the step the fade used to skip. Setting src does not repaint, so
+         * removing the fade in the same tick revealed the OUTGOING bitmap at full opacity
+         * until the new one was ready — the flash of the previous image. Waiting on decode()
+         * means the fade back in only starts once there is something correct to show.
+         */
+        return image.decode ? image.decode() : null;
+      })
+      .then(abortIfSuperseded)
+      .then(() => {
+        image.classList.remove('is-fading');
+      })
+      .catch((error) => {
+        /*
+         * Being superseded is the normal case and not a failure — the newer swap owns the
+         * element now and will clear the fade itself. Anything else (a decode that failed on
+         * a corrupt file) must still clear it, or the image would stay invisible.
+         */
+        if (error !== SWAP_SUPERSEDED) {
+          image.classList.remove('is-fading');
+        }
+      });
+  };
+
+  // Warmed on open rather than on first hover, so crossing a link the pointer has not
+  // visited yet costs no network round trip.
+  const preloadMenuImages = () => {
+    overlay.querySelectorAll('[data-menu-image]').forEach((link) => {
+      if (link.dataset.menuImage) {
+        preload(link.dataset.menuImage);
+      }
+    });
   };
 
   overlay.addEventListener('mouseover', (e) => {
@@ -195,6 +284,7 @@ export function initMenuOverlay() {
     document.body.classList.add('menu-open');
     syncHeaderHeight();
     syncImageHeight();
+    preloadMenuImages();
     revealTl.play();
   };
 

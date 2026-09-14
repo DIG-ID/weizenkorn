@@ -1,0 +1,42 @@
+// About Us — Organization page — template-parts/pages/about-us-organization/
+
+// -- "Jahresbericht - Rückblick mit Ausblick": the report-download buttons sit in a
+//    2-up grid (mobile: 1-up) inside a narrow xl:col-span-4 column. Below xl, kept as
+//    min-w-full + gap-4 — the grid cell (.jahresbericht__button, a plain wrapper — .btn
+//    itself is not the grid item here, so it isn't capped at the cell's own width) is
+//    the FLOOR, not the ceiling, so a long label like "Jahresbericht 2021" grows the
+//    button past its own cell instead of squeezing or overflowing through the icon
+//    (gap-4, not .btn's own gap-16, a small reserved minimum instead of the 64px that
+//    caused the overflow in the first place). Confirmed fine as-is at these two sizes.
+//
+//    Figma has these as a fixed 230px regardless of the cell's own width — same
+//    fixed-width pattern as _pages/_404.sass's .error-404__button (w-[Npx], gap-0, and
+//    relying on .btn's own base `justify-between` to still push the icon flush right
+//    inside that fixed box) — but only from 2xl up: the buttons column is narrower than
+//    Figma's own canvas between xl and 2xl (1280-1535px), where two fixed 230px buttons
+//    plus their gap no longer fit the xl:col-span-4 cell and start overlapping. Kept
+//    flexible (min-w-full) through that range instead, and only pinned to the exact
+//    230px once there is enough room for it (see the buttons' own grid-column override
+//    below, which shifts the whole cell one column left through that same range).
+.jahresbericht__button .btn
+  @apply min-w-full gap-4
+  @apply 2xl:w-[230px] 2xl:min-w-0 2xl:gap-0
+
+// The buttons' own cell (xl:col-start-3/col-span-4, set on the PHP template) widens by a
+// column and shifts left to match, col-start-2/col-span-5, between xl and 2xl
+// (1280-1535px) only — the extra column comes from the one the iframe's own inset
+// leaves empty on that row. Above 2xl the template's own xl:col-start-3/col-span-4
+// (unbounded, so still active) takes back over unchanged.
+//
+// Qualified with .jahresbericht, not bare .jahresbericht__buttons: Tailwind moves every
+// responsive (breakpoint-prefixed) utility — including the template's own xl:col-start-3
+// and xl:col-span-4 — to the very end of the compiled stylesheet, after this file, so a
+// single-class selector here would tie on specificity with those and lose on source
+// order despite appearing to override them. Two classes here, one there, settles it
+// without relying on import order (same reasoning as _modules/_cta-form.sass's own
+// .cta-form .section-heading__intro override). Raw grid-column, not col-start-*/
+// col-span-* utilities: the span utility compiles to the shorthand, which would reset
+// the start.
+.jahresbericht .jahresbericht__buttons
+  @media (min-width: 1280px) and (max-width: 1535px)
+    grid-column: 2 / span 5

@@ -22,7 +22,7 @@ body.menu-open
 //
 // visibility and clip-path start closed as the no-JS fallback; GSAP drives the rest.
 .menu-overlay
-  @apply fixed inset-0 z-40 bg-white invisible
+  @apply fixed inset-0 z-40 bg-brand-cream invisible
   @apply flex flex-col
   padding-top: var(--header-height)
   clip-path: inset(0% 0% 100% 0%)
@@ -121,10 +121,58 @@ body.menu-open
   .menu-overlay__grid
     @apply items-start content-start
 
+  // Figma's own mobile order interleaves items from different WP menu locations
+  // (confirmed against wp-admin, Appearance → Menus — mega-menu-1: Produkte, Ausbildung
+  // & Arbeiten; mega-menu-2: Diensleitungen, Über uns; mega-menu-3: Gastronomie &
+  // Hotellerie, News+Kontakt), which a plain CSS order on the three <nav> blocks
+  // themselves can't produce — two items from the SAME menu need to land in
+  // non-adjacent final spots. Flattening nav + its own top-level <ul> to
+  // display:contents (mobile only here; xl already does the same thing below, for the
+  // same reason, to line group headings up across all three desktop columns) promotes
+  // every top-level <li> to a direct .menu-overlay__grid item instead, so each one can
+  // get its own explicit order independent of which menu it lives in. Desktop's own
+  // xl:col-start-N further down is untouched, so the desktop columns stay exactly as
+  // assigned by those same three menu locations.
+  .menu-overlay__col,
+  .menu-overlay__col > ul
+    @apply contents
+
+  .menu-overlay__col > ul > li
+    @apply col-span-2
+
+  // order-7 upward, not order-1: order-5 alone collides with an unrelated hand-written
+  // selector — .section-gastronomy__cards .card-venue.order-5 in _pages/_home.sass,
+  // which matches an actual order-5 CLASS on an element rather than @apply-ing the
+  // utility — and Tailwind's build mis-merges the two into one broken, inert rule
+  // (harmless — it ends up under an impossible combined media condition — but noisy).
+  // 7-12 stay clear of every other .order-N used as a literal class anywhere else.
+  .menu-overlay__col--1 > ul > li
+    &:nth-of-type(1)
+      @apply order-7
+    &:nth-of-type(2)
+      @apply order-10
+
+  .menu-overlay__col--2 > ul > li
+    &:nth-of-type(1)
+      @apply order-8
+    &:nth-of-type(2)
+      @apply order-11
+
+  .menu-overlay__col--3 > ul > li
+    &:nth-of-type(1)
+      @apply order-9
+    &:nth-of-type(2)
+      @apply order-12
+
   // A flat group skips the shared border — it gets two independent boxes instead, since
   // parent and child read as two equally-weighted items rather than one divided box.
+  //
+  // mb-0, not a margin of its own: every <li> is now a direct item of .menu-overlay__grid
+  // (the flattening above), so its own gap-y-5 spaces all seven uniformly regardless of
+  // which of the three original menus each one came from — an own margin here would
+  // double up with that gap unevenly, wider wherever a menu's own boundary used to fall.
   .menu-overlay__col > ul > li
-    @apply mb-4
+    @apply mb-0
 
     &:not(.menu-overlay__group--flat)
       @apply border border-brand-red

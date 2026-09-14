@@ -41,7 +41,7 @@ $gastro_card_order = array(
 	5 => 'order-1',
 );
 ?>
-<section class="section-gastronomy mb-24 md:mb-32 xl:mb-48">
+<section id="section-gastronomy" class="section-gastronomy mb-24 md:mb-32 xl:mb-48">
 	<div class="theme-container">
 		<?php if ( have_rows( 'gastronomy' ) ) : ?>
 			<?php

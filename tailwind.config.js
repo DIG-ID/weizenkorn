@@ -13,6 +13,21 @@ module.exports = {
     './page-templates/**/*.php',
     './template-parts/**/*.php',
   ],
+  // Tailwind only scans the files listed above — never content stored in the database.
+  // These are typed by editors into ACF fields that allow markup — a title's <br>, which
+  // carries a class saying at which widths it should break the line:
+  //
+  //   <br class="xl:hidden">                  tablet and mobile
+  //   <br class="hidden md:inline xl:hidden"> tablet only
+  //   <br class="md:hidden">                  mobile only
+  //
+  // so they must be generated whether or not a theme file happens to use them.
+  safelist: [
+    'hidden',
+    'md:hidden',
+    'md:inline',
+    'xl:hidden',
+  ],
   theme: {
     fontFamily: {
       primary: ['DM Sans', 'sans-serif'],

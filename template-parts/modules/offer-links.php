@@ -6,10 +6,14 @@
  * section-heading's own right-description uses.
  *
  * Not a fit for that component: its buttons_prmary slot is one button with
- * no label of its own, not a repeater of labelled links. Shared by For
- * Social Offices & Partners' "Angebote im Überblick" (two links) and the
- * Open Positions archive's "Weizenkorn mitgestalten" (one link) — both the
- * same shape, confirmed against Figma.
+ * no label of its own, not a repeater of labelled links. Shared by About
+ * Us' "Spenden" (one link) and the Open Positions archive's "Weizenkorn
+ * mitgestalten" (one link) — both the same shape, confirmed against Figma.
+ * For Social Offices & Partners' own "Angebote im Überblick" used to be a
+ * third caller here too, until its desktop text column turned out to sit
+ * narrower (the grid's own last 4 columns, not 5) than every other user of
+ * this module — see its own page-specific fork,
+ * template-parts/pages/work-training-for-social-offices-and-partners/offer-links.php.
  *
  * .theme-grid sets gap-x only, so the two columns touch where they stack — the paragraph
  * carries the 16 the frame puts between it and the button, dropped again from tablet up

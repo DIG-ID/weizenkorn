@@ -2,15 +2,15 @@
 /**
  * Template Name: Organization Template
  *
- * Organization page (Figma "Organization_desktop"): shared hero-section
- * module, a page-specific fork of intro-cta ("Warum Weizenkorn?" — an
- * optional iframe embed in the left column beside the text; see
- * template-parts/pages/about-us-organization/intro-cta.php's own docblock
- * for why this one isn't the shared module), the shared button-text module
- * ("Organigramm" — a "PDF herunterladen" button beside a paragraph), "Das
- * Weizenkorn Team" (a filterable grid built from a plain ACF repeater, not
- * a post type — see team.php's own docblock), and the shared cta-form
- * module ("Kommen wir ins Gespräch?").
+ * Organization page (Figma "Organization_desktop"): shared hero-section module, the
+ * shared intro-cta module ("Warum Weizenkorn?", prefix 'organization_why_' — text only
+ * since 1.16.2, the iframe it used to carry having moved to the new "Jahresbericht"
+ * section below it), that new page-specific "Jahresbericht - Rückblick mit Ausblick"
+ * section (the iframe embed plus a repeater of report-download buttons — see
+ * jahresbericht.php's own docblock), the shared button-text module ("Organigramm" — a
+ * "PDF herunterladen" button beside a paragraph), "Das Weizenkorn Team" (a filterable
+ * grid built from a plain ACF repeater, not a post type — see team.php's own docblock),
+ * and the shared cta-form module ("Kommen wir ins Gespräch?").
  *
  * "Transparency" (also button-text, prefix 'organization_transparency_' —
  * a "Mehr erfahren" button, same shape as Organigramm) is commented out
@@ -44,7 +44,8 @@ if ( have_posts() ) :
 		do_action( 'before_main_content' );
 
 		get_template_part( 'template-parts/modules/hero-section' );
-		get_template_part( 'template-parts/pages/about-us-organization/intro-cta' );
+		get_template_part( 'template-parts/modules/intro-cta', null, array( 'prefix' => 'organization_why_' ) );
+		get_template_part( 'template-parts/pages/about-us-organization/jahresbericht' );
 		get_template_part( 'template-parts/modules/button-text', null, array( 'prefix' => 'organigramm_' ) );
 		get_template_part( 'template-parts/pages/about-us-organization/team' );
 		// Transparency is temporarily hidden — client's own request, no date to restore it yet.

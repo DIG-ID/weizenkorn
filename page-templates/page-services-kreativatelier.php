@@ -8,7 +8,7 @@
  * SECTIONS, in order:
  *
  *   1. hero-section    shared module
- *   2. offer-grid      module, new to this page — "Gestalten mit Kopf, Herz und Hand"
+ *   2. offer-grid      module — "Gestalten mit Kopf, Herz und Hand"
  *   3. usp-band        shared module
  *   4. process-steps   module, new to this page — "So entsteht Mehrwert"
  *   5. quote-slider    shared module

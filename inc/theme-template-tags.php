@@ -255,6 +255,18 @@ function weizenkorn_get_post_term_names( $post_id, $taxonomy, $glue = ', ' ) {
  * filter/"Mehr Laden" endpoint (inc/rest-job-filters.php), so both render
  * identical markup for the same posts.
  *
+ * Each card's own wrapper carries its grid placement: .job-listing__grid
+ * stays a single 6-column grid from md up (theme-grid's own tablet column
+ * count, since it lives inside a plain grid-cols-6 rather than that shared
+ * class — see job-listing.php's own docblock for why) — md:col-span-3 (two
+ * cards per row) up to lg:col-span-2 (three), which then carries through
+ * xl and up unchanged, so desktop keeps its existing three-across layout
+ * without a separate grid-cols-3 declaration. xl:w-[440px] is neutralised
+ * for the archive's own grid in _archives/_offene-stellen.sass; the single
+ * post's own related-jobs slider (template-parts/single/offene-stellen/related-jobs.php)
+ * calls card-job.php directly instead of this helper, so its fixed width —
+ * and the col-span classes here, inert outside a grid — never reach it.
+ *
  * @since 1.11.0
  *
  * @param WP_Query $query An offene-stellen WP_Query, not yet iterated.
@@ -270,7 +282,7 @@ function weizenkorn_render_job_cards( WP_Query $query ) {
 	while ( $query->have_posts() ) {
 		$query->the_post();
 		?>
-		<div class="xl:w-[440px]">
+		<div class="md:col-span-3 lg:col-span-2 xl:w-[440px]">
 			<?php
 			get_template_part(
 				'template-parts/components/card-job',

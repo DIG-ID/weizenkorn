@@ -69,7 +69,6 @@ if ( have_posts() ) :
 			null,
 			array( 'prefix' => 'origin_' )
 		);
-
 		get_template_part( 'template-parts/modules/video-panel' );
 
 		get_template_part(
@@ -78,6 +77,7 @@ if ( have_posts() ) :
 			array( 'variant' => 'pair' )
 		);
 		get_template_part( 'template-parts/modules/quote-slider' );
+
 		get_template_part(
 			'template-parts/modules/button-text',
 			null,

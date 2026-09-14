@@ -6,7 +6,9 @@
  * $args keys match the ACF group's field names verbatim, typos included:
  *   title_heading      string  h1..h6 (heading tag; default h2)
  *   subtitle           string  eyebrow / overline
- *   title              string  main title (may contain <br>; new_lines = br)
+ *   title              string  main title (may contain <br>; new_lines = br). A <br>
+ *                              may carry a class to break only at some widths — see
+ *                              the note at the wp_kses() call below.
  *   description        string  'left' | 'right' | 'both' — which description field shows.
  *                              Each renders in the column its name says.
  *   desciption_left    string  wysiwyg — left column   [sic]
@@ -14,10 +16,14 @@
  *   buttons            array   { prmary: link, secondary: link }  [sic]
  *   image              int     optional heading image (attachment ID)
  *
- * One key is the caller's own and not the group's:
+ * Two keys are the caller's own and not the group's:
  *   title_style        string  'overline' typesets the title as the eyebrow instead of the
  *                              display heading — the gastronomy venues' photo mosaic,
  *                              which has no display title at all.
+ *   hide_secondary     bool    drops the secondary button while its link stays filled, for
+ *                              a CTA that comes and goes without the editor having to empty
+ *                              and retype it. Only the Home products section passes it; a
+ *                              caller that does not is unaffected.
  *
  * Usage:
  *   $st = get_field( 'products_section_title' );
@@ -59,8 +65,15 @@ $st_intro_span = ( $show_left && $st_left )
 	? 'md:col-span-6 xl:col-start-2 xl:col-span-5'
 	: 'md:col-span-2 xl:col-start-2 xl:col-span-4';
 
-$btn_primary   = ! empty( $st_buttons['prmary'] ) ? $st_buttons['prmary'] : null;
-$btn_secondary = ! empty( $st_buttons['secondary'] ) ? $st_buttons['secondary'] : null;
+$btn_primary = ! empty( $st_buttons['prmary'] ) ? $st_buttons['prmary'] : null;
+// Nulled here rather than checked at the render, so the row wrapper and the has-row test
+// below both see the button as absent — a heading whose only button is a hidden one keeps
+// no empty button row.
+$st_hide_secondary = ! empty( $args['hide_secondary'] );
+
+$btn_secondary = ( ! empty( $st_buttons['secondary'] ) && ! $st_hide_secondary )
+	? $st_buttons['secondary']
+	: null;
 
 // Only render the intro/description row when there is something to show, so the
 // component can be reused for a title-only heading (title + rule) — e.g. the
@@ -81,10 +94,15 @@ if ( ! $st_title && ! $st_subtitle && ! $st_left && ! $st_right && ! $st_image )
 			<div class="theme-grid">
 				<<?php echo esc_html( $st_tag ); ?> class="<?php echo esc_attr( $st_title_class ); ?> section-heading__title col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-11">
 					<?php
+					// class on <br> so a title can break at some widths and not others:
+					// hidden md:inline xl:hidden breaks on tablet alone, xl:hidden on
+					// tablet and mobile, md:hidden on mobile alone. A bare <br> breaks at
+					// every width. The utilities are safelisted in tailwind.config.js —
+					// Tailwind never scans the database.
 					echo wp_kses(
 						$st_title,
 						array(
-							'br'     => array(),
+							'br'     => array( 'class' => array() ),
 							'strong' => array(),
 							'em'     => array(),
 						)
@@ -149,7 +167,7 @@ if ( ! $st_title && ! $st_subtitle && ! $st_left && ! $st_right && ! $st_image )
 
 			<?php if ( $show_right && $st_right ) : ?>
 				<div class="section-heading__desc col-span-2 md:col-start-4 md:col-span-3 xl:col-start-7 xl:col-span-5">
-					<div class="body-text section-heading__desc-text xl:max-w-[500px]"><?php echo wp_kses_post( $st_right ); ?></div>
+					<div class="body-text section-heading__desc-text"><?php echo wp_kses_post( $st_right ); ?></div>
 				</div>
 			<?php endif; ?>
 

@@ -153,3 +153,6 @@ acf-exports/
 *.zip
 # macOS folder metadata
 .DS_Store
+
+# Source maps (build artefacts)
+dist/**/*.map

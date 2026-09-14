@@ -76,7 +76,7 @@ $dl_has_items = have_rows( 'social_offices_downloads_items' );
 			}
 			?>
 			<div class="theme-grid mt-8 md:mt-14 xl:mt-16">
-				<div class="body-text col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-10"><?php echo esc_html( $dl_empty_message ); ?></div>
+				<div class="body-text col-span-2 md:col-start-4 md:col-span-3 xl:col-start-7 xl:col-span-4"><?php echo esc_html( $dl_empty_message ); ?></div>
 			</div>
 		<?php endif; ?>
 	</div>

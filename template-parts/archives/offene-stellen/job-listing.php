@@ -3,8 +3,8 @@
  * Open Positions archive — "Aktuell offene Stellen" section (Figma desktop
  * node 2629:3105, filter panel node 4129:5548). Title, a results count with
  * the filter trigger beside it, a grid of the first 9 published
- * offene-stellen posts — three across at desktop, two at tablet, one at
- * mobile — and a "Mehr Laden" button.
+ * offene-stellen posts — three across from lg up, two between md and lg,
+ * one at mobile — and a "Mehr Laden" button.
  *
  * This is deliberately just the SSR first page: filtering and "Mehr Laden"
  * are the same query (see inc/rest-job-filters.php's own docblock), both
@@ -52,7 +52,7 @@ if ( ! $jl_query->have_posts() ) {
 		<?php get_template_part( 'template-parts/components/section-heading', null, array( 'title' => __( 'Aktuell offene Stellen', 'weizenkorn' ) ) ); ?>
 
 		<div class="theme-grid mt-8 xl:mt-12">
-			<div class="job-listing__bar col-span-2 xl:col-start-2 xl:col-span-10 flex items-center justify-between">
+			<div class="job-listing__bar col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-10 flex items-center justify-between">
 				<p class="job-listing__count js-job-listing-count body-text text-brand-dark">
 					<?php
 					printf(
@@ -70,22 +70,31 @@ if ( ! $jl_query->have_posts() ) {
 		/*
 		 * Deliberately against Figma (client request): the frame's own cards stay a
 		 * fixed 440px, flush left with empty space to the right of the third one at
-		 * desktop — here they instead stretch to fill the full 10-column inset, three
-		 * equal columns with no leftover gap. xl:grid-cols-3 replaces the flex-wrap
-		 * layout that used to size each card to its own fixed width; the fixed width
-		 * itself (weizenkorn_render_job_cards()'s xl:w-[440px] wrapper, shared with the
-		 * single post's own related-jobs slider, which keeps it) is neutralised for
-		 * this grid only in _archives/_offene-stellen.sass.
+		 * desktop — here they instead stretch to fill the full row, no leftover gap.
+		 * The fixed width itself (weizenkorn_render_job_cards()'s xl:w-[440px]
+		 * wrapper, shared with the single post's own related-jobs slider, which keeps
+		 * it) is neutralised for this grid only in _archives/_offene-stellen.sass.
+		 *
+		 * One 6-column grid from md up, not a dedicated 2- or 3-column one that
+		 * switches at each breakpoint: every card (weizenkorn_render_job_cards()'s own
+		 * wrapper) carries md:col-span-3 (two per row) and lg:col-span-2 (three) right
+		 * there instead, and that lg span simply carries through xl and up unchanged —
+		 * three equal columns either way, CSS Grid's own fr-unit + gap math makes a
+		 * span-2 item on 6 columns exactly as wide as a dedicated 3-column grid's own
+		 * track. Two columns that narrow, at only md's own six, was clipping the
+		 * category banner's label + arrow — three narrower-but-fitting ones start a
+		 * step earlier instead, at lg.
 		 *
 		 * The nested .job-listing__grid below stays one level inside a plain theme-grid
 		 * (used only to position it in the 10-column inset) rather than sharing a single
 		 * element with theme-grid itself — theme-grid and a grid utility on the very
-		 * same element fight at equal specificity and the utility loses.
+		 * same element fight at equal specificity and the utility loses. Its own
+		 * grid-cols-6 is a plain utility for the same reason, not theme-grid's own class.
 		 */
 		?>
 		<div class="theme-grid mt-8 xl:mt-12">
 			<div
-				class="job-listing__grid js-job-listing-grid col-span-2 xl:col-start-2 xl:col-span-10 flex flex-col gap-y-8 md:grid md:grid-cols-2 md:gap-x-5 md:gap-y-8 xl:grid xl:grid-cols-3 xl:gap-x-5 xl:gap-y-8"
+				class="job-listing__grid js-job-listing-grid col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-10 flex flex-col gap-y-8 md:grid md:grid-cols-6 md:gap-x-5 md:gap-y-8"
 				data-page="1"
 				data-max-pages="<?php echo esc_attr( $jl_query->max_num_pages ); ?>"
 			>

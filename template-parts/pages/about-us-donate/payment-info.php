@@ -45,9 +45,9 @@ $pi_has_methods  = have_rows( 'donate_payment_methods' );
 		<?php get_template_part( 'template-parts/components/section-heading', null, array( 'title' => $pi_title ) ); ?>
 
 		<?php if ( $pi_has_methods || $pi_bank_details || $pi_tax_note ) : ?>
-			<div class="theme-grid mt-8 xl:mt-12">
+			<div class="theme-grid mt-8">
 				<?php if ( $pi_has_methods ) : ?>
-					<div class="payment-info__methods col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-5 flex flex-col md:flex-row gap-8 md:gap-6">
+					<div class="payment-info__methods col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-3 flex flex-col md:flex-row gap-8 md:gap-6">
 						<?php
 						while ( have_rows( 'donate_payment_methods' ) ) :
 							the_row();
@@ -58,7 +58,7 @@ $pi_has_methods  = have_rows( 'donate_payment_methods' );
 								continue;
 							}
 							?>
-							<div class="payment-info__method flex flex-col items-center text-center gap-4">
+							<div class="payment-info__method flex flex-col items-center xl:flex-row xl:items-start gap-4 mb-4">
 								<?php
 								echo wp_get_attachment_image(
 									$pi_qr,
@@ -68,7 +68,7 @@ $pi_has_methods  = have_rows( 'donate_payment_methods' );
 								);
 								?>
 								<?php if ( get_sub_field( 'label' ) ) : ?>
-									<span class="body-text text-brand-dark"><?php echo esc_html( get_sub_field( 'label' ) ); ?></span>
+									<span class="body-text text-brand-dark !font-bold uppercase"><?php echo esc_html( get_sub_field( 'label' ) ); ?></span>
 								<?php endif; ?>
 							</div>
 							<?php

@@ -14,6 +14,20 @@
     grid-column: 1 / span 2
     grid-row: 1
 
+    // Equal-height cards, all 3 matching the tallest: card-donation-project.php already
+    // carries h-full to fill whatever height its slide ends up with. items-stretch alone
+    // was not enough: Swiper's own core CSS gives .swiper-slide height: 100%, and align-
+    // items: stretch only stretches a flex item whose OWN cross-size computes to auto —
+    // a percentage still counts as "set" even though .swiper (its containing block) has
+    // no definite height for it to resolve against, so it silently blocks the stretch.
+    // Overriding it back to auto (autoHeight stays off, or every slide would instead size
+    // to ITS OWN content) is what lets stretch actually apply.
+    .swiper-wrapper
+      @apply items-stretch
+
+    .swiper-slide
+      @apply h-auto
+
     // Full width at tablet — the arrows are hidden below xl (dots show instead, in
     // their own row below), so there's no side column to leave room for here.
     @media (min-width: 768px)
@@ -50,8 +64,15 @@
   &__nav--next
     grid-column: 12
 
+  // flex-nowrap + overflow-x-auto, not wrap: this list is a repeater count, not a fixed
+  // one, and unlike _pages/_supported-jobs.sass's own __pagination (confirmed
+  // overflowing at a known item count) there's no confirmed break here yet — scrolling
+  // is a quiet fallback if the count ever runs past the row's own width, without
+  // changing today's centred look for the common case that still fits. shrink-0 below
+  // is what actually matters either way: without it the bullets would squeeze down to
+  // slivers instead of scrolling once they no longer fit.
   &__pagination
-    @apply xl:hidden static flex items-center justify-center gap-[26px] md:gap-[30px]
+    @apply xl:hidden static flex flex-nowrap items-center justify-center overflow-x-auto gap-[26px] md:gap-[30px]
     grid-column: 1 / span 2
     grid-row: 2
 
@@ -60,8 +81,17 @@
     @media (min-width: 768px)
       grid-column: 1 / span 6
 
+    // The bullets already show scroll position via Swiper's own active-bullet paint; a
+    // visible native scrollbar under a row of 15px dots would read as a stray UI
+    // element rather than a real control.
+    scrollbar-width: none
+    -ms-overflow-style: none
+
+    &::-webkit-scrollbar
+      display: none
+
     .swiper-pagination-bullet
-      @apply w-[15px] h-[15px] m-0 rounded-full border border-brand-red bg-transparent opacity-100 transition-colors duration-300
+      @apply w-[15px] h-[15px] shrink-0 m-0 rounded-full border border-brand-red bg-transparent opacity-100 transition-colors duration-300
 
     .swiper-pagination-bullet-active
       @apply bg-brand-red

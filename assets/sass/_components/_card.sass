@@ -147,9 +147,13 @@
 
   // Same 0fr → 1fr trick as .card-service's own &__reveal — see that block's own comment
   // for why grid-template-rows over a guessed max-height, and why the bare child <div>
-  // (padding/margin the collapsed row can't zero, only the content it wraps can).
+  // (padding/margin the collapsed row can't zero, only the content it wraps can). The
+  // top spacing lives on &__text below, NOT here: a margin on &__reveal itself sits
+  // outside the overflow-hidden wrapper, so the collapsed row could never zero it out —
+  // it kept the closed panel visibly taller than the head alone. Same fix as .card-service,
+  // whose own &__reveal carries no margin of its own either.
   &__reveal
-    @apply grid overflow-hidden mt-4
+    @apply grid overflow-hidden
     grid-template-rows: 0fr
     transition: grid-template-rows var(--transition-slow)
 
@@ -157,7 +161,7 @@
       @apply overflow-hidden
 
   &__text
-    @apply body-text text-brand-dark
+    @apply body-text text-brand-dark mt-4
 
   &__more
     @apply link-inline inline-flex items-center gap-2 mt-4

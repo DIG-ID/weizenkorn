@@ -42,3 +42,33 @@
 
     p
       @apply mb-5 last:mb-0
+
+  // The info window's close button. Google gives no option to omit it, so it goes here — the
+  // label opens on load and nothing would reopen it, so a visitor who dismissed one would
+  // have no way to get the venue's name back.
+  //
+  // Two selectors because the button moved: older Maps put it loose in the window as
+  // .gm-ui-hover-effect, newer ones wrap it in a header row, .gm-style-iw-chr, whose only
+  // content it is. !important because Google styles these inline, which a class cannot beat.
+  //
+  // Coupled to their internal class names either way — the cost of using their window rather
+  // than drawing an overlay of our own. If the close buttons ever come back, this is why.
+  .gm-style-iw .gm-ui-hover-effect,
+  .gm-style-iw-chr
+    display: none !important
+
+  // Even padding around the label. Hiding the header row above took the top spacing with it,
+  // so Google's own padding left the text against the top edge and loose at the bottom.
+  //
+  // The inner wrapper gives up its scroll box as well: it carries a max-height and overflow
+  // auto for long content, which on a one-line label only risks a scrollbar appearing over
+  // the text. The same 10px at every width — these bubbles are not in the design, so there
+  // is no per-breakpoint value to match, and one line of type needs no more room on a phone.
+  .gm-style-iw-c
+    padding: 10px !important
+
+  .gm-style-iw-d
+    max-height: none !important
+    overflow: hidden !important
+    padding: 0 !important
+
