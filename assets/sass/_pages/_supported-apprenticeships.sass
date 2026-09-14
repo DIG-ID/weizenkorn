@@ -24,6 +24,26 @@
     @apply absolute inset-x-0 bottom-0 z-10
     @apply px-5 py-4 md:px-6 md:py-5 xl:px-8 xl:py-6
 
+  // Title + toggle button, side by side — same shape as .card-preview__head
+  // in _components/_card.sass. Only present on a card that has $text (see
+  // the template); a title-only caption keeps its bare <h3>, no head row.
+  &__head
+    @apply flex items-center justify-between gap-4
+
+  // m-0: title-card carries no margin reset of its own, and the default
+  // <h3> margin would misalign it against the toggle button next to it.
+  &__title
+    @apply m-0
+
+  // Same red +/− as .card-preview__toggle (_components/_card.sass) — only
+  // exists below xl, that breakpoint still opens on hover/focus-within.
+  &__toggle
+    @apply shrink-0 text-brand-red
+
+    .icon-toggle__vertical
+      transition: transform var(--transition-slow), opacity var(--transition-slow)
+      transform-origin: center
+
   // Animating to a height the content decides: a grid track goes from 0fr to
   // 1fr, which transitions where height: auto cannot. The inner element is
   // what actually gets clipped, so it needs the overflow rather than this
@@ -36,18 +56,25 @@
   &__text-inner
     @apply overflow-hidden
 
-  // A hover state is unreachable by touch, so the text is only hidden
-  // behind one where there is a pointer to hover with. Everywhere else the
-  // caption simply shows it.
-  @media (hover: hover)
-    &__media:hover .card-program__text
+  // Desktop: hover or keyboard focus over the photo opens it, same as
+  // .card-preview's own xl reveal.
+  @media (min-width: 1280px)
+    &__media:hover .card-program__text,
+    &__media:focus-within .card-program__text
       @apply mt-2
       grid-template-rows: 1fr
 
-  @media (hover: none)
+  // Below xl: no reliable hover, so assets/js/card-program.js toggles this
+  // class instead (and the toggle button's own aria-expanded) — see
+  // programs.php's own docblock.
+  &.is-open
     .card-program__text
       @apply mt-2
       grid-template-rows: 1fr
+
+    .icon-toggle__vertical
+      @apply opacity-0
+      transform: rotate(90deg)
 
 // Contact person ("Bereit für Weizenkorn?") is now the shared
 // template-parts/modules/contact-person.php module — its own styles live

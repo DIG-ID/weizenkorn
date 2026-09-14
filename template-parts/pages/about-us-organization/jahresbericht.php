@@ -73,9 +73,9 @@ $oj_buttons = have_rows( 'organization_jahresbericht_buttons' );
 		<?php get_template_part( 'template-parts/components/section-heading', null, array( 'title' => $oj_title ) ); ?>
 
 		<?php if ( $oj_iframe || $oj_buttons || $oj_text ) : ?>
-			<div class="theme-grid gap-y-8">
+			<div class="theme-grid gap-y-4 md:gap-y-6 xl:gap-y-8">
 				<?php if ( $oj_iframe ) : ?>
-					<div class="jahresbericht__iframe col-span-2 md:col-span-6 xl:col-start-3 xl:col-span-8 mb-16">
+					<div class="jahresbericht__iframe col-span-2 md:col-span-6 xl:col-start-3 xl:col-span-8 mb-0 xl:mb-16">
 						<?php
 						/*
 						 * Same reasoning as the old "Warum Weizenkorn?" embed this replaced: the URL
