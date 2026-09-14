@@ -117,11 +117,14 @@
     @apply font-primary font-medium uppercase tracking-[0.5px] text-[14px] leading-[normal]
     @apply text-brand-red
 
+  // 24x19, the sideways arrow's own proportions — it is the one this link uses, pointing at
+  // a product page. The downloads variant overrides both numbers below, where the icon is
+  // the download arrow instead and is taller than it is wide.
   &__link-icon
     @apply shrink-0
 
     svg
-      @apply w-4 h-[19px]
+      @apply w-6 h-[19px]
 
   // The panel still opens, it just does not animate.
   @media (prefers-reduced-motion: reduce)

@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 ### Changed
 - Hero separator logos are sized the same way on every page, the home page included, and take their own size at desktop.
 - Bakery download cards no longer turn red on hover — they open the same way the product ranges do.
+- Product range cards: the "zum Produkt" link shows a sideways arrow instead of a download one — it opens a page, not a file. The bakery's download cards keep the download arrow.
 - Donate page: at desktop the payment details now sit as close to the section heading as they already did at narrower widths.
 - Organization page: the Jahresbericht report-download buttons match their Figma size at desktop instead of stretching to fill their column, with a wider column in between so they never overlap.
 - Organization page: tighter, more consistent spacing around the Jahresbericht iframe on tablet and mobile.
