@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - The diversity slider advances on its own every five seconds.
 - Supported Apprenticeships: the "Unsere Ausbildung" programme cards get a tap-to-expand +/- toggle on tablet and mobile, matching the preview cards used elsewhere on the site, instead of always showing their description.
 - Page heroes take an optional separate image for mobile, so a photo framed for the wide desktop banner can be swapped for one composed for the short mobile one. Pages that leave it empty are unchanged.
-- Page hero titles can break a line at some screen sizes and not others: a `<br class="xl:hidden">` in the title field breaks it on tablet and mobile and closes it up on desktop (`md:hidden` breaks it on mobile only). A plain `<br>` still breaks the line at every size.
+- Titles can break a line at some screen sizes and not others. A `<br>` in a page hero title or a section heading takes a class saying where it applies: `xl:hidden` breaks on tablet and mobile, `hidden md:inline xl:hidden` on tablet only, `md:hidden` on mobile only. A plain `<br>` still breaks the line at every size.
 
 ### Changed
 - Page heroes: the bordered intro box takes a tighter padding on narrow tablets, so a long title such as "Perspektiven schaffen" no longer breaks in the middle of a word. From 1024px up it keeps the padding it had.

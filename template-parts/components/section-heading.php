@@ -6,7 +6,9 @@
  * $args keys match the ACF group's field names verbatim, typos included:
  *   title_heading      string  h1..h6 (heading tag; default h2)
  *   subtitle           string  eyebrow / overline
- *   title              string  main title (may contain <br>; new_lines = br)
+ *   title              string  main title (may contain <br>; new_lines = br). A <br>
+ *                              may carry a class to break only at some widths — see
+ *                              the note at the wp_kses() call below.
  *   description        string  'left' | 'right' | 'both' — which description field shows.
  *                              Each renders in the column its name says.
  *   desciption_left    string  wysiwyg — left column   [sic]
@@ -92,10 +94,15 @@ if ( ! $st_title && ! $st_subtitle && ! $st_left && ! $st_right && ! $st_image )
 			<div class="theme-grid">
 				<<?php echo esc_html( $st_tag ); ?> class="<?php echo esc_attr( $st_title_class ); ?> section-heading__title col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-11">
 					<?php
+					// class on <br> so a title can break at some widths and not others:
+					// hidden md:inline xl:hidden breaks on tablet alone, xl:hidden on
+					// tablet and mobile, md:hidden on mobile alone. A bare <br> breaks at
+					// every width. The utilities are safelisted in tailwind.config.js —
+					// Tailwind never scans the database.
 					echo wp_kses(
 						$st_title,
 						array(
-							'br'     => array(),
+							'br'     => array( 'class' => array() ),
 							'strong' => array(),
 							'em'     => array(),
 						)
