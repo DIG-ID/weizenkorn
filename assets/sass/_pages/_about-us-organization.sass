@@ -1,20 +1,42 @@
 // About Us — Organization page — template-parts/pages/about-us-organization/
 
 // -- "Jahresbericht - Rückblick mit Ausblick": the report-download buttons sit in a
-//    2-up grid inside a narrow xl:col-span-4 column, so at some widths (a long label
-//    like "Jahresbericht 2021" in a ~240px cell) .btn's own gap-16 — a fixed 64px
-//    minimum between label and icon, fine everywhere else since those buttons are
-//    sized to their own content — left no room for the label and pushed the icon past
-//    the button's own edge instead of the two ever sitting flush.
+//    2-up grid (mobile: 1-up) inside a narrow xl:col-span-4 column. Below xl, kept as
+//    min-w-full + gap-4 — the grid cell (.jahresbericht__button, a plain wrapper — .btn
+//    itself is not the grid item here, so it isn't capped at the cell's own width) is
+//    the FLOOR, not the ceiling, so a long label like "Jahresbericht 2021" grows the
+//    button past its own cell instead of squeezing or overflowing through the icon
+//    (gap-4, not .btn's own gap-16, a small reserved minimum instead of the 64px that
+//    caused the overflow in the first place). Confirmed fine as-is at these two sizes.
 //
-//    min-w-full instead of the grid's own default stretch, same pattern as
-//    _modules/_booking.sass's own .booking__action .btn (and the same reasoning): the
-//    grid cell (.jahresbericht__button, a plain wrapper — .btn itself is not the grid
-//    item here, so it isn't capped at the cell's own width) is the FLOOR, not the
-//    ceiling. A button whose label is short fills the cell exactly, same as before;
-//    one whose label runs long grows past its own cell instead of squeezing or
-//    overflowing through the icon, since .btn is whitespace-nowrap and the text cannot
-//    give. gap-4 (not gap-16, and not gap-0) matches booking.php's own value — a small
-//    reserved minimum, not the 64px that caused this in the first place. -------------
+//    Figma has these as a fixed 230px regardless of the cell's own width — same
+//    fixed-width pattern as _pages/_404.sass's .error-404__button (w-[Npx], gap-0, and
+//    relying on .btn's own base `justify-between` to still push the icon flush right
+//    inside that fixed box) — but only from 2xl up: the buttons column is narrower than
+//    Figma's own canvas between xl and 2xl (1280-1535px), where two fixed 230px buttons
+//    plus their gap no longer fit the xl:col-span-4 cell and start overlapping. Kept
+//    flexible (min-w-full) through that range instead, and only pinned to the exact
+//    230px once there is enough room for it (see the buttons' own grid-column override
+//    below, which shifts the whole cell one column left through that same range).
 .jahresbericht__button .btn
   @apply min-w-full gap-4
+  @apply 2xl:w-[230px] 2xl:min-w-0 2xl:gap-0
+
+// The buttons' own cell (xl:col-start-3/col-span-4, set on the PHP template) widens by a
+// column and shifts left to match, col-start-2/col-span-5, between xl and 2xl
+// (1280-1535px) only — the extra column comes from the one the iframe's own inset
+// leaves empty on that row. Above 2xl the template's own xl:col-start-3/col-span-4
+// (unbounded, so still active) takes back over unchanged.
+//
+// Qualified with .jahresbericht, not bare .jahresbericht__buttons: Tailwind moves every
+// responsive (breakpoint-prefixed) utility — including the template's own xl:col-start-3
+// and xl:col-span-4 — to the very end of the compiled stylesheet, after this file, so a
+// single-class selector here would tie on specificity with those and lose on source
+// order despite appearing to override them. Two classes here, one there, settles it
+// without relying on import order (same reasoning as _modules/_cta-form.sass's own
+// .cta-form .section-heading__intro override). Raw grid-column, not col-start-*/
+// col-span-* utilities: the span utility compiles to the shorthand, which would reset
+// the start.
+.jahresbericht .jahresbericht__buttons
+  @media (min-width: 1280px) and (max-width: 1535px)
+    grid-column: 2 / span 5
