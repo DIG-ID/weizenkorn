@@ -144,7 +144,12 @@ $hero_image_atts = array(
 						get_field( $hero_prefix . 'hero_section_title', $hero_ctx )
 							? get_field( $hero_prefix . 'hero_section_title', $hero_ctx )
 							: ( is_post_type_archive() ? post_type_archive_title( '', false ) : get_the_title() ),
-						array( 'br' => array() )
+						// class on <br> so a title can break at some widths and not others:
+						// <br class="xl:hidden"> breaks at tablet and mobile and closes up at
+						// desktop. A bare <br> still breaks at every width, which is what the
+						// Rhyvage and Cantina e9 heroes use. Both utilities are safelisted in
+						// tailwind.config.js — Tailwind never scans the database.
+						array( 'br' => array( 'class' => array() ) )
 					);
 					?>
 				</<?php echo esc_html( $hero_title_tag ); ?>>
