@@ -38,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Footer newsletter: space above the sign-up confirmation/error message.
 - Mega menu: the item order on mobile now matches the design instead of the order the menu items happen to be in across the three admin menus that build it. Tablet and desktop are unchanged.
 - Work & Training's diversity slider: the pagination dots stay round and scroll instead of shrinking to fit when there are many of them on mobile, and the active dot scrolls into view as the slide changes.
+- Slider pagination: centring the active dot now scrolls only the row of dots, not the page. On the Work & Training diversity slider, which advances on its own, the page was being pulled down to the slider every few seconds while the reader was somewhere else entirely.
 - Slide pagination dots (Home's gastronomy and services sliders, stories & references, donation projects, related jobs, quote slider) no longer risk shrinking to slivers if their item count ever grows — the same fix already applied elsewhere on the site.
 - Main page titles (.title-main) are a little larger on mobile.
 

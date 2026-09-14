@@ -249,7 +249,19 @@ export function initEquipmentSlider() {
       const activeBullet = paginationEl.querySelector('.swiper-pagination-bullet-active');
 
       if (activeBullet) {
-        activeBullet.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        // scrollBy on the row itself, not scrollIntoView on the bullet: scrollIntoView walks
+        // every scrollable ancestor, the document included, so block:'nearest' drags the page
+        // down to the slider whenever the bullet is off-screen — which autoplay makes happen
+        // every few seconds while the reader is somewhere else entirely. Only the horizontal
+        // centring was ever wanted. Rects rather than offsetLeft: that needs a positioned
+        // ancestor, which the pagination row has no guarantee of.
+        const bulletRect = activeBullet.getBoundingClientRect();
+        const rowRect = paginationEl.getBoundingClientRect();
+
+        paginationEl.scrollBy({
+          left: bulletRect.left + bulletRect.width / 2 - (rowRect.left + rowRect.width / 2),
+          behavior: 'smooth',
+        });
       }
     };
 
@@ -301,7 +313,19 @@ export function initDiversitySlider() {
       const activeBullet = paginationEl.querySelector('.swiper-pagination-bullet-active');
 
       if (activeBullet) {
-        activeBullet.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        // scrollBy on the row itself, not scrollIntoView on the bullet: scrollIntoView walks
+        // every scrollable ancestor, the document included, so block:'nearest' drags the page
+        // down to the slider whenever the bullet is off-screen — which autoplay makes happen
+        // every few seconds while the reader is somewhere else entirely. Only the horizontal
+        // centring was ever wanted. Rects rather than offsetLeft: that needs a positioned
+        // ancestor, which the pagination row has no guarantee of.
+        const bulletRect = activeBullet.getBoundingClientRect();
+        const rowRect = paginationEl.getBoundingClientRect();
+
+        paginationEl.scrollBy({
+          left: bulletRect.left + bulletRect.width / 2 - (rowRect.left + rowRect.width / 2),
+          behavior: 'smooth',
+        });
       }
     };
 
@@ -348,7 +372,19 @@ export function initDiversityCardsSlider() {
       const activeBullet = paginationEl.querySelector('.swiper-pagination-bullet-active');
 
       if (activeBullet) {
-        activeBullet.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        // scrollBy on the row itself, not scrollIntoView on the bullet: scrollIntoView walks
+        // every scrollable ancestor, the document included, so block:'nearest' drags the page
+        // down to the slider whenever the bullet is off-screen — which autoplay makes happen
+        // every few seconds while the reader is somewhere else entirely. Only the horizontal
+        // centring was ever wanted. Rects rather than offsetLeft: that needs a positioned
+        // ancestor, which the pagination row has no guarantee of.
+        const bulletRect = activeBullet.getBoundingClientRect();
+        const rowRect = paginationEl.getBoundingClientRect();
+
+        paginationEl.scrollBy({
+          left: bulletRect.left + bulletRect.width / 2 - (rowRect.left + rowRect.width / 2),
+          behavior: 'smooth',
+        });
       }
     };
 
