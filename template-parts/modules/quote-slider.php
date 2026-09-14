@@ -3,12 +3,14 @@
  * Quote slider — one testimonial per slide: a red-bordered box with the quotation and its
  * attribution, and an optional image panel beside it.
  *
- * Heights are min-heights, so a longer quote grows the box rather than overflowing it —
- * and every slide matches the height of the tallest one (assets/js/swiper.js runs no
- * autoHeight; content-stretch below carries that height into the card itself, see
- * _modules/_quote-slider.sass), so swiping between a short quote and a long one never
- * resizes the slider. The image is per slide and optional; a slide without one keeps the
- * box at its designed width and centres it.
+ * Heights are min-heights, so a longer quote grows the box rather than overflowing it,
+ * and every slide matches the height of the tallest one — assets/js/swiper.js runs no
+ * autoHeight — so swiping between a short quote and a long one never resizes the
+ * slider. At mobile the box's own border reaches that same height too, not just the
+ * slide around it (see _modules/_quote-slider.sass for the chain that carries it down,
+ * and why an image slide needs its own grid-template-rows so the photo itself doesn't
+ * stretch). The image is per slide and optional; a slide without one keeps the box at
+ * its designed width and centres it.
  *
  * With a single quote there is nothing to navigate: Swiper is not initialised at all, so
  * the card cannot be swiped, and neither the bullets nor the arrows are rendered. The
@@ -73,7 +75,7 @@ $quote_is_slider = count( (array) get_field( $quote_prefix . 'quote_slider_items
 				?>
 				<div class="swiper-slide">
 					<div class="theme-container">
-						<div class="quote-slider__grid theme-grid content-stretch">
+						<div class="quote-slider__grid theme-grid content-stretch<?php echo $quote_has_image ? ' quote-slider__grid--has-image' : ''; ?>">
 
 							<?php
 							/*
