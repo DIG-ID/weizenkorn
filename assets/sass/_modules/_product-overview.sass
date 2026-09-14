@@ -91,8 +91,10 @@
     > *
       @apply overflow-hidden
 
+  // .is-open is what a tap sets where there is no hover — see assets/js/product-overview.js.
   &__card:hover &__reveal,
-  &__card:focus-visible &__reveal
+  &__card:focus-visible &__reveal,
+  &__card.is-open &__reveal
     grid-template-rows: 1fr
 
   // Title and copy are one block with no gap, which is also what keeps the panel's
