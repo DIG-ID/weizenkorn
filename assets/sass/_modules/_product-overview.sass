@@ -82,7 +82,7 @@
   //
   // :focus-visible and NOT :focus-within — the card is the anchor, so a plain click
   // leaves focus on it and :focus-within would hold the panel open with nothing to close
-  // it. None of this fires on a touch device, which has no hover.
+  // it. Neither fires on a touch device, which is what .is-open below is for.
   &__reveal
     @apply grid overflow-hidden
     grid-template-rows: 0fr
@@ -91,7 +91,10 @@
     > *
       @apply overflow-hidden
 
-  // .is-open is what a tap sets where there is no hover — see assets/js/product-overview.js.
+  // .is-open is what a tap sets when nothing else has opened the card. The row height is
+  // also what assets/js/product-overview.js reads to decide whether a click opens the card
+  // or follows its link — a closed reveal measures zero high, so keep the collapse a real
+  // collapse and not an opacity/visibility one.
   &__card:hover &__reveal,
   &__card:focus-visible &__reveal,
   &__card.is-open &__reveal

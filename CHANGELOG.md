@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Page hero titles can break a line at some screen sizes and not others: a `<br class="xl:hidden">` in the title field breaks it on tablet and mobile and closes it up on desktop (`md:hidden` breaks it on mobile only). A plain `<br>` still breaks the line at every size.
 
 ### Changed
+- Page heroes: the bordered intro box takes a tighter padding on narrow tablets, so a long title such as "Perspektiven schaffen" no longer breaks in the middle of a word. From 1024px up it keeps the padding it had.
+- Product range cards: a tap opens the card's description reliably before the card's link is followed, on every touch device rather than only the ones the browser reports as having no mouse.
 - 404 page: on mobile the red panel runs to the edges of the screen and the "Ups, hier sind wir auf dem Holzweg..." line breaks over two lines.
 - About Us: the "Unsere Werte" values are centred under their icon on mobile, as in the design, and stay left-aligned beside the icon from tablet up.
 - Hero separator logos are sized the same way on every page, the home page included, and take their own size at desktop.

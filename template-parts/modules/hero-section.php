@@ -120,7 +120,17 @@ $hero_image_atts = array(
 			</div>
 		<?php endif; ?>
 
-		<div class="hero-section__box border-2 border-brand-dark p-8 md:px-11 md:py-12 xl:px-0 xl:py-14 break-words">
+		<?php
+		/*
+		 * The box is the one place the theme uses lg:. Its padding has to serve the whole
+		 * 768-1279 tablet range, and that range is wide: at its narrow end the 44px the
+		 * frames draw leaves the title column too tight for "Perspektiven" to fit a line,
+		 * and the word breaks mid-syllable. So the frames' padding starts at lg and the
+		 * narrow half of tablet gets a tighter one. Everything else in the theme stays on
+		 * base / md / xl.
+		 */
+		?>
+		<div class="hero-section__box border-2 border-brand-dark p-8 md:px-[0.8rem] md:py-6 lg:px-11 lg:py-12 xl:px-0 xl:py-14 break-words">
 			<?php
 			/*
 			 * Explicit row-start on title/subtitle/body at md and xl: without it, the
