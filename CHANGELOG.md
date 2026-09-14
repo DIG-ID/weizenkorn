@@ -34,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Supported Jobs and Product Range — Holzmanufaktur: the slide pagination dots stay on one line and scroll instead of wrapping when there are many of them on mobile, and the active dot scrolls into view as the slide changes.
 - Quote slider: every slide now matches the height of the tallest one on mobile and tablet too, so swiping between a short quote and a long one no longer resizes the slider — on mobile the card's own border reaches that same height too, with its attribution pinned to the bottom.
 - Footer newsletter: space above the sign-up confirmation/error message.
+- Mega menu: the item order on mobile now matches the design instead of the order the menu items happen to be in across the three admin menus that build it. Tablet and desktop are unchanged.
 
 ### Removed
 - The header's language switcher is hidden for now — the site launches German-only.
