@@ -75,3 +75,13 @@
 
         span.wpml-ls-native
           @apply text-[15px] font-primary font-normal uppercase leading-none
+
+// TEMP — LAUNCH IS GERMAN-ONLY: the switcher stays in the DOM (WPML's own action above,
+// the mobile trigger assets/js/language-switcher.js injects, all of it) so nothing else
+// has to change the day the other languages get content — this is invisible + inert
+// rather than display:none specifically so .header-main__row's grid-cols-[auto_1fr_auto]
+// keeps reserving the same track for it and the centred logo doesn't jump sideways to
+// fill the gap. To bring the switcher back once there is something to switch to, delete
+// this rule (only this rule — nothing else in this file needs to change).
+.header-main__lang
+  @apply invisible pointer-events-none

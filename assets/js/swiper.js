@@ -143,17 +143,16 @@ export function initQuoteSlider() {
     // Both controls are always wired up and hidden with CSS, so crossing the breakpoint
     // needs no re-init.
     //
-    // autoHeight up to tablet, where the card stacks under the image and its position
-    // differs per slide, so sizing the viewport to the active slide keeps the bullets
-    // under the card rather than under the tallest slide. Off from xl, where the panels
-    // are side by side and a constant height stops the centred arrows moving.
+    // No autoHeight, at any breakpoint: every slide matches the tallest one instead of
+    // the viewport resizing to whichever is active. Swiper leaves .swiper-wrapper's own
+    // height to plain CSS this way — a row flex container sized to its tallest child by
+    // default, every .swiper-slide then stretched to match — and content-stretch on
+    // .quote-slider__grid (_modules/_quote-slider.sass) is what carries that height down
+    // into the card and image themselves rather than leaving blank space under a shorter
+    // one, at every breakpoint that class applies.
     new Swiper(el, {
       modules: [Navigation, Pagination, A11y],
       slidesPerView: 1,
-      autoHeight: true,
-      breakpoints: {
-        1280: { autoHeight: false },
-      },
       observer: true,
       observeParents: true,
       // Neither control sits inside .swiper, so both elements are passed explicitly.

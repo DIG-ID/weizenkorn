@@ -10,8 +10,14 @@
 .quote-slider
 
   // .theme-grid has no row gap by design. Nothing reserves the image row: a slide
-  // without an image puts its card in row 1. content-start (set in the template) keeps
-  // the card at its own height instead of stretching to the tallest slide's.
+  // without an image puts its card in row 1.
+  //
+  // content-stretch (set in the template, every breakpoint) is what carries a slide's
+  // height down into its own card and image: assets/js/swiper.js runs this slider with
+  // no autoHeight, so every .swiper-slide already matches the tallest one via plain CSS
+  // — a row flex container sized to its tallest child by default, the rest stretched to
+  // match — and content-stretch is what stops a shorter slide's own grid leaving that
+  // extra height as blank space under a top-aligned card instead of growing it to fill.
   &__grid
     @apply gap-y-[14px] md:gap-y-0
 
@@ -74,9 +80,6 @@
 
   // `static` undoes Swiper's absolute positioning: a block below the slider. A single
   // quote renders no pagination at all — the template only outputs it for two or more.
-  //
-  // The margin is measured from the card, not the section: Swiper runs with autoHeight
-  // up to tablet, so the viewport ends where the active slide's card ends.
   &__pagination
     @apply static mt-8 md:mt-10 flex items-center justify-center gap-[30px]
 
