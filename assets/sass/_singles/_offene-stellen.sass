@@ -58,8 +58,15 @@
     @media (min-width: 1280px)
       grid-column: 11
 
+  // flex-nowrap + overflow-x-auto, not wrap: this list follows however many other
+  // published postings there are, and unlike _pages/_supported-jobs.sass's own
+  // __pagination (confirmed overflowing at a known item count) there's no confirmed
+  // break here yet — scrolling is a quiet fallback if the count ever runs past the
+  // row's own width, without changing today's centred look for the common case that
+  // still fits. shrink-0 below is what actually matters either way: without it the
+  // bullets would squeeze down to slivers instead of scrolling once they no longer fit.
   &__pagination
-    @apply static flex items-center justify-center gap-[26px] md:gap-[30px]
+    @apply static flex flex-nowrap items-center justify-center overflow-x-auto gap-[26px] md:gap-[30px]
 
     --swiper-pagination-bullet-horizontal-gap: 0px
     grid-row: 2
@@ -71,8 +78,17 @@
     @media (min-width: 1280px)
       grid-column: 1 / span 12
 
+    // The bullets already show scroll position via Swiper's own active-bullet paint; a
+    // visible native scrollbar under a row of 15px dots would read as a stray UI
+    // element rather than a real control.
+    scrollbar-width: none
+    -ms-overflow-style: none
+
+    &::-webkit-scrollbar
+      display: none
+
     .swiper-pagination-bullet
-      @apply w-[15px] h-[15px] m-0 rounded-full border border-brand-red bg-transparent opacity-100 transition-colors duration-300
+      @apply w-[15px] h-[15px] shrink-0 m-0 rounded-full border border-brand-red bg-transparent opacity-100 transition-colors duration-300
 
     .swiper-pagination-bullet-active
       @apply bg-brand-red

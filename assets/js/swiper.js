@@ -285,6 +285,25 @@ export function initEquipmentSlider() {
 export function initDiversitySlider() {
   document.querySelectorAll('.js-diversity-slider').forEach((el) => {
     const root = el.closest('.section-diversity-slider');
+    const paginationEl = root ? root.querySelector('.js-diversity-pagination') : null;
+
+    // Below md the row is nowrap + overflow-x-auto instead of shrinking the bullets to
+    // fit (see _pages/_work-training.sass's own __pagination) — this keeps the active
+    // bullet scrolled into the centre of that row as the slide changes, autoplay
+    // included (slideChange fires either way). Same as initDiversityCardsSlider()'s own
+    // centerActiveBullet(); kept as its own small copy since each closure captures a
+    // different pagination element and root.
+    const centerActiveBullet = () => {
+      if (!paginationEl || !window.matchMedia('(max-width: 767px)').matches) {
+        return;
+      }
+
+      const activeBullet = paginationEl.querySelector('.swiper-pagination-bullet-active');
+
+      if (activeBullet) {
+        activeBullet.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    };
 
     new Swiper(el, {
       autoplay: {
@@ -295,8 +314,11 @@ export function initDiversitySlider() {
       observer: true,
       observeParents: true,
       pagination: {
-        el: root ? root.querySelector('.js-diversity-pagination') : null,
+        el: paginationEl,
         clickable: true,
+      },
+      on: {
+        slideChange: centerActiveBullet,
       },
     });
   });

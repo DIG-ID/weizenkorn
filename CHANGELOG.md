@@ -35,6 +35,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Quote slider: every slide now matches the height of the tallest one on mobile and tablet too, so swiping between a short quote and a long one no longer resizes the slider — on mobile the card's own border reaches that same height too, with its attribution pinned to the bottom.
 - Footer newsletter: space above the sign-up confirmation/error message.
 - Mega menu: the item order on mobile now matches the design instead of the order the menu items happen to be in across the three admin menus that build it. Tablet and desktop are unchanged.
+- Work & Training's diversity slider: the pagination dots stay round and scroll instead of shrinking to fit when there are many of them on mobile, and the active dot scrolls into view as the slide changes.
+- Slide pagination dots (Home's gastronomy and services sliders, stories & references, donation projects, related jobs, quote slider) no longer risk shrinking to slivers if their item count ever grows — the same fix already applied elsewhere on the site.
 
 ### Removed
 - The header's language switcher is hidden for now — the site launches German-only.
