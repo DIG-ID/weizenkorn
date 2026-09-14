@@ -37,9 +37,10 @@
   // Title and paragraph share one rhythm: the frame's text block is four lines of 30 with
   // nothing added between the two.
   // Full width at mobile, where the item is a column and a flex child would otherwise
-  // shrink to its content and lose the frame's left-aligned text.
+  // shrink to its content. The frame centres that column under the icon; from tablet the
+  // icon moves beside the text and the alignment goes back to the left.
   &__text
-    @apply w-full
+    @apply w-full text-center md:text-left
 
   &__title
     @apply mb-0
