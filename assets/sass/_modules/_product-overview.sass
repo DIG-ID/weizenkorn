@@ -123,8 +123,14 @@
     @apply flex flex-col
 
   // Title left, download arrow hard right. One child in the default, so it is inert there.
+  // justify-end and not justify-between: the row holds a title and then whatever icons the
+  // variant draws, and any of them can be absent. With justify-between a row left holding
+  // one child puts it at the START — which walked the download arrow over to the left on
+  // the bakery card that has no title. Ending the row instead, and letting the title push
+  // itself left with its own auto margin, keeps the icons in the same place whether or not
+  // there is a title, and whether there are one or two of them.
   &__head-row
-    @apply flex items-center justify-between gap-8
+    @apply flex items-center justify-end gap-8
 
   // Same red +/- as .card-preview__toggle in _components/_card.sass, and like it only
   // below xl. Only the vertical bar moves, which is what turns the + into a -.
@@ -141,8 +147,9 @@
     @apply opacity-0
     transform: rotate(90deg)
 
+  // mr-auto is what does the pushing — see __head-row above.
   &__title
-    @apply title-card text-brand-dark m-0
+    @apply title-card text-brand-dark m-0 mr-auto
 
   // pt and not mt: padding is inside this element's own overflow: hidden box, so the
   // collapsed row takes it away with the text. A margin would sit outside it and hold the

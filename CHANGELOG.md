@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ### Fixed
 - Product range cards: a closed card shows its title and nothing else, at the height the design draws, on mobile and tablet alike — no extra band of cream under the title, and no sliver of the "zum Produkt" link showing through it.
+- Product range cards: a card left without a title keeps its download arrow at the right of the bar, in line with the cards beside it, instead of sliding over to the left.
 
 ## [1.18.4] — 2026-09-14
 
