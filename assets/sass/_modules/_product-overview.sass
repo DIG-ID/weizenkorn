@@ -32,19 +32,27 @@
   //
   // Counted in CSS and not in PHP on purpose: with a PHP index the widths would be fixed
   // at build time and every new card would need the rules rewritten.
-  &__card:nth-child(4n+1):nth-last-child(3),
-  &__card:nth-child(4n+1):nth-last-child(3) ~ &__card
-    @media (min-width: 1280px)
-      grid-column: span 4
+  // Scoped away from the downloads variant, which pairs its cards by parity instead and
+  // has to be left to do it. Not a matter of taste: the sibling combinator below puts two
+  // classes and two pseudo-classes in the selector, which out-specifies that variant's own
+  // rules — so on a three-card bakery row these took over the second and third cards while
+  // the first, whose rule has no combinator and only ties, kept the variant's placement.
+  // One row, two layouts. :not() keeps each variant's rules to itself.
+  &:not(.product-overview--downloads)
 
-  &__card:nth-child(4n+1):nth-last-child(2),
-  &__card:nth-child(4n+1):nth-last-child(2) ~ &__card
-    @media (min-width: 1280px)
-      grid-column: span 6
+    .product-overview__card:nth-child(4n+1):nth-last-child(3),
+    .product-overview__card:nth-child(4n+1):nth-last-child(3) ~ .product-overview__card
+      @media (min-width: 1280px)
+        grid-column: span 4
 
-  &__card:nth-child(4n+1):last-child
-    @media (min-width: 1280px)
-      grid-column: span 12
+    .product-overview__card:nth-child(4n+1):nth-last-child(2),
+    .product-overview__card:nth-child(4n+1):nth-last-child(2) ~ .product-overview__card
+      @media (min-width: 1280px)
+        grid-column: span 6
+
+    .product-overview__card:nth-child(4n+1):last-child
+      @media (min-width: 1280px)
+        grid-column: span 12
 
   // Tablet is two up, so an odd count leaves the last card alone on its row and the
   // frame gives it the full width. Bounded at the top as well: these are min-width

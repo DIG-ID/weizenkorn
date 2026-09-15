@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - A handful of sections are hidden for launch, with no content ready for them yet: Product Range — Xyloba's "Projekte & Referenzen", the Treuhand and Schreinerei pages' FAQ, Supported Apprenticeships' quote slider and FAQ, Product Range — Holzspielwaren's "Jetzt aktuell" product overview, Kreativatelier's FAQ, and About Us' quote slider.
 
 ### Fixed
+- Bakery download cards sat on two different layouts at once at desktop: the first card took the page's pairing while the two after it fell back to the product range cards' narrower one, so a three-card row came out with mismatched widths and the last card starting off the left margin. Each layout now keeps to its own section.
 - Product range cards: a closed card shows its title and nothing else, at the height the design draws, on mobile and tablet alike — no extra band of cream under the title, and no sliver of the "zum Produkt" link showing through it.
 - Product range cards: a card left without a title keeps the same bar as the cards beside it — same height, and its download arrow at the right rather than sliding over to the left.
 
