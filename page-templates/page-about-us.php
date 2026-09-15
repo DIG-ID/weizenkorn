@@ -17,7 +17,7 @@
  *                     the same line.
  *   6. craft-showcase shared module in its 'pair' variant — "So arbeiten wir". No left
  *                     image, so the paragraph and the picture sit side by side.
- *   7. quote-slider   shared module
+ *   7. quote-slider   shared module (commented out below — TEMP, launch)
  *   8. button-text    with the `organisation_` prefix — "Organisation". Daniel's module
  *                     off the Organization page, which already pairs a button on the left
  *                     with a paragraph on the right; here it also carries the wide picture
@@ -76,7 +76,9 @@ if ( have_posts() ) :
 			null,
 			array( 'variant' => 'pair' )
 		);
-		get_template_part( 'template-parts/modules/quote-slider' );
+		// TEMP — LAUNCH: hidden at the client's own request, no content ready for it yet.
+		// Uncomment to bring it back.
+		/* get_template_part( 'template-parts/modules/quote-slider' ); */
 
 		get_template_part(
 			'template-parts/modules/button-text',

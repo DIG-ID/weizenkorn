@@ -25,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Open Positions single post: "Weitere Stellenausschreibungen" reads "Weitere Stellen", and its related-jobs cards all match the height of the tallest one instead of each following its own excerpt length.
 
 ### Removed
-- A handful of sections are hidden for launch, with no content ready for them yet: Product Range — Xyloba's "Projekte & Referenzen", the Treuhand and Schreinerei pages' FAQ, Supported Apprenticeships' quote slider and FAQ, Product Range — Holzspielwaren's "Jetzt aktuell" product overview, and Kreativatelier's FAQ.
+- A handful of sections are hidden for launch, with no content ready for them yet: Product Range — Xyloba's "Projekte & Referenzen", the Treuhand and Schreinerei pages' FAQ, Supported Apprenticeships' quote slider and FAQ, Product Range — Holzspielwaren's "Jetzt aktuell" product overview, Kreativatelier's FAQ, and About Us' quote slider.
 
 ### Fixed
 - Product range cards: a closed card shows its title and nothing else, at the height the design draws, on mobile and tablet alike — no extra band of cream under the title, and no sliver of the "zum Produkt" link showing through it.
