@@ -25,13 +25,18 @@
 				<?php endif; ?>
 
 				<?php if ( have_rows( 'items' ) ) : ?>
-					<div class="theme-grid">
+					<div class="section-work-training__grid theme-grid">
 						<?php
 						// Wrapper spans the middle 10 cols on desktop; inside, the buttons
 						// split into equal columns (1-up mobile, 2-up tablet, 4-up desktop)
-						// with a constant 25px gap.
+						// with a constant 25px gap. The tablet arrangement (2-up) now runs all
+						// the way to a custom 1800px instead of switching at xl — Tailwind's
+						// arbitrary-value variant (min-[1800px]:) rather than a plain @media
+						// block in the SASS, so it hoists and sorts alongside the md: classes
+						// it needs to beat instead of losing to them — see _pages/_home.sass
+						// for the matching .theme-grid column-count override this needs.
 						?>
-						<div class="section-work-training__list col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-10 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-[25px] mt-8 md:mt-14 xl:mt-24">
+						<div class="section-work-training__list col-span-2 md:col-span-6 min-[1800px]:col-start-2 min-[1800px]:col-span-10 grid grid-cols-1 md:grid-cols-2 min-[1800px]:grid-cols-4 gap-[25px] mt-8 md:mt-14 min-[1800px]:mt-24">
 							<?php
 							while ( have_rows( 'items' ) ) :
 								the_row();

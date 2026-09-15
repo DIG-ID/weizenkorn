@@ -58,6 +58,16 @@
     grid-column: span 2
 
 // -- Work & Training -----------------------------------------------------------
+// .theme-grid itself switches to its 12-column grid at xl; this section's own tablet
+// layout now only switches at a custom 1800px (see the __list rule in the template,
+// which needs the same arbitrary variant rather than a plain @media block here — a
+// hand-written media query would land earlier in the compiled stylesheet than the
+// template's own responsive-prefixed utility classes, which Tailwind hoists to the
+// end, and lose to them), so this holds the grid at 6 from xl on, only becoming 12
+// at that same 1800px.
+.section-work-training__grid
+  @apply xl:grid-cols-6 min-[1800px]:grid-cols-12
+
 // Equal-width link buttons in a row, each filling its cell with the label left and the
 // arrow pushed right.
 .section-work-training__list

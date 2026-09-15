@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Titles' `<br>` breakpoint classes gained a fourth option, `xl:inline`: a break on mobile only, joined back into one line from tablet up.
 
 ### Changed
+- Home page's Work & Training links: the two-across tablet layout now holds through wider screens too, only switching to the four-across desktop row from a wide screen up instead of at the narrower desktop width.
 - The "mehr" arrow on preview cards is smaller on mobile, matching the tighter card at that size; tablet and desktop are unchanged.
 - Products archive: the "Über die Händlerplattform pepperi" reseller link no longer opens anything — it reads as plain text, with no arrow. Product range pages keep the working link.
 - Map addresses are a little smaller on tablet, on every page that shows a map.
