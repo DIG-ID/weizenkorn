@@ -23,7 +23,7 @@
 		<div class="news-header__rule border-b border-brand-red"></div>
 
 		<div class="theme-grid">
-			<h1 class="news-header__title title-main text-brand-dark col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-9">
+			<h1 class="news-header__title title-main text-brand-dark col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-7">
 				<?php the_title(); ?>
 			</h1>
 		</div>
