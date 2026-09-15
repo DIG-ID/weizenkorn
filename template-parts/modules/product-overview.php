@@ -198,23 +198,37 @@ if ( ! $po_heading && ! have_rows( $po_prefix . 'product_overview_items', $po_ct
 								</div>
 
 								<?php if ( get_sub_field( 'text' ) ) : ?>
+									<?php
+									/*
+									 * The bare <div> is load-bearing — see the note on __reveal in
+									 * _modules/_product-overview.sass. It is the element the collapse
+									 * clips, so it must carry no padding of its own; the spacing lives
+									 * on the content inside it.
+									 */
+									?>
 									<div class="product-overview__reveal" id="<?php echo esc_attr( $po_reveal_id ); ?>">
-										<div class="product-overview__text"><?php echo wp_kses_post( get_sub_field( 'text' ) ); ?></div>
+										<div>
+											<div class="product-overview__text"><?php echo wp_kses_post( get_sub_field( 'text' ) ); ?></div>
+										</div>
 									</div>
 								<?php endif; ?>
 							</div>
 
 							<?php if ( $po_url && ! $po_variant ) : ?>
 								<div class="product-overview__reveal">
-									<span class="product-overview__link">
-										<span><?php echo esc_html_x( 'zum Produkt', 'product overview card link', 'weizenkorn' ); ?></span>
-										<?php
-										// Sideways and not the downloads variant's download arrow: this
-										// card links to a product page, and the two arrows are what tell
-										// a reader whether a file is about to land on their machine.
-										?>
-										<span class="product-overview__link-icon" aria-hidden="true"><?php weizenkorn_the_svg_icon( 'arrow-right' ); ?></span>
-									</span>
+									<?php // The same bare <div> as above, and for the same reason. ?>
+									<div>
+										<span class="product-overview__link">
+											<span><?php echo esc_html_x( 'zum Produkt', 'product overview card link', 'weizenkorn' ); ?></span>
+											<?php
+											// Sideways and not the downloads variant's download arrow:
+											// this card links to a product page, and the two arrows are
+											// what tell a reader whether a file is about to land on
+											// their machine.
+											?>
+											<span class="product-overview__link-icon" aria-hidden="true"><?php weizenkorn_the_svg_icon( 'arrow-right' ); ?></span>
+										</span>
+									</div>
 								</div>
 							<?php endif; ?>
 						</div>

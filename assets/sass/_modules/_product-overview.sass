@@ -88,6 +88,12 @@
   // :focus-visible and NOT :focus-within — the card is the anchor, so a plain click
   // leaves focus on it and :focus-within would hold the panel open with nothing to close
   // it. Both are desktop-only; see the two blocks below.
+  // The bare <div> the template puts inside this one is what > * clips, and it must stay
+  // free of padding. The spacing below sits on the content INSIDE it, because an element
+  // that both carries the overflow and lays its content out centred leaks: with the
+  // content box collapsed to zero the line centres on its top edge and half of it shows
+  // through the padding band. That is what put a sliced "zum Produkt" under every closed
+  // card. A bare wrapper has neither padding nor centring, so it clips cleanly.
   &__reveal
     @apply grid overflow-hidden
     grid-template-rows: 0fr
