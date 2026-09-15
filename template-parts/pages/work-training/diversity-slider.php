@@ -60,7 +60,7 @@ if ( ! $wtd_title || ! have_rows( 'work_training_diversity_items' ) ) {
 									?>
 
 									<?php if ( get_sub_field( 'category' ) || get_sub_field( 'title' ) ) : ?>
-										<figcaption class="section-diversity-slider__caption absolute bottom-0 left-0 w-full">
+										<figcaption class="section-diversity-slider__caption md:absolute md:bottom-0 md:left-0 w-full">
 											<?php if ( get_sub_field( 'category' ) ) : ?>
 												<span class="uppercase text-brand-dark"><?php echo esc_html( get_sub_field( 'category' ) ); ?></span>
 											<?php endif; ?>
