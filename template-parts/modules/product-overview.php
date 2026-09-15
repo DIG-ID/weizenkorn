@@ -98,8 +98,23 @@ if ( ! $po_heading && ! have_rows( $po_prefix . 'product_overview_items', $po_ct
 					 * the JS only intercepts a tap when there is, and a linked card with
 					 * nothing to reveal must stay a plain link.
 					 */
-					$po_has_reveal = ( $po_url && ! $po_variant ) || get_sub_field( 'text' );
-					$po_reveal_id  = wp_unique_id( 'product-overview-reveal-' );
+					$po_has_reveal = $po_url || get_sub_field( 'text' );
+
+					/*
+					 * Which arrow "zum Produkt" carries: a file lands on the reader's machine,
+					 * a page does not, and the two arrows are what tell them apart. Read from
+					 * the URL rather than from a field, so an editor swapping a product page
+					 * for a PDF gets the right arrow without knowing there was a choice —
+					 * the same list and the same test card-preview.php already uses.
+					 *
+					 * The downloads variant says so outright and does not wait to be asked:
+					 * every tile in it is a PDF by definition, and the arrow has to read right
+					 * while the links are still placeholders and the files are being prepared.
+					 */
+					$po_download_types = array( 'pdf', 'zip', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'csv', 'rar', '7z' );
+					$po_url_extension  = strtolower( pathinfo( (string) wp_parse_url( $po_url, PHP_URL_PATH ), PATHINFO_EXTENSION ) );
+					$po_is_download    = ( '' !== $po_variant ) || in_array( $po_url_extension, $po_download_types, true );
+					$po_reveal_id      = wp_unique_id( 'product-overview-reveal-' );
 
 					?>
 					<<?php echo esc_html( $po_tag ); ?> class="product-overview__card"<?php echo $po_url ? ' href="' . esc_url( $po_url ) . '"' : ''; ?><?php echo ( '_blank' === $po_target ) ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>>
@@ -138,12 +153,8 @@ if ( ! $po_heading && ! have_rows( $po_prefix . 'product_overview_items', $po_ct
 							?>
 							<div class="product-overview__head">
 								<?php
-								/*
-								 * The title shares its line with the arrow in the downloads variant,
-								 * where the bar is the whole affordance and there is no "zum Produkt"
-								 * under it. In the default the row holds the title alone, so
-								 * justify-between has nothing to push and the row is inert.
-								 */
+								// The title, and the +/- beside it below xl. Both variants draw the
+								// same bar now; the link lives in the reveal under it either way.
 								?>
 								<div class="product-overview__head-row">
 									<?php if ( get_sub_field( 'title' ) ) : ?>
@@ -191,10 +202,6 @@ if ( ! $po_heading && ! have_rows( $po_prefix . 'product_overview_items', $po_ct
 											</button>
 										<?php endif; ?>
 									<?php endif; ?>
-
-									<?php if ( $po_variant && $po_url ) : ?>
-										<span class="product-overview__link-icon"><?php weizenkorn_the_svg_icon( 'arrow-download' ); ?></span>
-									<?php endif; ?>
 								</div>
 
 								<?php if ( get_sub_field( 'text' ) ) : ?>
@@ -214,19 +221,19 @@ if ( ! $po_heading && ! have_rows( $po_prefix . 'product_overview_items', $po_ct
 								<?php endif; ?>
 							</div>
 
-							<?php if ( $po_url && ! $po_variant ) : ?>
+							<?php if ( $po_url ) : ?>
 								<div class="product-overview__reveal">
 									<?php // The same bare <div> as above, and for the same reason. ?>
 									<div>
 										<span class="product-overview__link">
 											<span><?php echo esc_html_x( 'zum Produkt', 'product overview card link', 'weizenkorn' ); ?></span>
 											<?php
-											// Sideways and not the downloads variant's download arrow:
-											// this card links to a product page, and the two arrows are
-											// what tell a reader whether a file is about to land on
-											// their machine.
+											// Sideways for a page, downward for a file — see
+											// $po_is_download above. The modifier is only for the
+											// box: the download arrow is taller than wide, where
+											// the sideways one is the reverse.
 											?>
-											<span class="product-overview__link-icon" aria-hidden="true"><?php weizenkorn_the_svg_icon( 'arrow-right' ); ?></span>
+											<span class="product-overview__link-icon<?php echo $po_is_download ? ' product-overview__link-icon--download' : ''; ?>" aria-hidden="true"><?php weizenkorn_the_svg_icon( $po_is_download ? 'arrow-download' : 'arrow-right' ); ?></span>
 										</span>
 									</div>
 								</div>

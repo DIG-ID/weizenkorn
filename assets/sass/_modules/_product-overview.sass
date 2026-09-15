@@ -32,27 +32,21 @@
   //
   // Counted in CSS and not in PHP on purpose: with a PHP index the widths would be fixed
   // at build time and every new card would need the rules rewritten.
-  // Scoped away from the downloads variant, which pairs its cards by parity instead and
-  // has to be left to do it. Not a matter of taste: the sibling combinator below puts two
-  // classes and two pseudo-classes in the selector, which out-specifies that variant's own
-  // rules — so on a three-card bakery row these took over the second and third cards while
-  // the first, whose rule has no combinator and only ties, kept the variant's placement.
-  // One row, two layouts. :not() keeps each variant's rules to itself.
-  &:not(.product-overview--downloads)
+  // Rows of four for every variant now — the downloads arrangement was the one exception
+  // and it no longer places its own cards, it only narrows the grid they sit in.
+  &__card:nth-child(4n+1):nth-last-child(3),
+  &__card:nth-child(4n+1):nth-last-child(3) ~ &__card
+    @media (min-width: 1280px)
+      grid-column: span 4
 
-    .product-overview__card:nth-child(4n+1):nth-last-child(3),
-    .product-overview__card:nth-child(4n+1):nth-last-child(3) ~ .product-overview__card
-      @media (min-width: 1280px)
-        grid-column: span 4
+  &__card:nth-child(4n+1):nth-last-child(2),
+  &__card:nth-child(4n+1):nth-last-child(2) ~ &__card
+    @media (min-width: 1280px)
+      grid-column: span 6
 
-    .product-overview__card:nth-child(4n+1):nth-last-child(2),
-    .product-overview__card:nth-child(4n+1):nth-last-child(2) ~ .product-overview__card
-      @media (min-width: 1280px)
-        grid-column: span 6
-
-    .product-overview__card:nth-child(4n+1):last-child
-      @media (min-width: 1280px)
-        grid-column: span 12
+  &__card:nth-child(4n+1):last-child
+    @media (min-width: 1280px)
+      grid-column: span 12
 
   // Tablet is two up, so an odd count leaves the last card alone on its row and the
   // frame gives it the full width. Bounded at the top as well: these are min-width
@@ -62,10 +56,7 @@
     &__card:last-child:nth-child(odd)
       grid-column: span 6
 
-    // The taller image is the default variant's: its cards gain height along with the
-    // width when one is left alone on a row. The downloads variant keeps the 256 it draws
-    // at this width whatever happens, so there a lone card grows sideways and not down.
-    &:not(.product-overview--downloads) .product-overview__card:last-child:nth-child(odd) .product-overview__media
+    &__card:last-child:nth-child(odd) &__media
       height: 472px
 
   // A height and not an aspect ratio: the cards come in two widths and the frames give
@@ -181,14 +172,23 @@
     @apply font-primary font-medium uppercase tracking-[0.5px] text-[14px] leading-[normal]
     @apply text-brand-red
 
-  // 24x19, the sideways arrow's own proportions — it is the one this link uses, pointing at
-  // a product page. The downloads variant overrides both numbers below, where the icon is
-  // the download arrow instead and is taller than it is wide.
+  // 24x19, the sideways arrow's own proportions — the one a link to a product page uses.
+  // The downloads variant overrides both numbers below, where the icon is the download
+  // arrow instead and is taller than it is wide.
   &__link-icon
     @apply shrink-0
 
     svg
       @apply w-6 h-[19px]
+
+    // Same swap for a link that points at a file rather than a page: the download arrow
+    // is 21x26, so the sideways arrow's box would letterbox it down to a narrow sliver.
+    // The numbers are the downloads variant's own, which draws the same icon.
+    //
+    // After the rule above and not before it: both are one class and one element, so they
+    // tie on specificity and only the order decides which wins.
+    &--download svg
+      @apply w-4 h-[19px]
 
   // The panel still opens, it just does not animate.
   @media (prefers-reduced-motion: reduce)
@@ -196,31 +196,12 @@
       transition: none
 
   // -- The downloads arrangement -----------------------------------------------
-  // Figma 3686:3356 desktop, 3738:4612 tablet and 3738:4625 mobile. Each tile is a PDF
-  // download rather than a product: the bar carries the name and a download arrow. The
-  // hover is the shared one — the bar grows to show the copy and keeps its cream, the
-  // same as the product ranges.
+  // Figma 5503:7306. Each tile is a PDF download rather than a product, but it is the same
+  // card: the bar carries the name, a tap opens the copy, and the link inside it draws the
+  // download arrow on its own because the URL ends in .pdf (see $po_is_download in the
+  // template). So this variant no longer places cards or sizes bars — the module does all
+  // of that — and is left with the two things that really are its own.
   &--downloads
-
-    // The bar is the same at every breakpoint — 24 / 14 of padding around a 22px line,
-    // which is the 50px the desktop frame draws. Only the card under it changes.
-    .product-overview__panel
-      @apply px-6 py-3.5
-
-    // 13x16 below desktop against the 24x19 the rest of the site uses; the desktop frame
-    // goes back up to 16x19.
-    .product-overview__link-icon svg
-      @apply w-[13px] h-4 xl:w-4 xl:h-[19px]
-
-    // Standing alone in the bar rather than inside a link, so it needs its own colour —
-    // brand red, like every other arrow on the site.
-    .product-overview__link-icon
-      @apply text-brand-red
-
-    // One card a row at mobile, two from tablet. The heights are the frames' own and do
-    // not scale from one another.
-    .product-overview__media
-      height: 192px
 
     // cover, not the contain the module sets from xl up. These are photographs of a full
     // counter, not products on white, so filling the card reads better than fitting the whole
@@ -243,33 +224,15 @@
         margin-top: 56px
         row-gap: 20px
 
-      .product-overview__media
-        height: 256px
-
     @media (min-width: 1280px)
+
+      // The frame insets this section by a column at each end — 203 to 1715 against the
+      // container's 50 to 1870 — where the product ranges run the full twelve. Taken on the
+      // grid and not on the cards, so the leftover-row rules above keep working unchanged:
+      // they still divide twelve columns, those columns are simply narrower. The margin is
+      // one column plus one gutter, the same expression _service-info-downloads.sass uses.
       .product-overview__grid
         margin-top: 88px
         row-gap: 80px
-
-      .product-overview__media
-        height: 400px
-
-      // The parity is what pairs them — an odd card opens a row on column 2 and the even
-      // one beside it takes column 7, which is also what makes the row break where it
-      // should.
-      .product-overview__card:nth-child(odd)
-        grid-column: 2 / span 5
-
-      .product-overview__card:nth-child(even)
-        grid-column: 7 / span 5
-
-      // A card in an odd position with nothing after it has no partner, so it is alone on
-      // its row — and there it runs from column 2 to column 11, the full width the pair
-      // above it covers, rather than the five columns a paired card gets. A row of two is
-      // untouched.
-      //
-      // Two pseudo-classes against the parity rules' one, so this wins on specificity and
-      // does not depend on coming after them.
-      .product-overview__card:last-child:nth-child(odd)
-        grid-column: 2 / span 10
-
+        margin-left: calc((100% - 11 * 20px) / 12 + 20px)
+        margin-right: calc((100% - 11 * 20px) / 12 + 20px)
