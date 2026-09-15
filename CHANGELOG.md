@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Home hero: more breathing room inside the bordered panel on mobile, with the title, tagline and body text sitting closer together.
 - Page hero subtitles hold their 26px size through the narrower desktop widths and only step up to 48px on a wide screen, instead of jumping at 1280px.
 - Filter panel (Open Positions archive, Das Weizenkorn Team): matches the design — the checkbox is no longer red, the rule under each group heading moved to below it instead of under the close button, and spacing throughout was tightened up. A group with many terms now scrolls within its own space instead of pushing past the close button and the Apply/Clear buttons, and that scroll no longer fights the page's own smooth-scrolling for the mouse wheel.
+- Open Positions single post: "Weitere Stellenausschreibungen" reads "Weitere Stellen", and its related-jobs cards all match the height of the tallest one instead of each following its own excerpt length.
 
 ## [1.18.4] — 2026-09-14
 

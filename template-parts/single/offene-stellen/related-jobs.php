@@ -1,6 +1,6 @@
 <?php
 /**
- * Open Positions single post — "Weitere Stellenausschreibungen" related-jobs
+ * Open Positions single post — "Weitere Stellen" related-jobs
  * slider (Figma desktop node 4450:6539). Title, an "Alle offenen Stellen"
  * button to the archive, then a slider of other offene-stellen posts —
  * three per view at desktop (where the controls hide, there being nothing
@@ -41,7 +41,7 @@ $rj_fits_xl      = ( $rj_count <= 3 );
 ?>
 <section class="related-jobs<?php echo $rj_fits_xl ? ' related-jobs--fits-xl' : ''; ?> mt-24 md:mt-32 xl:mt-48 mb-24 md:mb-32 xl:mb-48">
 	<div class="theme-container">
-		<?php get_template_part( 'template-parts/components/section-heading', null, array( 'title' => __( 'Weitere Stellenausschreibungen', 'weizenkorn' ) ) ); ?>
+		<?php get_template_part( 'template-parts/components/section-heading', null, array( 'title' => __( 'Weitere Stellen', 'weizenkorn' ) ) ); ?>
 
 		<div class="theme-grid justify-items-start mt-8 xl:mt-12">
 			<?php // md:col-start-2, matching where __viewport itself starts at this breakpoint (see _singles/_offene-stellen.sass) — col-span-5 rather than 6 so it still fits the grid without overflowing a 7th column. ?>

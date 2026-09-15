@@ -1,6 +1,6 @@
 // Open Positions single post (single-offene-stellen.php)
 
-// -- Related jobs slider ("Weitere Stellenausschreibungen") -------------------
+// -- Related jobs slider ("Weitere Stellen") -----------------------------------
 // Same arrows-in-the-outer-grid-columns pattern as _modules/_stories-references.sass:
 // the arrows and the viewport are siblings in one .theme-grid, each pinned to row 1,
 // rather than an overlay with a grid of its own.
@@ -11,6 +11,15 @@
   &__viewport
     grid-column: 1 / span 2
     grid-row: 1
+
+    // Swiper's own stylesheet gives .swiper-slide height:100%, which with no definite
+    // height on .swiper-wrapper resolves to each slide's own content instead of the
+    // flex row's default stretch-to-tallest — same fix, same reasoning, as
+    // _pages/_home.sass's own .section-services__viewport. Setting it back to auto is
+    // what lets every slide match the tallest one, and only then does card-job.php's
+    // own .card-job (h-full) resolve against a real height instead of its own content.
+    .swiper-slide
+      @apply h-auto
 
     @media (min-width: 768px)
       grid-column: 2 / span 4
