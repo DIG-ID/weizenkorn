@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Open Positions single post: "Weitere Stellenausschreibungen" reads "Weitere Stellen", and its related-jobs cards all match the height of the tallest one instead of each following its own excerpt length.
 
 ### Removed
-- A handful of sections are hidden for launch, with no content ready for them yet: Product Range — Xyloba's "Projekte & Referenzen", the Treuhand and Schreinerei pages' FAQ, Supported Apprenticeships' quote slider, Product Range — Holzspielwaren's main product overview, and Kreativatelier's FAQ.
+- A handful of sections are hidden for launch, with no content ready for them yet: Product Range — Xyloba's "Projekte & Referenzen", the Treuhand and Schreinerei pages' FAQ, Supported Apprenticeships' quote slider, Product Range — Holzspielwaren's "Jetzt aktuell" product overview, and Kreativatelier's FAQ.
 
 ## [1.18.4] — 2026-09-14
 

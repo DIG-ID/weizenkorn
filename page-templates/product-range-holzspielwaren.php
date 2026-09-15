@@ -6,9 +6,9 @@
  * One template per range — see product-range-kerzen.php for why the assignment is
  * explicit and not single-products-{slug}.php, and for how to attach it to a post.
  *
- * SECTIONS, in order: hero-section, product-overview (commented out below — TEMP,
- * launch), usp-band, craft-showcase, "Jetzt aktuell" (product-overview again, through the
- * `latest_` prefix), quote-slider, stories-references, order-form ('split' variant),
+ * SECTIONS, in order: hero-section, product-overview, usp-band, craft-showcase,
+ * "Jetzt aktuell" (product-overview again, through the `latest_` prefix — commented out
+ * below, TEMP, launch), quote-slider, stories-references, order-form ('split' variant),
  * cta-form, preview-cards (unprefixed, like every other use of it — see the module's own
  * docblock for the two ACF Clone fields it expects).
  *
@@ -34,19 +34,16 @@ if ( have_posts() ) :
 		do_action( 'before_main_content' );
 
 		get_template_part( 'template-parts/modules/hero-section' );
-		// TEMP — LAUNCH: hidden at the client's own request, no content ready for it yet.
-		// Uncomment to bring it back.
-		/* get_template_part( 'template-parts/modules/product-overview' ); */
+		get_template_part( 'template-parts/modules/product-overview' );
 		get_template_part( 'template-parts/modules/usp-band' );
 		get_template_part( 'template-parts/modules/craft-showcase' );
 
 		// Two instances on one page cannot read the same field names, so this one goes through
 		// the prefix the module already takes for the archive: `latest_product_overview_*`.
-		get_template_part(
-			'template-parts/modules/product-overview',
-			null,
-			array( 'prefix' => 'latest_' )
-		);
+		//
+		// TEMP — LAUNCH: hidden at the client's own request, no content ready for it yet.
+		// Uncomment to bring it back.
+		/* get_template_part( 'template-parts/modules/product-overview', null, array( 'prefix' => 'latest_' ) ); */
 
 		get_template_part( 'template-parts/modules/quote-slider' );
 		get_template_part( 'template-parts/modules/stories-references' );
