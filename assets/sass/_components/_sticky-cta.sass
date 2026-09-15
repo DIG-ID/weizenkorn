@@ -1,14 +1,14 @@
-// Fixed bottom-right promo box. Desktop and tablet only — the box would dominate a
-// phone screen. Behaviour: assets/js/sticky-cta.js (auto-collapse, hover re-expands).
+// Fixed bottom-right promo box, every breakpoint. Behaviour: assets/js/sticky-cta.js
+// (auto-collapse, hover re-expands).
 .sticky-cta
-  @apply hidden md:flex fixed bottom-[82px] right-[83px] z-30
+  @apply flex fixed bottom-[35px] right-[20px] md:bottom-[82px] md:right-[83px] z-30
   @apply items-center justify-between gap-4 w-[250px] py-4 px-3
   @apply bg-brand-red text-white no-underline overflow-hidden
 
   // The transitions live only here and not on the base classes, so collapsing animates
   // while expanding back is instant — as asked for.
   &.is-collapsed
-    @apply w-[100px] h-[100px] p-0 justify-center rounded-full
+    @apply w-[80px] h-[80px] md:w-[100px] md:h-[100px] p-0 justify-center rounded-full
     @apply transition-[width,height,padding] duration-500 ease-in-out
 
     // No transition here — title/text/arrow disappear instantly so only
@@ -32,6 +32,7 @@
   &__icon
     @apply flex items-center justify-center shrink-0 text-white absolute right-3 top-4
 
-  // Wheat mark — hidden until the card collapses (see .is-collapsed above).
+  // Wheat mark — hidden until the card collapses (see .is-collapsed above). Scaled down
+  // on mobile so it still fits inside the smaller 80px collapsed circle.
   &__logo-icon
-    @apply absolute top-3 w-[86px] h-[45px] opacity-0 pointer-events-none
+    @apply absolute top-2.5 w-[70px] h-[36px] md:top-3 md:w-[86px] md:h-[45px] opacity-0 pointer-events-none

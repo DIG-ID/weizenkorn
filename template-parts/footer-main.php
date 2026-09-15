@@ -81,7 +81,7 @@
 
 		<div class="footer-main__legal">
 			<div class="theme-grid">
-				<div class="footer-main__legal-copyright pt-7 md:pt-5 xl:pt-0">
+				<div class="footer-main__legal-copyright pt-7 md:pt-5 2xl:pt-0">
 					<p class="footer-main__copyright">
 						<?php
 						printf(
