@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Titles' `<br>` breakpoint classes gained a fourth option, `xl:inline`: a break on mobile only, joined back into one line from tablet up.
 
 ### Changed
+- Map addresses are a little smaller on tablet, on every page that shows a map.
 - Bakery download cards are the same card as the product ranges now: the bar carries the name and a +/-, a tap opens the description, and the download link sits inside it — instead of an arrow pinned to the bar with the description only reachable on hover. At desktop the row is inset by a column at each end, as the design draws it.
 - "zum Produkt" shows a download arrow when the link points at a file and a sideways one when it points at a page, decided from the link itself. Kerzen's seven PDFs pick it up without any change to their content.
 - The sticky promo box now shows on mobile too, tucked into the corner (20px from the right, 35px from the bottom) at a smaller 80px collapsed size, a narrower 220px box, 14px text and a smaller arrow; tablet and desktop are unchanged.
