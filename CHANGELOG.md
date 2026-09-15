@@ -15,8 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ### Added
 - The home page's services slider advances on its own every five seconds, as the diversity slider already did.
+- Product range cards carry the same red +/- as the preview cards on tablet and mobile: it opens the card's description and closes it again. Cards that link to a product open on the first tap and follow the link on the second; cards that do not link are opened by the +/- alone, which a keyboard can reach. Escape closes a card that has focus.
 
 ### Changed
+- Product range cards open on a tap on tablet and mobile rather than on hover, which no touch screen really has — the description used to depend on the browser's leftover hover state and could open or not open on the same gesture. Desktop is unchanged: the pointer opens the description and a click goes to the product.
 - Home hero: more breathing room inside the bordered panel on mobile, with the title, tagline and body text sitting closer together.
 - Page hero subtitles hold their 26px size through the narrower desktop widths and only step up to 48px on a wide screen, instead of jumping at 1280px.
 - Filter panel (Open Positions archive, Das Weizenkorn Team): matches the design — the checkbox is no longer red, the rule under each group heading moved to below it instead of under the close button, and spacing throughout was tightened up. A group with many terms now scrolls within its own space instead of pushing past the close button and the Apply/Clear buttons, and that scroll no longer fights the page's own smooth-scrolling for the mouse wheel.

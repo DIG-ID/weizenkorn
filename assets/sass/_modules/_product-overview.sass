@@ -82,7 +82,7 @@
   //
   // :focus-visible and NOT :focus-within — the card is the anchor, so a plain click
   // leaves focus on it and :focus-within would hold the panel open with nothing to close
-  // it. Neither fires on a touch device, which is what .is-open below is for.
+  // it. Both are desktop-only; see the two blocks below.
   &__reveal
     @apply grid overflow-hidden
     grid-template-rows: 0fr
@@ -91,14 +91,20 @@
     > *
       @apply overflow-hidden
 
-  // .is-open is what a tap sets when nothing else has opened the card. The row height is
-  // also what assets/js/product-overview.js reads to decide whether a click opens the card
-  // or follows its link — a closed reveal measures zero high, so keep the collapse a real
-  // collapse and not an opacity/visibility one.
-  &__card:hover &__reveal,
-  &__card:focus-visible &__reveal,
+  // Below xl this class is the ONLY thing that opens a card, which is the same split
+  // .card-preview makes and for the same reason: a touch browser applies :hover on tap and
+  // keeps it there until the next tap elsewhere. With hover opening the card at every
+  // width, the gesture meant to open it opened it by itself, the state stopped matching
+  // the .is-open the JS sets, and the +/- had nothing it could reliably close.
   &__card.is-open &__reveal
     grid-template-rows: 1fr
+
+  // Desktop keeps what the frames draw: the pointer opens the copy and a click goes to the
+  // product. No tap step, and the +/- is xl:hidden, so there is nothing to close either.
+  @media (min-width: 1280px)
+    &__card:hover &__reveal,
+    &__card:focus-visible &__reveal
+      grid-template-rows: 1fr
 
   // Title and copy are one block with no gap, which is also what keeps the panel's
   // justify-between from pushing the copy to the bottom edge along with the link.
@@ -108,6 +114,21 @@
   // Title left, download arrow hard right. One child in the default, so it is inert there.
   &__head-row
     @apply flex items-center justify-between gap-8
+
+  // Same red +/- as .card-preview__toggle in _components/_card.sass, and like it only
+  // below xl. Only the vertical bar moves, which is what turns the + into a -.
+  &__toggle
+    @apply shrink-0 text-brand-red
+
+    .icon-toggle__vertical
+      transition: transform var(--transition-slow), opacity var(--transition-slow)
+      transform-origin: center
+
+  // Only .is-open, because only .is-open opens the card where this icon is visible. The
+  // desktop hover states need no counterpart: xl:hidden means there is no + to turn.
+  &__card.is-open .icon-toggle__vertical
+    @apply opacity-0
+    transform: rotate(90deg)
 
   &__title
     @apply title-card text-brand-dark m-0

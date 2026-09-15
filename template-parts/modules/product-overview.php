@@ -88,6 +88,16 @@ if ( ! $po_heading && ! have_rows( $po_prefix . 'product_overview_items', $po_ct
 					// an <a> inside an <a> is invalid and browsers unnest it.
 					$po_tag = $po_url ? 'a' : 'article';
 
+					/*
+					 * Whether this card draws a __reveal at all — the same two conditions the
+					 * markup below uses, read once here because three things depend on the
+					 * answer: the +/- only means something when there is something to open,
+					 * the JS only intercepts a tap when there is, and a linked card with
+					 * nothing to reveal must stay a plain link.
+					 */
+					$po_has_reveal = ( $po_url && ! $po_variant ) || get_sub_field( 'text' );
+					$po_reveal_id  = wp_unique_id( 'product-overview-reveal-' );
+
 					?>
 					<<?php echo esc_html( $po_tag ); ?> class="product-overview__card"<?php echo $po_url ? ' href="' . esc_url( $po_url ) . '"' : ''; ?><?php echo ( '_blank' === $po_target ) ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>>
 
@@ -137,13 +147,55 @@ if ( ! $po_heading && ! have_rows( $po_prefix . 'product_overview_items', $po_ct
 										<h3 class="product-overview__title"><?php echo esc_html( get_sub_field( 'title' ) ); ?></h3>
 									<?php endif; ?>
 
+									<?php if ( $po_has_reveal ) : ?>
+										<?php
+										/*
+										 * The +/- of the preview cards, saying the same thing: there is
+										 * more under this bar, and tapping it puts it away again. Below
+										 * xl only — desktop opens on hover and the frames draw no icon
+										 * there. Both variants carry it: since the hover reveal became
+										 * desktop-only, a tap is the only way into the copy below xl, and
+										 * the downloads variant's own arrow speaks for the file, not for
+										 * the text. It sits before that arrow, so the two read in the
+										 * order they act.
+										 *
+										 * A <span> and not the preview card's <button>: this card IS the
+										 * <a>, and interactive content cannot nest inside a link. The JS
+										 * gives it its behaviour; aria-hidden keeps it from being
+										 * announced as a control a keyboard cannot reach, and the card's
+										 * own aria-expanded is what assistive tech reads instead.
+										 */
+										?>
+										<?php if ( $po_url ) : ?>
+											<span class="product-overview__toggle xl:hidden" aria-hidden="true"><?php weizenkorn_the_svg_icon( 'toggle' ); ?></span>
+										<?php else : ?>
+											<?php
+											/*
+											 * No link, so the card is an <article> and a real <button> is
+											 * allowed — the card-preview pattern, keyboard and all. This
+											 * is the only way into the copy here: the card has nowhere to
+											 * go, so nothing about it is tappable but this.
+											 */
+											?>
+											<button
+												type="button"
+												class="product-overview__toggle js-product-overview-toggle xl:hidden"
+												aria-expanded="false"
+												aria-controls="<?php echo esc_attr( $po_reveal_id ); ?>"
+											>
+												<span class="sr-only"><?php esc_html_e( 'Toggle description', 'weizenkorn' ); ?></span>
+												<?php weizenkorn_the_svg_icon( 'toggle' ); ?>
+											</button>
+										<?php endif; ?>
+									<?php endif; ?>
+
 									<?php if ( $po_variant && $po_url ) : ?>
 										<span class="product-overview__link-icon"><?php weizenkorn_the_svg_icon( 'arrow-download' ); ?></span>
 									<?php endif; ?>
 								</div>
 
 								<?php if ( get_sub_field( 'text' ) ) : ?>
-									<div class="product-overview__reveal">
+									<div class="product-overview__reveal" id="<?php echo esc_attr( $po_reveal_id ); ?>">
 										<div class="product-overview__text"><?php echo wp_kses_post( get_sub_field( 'text' ) ); ?></div>
 									</div>
 								<?php endif; ?>
