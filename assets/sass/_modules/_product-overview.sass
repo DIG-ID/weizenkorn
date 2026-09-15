@@ -129,8 +129,14 @@
   // the bakery card that has no title. Ending the row instead, and letting the title push
   // itself left with its own auto margin, keeps the icons in the same place whether or not
   // there is a title, and whether there are one or two of them.
+  //
+  // The min-height is .title-card's own line-height at each breakpoint, so the bar stands
+  // exactly as tall whether or not the card has a title. Without it the row falls back to
+  // the tallest icon in it — 19px against the title's 22 — and a card left untitled drew a
+  // visibly shallower bar than the ones beside it.
   &__head-row
     @apply flex items-center justify-end gap-8
+    @apply min-h-[22px] md:min-h-[30px]
 
   // Same red +/- as .card-preview__toggle in _components/_card.sass, and like it only
   // below xl. Only the vertical bar moves, which is what turns the + into a -.
