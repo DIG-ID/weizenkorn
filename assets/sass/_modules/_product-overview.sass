@@ -66,9 +66,14 @@
     @apply h-[264px] md:h-[284px] xl:h-[400px]
 
   // justify-between pins the title to the top of the panel and the link to its bottom.
+  // No gap: a flex gap sits between the items and not inside them, so it kept its 16px
+  // even with both reveals collapsed to nothing — a closed bar 54px tall where the frame
+  // draws 35. The spacing moved into the revealed content as padding instead, where the
+  // 0fr row clips it along with everything else. Same fix, and the same reason, as the
+  // note on .card-preview__reveal in _components/_card.sass.
   &__panel
     @apply absolute inset-x-0 bottom-0 z-10
-    @apply flex flex-col gap-4
+    @apply flex flex-col
     @apply bg-brand-cream
     @apply px-4 py-2 xl:px-6 xl:py-[10px]
 
@@ -133,13 +138,16 @@
   &__title
     @apply title-card text-brand-dark m-0
 
+  // pt and not mt: padding is inside this element's own overflow: hidden box, so the
+  // collapsed row takes it away with the text. A margin would sit outside it and hold the
+  // closed bar open — see the note on __panel above.
   &__text
-    @apply body-text text-brand-dark
+    @apply body-text text-brand-dark pt-4
 
   // The design sets this in Karla; the project has one font, so it uses font-primary at
   // the same weight.
   &__link
-    @apply inline-flex items-center gap-3
+    @apply inline-flex items-center gap-3 pt-4
     @apply font-primary font-medium uppercase tracking-[0.5px] text-[14px] leading-[normal]
     @apply text-brand-red
 

@@ -27,6 +27,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 ### Removed
 - A handful of sections are hidden for launch, with no content ready for them yet: Product Range — Xyloba's "Projekte & Referenzen", the Treuhand and Schreinerei pages' FAQ, Supported Apprenticeships' quote slider and FAQ, Product Range — Holzspielwaren's "Jetzt aktuell" product overview, and Kreativatelier's FAQ.
 
+### Fixed
+- Product range cards: the cream bar under a closed card is no longer ~16px taller than the design draws it, on mobile and tablet alike. The space meant to sit between the title and the description was held open even with the description closed.
+
 ## [1.18.4] — 2026-09-14
 
 ### Fixed
