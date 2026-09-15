@@ -1,25 +1,26 @@
 /**
- * Product range cards (template-parts/modules/product-overview.php) — below xl the card's
- * copy opens on a tap, closes on the +/-, and only then does the card behave as the link
- * it is.
+ * Product range cards (template-parts/modules/product-overview.php) — below xl the card
+ * opens and closes its own copy, and "zum Produkt" is the only thing that leaves the page.
  *
  * The whole card is an <a>, which is right with a pointer: hovering opens the copy and a
  * click goes to the product. Without hover there is no in-between — the copy never shows
- * and the first tap leaves the page, so the text the design writes for these cards is
- * unreachable on a phone. Below xl the stylesheet therefore drops the hover reveal and
- * .is-open, set here, becomes the only thing that opens a card.
+ * and a tap leaves the page, so the text the design writes for these cards is unreachable
+ * on a phone. Below xl the stylesheet therefore drops the hover reveal and .is-open, set
+ * here, becomes the only thing that opens a card.
  *
  * Which gesture does what, below xl:
  *
- *   tap the +        opens the copy        tap the -   closes it again
- *   tap the card     opens the copy, then, once open, follows the card's link
- *   tap "zum Produkt"  follows the link, open or closed
- *   Enter on the card  the same two steps; Escape closes it again
+ *   tap the card, or its +/-   opens the copy; tap again and it closes
+ *   tap "zum Produkt"          follows the link, open or closed
+ *   Enter on the card          opens and closes it too; Escape closes it
  *
- * Escape is there because the +/- cannot be: it is a <span>, so it is not in the tab
- * order and a screen reader never announces it. Without it a keyboard user could open a
- * card and not close it — and that is not a rare corner, since WCAG's 400% zoom puts a
- * desktop keyboard user in this same below-xl layout.
+ * So the card's own href never fires from a tap down here — only the named link does. The
+ * element stays an <a> regardless, which is what keeps long-press, "open in new tab" and
+ * copy-link working, and keeps the destination visible to a crawler.
+ *
+ * Escape is there because the +/- cannot be reached without it: it is a <span>, so it is
+ * not in the tab order and a screen reader never announces it. Enter on the card does the
+ * same job, and Escape gives a way out that does not toggle.
  *
  * No media query decides where this applies. An earlier version gated the whole thing on
  * (hover: hover) at load, which resolved once and could not be reviewed in a browser's
@@ -85,33 +86,19 @@ function bindCard(card) {
       return;
     }
 
-    // The +/- is a state control and never a way out: it opens, it closes, it does not
-    // navigate. It sits inside the card's own <a>, so the default has to be stopped in
-    // both directions.
-    if (event.target.closest(TOGGLE)) {
-      event.preventDefault();
-
-      const isOpen = card.classList.toggle(OPEN);
-
-      card.setAttribute('aria-expanded', String(isOpen));
-
-      return;
-    }
-
-    // "zum Produkt" is the way out, open or closed — it is the only part of the card that
-    // says where the tap leads.
+    // "zum Produkt" is the only way out — it is the one part of the card that says where
+    // the tap leads, so it is the one part that is allowed to leave.
     if (event.target.closest(LINK)) {
       return;
     }
 
-    // Already open: this tap means "go".
-    if (card.classList.contains(OPEN)) {
-      return;
-    }
-
+    // Everything else on the card, the +/- included, is the same switch. No branch for the
+    // icon: it sits inside the card, so this handler is already the one that hears it.
     event.preventDefault();
-    card.classList.add(OPEN);
-    card.setAttribute('aria-expanded', 'true');
+
+    const isOpen = card.classList.toggle(OPEN);
+
+    card.setAttribute('aria-expanded', String(isOpen));
   });
 
   // Escape closes the card that has focus — the keyboard's counterpart to tapping the -.

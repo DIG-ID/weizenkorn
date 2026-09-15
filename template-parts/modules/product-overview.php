@@ -20,7 +20,10 @@
  *     → image  (image → ID)      the card image
  *     → title  (text)            "Unikerzen", "Kerzenzubehör"
  *     → text   (textarea)        the copy the hover reveals
- *     → link   (link, optional)  makes the whole card clickable and shows "zum Produkt".
+ *     → link   (link, optional)  shows "zum Produkt" and, at desktop, makes the whole
+ *                               card clickable. Below xl the card is a switch for its
+ *                               own copy and only that link leaves the page — see
+ *                               assets/js/product-overview.js.
  *                                A Link holds any URL, so the product PDFs go here too.
  *
  * Usage:
