@@ -253,11 +253,12 @@
         grid-column: 7 / span 5
 
       // A card in an odd position with nothing after it has no partner, so it is alone on
-      // its row — and there it takes nine columns from the second rather than the five a
-      // paired card gets. A row of two is untouched.
+      // its row — and there it runs from column 2 to column 11, the full width the pair
+      // above it covers, rather than the five columns a paired card gets. A row of two is
+      // untouched.
       //
       // Two pseudo-classes against the parity rules' one, so this wins on specificity and
       // does not depend on coming after them.
       .product-overview__card:last-child:nth-child(odd)
-        grid-column: 2 / span 9
+        grid-column: 2 / span 10
 
