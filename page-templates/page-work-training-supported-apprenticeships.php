@@ -7,13 +7,13 @@
  * shared intro-cta module ("Auf der Suche nach der passenden
  * Ausbildungsstelle?"), this page's own "Unsere Ausbildung" programme
  * bento, the shared numbered-steps module ("Der Weg zu einem Platz bei
- * Weizenkorn in 4 Schritten"), the shared quote-slider (commented out below
- * — TEMP, launch), the shared contact-person module ("Bereit für
- * Weizenkorn?"), the shared faq
- * module, and the shared preview-cards module ("Entdecken Sie mehr"),
- * unprefixed like every other use of it — see the module's own docblock
- * for the two ACF Clone fields it expects. The Figma frame's "Das könnte
- * Sie auch interessieren" section is intentionally not built.
+ * Weizenkorn in 4 Schritten"), the shared quote-slider and the shared faq
+ * module (both commented out below — TEMP, launch), the shared
+ * contact-person module ("Bereit für Weizenkorn?"), and the shared
+ * preview-cards module ("Entdecken Sie mehr"), unprefixed like every other
+ * use of it — see the module's own docblock for the two ACF Clone fields it
+ * expects. The Figma frame's "Das könnte Sie auch interessieren" section is
+ * intentionally not built.
  *
  * "Einblicke unserer Auszubildenden" (a card carousel, the same shape as
  * Supported Jobs' diversity-cards-slider) sits between the intro and
@@ -42,7 +42,9 @@ if ( have_posts() ) :
 		// Uncomment to bring it back.
 		/* get_template_part( 'template-parts/modules/quote-slider' ); */
 		get_template_part( 'template-parts/modules/contact-person', null, array( 'prefix' => 'apprenticeships_' ) );
-		get_template_part( 'template-parts/modules/faq', null, array( 'prefix' => 'apprenticeships_' ) );
+		// TEMP — LAUNCH: hidden at the client's own request, no content ready for it yet.
+		// Uncomment to bring it back.
+		/* get_template_part( 'template-parts/modules/faq', null, array( 'prefix' => 'apprenticeships_' ) ); */
 		get_template_part( 'template-parts/modules/preview-cards' );
 
 		do_action( 'after_main_content' );
