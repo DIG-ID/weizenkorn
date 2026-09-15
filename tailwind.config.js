@@ -27,6 +27,7 @@ module.exports = {
     'md:hidden',
     'md:inline',
     'xl:hidden',
+    'xl:inline',
   ],
   theme: {
     fontFamily: {

@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 ### Added
 - The home page's services slider advances on its own every five seconds, as the diversity slider already did.
 - Product range cards carry the same red +/- as the preview cards on tablet and mobile: tapping the card, or the +/-, opens the card's description and tapping again closes it. On a card that links to a product, "zum Produkt" is the only thing that leaves the page, so the description can be read without losing the list. Keyboard: Enter opens and closes, Escape closes.
+- Titles' `<br>` breakpoint classes gained a fourth option, `xl:inline`: a break on mobile only, joined back into one line from tablet up.
 
 ### Changed
 - Product range cards open on a tap on tablet and mobile rather than on hover, which no touch screen really has — the description used to depend on the browser's leftover hover state and could open or not open on the same gesture. Desktop is unchanged: the pointer opens the description and a click goes to the product.
