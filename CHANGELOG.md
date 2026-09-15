@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Titles' `<br>` breakpoint classes gained a fourth option, `xl:inline`: a break on mobile only, joined back into one line from tablet up.
 
 ### Changed
+- Bakery download cards: when an odd number of them leaves the last card alone on its row, that card runs wider than a paired one instead of sitting half-width with a gap beside it. A row of two is unchanged.
 - Product range cards open on a tap on tablet and mobile rather than on hover, which no touch screen really has — the description used to depend on the browser's leftover hover state and could open or not open on the same gesture. Desktop is unchanged: the pointer opens the description and a click goes to the product.
 - Home hero: more breathing room inside the bordered panel on mobile, with the title, tagline and body text sitting closer together.
 - Page hero subtitles hold their 26px size through the narrower desktop widths and only step up to 48px on a wide screen, instead of jumping at 1280px.
