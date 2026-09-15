@@ -62,7 +62,10 @@
     &__card:last-child:nth-child(odd)
       grid-column: span 6
 
-    &__card:last-child:nth-child(odd) &__media
+    // The taller image is the default variant's: its cards gain height along with the
+    // width when one is left alone on a row. The downloads variant keeps the 256 it draws
+    // at this width whatever happens, so there a lone card grows sideways and not down.
+    &:not(.product-overview--downloads) .product-overview__card:last-child:nth-child(odd) .product-overview__media
       height: 472px
 
   // A height and not an aspect ratio: the cards come in two widths and the frames give
