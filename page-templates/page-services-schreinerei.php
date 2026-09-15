@@ -24,7 +24,7 @@
  *                      button each. The button component picks the download arrow off the
  *                      URL, so a PDF and a page can share the row.
  *   9. cta-form        shared module
- *  10. faq             shared module
+ *  10. faq             shared module (commented out below — TEMP, launch)
  *  11. preview-cards   shared module, unprefixed like every other use of it — see the
  *                      module's own docblock for the two ACF Clone fields it expects
  *
@@ -63,7 +63,9 @@ if ( have_posts() ) :
 		get_template_part( 'template-parts/modules/service-info-downloads' );
 		get_template_part( 'template-parts/modules/location' );
 		get_template_part( 'template-parts/modules/cta-form' );
-		get_template_part( 'template-parts/modules/faq' );
+		// TEMP — LAUNCH: hidden at the client's own request, no content ready for it yet.
+		// Uncomment to bring it back.
+		/* get_template_part( 'template-parts/modules/faq' ); */
 		get_template_part( 'template-parts/modules/preview-cards' );
 
 		do_action( 'after_main_content' );

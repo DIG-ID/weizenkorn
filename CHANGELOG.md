@@ -22,6 +22,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Filter panel (Open Positions archive, Das Weizenkorn Team): matches the design — the checkbox is no longer red, the rule under each group heading moved to below it instead of under the close button, and spacing throughout was tightened up. A group with many terms now scrolls within its own space instead of pushing past the close button and the Apply/Clear buttons, and that scroll no longer fights the page's own smooth-scrolling for the mouse wheel.
 - Open Positions single post: "Weitere Stellenausschreibungen" reads "Weitere Stellen", and its related-jobs cards all match the height of the tallest one instead of each following its own excerpt length.
 
+### Removed
+- A handful of sections are hidden for launch, with no content ready for them yet: Product Range — Xyloba's "Projekte & Referenzen", the Treuhand and Schreinerei pages' FAQ, Supported Apprenticeships' quote slider, Product Range — Holzspielwaren's main product overview, and Kreativatelier's FAQ.
+
 ## [1.18.4] — 2026-09-14
 
 ### Fixed

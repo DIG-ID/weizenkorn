@@ -6,11 +6,11 @@
  * One template per range — see product-range-kerzen.php for why the assignment is
  * explicit and not single-products-{slug}.php, and for how to attach it to a post.
  *
- * SECTIONS, in order: hero-section, product-overview, usp-band, craft-showcase,
- * "Jetzt aktuell" (product-overview again, through the `latest_` prefix), quote-slider,
- * stories-references, order-form ('split' variant), cta-form, preview-cards (unprefixed,
- * like every other use of it — see the module's own docblock for the two ACF Clone fields
- * it expects).
+ * SECTIONS, in order: hero-section, product-overview (commented out below — TEMP,
+ * launch), usp-band, craft-showcase, "Jetzt aktuell" (product-overview again, through the
+ * `latest_` prefix), quote-slider, stories-references, order-form ('split' variant),
+ * cta-form, preview-cards (unprefixed, like every other use of it — see the module's own
+ * docblock for the two ACF Clone fields it expects).
  *
  * ACF. On a single there is a post context, so every module reads the current post with
  * no prefix. Clone the GROUP per section, never a repeater inside one: a cloned repeater
@@ -34,7 +34,9 @@ if ( have_posts() ) :
 		do_action( 'before_main_content' );
 
 		get_template_part( 'template-parts/modules/hero-section' );
-		get_template_part( 'template-parts/modules/product-overview' );
+		// TEMP — LAUNCH: hidden at the client's own request, no content ready for it yet.
+		// Uncomment to bring it back.
+		/* get_template_part( 'template-parts/modules/product-overview' ); */
 		get_template_part( 'template-parts/modules/usp-band' );
 		get_template_part( 'template-parts/modules/craft-showcase' );
 
