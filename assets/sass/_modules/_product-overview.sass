@@ -252,3 +252,12 @@
       .product-overview__card:nth-child(even)
         grid-column: 7 / span 5
 
+      // An odd count leaves the last card with no partner, and a half-width card alone on
+      // a row reads as a gap rather than a choice. It takes the pair's whole width instead
+      // — the same answer the default variant gives its own leftover row, one rule up.
+      //
+      // Two pseudo-classes against the parity rules' one, so this wins on specificity
+      // without needing to come after them or to repeat their columns.
+      .product-overview__card:last-child:nth-child(odd)
+        grid-column: 2 / span 10
+
