@@ -29,6 +29,14 @@ export function initFilterPanel() {
   const clearBtn = document.querySelector('.js-filter-panel-clear');
   const inputs = () => Array.prototype.slice.call(panel.querySelectorAll('.filter-panel__input'));
 
+  // body.filter-panel-open freezes the page with position:fixed rather than
+  // overflow:hidden, so a stray scroll never reaches the page behind the panel (see
+  // that class's own comment in _components/_filter-panel.sass for why). Fixed
+  // positioning drops the body to the top, so `top` holds its visual place at minus the
+  // saved scroll position — same technique as assets/js/menu-overlay.js's own
+  // openMenu()/closeMenu().
+  let savedScrollY = 0;
+
   const open = () => {
     panel.classList.add('is-open');
 
@@ -39,6 +47,8 @@ export function initFilterPanel() {
 
     panel.setAttribute('aria-hidden', 'false');
     trigger.setAttribute('aria-expanded', 'true');
+    savedScrollY = window.scrollY;
+    document.body.style.top = `-${savedScrollY}px`;
     document.body.classList.add('filter-panel-open');
 
     if (closeBtn) {
@@ -56,6 +66,8 @@ export function initFilterPanel() {
     panel.setAttribute('aria-hidden', 'true');
     trigger.setAttribute('aria-expanded', 'false');
     document.body.classList.remove('filter-panel-open');
+    document.body.style.top = '';
+    window.scrollTo(0, savedScrollY);
     trigger.focus();
   };
 

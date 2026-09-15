@@ -60,33 +60,50 @@ $jf_groups = array(
 
 <aside id="job-filters-panel" class="filter-panel__panel js-filter-panel" role="dialog" aria-modal="true" aria-hidden="true" aria-label="<?php esc_attr_e( 'Filter', 'weizenkorn' ); ?>">
 	<div class="filter-panel__head">
-		<button type="button" class="filter-panel__close js-filter-panel-close inline-flex items-center gap-2 text-brand-red">
+		<button type="button" class="filter-panel__close js-filter-panel-close inline-flex items-center gap-4 text-brand-red">
 			<span class="-scale-x-100 shrink-0" aria-hidden="true"><?php weizenkorn_the_svg_icon( 'arrow-right' ); ?></span>
 			<?php esc_html_e( 'Filter schliessen', 'weizenkorn' ); ?>
 		</button>
 	</div>
 
 	<div class="filter-panel__body">
-		<?php foreach ( $jf_groups as $jf_key => $jf_group ) : ?>
-			<?php if ( empty( $jf_group['terms'] ) || is_wp_error( $jf_group['terms'] ) ) : ?>
-				<?php continue; ?>
-			<?php endif; ?>
-			<fieldset class="filter-panel__group">
-				<legend class="filter-panel__group-title label-overline text-brand-red"><?php echo esc_html( $jf_group['label'] ); ?></legend>
-				<ul class="filter-panel__list">
-					<?php foreach ( $jf_group['terms'] as $jf_term ) : ?>
-						<li class="filter-panel__item">
-							<label class="filter-panel__checkbox">
-								<input type="checkbox" class="filter-panel__input" data-filter="<?php echo esc_attr( $jf_key ); ?>" value="<?php echo esc_attr( $jf_term->slug ); ?>">
-								<span class="filter-panel__box" aria-hidden="true"></span>
-								<span class="filter-panel__label"><?php echo esc_html( $jf_term->name ); ?></span>
-								<span class="filter-panel__count"><?php echo esc_html( $jf_term->count ); ?></span>
-							</label>
-						</li>
-					<?php endforeach; ?>
-				</ul>
-			</fieldset>
-		<?php endforeach; ?>
+		<?php
+		/*
+		 * The scrollable box itself (_components/_filter-panel.sass's own __groups) —
+		 * both groups scroll together in here, inset from this section's own close
+		 * button and the Apply/Clear footer by __body's padding, which stays put
+		 * regardless of scroll position since it lives outside this element.
+		 *
+		 * data-lenis-prevent: assets/js/gsap.js runs Lenis globally, which hijacks the
+		 * page's own wheel scroll for its smooth-scroll effect — without this attribute
+		 * (Lenis' own documented escape hatch, its CSS already in _components/_lenis.sass)
+		 * it swallows wheel events over this box too, and the mouse wheel stops doing
+		 * anything here at all rather than scrolling it natively.
+		 */
+		?>
+		<div class="filter-panel__groups" data-lenis-prevent>
+			<?php foreach ( $jf_groups as $jf_key => $jf_group ) : ?>
+				<?php if ( empty( $jf_group['terms'] ) || is_wp_error( $jf_group['terms'] ) ) : ?>
+					<?php continue; ?>
+				<?php endif; ?>
+				<fieldset class="filter-panel__group">
+					<legend class="filter-panel__group-title label-overline text-brand-red"><?php echo esc_html( $jf_group['label'] ); ?></legend>
+					<hr class="filter-panel__group-line" aria-hidden="true">
+					<ul class="filter-panel__list">
+						<?php foreach ( $jf_group['terms'] as $jf_term ) : ?>
+							<li class="filter-panel__item">
+								<label class="filter-panel__checkbox">
+									<input type="checkbox" class="filter-panel__input" data-filter="<?php echo esc_attr( $jf_key ); ?>" value="<?php echo esc_attr( $jf_term->slug ); ?>">
+									<span class="filter-panel__box" aria-hidden="true"></span>
+									<span class="filter-panel__label"><?php echo esc_html( $jf_term->name ); ?></span>
+									<span class="filter-panel__count"><?php echo esc_html( $jf_term->count ); ?></span>
+								</label>
+							</li>
+						<?php endforeach; ?>
+					</ul>
+				</fieldset>
+			<?php endforeach; ?>
+		</div>
 	</div>
 
 	<div class="filter-panel__foot">
