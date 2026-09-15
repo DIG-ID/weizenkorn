@@ -34,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Open Positions single post: "Weitere Stellenausschreibungen" reads "Weitere Stellen", and its related-jobs cards all match the height of the tallest one instead of each following its own excerpt length.
 - News posts: the article title runs to a narrower column at desktop, so a long headline wraps sooner instead of running most of the way across the page.
 - Work & Training's diversity slider: on mobile the caption sits below its photo instead of over it, leaving the picture unobscured. Tablet and desktop keep the caption overlaid as before.
+- Treuhand page: the offer grid and the quote slider now sit above the teaser section rather than below it.
 
 ### Removed
 - A handful of sections are hidden for launch, with no content ready for them yet: Product Range — Xyloba's "Projekte & Referenzen", the Treuhand and Schreinerei pages' FAQ, Supported Apprenticeships' quote slider and FAQ, Product Range — Holzspielwaren's "Jetzt aktuell" product overview, Kreativatelier's FAQ, and About Us' quote slider.

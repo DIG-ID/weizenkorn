@@ -46,6 +46,9 @@ if ( have_posts() ) :
 
 		get_template_part( 'template-parts/modules/hero-section' );
 		get_template_part( 'template-parts/modules/usp-band' );
+
+		get_template_part( 'template-parts/modules/offer-grid' );
+		get_template_part( 'template-parts/modules/quote-slider' );
 		get_template_part(
 			'template-parts/modules/teaser',
 			null,
@@ -54,8 +57,6 @@ if ( have_posts() ) :
 				'variant' => 'stacked',
 			)
 		);
-		get_template_part( 'template-parts/modules/offer-grid' );
-		get_template_part( 'template-parts/modules/quote-slider' );
 		get_template_part( 'template-parts/modules/location' );
 		get_template_part( 'template-parts/modules/cta-form' );
 		// TEMP — LAUNCH: hidden at the client's own request, no content ready for it yet.
