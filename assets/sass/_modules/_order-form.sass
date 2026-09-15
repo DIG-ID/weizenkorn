@@ -267,6 +267,16 @@
     &:focus-visible
       @apply text-brand-red
 
+  // A <span>, not an <a> — order-form.php prints this instead of &__link when the archive
+  // disables the reseller link. Same look at rest, just no hover/focus colour change since
+  // there is nothing to click.
+  &__link--disabled
+    @apply cursor-default
+
+    &:hover,
+    &:focus-visible
+      @apply text-brand-dark
+
   // The helper draws the arrow at 24x19; the design uses a smaller one on mobile, so
   // the SVG is scaled rather than a second icon added to the helper.
   &__link-icon

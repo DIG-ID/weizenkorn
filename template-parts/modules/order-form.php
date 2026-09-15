@@ -45,10 +45,14 @@
  *   );
  *
  * @param array $args {
- *     @type int|string $post_id Optional. ACF post id / options store to read from.
- *                               Default: the current post.
- *     @type string     $prefix  Optional. Prepended to every field name.
- *     @type string     $variant Optional. 'split' for the product-range arrangement.
+ *     @type int|string $post_id                Optional. ACF post id / options store to
+ *                                               read from. Default: the current post.
+ *     @type string     $prefix                 Optional. Prepended to every field name.
+ *     @type string     $variant                Optional. 'split' for the product-range
+ *                                               arrangement.
+ *     @type bool       $disable_reseller_link  Optional. True prints the reseller card's
+ *                                               title as plain text, with no href and no
+ *                                               arrow — used on the archive.
  * }
  *
  * @package weizenkorn
@@ -59,7 +63,8 @@
 $of_ctx    = ( ! empty( $args['post_id'] ) ) ? $args['post_id'] : get_the_ID();
 $of_prefix = ! empty( $args['prefix'] ) ? $args['prefix'] : '';
 
-$of_split = ( ! empty( $args['variant'] ) && 'split' === $args['variant'] );
+$of_split                 = ( ! empty( $args['variant'] ) && 'split' === $args['variant'] );
+$of_disable_reseller_link = ! empty( $args['disable_reseller_link'] );
 
 // Both halves are optional, but with neither there is no section.
 if ( ! get_field( $of_prefix . 'order_form_reseller_title', $of_ctx )
@@ -113,7 +118,13 @@ if ( ! get_field( $of_prefix . 'order_form_reseller_title', $of_ctx )
 									<?php
 									$of_link = get_field( $of_prefix . 'order_form_reseller_link', $of_ctx );
 
-									if ( is_array( $of_link ) && ! empty( $of_link['url'] ) ) :
+									if ( $of_disable_reseller_link && is_array( $of_link ) && ! empty( $of_link['url'] ) ) :
+										?>
+										<span class="order-form__link order-form__link--disabled">
+											<span><?php echo esc_html( ! empty( $of_link['title'] ) ? $of_link['title'] : $of_link['url'] ); ?></span>
+										</span>
+										<?php
+									elseif ( is_array( $of_link ) && ! empty( $of_link['url'] ) ) :
 										?>
 										<a class="order-form__link" href="<?php echo esc_url( $of_link['url'] ); ?>"<?php echo ( '_blank' === ( $of_link['target'] ?? '' ) ) ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>>
 											<span><?php echo esc_html( ! empty( $of_link['title'] ) ? $of_link['title'] : $of_link['url'] ); ?></span>

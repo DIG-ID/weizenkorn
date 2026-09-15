@@ -166,6 +166,13 @@
   &__more
     @apply link-inline inline-flex items-center gap-2 mt-4
 
+    // Smaller arrow on mobile, matching the tighter card at that size — width only, height
+    // auto, so either icon this can render (arrow-right or, on a download URL,
+    // arrow-download) scales down keeping its own aspect ratio. Unset again from tablet up,
+    // so both keep their normal intrinsic size there.
+    svg
+      @apply w-[18px] h-auto md:w-auto md:h-auto
+
   // Desktop: hover or keyboard focus anywhere in the card opens it — :focus-within, not
   // :focus-visible, because the "mehr" link is a real focusable child sitting inside the
   // (collapsed) reveal itself; a keyboard user tabbing to it needs the panel to already be

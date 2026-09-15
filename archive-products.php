@@ -57,8 +57,9 @@ get_template_part(
 	'template-parts/modules/order-form',
 	null,
 	array(
-		'post_id' => 'option',
-		'prefix'  => 'products_archive_',
+		'post_id'               => 'option',
+		'prefix'                => 'products_archive_',
+		'disable_reseller_link' => true,
 	)
 );
 get_template_part(
