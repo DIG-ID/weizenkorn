@@ -39,7 +39,13 @@ if ( have_posts() ) :
 
 		do_action( 'before_main_content' );
 
-		get_template_part( 'template-parts/modules/hero-section' );
+		// 'lockup': this page's separator is the mark with "Weizenkorn Bäckerei" set under
+		// it, where every other page uses the bare mark. See the module's own note.
+		get_template_part(
+			'template-parts/modules/hero-section',
+			null,
+			array( 'separator' => 'lockup' )
+		);
 		get_template_part( 'template-parts/modules/our-locations' );
 		get_template_part( 'template-parts/modules/location' );
 		get_template_part( 'template-parts/modules/usp-band' );

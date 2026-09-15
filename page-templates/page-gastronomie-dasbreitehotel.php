@@ -27,7 +27,13 @@ if ( have_posts() ) :
 
 		do_action( 'before_main_content' );
 
-		get_template_part( 'template-parts/modules/hero-section' );
+		// 'wide-lockup': DasBreiteHotel's "ganz schön anders." line is set far smaller than the
+		// name beside it, and needs the room. See the module's own note.
+		get_template_part(
+			'template-parts/modules/hero-section',
+			null,
+			array( 'separator' => 'wide-lockup' )
+		);
 		get_template_part( 'template-parts/modules/usp-band' );
 		get_template_part( 'template-parts/modules/photo-mosaic', null, array( 'variant' => 'gastronomy' ) );
 		get_template_part( 'template-parts/modules/quote-slider' );

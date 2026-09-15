@@ -40,6 +40,12 @@
  *     @type int|string $post_id Optional. ACF post id / options store to read the fields
  *                               from. Default: the current post.
  *     @type string     $prefix  Optional. Prepended to every field name.
+ *     @type string     $separator Optional. Which kind of logo the separator holds, which
+ *                                 decides how much room it is given: 'lockup' for a mark
+ *                                 with the name under it, 'wide-lockup' for a wordmark
+ *                                 with a second line set much smaller. Omit for a bare
+ *                                 mark or a single self-sufficient wordmark. See
+ *                                 $hero_separator_ceilings below for the reasoning.
  * }
  *
  * @package weizenkorn
@@ -47,9 +53,35 @@
  * @since 1.4.0
  */
 
-$hero_ctx      = ( ! empty( $args['post_id'] ) ) ? $args['post_id'] : get_the_ID();
-$hero_prefix   = ! empty( $args['prefix'] ) ? $args['prefix'] : '';
-$hero_subtitle = get_field( $hero_prefix . 'hero_section_subtitle', $hero_ctx );
+$hero_ctx    = ( ! empty( $args['post_id'] ) ) ? $args['post_id'] : get_the_ID();
+$hero_prefix = ! empty( $args['prefix'] ) ? $args['prefix'] : '';
+
+/*
+ * The separator logo is sized by a box and not by a height: these logos are wordmarks,
+ * bare marks and lockups, whose proportions run from 1.86 to 3.93, and matching their
+ * heights left the widest nearly twice the width of the narrowest. Capping both lets each
+ * one meet whichever limit its own shape reaches first.
+ */
+$hero_separator_ceilings = array(
+	// A bare mark, or a single wordmark heavy enough to carry itself: Weizenkorn's wheat
+	// and arc, and Rhyvage's one word in display serif.
+	''            => 'max-h-[29px] max-w-[86px] md:max-h-[64px] md:max-w-[189px] xl:max-h-[91px] xl:max-w-[270px]',
+
+	// A mark with the name set under it, so three elements share the box where the others
+	// have one — Weizenkorn Bäckerei. Its shape is nearly square, so the height is what
+	// holds it back and the height is what gives.
+	'lockup'      => 'max-h-[43px] max-w-[86px] md:max-h-[95px] md:max-w-[189px] xl:max-h-[135px] xl:max-w-[270px]',
+
+	// The same problem in a wide shape: a wordmark with a second line in a much smaller
+	// size beside or under it — Cantina e9's "Restaurant", DasBreiteHotel's "ganz schön
+	// anders.". Wide enough that the WIDTH is the limit, so raising only the height would
+	// do nothing; both ceilings go up together.
+	'wide-lockup' => 'max-h-[35px] max-w-[103px] md:max-h-[77px] md:max-w-[227px] xl:max-h-[109px] xl:max-w-[324px]',
+);
+
+$hero_separator_key     = ( ! empty( $args['separator'] ) && isset( $hero_separator_ceilings[ $args['separator'] ] ) ) ? $args['separator'] : '';
+$hero_separator_classes = 'w-auto h-auto ' . $hero_separator_ceilings[ $hero_separator_key ];
+$hero_subtitle          = get_field( $hero_prefix . 'hero_section_subtitle', $hero_ctx );
 
 // Whichever of the two titles is last needs the mobile-only gap before the body column
 // stacks under it — the subtitle when there is one, the title itself otherwise.
@@ -187,7 +219,7 @@ $hero_image_atts = array(
 					'full',
 					false,
 					array(
-						'class'   => 'w-auto h-[32px] md:h-[71px] xl:h-[101px] max-w-full',
+						'class'   => $hero_separator_classes,
 						'loading' => 'lazy',
 					)
 				);
