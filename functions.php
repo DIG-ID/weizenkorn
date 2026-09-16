@@ -42,3 +42,5 @@ require get_template_directory() . '/inc/security.php';
 require get_template_directory() . '/inc/schema.php';
 
 require get_template_directory() . '/inc/social-image.php';
+
+require get_template_directory() . '/inc/seo-description.php';
