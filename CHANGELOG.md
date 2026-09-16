@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 ## [1.18.5] — 2026-09-14
 
 ### Added
+- The craft showcase section takes a Vimeo link, the way the About Us video panel already does — useful where the film is too long or too heavy to sit in the media library. The page shows a still with a play button and only fetches the player when someone presses it, so nothing is requested from Vimeo until a visitor asks for it. A Vimeo link wins over uploaded video files on the same section.
 - Sharing a page on social media now shows that page's own hero picture. The theme keeps its heroes in custom fields, which the SEO plugin cannot see, so every page used to share without an image. Pages that draw no hero — the three legal pages and the job postings — fall back to the default social image set in the plugin.
 - The home page's services slider advances on its own every five seconds, as the diversity slider already did.
 - Product range cards carry the same red +/- as the preview cards on tablet and mobile: tapping the card, or the +/-, opens the card's description and tapping again closes it. On a card that links to a product, "zum Produkt" is the only thing that leaves the page, so the description can be read without losing the list. Keyboard: Enter opens and closes, Escape closes.

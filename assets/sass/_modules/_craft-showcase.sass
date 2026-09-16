@@ -95,3 +95,22 @@
       height: auto
       grid-column: 7 / span 5
       grid-row: 1 / span 2
+
+  // A Vimeo embed has no height of its own and the film is 16/9, so the box follows the
+  // film rather than the photograph — the same swap video-panel makes.
+  //
+  // Two classes and last in the file, both deliberately: the ratios above are one class,
+  // and the pair variant's are two, so anything weaker loses at one width or another. The
+  // desktop case is not cosmetic — there __media--side takes aspect-ratio: auto and
+  // height: auto so it can stretch across the text's two rows, and an iframe has no height
+  // to give it, so without this the box collapses to nothing and the film never shows.
+  .craft-showcase__media--side.craft-showcase__media--embed
+    aspect-ratio: 16 / 9
+    height: auto
+
+    @media (min-width: 768px)
+      aspect-ratio: 16 / 9
+
+    @media (min-width: 1280px)
+      aspect-ratio: 16 / 9
+      grid-row: 1

@@ -30,6 +30,10 @@
  *   craft_showcase_image_secondary  (image → ID) the right, taller image. Also the video's
  *                                   poster, so it is what a reader sees before the video
  *                                   starts and what stays if it cannot play at all.
+ *   craft_showcase_vimeo            (url/oembed) optional. A Vimeo link. Set it and it wins
+ *                                   over the uploaded files below, and the section draws a
+ *                                   poster with a play button instead — the player itself is
+ *                                   only fetched on the click. See assets/js/video-facade.js.
  *   craft_showcase_enable_video     (true/false) optional. When on, the two video fields
  *                                   take the right column's place. Named as on the home
  *                                   page's hero, which set the convention.
@@ -114,6 +118,32 @@ $cs_has_video    = ( $cs_video_webm || $cs_video_mp4 );
 
 $cs_side_image = get_field( $cs_prefix . 'craft_showcase_image_secondary', $cs_ctx );
 $cs_poster     = $cs_side_image ? wp_get_attachment_image_url( $cs_side_image, 'large' ) : '';
+
+/*
+ * A Vimeo link, for a film that is too long or too heavy to sit in the media library: an
+ * mp4 there is one file at one bitrate, so a phone on mobile data downloads exactly what a
+ * desktop on fibre does. Set it and it wins over the uploaded files — the same order
+ * video-panel uses, and the same helpers, so a section behaves the same wherever it takes
+ * a video.
+ */
+$cs_vimeo_field = get_field( $cs_prefix . 'craft_showcase_vimeo', $cs_ctx );
+$cs_vimeo       = weizenkorn_get_vimeo_embed_url( $cs_vimeo_field );
+
+/*
+ * A video since deleted, made private or re-hashed would still draw its facade, and the
+ * visitor would only find out on the click. Asked of Vimeo once and cached, so a gone video
+ * falls back to the image instead.
+ */
+$cs_vimeo_data  = $cs_vimeo ? weizenkorn_get_vimeo_data( $cs_vimeo_field ) : array();
+$cs_vimeo_thumb = '';
+
+if ( $cs_vimeo && empty( $cs_vimeo_data['available'] ) ) {
+	$cs_vimeo = '';
+} elseif ( $cs_vimeo && ! $cs_side_image ) {
+	// Vimeo's own still, so an unfilled image field is a picture rather than a play button
+	// on a dark rectangle. The uploaded one always wins where there is one.
+	$cs_vimeo_thumb = ! empty( $cs_vimeo_data['thumbnail'] ) ? $cs_vimeo_data['thumbnail'] : '';
+}
 ?>
 <?php
 // Adjacent siblings' vertical margins collapse, so these do not add to the previous
@@ -152,9 +182,46 @@ $cs_poster     = $cs_side_image ? wp_get_attachment_image_url( $cs_side_image, '
 				</div>
 			<?php endif; ?>
 
-			<?php if ( $cs_has_video || $cs_side_image ) : ?>
-				<figure class="craft-showcase__media craft-showcase__media--side">
-					<?php if ( $cs_has_video ) : ?>
+			<?php if ( $cs_vimeo || $cs_has_video || $cs_side_image ) : ?>
+				<figure class="craft-showcase__media craft-showcase__media--side<?php echo $cs_vimeo ? ' craft-showcase__media--embed' : ''; ?>">
+					<?php if ( $cs_vimeo ) : ?>
+						<?php
+						// A facade, not the iframe itself. Vimeo's player loads a few hundred KB
+						// and sets its cookies the moment an iframe exists, whether or not anyone
+						// watches — so the page draws the poster and a play button, and the
+						// iframe is built by the click. Nothing third-party is fetched until a
+						// visitor asks for it, which is also what keeps this off a consent banner.
+						?>
+						<button
+							type="button"
+							class="video-facade"
+							data-video-facade="<?php echo esc_url( $cs_vimeo ); ?>"
+							aria-label="<?php esc_attr_e( 'Play the video', 'weizenkorn' ); ?>"
+						>
+							<?php
+							if ( $cs_side_image ) {
+								echo wp_get_attachment_image(
+									$cs_side_image,
+									'large',
+									false,
+									array(
+										'class'   => 'w-full h-full object-cover',
+										'loading' => 'lazy',
+									)
+								);
+							} elseif ( $cs_vimeo_thumb ) {
+								// Decorative: the button it sits in carries the accessible name.
+								printf(
+									'<img src="%s" alt="" class="w-full h-full object-cover" loading="lazy" decoding="async" />',
+									esc_url( $cs_vimeo_thumb )
+								);
+							}
+							?>
+							<span class="video-facade__play" aria-hidden="true">
+								<?php weizenkorn_the_svg_icon( 'play' ); ?>
+							</span>
+						</button>
+					<?php elseif ( $cs_has_video ) : ?>
 						<?php
 						// muted is what makes autoplay allowed at all — a browser blocks a video
 						// with sound that starts on its own. playsinline keeps iOS from taking it
