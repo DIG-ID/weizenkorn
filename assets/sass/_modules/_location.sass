@@ -1,6 +1,12 @@
 // Location — template-parts/modules/location.php
 
 .location
+  // The section carries id="location" for a link elsewhere (or on another page entirely,
+  // e.g. /kontakt#location) to jump straight to it. assets/js/anchor-scroll.js already
+  // drives that jump itself, header offset included, but this is the plain-CSS fallback —
+  // the browser's own native fragment jump (no JS, or before it has run) honours
+  // scroll-margin-top, so the fixed header still never ends up over the section's heading.
+  scroll-margin-top: var(--header-height)
 
   // Google Maps needs a height of its own here: the API renders into a zero-height box
   // without complaint, and the section then looks like it simply did not load. A ratio
