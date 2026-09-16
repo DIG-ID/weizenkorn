@@ -347,6 +347,25 @@ endif;
 add_action( 'acf/init', 'weizenkorn_acf_google_maps_key' );
 
 /**
+ * ACF strips every ACF field on a post through wp_kses_post_deep() on save whenever the
+ * saving user lacks the 'unfiltered_html' capability (acf_allow_unfiltered_html(), in the
+ * plugin's own acf-user-functions.php) — not just the field being edited, the whole form.
+ * A WYSIWYG field an admin filled in with markup outside wp_kses_post()'s allow list (a
+ * custom class, an embed) then loses that markup, silently and permanently, the next time
+ * anyone without that capability updates the same post — which is what happened on a
+ * handful of Open Positions posts. Safe to allow outright here: every ACF WYSIWYG value
+ * this theme ever echoes already goes through wp_kses_post() of its own at output time
+ * (job-header.php, class-weizenkorn-schema-jobposting.php, and so on), so the front end is
+ * no less protected either way — only what a logged-in editor can save is affected.
+ *
+ * @return bool
+ */
+function weizenkorn_acf_allow_unfiltered_html() {
+	return true;
+}
+add_filter( 'acf/allow_unfiltered_html', 'weizenkorn_acf_allow_unfiltered_html' );
+
+/**
  * Lowers Yoast SEO metabox priority so ACF fields appear above it.
  *
  * @return string

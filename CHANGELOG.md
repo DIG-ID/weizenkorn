@@ -46,6 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - A handful of sections are hidden for launch, with no content ready for them yet: Product Range — Xyloba's "Projekte & Referenzen", the Treuhand and Schreinerei pages' FAQ, Supported Apprenticeships' quote slider and FAQ, Product Range — Holzspielwaren's "Jetzt aktuell" product overview, Kreativatelier's FAQ, and About Us' quote slider.
 
 ### Fixed
+- Rich content in a custom field (an Open Positions post's body, for instance) could lose its formatting for good the next time anyone without full HTML permissions saved that same post, even editing something else on it entirely. Saving a custom field no longer strips anything.
 - Bakery download cards: on tablet, a card left alone on its row runs the full width without also growing taller than the pair above it.
 - Bakery download cards sat on two different layouts at once at desktop: the first card took the page's pairing while the two after it fell back to the product range cards' narrower one, so a three-card row came out with mismatched widths and the last card starting off the left margin. Each layout now keeps to its own section.
 - Product range cards: a closed card shows its title and nothing else, at the height the design draws, on mobile and tablet alike — no extra band of cream under the title, and no sliver of the "zum Produkt" link showing through it.
