@@ -33,6 +33,20 @@
   .card__text
     @apply body-text text-brand-dark mt-4 xl:max-w-[427px]
 
+// Desktop: the whole tile is the link, so hovering anywhere on it underlines the title.
+// The arrow says the card leads somewhere; this says so again at the moment of pointing,
+// and gives the pointer something that answers back.
+//
+// a.card-range and not &:hover inside the block above: a range with no page set renders as
+// a <div> (see range-grid.php), which leads nowhere and must not offer a link's cue.
+// Desktop only, because below xl a touch browser holds :hover after the tap and the title
+// would stay underlined on a card the reader has already left.
+a.card-range
+  @media (min-width: 1280px)
+    &:hover .card__title,
+    &:focus-visible .card__title
+      @apply underline underline-offset-4
+
 // -- Services: one markup, two behaviours.
 //
 //    Desktop: the cream panel is an overlay on the image, collapsed to one title line
