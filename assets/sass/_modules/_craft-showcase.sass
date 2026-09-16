@@ -96,21 +96,22 @@
       grid-column: 7 / span 5
       grid-row: 1 / span 2
 
-  // A Vimeo embed has no height of its own and the film is 16/9, so the box follows the
-  // film rather than the photograph — the same swap video-panel makes.
+  // A Vimeo embed cannot crop the way a photograph does: an iframe letterboxes inside its
+  // box instead of filling it. So below desktop, where the frames give this box a ratio of
+  // its own, the box takes the film's 16/9 and the player fills it edge to edge.
   //
-  // Two classes and last in the file, both deliberately: the ratios above are one class,
-  // and the pair variant's are two, so anything weaker loses at one width or another. The
-  // desktop case is not cosmetic — there __media--side takes aspect-ratio: auto and
-  // height: auto so it can stretch across the text's two rows, and an iframe has no height
-  // to give it, so without this the box collapses to nothing and the film never shows.
+  // NOT at desktop. There __media--side spans the title's row and the text's, and its
+  // height comes from them — a ratio would have to fight that, and setting grid-row to
+  // reach the ratio is what dropped the `span 2` and pushed the text below the picture
+  // instead of beside it. The player letterboxes a little there; the layout is worth more.
+  //
+  // Two classes and last in the file: the ratios above are one class, and the pair
+  // variant's are two, so anything weaker loses at one width or another.
   .craft-showcase__media--side.craft-showcase__media--embed
     aspect-ratio: 16 / 9
-    height: auto
 
-    @media (min-width: 768px)
+    // Bounded at both ends. A plain min-width would still be in force at desktop, and this
+    // selector carries three classes against that rule's one — so it would win there and
+    // reimpose the ratio the block above just explained it must not have.
+    @media (min-width: 768px) and (max-width: 1279px)
       aspect-ratio: 16 / 9
-
-    @media (min-width: 1280px)
-      aspect-ratio: 16 / 9
-      grid-row: 1
