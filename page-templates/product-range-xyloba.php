@@ -52,7 +52,10 @@ if ( have_posts() ) :
 		get_template_part(
 			'template-parts/modules/order-form',
 			null,
-			array( 'variant' => 'split' )
+			array(
+				'variant'               => 'split',
+				'disable_reseller_link' => true,
+			)
 		);
 		get_template_part( 'template-parts/modules/cta-form' );
 		get_template_part( 'template-parts/modules/preview-cards' );
