@@ -76,7 +76,12 @@ $hero_separator_ceilings = array(
 	// size beside or under it — Cantina e9's "Restaurant", DasBreiteHotel's "ganz schön
 	// anders.". Wide enough that the WIDTH is the limit, so raising only the height would
 	// do nothing; both ceilings go up together.
-	'wide-lockup' => 'max-h-[35px] max-w-[103px] md:max-h-[77px] md:max-w-[227px] xl:max-h-[109px] xl:max-w-[324px]',
+	//
+	// The two are not equally wide, though, and that is worth knowing before touching these
+	// numbers: at this ceiling DasBreiteHotel (3.70:1) is held by the width and Cantina e9
+	// (2.74:1) by the height. So the width moves DasBreiteHotel alone — up to 403px, where
+	// it would start meeting the height instead — and the height moves Cantina e9 alone.
+	'wide-lockup' => 'max-h-[35px] max-w-[124px] md:max-h-[77px] md:max-w-[272px] xl:max-h-[109px] xl:max-w-[389px]',
 );
 
 $hero_separator_key     = ( ! empty( $args['separator'] ) && isset( $hero_separator_ceilings[ $args['separator'] ] ) ) ? $args['separator'] : '';
