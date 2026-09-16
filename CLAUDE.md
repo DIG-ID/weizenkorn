@@ -113,9 +113,8 @@ Antes de entregar código PHP, verificar com `npm run php:lint`. Usar `npm run p
 | CPT `news`   | `schema.org/Article`    | Coberto pelo Yoast por omissão                 |
 | CPT `offene-stellen` (single) | `schema.org/JobPosting` | Custom (`inc/schema/class-weizenkorn-schema-jobposting.php`, desde 1.13.0) — title, description, datePosted, hiringOrganization, jobLocation (morada fixa da Stiftung), employmentType só quando inferível com confiança (Ausbildungsplätze → INTERN) |
 | Páginas com o módulo `template-parts/modules/faq.php` | `schema.org/FAQPage` | Custom (`inc/schema/class-weizenkorn-schema-faq.php`, desde 1.13.0) — lista de prefixos ACF conhecidos no próprio ficheiro; actualizar ao adicionar uma página nova que use o módulo com um prefixo diferente |
+| Páginas Gastronomie (Rhyvage, DasBreiteHotel, Cantina E9, padaria, events-seminare) | `schema.org/LocalBusiness` (ou subtipo — `Bakery`/`Restaurant`/`Hotel`/`CafeOrCoffeeShop`) | Custom (`inc/schema/class-weizenkorn-schema-localbusiness.php`, desde 1.18.5) — um nó por localização física, lido do repeater `gastro_schema_locations` (campos ACF dedicados ao schema, distintos dos campos de texto livre que servem o display; ver `schema-gastronomie-acf-fields.md` na raiz do tema para a lista completa e onde os inserir por página) |
 
-> Candidato futuro: `LocalBusiness`/`Restaurant`/`Bakery` para as páginas Gastronomie (Rhyvage, DasBreiteHotel, Cantina E9, padaria, events-seminare) — bloqueado por falta de campos reais de morada/telefone/horário por local, não por falta de código.
->
 > Actualizar esta tabela quando os CPTs/templates reais forem criados (ver secção "Custom Post Types" acima).
 
 ---
