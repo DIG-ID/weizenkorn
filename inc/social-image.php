@@ -95,3 +95,35 @@ function weizenkorn_opengraph_image_id( $image_id ) {
 }
 add_filter( 'wpseo_opengraph_image_id', 'weizenkorn_opengraph_image_id' );
 add_filter( 'wpseo_twitter_image_id', 'weizenkorn_opengraph_image_id' );
+
+/**
+ * The same thing by URL rather than by attachment id.
+ *
+ * Both, because the id filters above went out on their own first and did nothing: every
+ * page kept the site's default image, and the product pages that looked right turned out to
+ * be right for another reason — they are the only post type here with a featured image, so
+ * Yoast was finding that by itself and the filter never ran at all. These two are the
+ * oldest and most widely used names in Yoast's image API, so they are the better bet; the
+ * pair above costs nothing if it is never called.
+ *
+ * @since 1.18.5
+ *
+ * @param string $image The image URL Yoast settled on.
+ * @return string The hero's URL, or Yoast's own when there is no hero.
+ */
+function weizenkorn_opengraph_image_url( $image ) {
+
+	$hero_id = weizenkorn_social_image_id();
+
+	if ( $hero_id <= 0 ) {
+		return $image;
+	}
+
+	// full, not a crop: a hero is already wide, and the sizes WordPress generates are cut to
+	// this theme's own proportions rather than the 1.91:1 the networks ask for.
+	$url = wp_get_attachment_image_url( $hero_id, 'full' );
+
+	return $url ? $url : $image;
+}
+add_filter( 'wpseo_opengraph_image', 'weizenkorn_opengraph_image_url' );
+add_filter( 'wpseo_twitter_image', 'weizenkorn_opengraph_image_url' );
