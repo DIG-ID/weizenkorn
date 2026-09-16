@@ -27,14 +27,8 @@ body.menu-open
   padding-top: var(--header-height)
   clip-path: inset(0% 0% 100% 0%)
 
-  // .theme-container itself caps at 1920px from xl — wide enough that the site's own
-  // grid never runs past it, but not here: on a 2K/4K screen the overlay's own height
-  // (flex-1, filling the fixed-position viewport) grows more than its width does, and
-  // the image column (__image below) stretches tall trying to fill it at that same
-  // capped width. A higher cap, just for this overlay, gives the image more width to
-  // grow into instead, keeping it closer to the aspect ratio it has everywhere else.
   .theme-container
-    @apply flex flex-col flex-1 min-h-0 xl:max-w-[2560px]
+    @apply flex flex-col flex-1 min-h-0
 
   // clamp(MIN, 100vh - X, MAX) is a linear ramp: the value holds at MAX for viewports
   // 950px tall and up, and shrinks toward MIN as the window gets shorter. X is just
