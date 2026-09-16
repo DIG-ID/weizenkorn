@@ -14,16 +14,21 @@
  * do (assets/js/team-filters.js, entirely client-side) are this section's
  * own.
  *
- * $args['choices'] is team.php's own bereich/standort key → label map,
- * passed in rather than duplicated here — see that file's own docblock for
- * why a 'select' field's labels have to live somewhere in code at all.
+ * $args['choices'] is team.php's own bereich_filter/standort_filter key →
+ * label map (read live off the fields' own 'choices', not bereich/standort's
+ * — see that file's own docblock for why display and filter are separate
+ * fields), passed in rather than re-read here.
  *
  * @param array $args {
  *     @type array $items   Every team member row, as team.php itself reads
- *                          them (photo/name/bereich/standort — the last two
- *                          as raw choice keys, not labels).
+ *                          them — bereich_filter/standort_filter (below) are
+ *                          the ones this file counts and filters by; the
+ *                          bereich/standort also present are that same row's
+ *                          display fields and are of no interest here.
  *     @type array $choices { @type array $bereich, @type array $standort }
- *                          key → label maps.
+ *                          key → label maps — despite the array keys, these
+ *                          are bereich_filter's/standort_filter's own
+ *                          choices, not bereich's/standort's.
  * }
  *
  * @package weizenkorn
@@ -35,21 +40,29 @@ if ( empty( $args['items'] ) || empty( $args['choices'] ) ) {
 	return;
 }
 
-$tf_groups_labels = array(
-	'bereich'  => __( 'Bereiche', 'weizenkorn' ),
-	'standort' => __( 'Standorte', 'weizenkorn' ),
+// item_key: the row key each group actually counts/filters by — bereich_filter/
+// standort_filter, not the display bereich/standort also present on the same item.
+$tf_groups_config = array(
+	'bereich'  => array(
+		'label'    => __( 'Bereiche', 'weizenkorn' ),
+		'item_key' => 'bereich_filter',
+	),
+	'standort' => array(
+		'label'    => __( 'Standorte', 'weizenkorn' ),
+		'item_key' => 'standort_filter',
+	),
 );
 
 // Counts straight off the items passed in — only a choice actually in use shows up, same
 // "hide_empty" behaviour as the Open Positions archive's own get_terms() call.
 $tf_groups = array();
 
-foreach ( $tf_groups_labels as $tf_key => $tf_label ) {
+foreach ( $tf_groups_config as $tf_key => $tf_config ) {
 	$tf_choices = $args['choices'][ $tf_key ] ?? array();
 	$tf_counts  = array();
 
 	foreach ( $args['items'] as $tf_item ) {
-		$tf_value = $tf_item[ $tf_key ];
+		$tf_value = $tf_item[ $tf_config['item_key'] ];
 
 		if ( ! $tf_value ) {
 			continue;
@@ -73,7 +86,7 @@ foreach ( $tf_groups_labels as $tf_key => $tf_label ) {
 	}
 
 	$tf_groups[ $tf_key ] = array(
-		'label' => $tf_label,
+		'label' => $tf_config['label'],
 		'terms' => $tf_terms,
 	);
 }

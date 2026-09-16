@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 ### Changed
 - Product range cards on the home page and the products archive underline their title when the pointer is anywhere over the card, at desktop, so it reads as one link rather than only the arrow being active.
 - DasBreiteHotel's hero separator logo is a fifth larger.
+- Das Weizenkorn Team's filter now groups by its own dedicated Bereich/Standort fields instead of the ones each card shows, so the client can group people for filtering differently than how a card describes them.
+- Mega menu: on a wide (2K/4K) screen the photo no longer stretches tall — the menu's own width now grows to 2560px on those screens instead of stopping at the site's usual 1920px.
 - Home page's Work & Training links: the two-across tablet layout now holds through wider screens too, only switching to the four-across desktop row from a wide screen up instead of at the narrower desktop width.
 - Hero separator logos are sized to a box rather than to a height, so a wide logo and a narrow one no longer come out half again as big as each other. Logos that carry a second line of much smaller type — Weizenkorn Bäckerei, Cantina e9, DasBreiteHotel — are given more room than a bare mark, since that line has to stay readable.
 - The "mehr" arrow on preview cards is smaller on mobile, matching the tighter card at that size; tablet and desktop are unchanged.

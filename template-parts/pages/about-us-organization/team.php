@@ -22,28 +22,34 @@
  * (see inc/rest-job-filters.php's own docblock for why that call went the
  * other way for 100+ job postings).
  *
- * bereich/standort are ACF 'select' fields with a fixed choice list — the
- * client's real values turned out to already be exactly what each card's
- * second/third line shows (a role like "Bäcker/in", a workplace like
- * "DasBreiteHotel"), not a broader grouping layered on top, so one field
- * each does double duty as both display and filter criteria rather than
- * a separate free-text field plus a separate filter field. $tm_choices is
- * the single source for both this file's own card labels and
- * team-filters.php's checkbox labels — a 'select' field only ever returns
- * its raw choice key via get_sub_field(), never the label, so something
- * has to map key → label either way; keeping that map in exactly one place
- * (passed to team-filters.php as $args) is simpler than asking ACF for the
- * field object twice.
+ * bereich/standort are ACF 'select' fields shown on each card (a role like
+ * "Bäcker/in", a workplace like "DasBreiteHotel"). bereich_filter/
+ * standort_filter are two more 'select' fields, admin-only, that the filter
+ * panel reads instead — the client wanted the filter's own grouping to be
+ * able to differ from what a card shows, so display and filter come from
+ * separate fields rather than one field doing both jobs.
+ *
+ * None of the four are hardcoded anywhere: a 'select' field only ever
+ * returns its raw choice key via get_sub_field(), never the label, so
+ * every key → label map below (for this file's own card labels and, via
+ * $tm_filter_choices, team-filters.php's checkbox labels) reads
+ * get_sub_field_object()'s own 'choices' array instead, fetched once off
+ * the first row — the field's choice list is the same on every row, so
+ * there is nothing to gain re-reading it per row, only per page load.
+ * Changing, reordering or renaming a choice is then a wp-admin-only edit
+ * (Custom Fields → the field's own Choices setting); nothing here keeps a
+ * second copy that could fall out of sync with it.
  *
  * assets/js/team-filters.js does the filtering and "Mehr Laden": every
  * card is rendered here upfront with its own data-bereich/data-standort
- * attributes (the raw slugs, not the labels — what the filter checkboxes'
- * own values are), cards past the twelfth start hidden, and the JS shows/
- * hides by matching those attributes against the checked filters, then
- * reveals more of the matching set on "Mehr Laden" — never a second
- * request. It also runs that same reveal logic once on its own init,
- * rather than trusting this file's own initial hidden/data-team-extra
- * markup to already match — so the two can never quietly disagree.
+ * attributes — bereich_filter/standort_filter's raw values, not bereich/
+ * standort's, and not the labels either — cards past the twelfth start
+ * hidden, and the JS shows/hides by matching those attributes against the
+ * checked filters, then reveals more of the matching set on "Mehr Laden"
+ * — never a second request. It also runs that same reveal logic once on
+ * its own init, rather than trusting this file's own initial hidden/
+ * data-team-extra markup to already match — so the two can never quietly
+ * disagree.
  *
  * Unlike job-listing.php's own .job-listing__grid (fixed pixel card widths,
  * because 3 equal 12-column tracks don't divide evenly to its own card
@@ -63,78 +69,6 @@
 
 $tm_visible_count = 12;
 
-// Mirrors organization_team_items' own bereich/standort choices exactly
-// (acf-exports/acf-organization-fields.json) — see this file's own docblock
-// for why the map lives here in code rather than being read off the field.
-$tm_choices = array(
-	'bereich'  => array(
-		'abteilungsleiter-in-hauswirtschaft'       => __( 'Abteilungsleiter/in Hauswirtschaft', 'weizenkorn' ),
-		'abteilungsleiter-in-holzwerkstatt'        => __( 'Abteilungsleiter/in Holzwerkstatt', 'weizenkorn' ),
-		'abteilungsleiter-in-endfertigung'         => __( 'Abteilungsleiter/in Endfertigung', 'weizenkorn' ),
-		'abteilungsleiter-in-kerzen'               => __( 'Abteilungsleiter/in Kerzen', 'weizenkorn' ),
-		'abteilungsleiter-in-sozialdienst'         => __( 'Abteilungsleiter/in Sozialdienst', 'weizenkorn' ),
-		'back-office-manager-dbh'                  => __( 'Back Office Manager DBH', 'weizenkorn' ),
-		'bereichsleiter-in'                        => __( 'Bereichsleiter/in', 'weizenkorn' ),
-		'baecker-in'                               => __( 'Bäcker/in', 'weizenkorn' ),
-		'fachmitarbeiter-in-finanzen'              => __( 'Fachmitarbeiter/in Finanzen', 'weizenkorn' ),
-		'fachmitarbeiter-in-hotelkommunikation'    => __( 'Fachmitarbeiter/in Hotelkommunikation', 'weizenkorn' ),
-		'fachmitarbeiter-in-kerzen'                => __( 'Fachmitarbeiter/in Kerzen', 'weizenkorn' ),
-		'fachmitarbeiter-in-logistik-und-messebau' => __( 'Fachmitarbeiter/in Logistik und Messebau', 'weizenkorn' ),
-		'fachmitarbeiter-in-sozialdienst'          => __( 'Fachmitarbeiter/in Sozialdienst', 'weizenkorn' ),
-		'fachmitarbeiter-in-verkauf-vertrieb'      => __( 'Fachmitarbeiter/in Verkauf/Vertrieb', 'weizenkorn' ),
-		'geschaeftsfuehrer-in'                     => __( 'Geschäftsführer/in', 'weizenkorn' ),
-		'gruppenleiter-in-empfang'                 => __( 'Gruppenleiter/in Empfang', 'weizenkorn' ),
-		'gruppenleiter-in-endfertigung'            => __( 'Gruppenleiter/in Endfertigung', 'weizenkorn' ),
-		'gruppenleiter-in-hauswart'                => __( 'Gruppenleiter/in Hauswart', 'weizenkorn' ),
-		'gruppenleiter-in-hauswirtschaft'          => __( 'Gruppenleiter/in Hauswirtschaft', 'weizenkorn' ),
-		'gruppenleiter-in-holzwerkstatt'           => __( 'Gruppenleiter/in Holzwerkstatt', 'weizenkorn' ),
-		'gruppenleiter-in-host'                    => __( 'Gruppenleiter/in Host', 'weizenkorn' ),
-		'gruppenleiter-in-kerzen'                  => __( 'Gruppenleiter/in Kerzen', 'weizenkorn' ),
-		'gruppenleiter-in-kreativatelier'          => __( 'Gruppenleiter/in Kreativatelier', 'weizenkorn' ),
-		'gruppenleiter-in-kueche'                  => __( 'Gruppenleiter/in Küche', 'weizenkorn' ),
-		'gruppenleiter-in-service'                 => __( 'Gruppenleiter/in Service', 'weizenkorn' ),
-		'gruppenleiter-in-verkauf'                 => __( 'Gruppenleiter/in Verkauf', 'weizenkorn' ),
-		'hilfsmitarbeiter-in-baeckerei'            => __( 'Hilfsmitarbeiter/in Bäckerei', 'weizenkorn' ),
-		'kundenberater-in-aussendienst'            => __( 'Kundenberater/in Aussendienst', 'weizenkorn' ),
-		'lehrer-in-fachmitarbeiter-in'             => __( 'Lehrer/in (Fachmitarbeiter/in)', 'weizenkorn' ),
-		'leiter-in-baeckerei-und-verkauf'          => __( 'Leiter/in Bäckerei und Verkauf', 'weizenkorn' ),
-		'leiter-in-finanzen'                       => __( 'Leiter/in Finanzen', 'weizenkorn' ),
-		'leiter-in-kreativatelier'                 => __( 'Leiter/in Kreativatelier', 'weizenkorn' ),
-		'leiter-in-personal'                       => __( 'Leiter/in Personal', 'weizenkorn' ),
-		'leiter-in-restaurant-cantina'             => __( 'Leiter/in Restaurant Cantina', 'weizenkorn' ),
-		'leiterin-kommunikation-pr-marketing'      => __( 'Leiterin Kommunikation/PR/Marketing', 'weizenkorn' ),
-		'lernende-r'                               => __( 'Lernende/r', 'weizenkorn' ),
-		'praktikant-in'                            => __( 'Praktikant/in', 'weizenkorn' ),
-		'schreiner-in'                             => __( 'Schreiner/in', 'weizenkorn' ),
-		'teamleiter-in-kerzen'                     => __( 'Teamleiter/in Kerzen', 'weizenkorn' ),
-		'teamleiter-in-kueche'                     => __( 'Teamleiter/in Küche', 'weizenkorn' ),
-		'teamleiter-in-logistik'                   => __( 'Teamleiter/in Logistik', 'weizenkorn' ),
-		'verkaeufer-in-baeckerei'                  => __( 'Verkäufer/in Bäckerei', 'weizenkorn' ),
-	),
-	'standort' => array(
-		'baeckerei-augst'                    => __( 'Bäckerei Augst', 'weizenkorn' ),
-		'baeckerei-dreispitz-bachspitz'      => __( 'Bäckerei Dreispitz (Bachspitz)', 'weizenkorn' ),
-		'baeckerei-erasmusplatz-bachegge'    => __( 'Bäckerei Erasmusplatz (Bachegge)', 'weizenkorn' ),
-		'baeckerei-produktion-bachstube'     => __( 'Bäckerei Produktion (Bachstube)', 'weizenkorn' ),
-		'cantina-e9'                         => __( 'Cantina E9', 'weizenkorn' ),
-		'dasbreitehotel'                     => __( 'DasBreiteHotel', 'weizenkorn' ),
-		'empfang'                            => __( 'Empfang', 'weizenkorn' ),
-		'finanzen'                           => __( 'Finanzen', 'weizenkorn' ),
-		'geschaeftsfuehrer'                  => __( 'Geschäftsführer', 'weizenkorn' ),
-		'hr'                                 => __( 'HR', 'weizenkorn' ),
-		'hausdienst'                         => __( 'Hausdienst', 'weizenkorn' ),
-		'hausdienst-ve37'                    => __( 'Hausdienst Ve37', 'weizenkorn' ),
-		'holzmanufaktur'                     => __( 'Holzmanufaktur', 'weizenkorn' ),
-		'kerzenwerkstatt'                    => __( 'Kerzenwerkstatt', 'weizenkorn' ),
-		'kommunikation-pr-marketing'         => __( 'Kommunikation/PR/Marketing', 'weizenkorn' ),
-		'kreativatelier'                     => __( 'Kreativatelier', 'weizenkorn' ),
-		'restaurant-dbh'                     => __( 'Restaurant DBH', 'weizenkorn' ),
-		'schreinerei-innenausbau-und-moebel' => __( 'Schreinerei Innenausbau und Möbel', 'weizenkorn' ),
-		'sozialdienst'                       => __( 'Sozialdienst', 'weizenkorn' ),
-		'verkauf'                            => __( 'Verkauf', 'weizenkorn' ),
-	),
-);
-
 $tm_title = get_field( 'organization_team_title' );
 
 if ( ! $tm_title || ! have_rows( 'organization_team_items' ) ) {
@@ -144,7 +78,12 @@ if ( ! $tm_title || ! have_rows( 'organization_team_items' ) ) {
 // Read every row once, up front: this file needs the full list to render the grid,
 // team-filters.php needs it again to build the filter groups' own counts — reading it
 // twice would leave the second read racing have_rows()'s own internal row pointer.
-$tm_items = array();
+//
+// $tm_choices/$tm_filter_choices are read off the first row's own field objects (see this
+// file's own docblock for why) rather than kept as a literal array here.
+$tm_choices        = array();
+$tm_filter_choices = array();
+$tm_items          = array();
 
 while ( have_rows( 'organization_team_items' ) ) {
 	the_row();
@@ -153,11 +92,25 @@ while ( have_rows( 'organization_team_items' ) ) {
 		continue;
 	}
 
+	if ( ! $tm_choices ) {
+		$tm_choices = array(
+			'bereich'  => get_sub_field_object( 'bereich' )['choices'] ?? array(),
+			'standort' => get_sub_field_object( 'standort' )['choices'] ?? array(),
+		);
+
+		$tm_filter_choices = array(
+			'bereich'  => get_sub_field_object( 'bereich_filter' )['choices'] ?? array(),
+			'standort' => get_sub_field_object( 'standort_filter' )['choices'] ?? array(),
+		);
+	}
+
 	$tm_items[] = array(
-		'photo'    => get_sub_field( 'photo' ),
-		'name'     => get_sub_field( 'name' ),
-		'bereich'  => get_sub_field( 'bereich' ),
-		'standort' => get_sub_field( 'standort' ),
+		'photo'           => get_sub_field( 'photo' ),
+		'name'            => get_sub_field( 'name' ),
+		'bereich'         => get_sub_field( 'bereich' ),
+		'standort'        => get_sub_field( 'standort' ),
+		'bereich_filter'  => get_sub_field( 'bereich_filter' ),
+		'standort_filter' => get_sub_field( 'standort_filter' ),
 	);
 }
 
@@ -205,7 +158,7 @@ usort(
 					null,
 					array(
 						'items'   => $tm_items,
-						'choices' => $tm_choices,
+						'choices' => $tm_filter_choices,
 					)
 				);
 				?>
@@ -228,8 +181,8 @@ usort(
 					<div
 						class="col-span-2 md:col-span-3 lg:col-span-2 xl:col-span-3"
 						data-team-card
-						data-bereich="<?php echo esc_attr( $tm_item['bereich'] ); ?>"
-						data-standort="<?php echo esc_attr( $tm_item['standort'] ); ?>"
+						data-bereich="<?php echo esc_attr( $tm_item['bereich_filter'] ); ?>"
+						data-standort="<?php echo esc_attr( $tm_item['standort_filter'] ); ?>"
 						<?php echo $tm_is_extra ? ' hidden data-team-extra' : ''; ?>
 					>
 						<?php
