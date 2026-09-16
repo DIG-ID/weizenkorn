@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 ## [1.18.5] — 2026-09-14
 
 ### Added
+- The map/address section (`template-parts/modules/location.php`) carries an `id="location"` anchor, so a link elsewhere on the page can jump straight to it.
 - Structured data (schema.org) for the Gastronomie venues — Rhyvage, DasBreiteHotel, Cantina E9, the bakery and Events & Seminare — once each page's own schema fields are filled in, one entry per physical location, so search engines can show the address, phone and opening hours directly.
 - The craft showcase section takes a Vimeo link, the way the About Us video panel already does — useful where the film is too long or too heavy to sit in the media library. The page shows a still with a play button and only fetches the player when someone presses it, so nothing is requested from Vimeo until a visitor asks for it. A Vimeo link wins over uploaded video files on the same section.
 - Sharing a page on social media now shows that page's own hero picture. The theme keeps its heroes in custom fields, which the SEO plugin cannot see, so every page shared with the same default image. Pages that draw no hero — the three legal pages and the job postings — still fall back to that default.

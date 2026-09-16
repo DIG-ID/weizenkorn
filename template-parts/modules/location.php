@@ -118,7 +118,7 @@ if ( ! $lc_heading
 // Adjacent siblings' vertical margins collapse, so this does not add to the previous
 // section's bottom margin — the gap is these values, not their sum.
 ?>
-<section class="location mt-24 md:mt-32 xl:mt-48 mb-24 md:mb-32 xl:mb-48">
+<section id="location" class="location mt-24 md:mt-32 xl:mt-48 mb-24 md:mb-32 xl:mb-48">
 	<div class="theme-container">
 
 		<?php
