@@ -170,6 +170,30 @@ function weizenkorn_login_logo() {
 
 	$logo_id = weizenkorn_get_logo_id();
 
+	/*
+	 * WPML keeps ACF options per language, and wp-login.php is served under whichever
+	 * language prefix the visitor arrived on — /en/wp-login.php reads the English options,
+	 * which on a site written in German are empty. So a logo that is plainly set in Theme
+	 * Options reads as missing here, and the screen quietly keeps the starter's mark.
+	 *
+	 * There is one login screen and one brand, so fall back to the site's default language
+	 * rather than the request's. Only on the way down: a project that does translate the
+	 * logo still gets the translation first.
+	 */
+	if ( ! $logo_id && has_filter( 'wpml_default_language' ) ) {
+		$default_language = apply_filters( 'wpml_default_language', null );
+
+		if ( $default_language ) {
+			$force_default = static function () use ( $default_language ) {
+				return $default_language;
+			};
+
+			add_filter( 'acf/settings/current_language', $force_default );
+			$logo_id = weizenkorn_get_logo_id();
+			remove_filter( 'acf/settings/current_language', $force_default );
+		}
+	}
+
 	if ( ! $logo_id ) {
 		return;
 	}
