@@ -1,6 +1,6 @@
 <?php
 /**
- * Open Positions archive — "Aktuell offene Stellen" section (Figma desktop
+ * Open Positions archive — "Aktuell offene Stellen IV" section (Figma desktop
  * node 2629:3105, filter panel node 4129:5548). Title, a results count with
  * the filter trigger beside it, a grid of the first 9 published
  * offene-stellen posts — three across from lg up, two between md and lg,
@@ -49,7 +49,7 @@ if ( ! $jl_query->have_posts() ) {
 ?>
 <section class="job-listing mt-24 md:mt-32 xl:mt-48 mb-24 md:mb-32 xl:mb-48">
 	<div class="theme-container">
-		<?php get_template_part( 'template-parts/components/section-heading', null, array( 'title' => __( 'Aktuell offene Stellen', 'weizenkorn' ) ) ); ?>
+		<?php get_template_part( 'template-parts/components/section-heading', null, array( 'title' => __( 'Aktuell offene Stellen IV', 'weizenkorn' ) ) ); ?>
 
 		<div class="theme-grid mt-8 xl:mt-12">
 			<div class="job-listing__bar col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-10 flex items-center justify-between">

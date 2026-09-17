@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Titles' `<br>` breakpoint classes gained a fourth option, `xl:inline`: a break on mobile only, joined back into one line from tablet up.
 
 ### Changed
+- Open Positions archive: the job list is headed "Aktuell offene Stellen IV".
 - About Us: the "Weizenkorn entdecken" video now sits above "Unser Ursprung" rather than below it.
 - Product range cards on the home page and the products archive underline their title when the pointer is anywhere over the card, at desktop, so it reads as one link rather than only the arrow being active.
 - DasBreiteHotel's hero separator logo is a fifth larger.
