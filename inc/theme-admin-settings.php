@@ -140,6 +140,43 @@ function weizenkorn_login_css() {
 add_action( 'login_enqueue_scripts', 'weizenkorn_login_css', 10 );
 
 /**
+ * Puts the site's own logo on the login screen.
+ *
+ * The stylesheet carries the agency's mark as an inline SVG, which is right for a theme
+ * that starts every project — but wrong the moment a project has a client. Rather than
+ * swapping one hard-coded file for another, this reads the logo already chosen in
+ * Appearance → Customize → Site Identity, the same one the site header draws. Change it
+ * there and the login follows, with no deploy.
+ *
+ * Printed as a style tag and not added to the stylesheet because the URL is not known until
+ * runtime. #login outranks the .login the stylesheet uses, so no !important is needed.
+ *
+ * Nothing is printed when no logo is set, which leaves the starter's own mark in place
+ * rather than an empty box.
+ *
+ * @since 1.18.5
+ */
+function weizenkorn_login_logo() {
+
+	if ( ! has_custom_logo() ) {
+		return;
+	}
+
+	$logo_url = wp_get_attachment_image_url( (int) get_theme_mod( 'custom_logo' ), 'full' );
+
+	if ( ! $logo_url ) {
+		return;
+	}
+
+	printf(
+		'<style id="weizenkorn-login-logo">#login h1 a{background-image:url("%s")}</style>' . "\n",
+		esc_url( $logo_url )
+	);
+}
+
+add_action( 'login_head', 'weizenkorn_login_logo', 20 );
+
+/**
  * Enqueues the custom admin stylesheet (wp-admin screens only).
  *
  * @since 1.9.0
