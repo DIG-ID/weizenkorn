@@ -1,16 +1,18 @@
 <?php
 /**
- * Open Positions archive — category grid. A title with a description on
- * the right (the shared section-heading component's own layout), then a
- * grid of category cards: a red uppercase label above a bordered box with
- * a bullet list — no photos.
+ * Category grid. A title with a description on the right (the shared
+ * section-heading component's own layout), then a grid of category cards:
+ * a red uppercase label above a bordered box with a bullet list — no
+ * photos.
  *
- * Two sections on this one archive share this exact shape ("Schaffen
+ * Originally the Open Positions archive's own partial — "Schaffen
  * Perspektiven. Unsere Ausbildungen" and "Sinnstiftend vielfältig Unsere
- * Arbeitsstellen"), so this file is a reusable partial rather than being
- * duplicated — called twice with a different prefix. It stays local to
- * this archive (template-parts/archives/offene-stellen/) rather than
- * template-parts/modules/ since nothing else needs it yet.
+ * Arbeitsstellen" shared this exact shape there, called twice with a
+ * different prefix (both now commented out in archive-offene-stellen.php,
+ * their content moved to a page of its own instead — the training one is
+ * Supported Apprenticeships' own "Schaffen Perspektiven" as of 1.18.6).
+ * Promoted to template-parts/modules/ once a second page needed it too,
+ * per this project's own file-placement rule.
  *
  * Desktop columns are per caller, via $args['columns'] — three across for
  * the training categories (a fixed 3 items, one full row), four across for
@@ -34,9 +36,9 @@
  *
  * Usage:
  *   get_template_part(
- *       'template-parts/archives/offene-stellen/category-grid',
+ *       'template-parts/modules/category-grid',
  *       null,
- *       array( 'post_id' => 'option', 'prefix' => 'offene_stellen_archive_training_', 'columns' => 3 )
+ *       array( 'post_id' => 'option', 'prefix' => 'offene_stellen_archive_jobs_', 'columns' => 4 )
  *   );
  *
  * @param array $args {
@@ -47,7 +49,7 @@
  * }
  *
  * @package weizenkorn
- * @subpackage Section
+ * @subpackage Module
  * @since 1.10.0
  */
 
@@ -98,8 +100,8 @@ $cg_item_column = $cg_three_cols ? 'xl:col-span-4' : 'xl:col-span-3';
 			 * standard xl:col-start-2/col-span-10 inset (full width below xl, same as
 			 * everywhere else). Nested rather than moving the inset onto each card
 			 * individually, so the 3/4-across split (and the trailing-pair CSS in
-			 * _offene-stellen.sass) stays relative to the inset's own 12-column grid,
-			 * not the page's full width.
+			 * _modules/_category-grid.sass) stays relative to the inset's own
+			 * 12-column grid, not the page's full width.
 			 */
 			?>
 			<div class="theme-grid mt-8 md:mt-14 xl:mt-16">

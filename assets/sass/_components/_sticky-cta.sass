@@ -37,6 +37,11 @@
       @apply w-[18px] h-[14px] md:w-6 md:h-[19px]
 
   // Wheat mark — hidden until the card collapses (see .is-collapsed above). Scaled down
-  // on mobile so it still fits inside the smaller 80px collapsed circle.
+  // on mobile so it still fits inside the smaller 80px collapsed circle. An inline SVG now
+  // (see sticky-cta.php), sized off this wrapper rather than its own width/height
+  // attributes, same as every other icon in the project.
   &__logo-icon
     @apply absolute top-2.5 w-[70px] h-[36px] md:top-3 md:w-[86px] md:h-[45px] opacity-0 pointer-events-none
+
+    svg
+      @apply block w-full h-full
