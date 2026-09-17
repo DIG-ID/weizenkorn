@@ -88,10 +88,14 @@ $weizenkorn_hero_video_webm   = $weizenkorn_hero_enable_video ? get_field( 'hero
 			// xl:max-h caps just the image/video column at the target height, which is what keeps
 			// the bottom gap at wide viewports: with no explicit height the browser sizes the column
 			// to the image's own ratio at whatever width the span gives it, which grows taller as
-			// the viewport widens and was stretching the whole card past the target.
+			// the viewport widens and was stretching the whole card past the target. This is only
+			// the no-JS/first-paint fallback, and only ever a guess at the text column's real
+			// height — assets/js/hero-fit.js measures that column once it has rendered and sets
+			// this one's height (not max-height, from then on) to match it exactly, since the two
+			// disagreeing is exactly the "left column taller than the right" bug this replaced.
 			//
-			// max-height and not height, because object-cover simply crops a wide image to fit
-			// shorter — nothing is lost, unlike in the text column.
+			// max-height and not height here in the CSS, because object-cover simply crops a wide
+			// image to fit shorter — nothing is lost, unlike in the text column.
 			?>
 			<div class="col-span-2 md:col-span-3 xl:col-span-7 section-hero__media overflow-hidden order-1 md:order-none xl:max-h-[calc(100vh-var(--header-height)-48px)] mb-4 md:mb-0">
 				<?php if ( $weizenkorn_hero_video_mp4 || $weizenkorn_hero_video_webm ) : ?>

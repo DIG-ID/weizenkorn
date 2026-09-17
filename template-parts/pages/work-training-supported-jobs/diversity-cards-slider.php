@@ -52,7 +52,17 @@ if ( ! $sjd_title || ! have_rows( 'supported_jobs_diversity_items' ) ) {
 							}
 							?>
 							<div class="swiper-slide">
-								<figure class="card-diversity relative overflow-hidden w-full m-0">
+								<?php
+								/*
+								 * No overflow-hidden here: every child (the media, the overlay, the
+								 * caption) is already exactly inset/bottom-0 bounded to this box, none
+								 * of them actually overflows it. Clipping anyway risked the caption's
+								 * own bottom border vanishing at some widths — its bottom edge sits
+								 * exactly on the aspect-ratio box's own (fractional-pixel) bottom edge,
+								 * and rounding could put the 1px border just past the clip.
+								 */
+								?>
+								<figure class="card-diversity relative w-full m-0">
 									<?php
 									echo wp_get_attachment_image(
 										get_sub_field( 'image' ),

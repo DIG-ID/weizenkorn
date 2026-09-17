@@ -50,6 +50,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - A handful of sections are hidden for launch, with no content ready for them yet: Product Range — Xyloba's "Projekte & Referenzen", the Treuhand and Schreinerei pages' FAQ, Supported Apprenticeships' quote slider and FAQ, Product Range — Holzspielwaren's "Jetzt aktuell" product overview, Kreativatelier's FAQ, and About Us' quote slider.
 
 ### Fixed
+- Home hero: the text panel and the photo could end up different heights at some window widths, the design's title-wrap assumption having drifted from the real rendered text. The photo now always matches the text column's real height.
+- Supported Jobs' diversity card slider: a card's caption could lose its own bottom border at some widths, a sub-pixel rounding clash with the card's clipping that no longer clips it in the first place — nothing inside it ever overflowed the card to begin with.
+- Work & Training's diversity cards: the wider gap between the category and the title now only kicks in from a wide screen up, matching the narrower tablet one through the ordinary desktop width instead of switching early.
 - Job postings carry a meta description again: their text lives in a custom field the SEO plugin cannot read, so both search results and shared links were going out with nothing. The opening of the posting is now used, cut on a word boundary, and a description written by hand still wins.
 - Rich content in a custom field (an Open Positions post's body, for instance) could lose its formatting for good the next time anyone without full HTML permissions saved that same post, even editing something else on it entirely. Saving a custom field no longer strips anything.
 - Bakery download cards: on tablet, a card left alone on its row runs the full width without also growing taller than the pair above it.

@@ -10,8 +10,16 @@
  * if it is still taller, shaves more off the same spacing the CSS controls — largest and
  * least visually important first, down to a floor.
  *
- * A best-effort top-up, not a hard requirement: falling short is safe, the section simply
- * grows.
+ * Once that settles, .section-hero__media (capped in CSS by the same target height, via
+ * xl:max-h-[...] in hero.php — object-cover crops the image to fit shorter, which a plain
+ * height could not) is set in JS to whichever is taller, the same target height or the
+ * text column's own real one, instead of trusting the CSS cap alone to agree with the
+ * text: short text (a one-line title where the CSS clamp()s assumed two) should still
+ * reach the target, the same "fills to 100vh, gap at the bottom" look every hero gets —
+ * but text that is still taller than the target even with every spacing target above at
+ * its floor (the design's "never clipped" rule keeps growing it) needs the media column
+ * to grow with it, or the two no longer match, which is the mismatch this file exists to
+ * prevent in the first place.
  */
 
 const XL_BREAKPOINT = 1280;
@@ -25,6 +33,8 @@ export function initHeroFit() {
     return;
   }
 
+  const media = document.querySelector('.section-hero__media');
+
   const targets = [
     { el: content.querySelector('.section-hero__title'), prop: 'marginBottom', floor: 24 },
     { el: content, prop: 'paddingTop', floor: 16 },
@@ -36,6 +46,11 @@ export function initHeroFit() {
     targets.forEach(({ el, prop }) => {
       el.style[prop] = '';
     });
+
+    if (media) {
+      media.style.height = '';
+      media.style.maxHeight = '';
+    }
   };
 
   const getHeaderHeight = () => {
@@ -56,26 +71,36 @@ export function initHeroFit() {
     const targetHeight = window.innerHeight - getHeaderHeight() - BOTTOM_GAP_PX;
     let overflow = content.scrollHeight - targetHeight;
 
-    if (overflow <= 0) {
-      return;
+    if (overflow > 0) {
+      targets.forEach(({ el, prop, floor }) => {
+        if (overflow <= 0) {
+          return;
+        }
+
+        const current = parseFloat(getComputedStyle(el)[prop]) || 0;
+        const reduceBy = Math.min(Math.max(0, current - floor), overflow);
+
+        if (reduceBy > 0) {
+          el.style[prop] = `${current - reduceBy}px`;
+          overflow -= reduceBy;
+        }
+      });
+
+      // Whatever is left once every target is at its floor is left alone on purpose —
+      // the section's own min-height grows to fit.
     }
 
-    targets.forEach(({ el, prop, floor }) => {
-      if (overflow <= 0) {
-        return;
-      }
+    // Whichever is taller: the target (so short text still leaves the usual gap below it,
+    // matched by the image reaching just as far) or the text column's own real height (so
+    // text that is still too tall for the target even at every floor is matched rather
+    // than clipped against by the image). maxHeight is cleared so this is not then
+    // clamped straight back down by that same cap.
+    if (media) {
+      const finalHeight = Math.max(targetHeight, content.offsetHeight);
 
-      const current = parseFloat(getComputedStyle(el)[prop]) || 0;
-      const reduceBy = Math.min(Math.max(0, current - floor), overflow);
-
-      if (reduceBy > 0) {
-        el.style[prop] = `${current - reduceBy}px`;
-        overflow -= reduceBy;
-      }
-    });
-
-    // Whatever is left once every target is at its floor is left alone on purpose — the
-    // section's own min-height grows to fit.
+      media.style.maxHeight = 'none';
+      media.style.height = `${finalHeight}px`;
+    }
   };
 
   let resizeTimer;

@@ -106,8 +106,9 @@
       @apply text-[20px] tracking-[-0.38px]
 
     // ~150px between the category and the title at desktop — gap-36 (144px) is the
-    // closest Tailwind step, tablet keeping the 56px above.
-    @media (min-width: 1280px)
+    // closest Tailwind step. Only from 2xl though: the 56px above now holds through xl
+    // too, rather than switching to the wider gap at the narrower desktop width.
+    @media (min-width: 1536px)
       @apply gap-36
 
 // "Arbeiten mit IV-Rente" (intro-cta) and "Der Weg zu uns" (numbered-steps)
