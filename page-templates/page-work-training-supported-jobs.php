@@ -47,7 +47,6 @@ if ( have_posts() ) :
 			)
 		);
 		get_template_part( 'template-parts/modules/numbered-steps', null, array( 'prefix' => 'supported_jobs_process_' ) );
-
 		get_template_part( 'template-parts/modules/quote-slider' );
 		get_template_part( 'template-parts/modules/cta-form', null, array( 'prefix' => 'supported_jobs_' ) );
 		get_template_part( 'template-parts/modules/faq', null, array( 'prefix' => 'supported_jobs_' ) );
