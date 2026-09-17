@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 ## [1.18.5] — 2026-09-14
 
 ### Added
-- Map sections take a telephone and e-mail beside each address, so a page naming two venues keeps each address with its own contact details — on a phone they now read address, contact, address, contact instead of both addresses followed by both numbers.
+- Map sections take a telephone and e-mail beside each address, so a page naming two venues keeps each address with its own contact details — on a phone they now read address, contact, address, contact instead of both addresses followed by both numbers. Pages that do not fill the new fields are unchanged.
 - Supported Apprenticeships gets its own "Schaffen Perspektiven" category grid, and Supported Jobs its own "Sinnstiftend vielfältig Unsere Arbeitsstellen" one — both moved from the Open Positions archive, which no longer shows either.
 - The map/address section (`template-parts/modules/location.php`) carries an `id="location"` anchor, so a link elsewhere — even on another page, e.g. `/kontakt#location` — scrolls smoothly straight to it instead of jumping there instantly, and lands below the fixed header instead of behind it.
 - Structured data (schema.org) for the Gastronomie venues — Rhyvage, DasBreiteHotel, Cantina E9, the bakery and Events & Seminare — once each page's own schema fields are filled in, one entry per physical location, so search engines can show the address, phone and opening hours directly.

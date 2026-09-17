@@ -46,10 +46,10 @@
  *   location_contact        (textarea) optional. Telephone and e-mail for the first address,
  *                           in the column beside it.
  *   location_contact_2      (textarea) optional. The same for the second address.
- *   location_address_2      (textarea) optional. A second venue's address, under the first
- *                           rather than beside it — the column beside belongs to that
- *                           venue's own contact. Events & Seminare names two venues; leave
- *                           it empty and the first keeps the row to itself.
+ *   location_address_2      (textarea) optional. A second address. It takes the column
+ *                           beside the first, unless location_contact_2 is filled too — then
+ *                           it drops underneath and that contact takes the column beside it.
+ *                           Leave it empty and the first address keeps the row to itself.
  *   location_schedule_text  (textarea) optional. Opening hours, where the contact page puts
  *                           them and a second address would otherwise go. One field: the
  *                           heading is whatever the editor marks up as <b>, which is the
@@ -174,15 +174,23 @@ if ( ! $lc_heading
 				<?php if ( get_field( $lc_prefix . 'location_address_2', $lc_ctx ) ) : ?>
 					<?php
 					/*
-					 * Under the first address when this section carries a second venue, and its
-					 * own contact goes beside it — see location_contact_2 below.
+					 * Which column this takes depends on whether it has a contact of its own.
 					 *
-					 * The right-hand column it used to take is now location_contact's. Kreativatelier
-					 * had been using this field for a telephone number, which is what that column is
-					 * for; its value moved to location_contact and it reads the same.
+					 * With one, it is a second venue: it drops to the left under the first address
+					 * and its contact sits beside it, so a phone reads address, contact, address,
+					 * contact rather than both addresses and then both numbers.
+					 *
+					 * Without one, it keeps the right-hand column it has always had. That is not a
+					 * fallback for its own sake — Kreativatelier puts a telephone number in this
+					 * field, which is what the right-hand column is for, and moving it would have
+					 * broken a page that reads correctly today in order to fix one that does not.
+					 * Filling location_contact_2 is what opts a page into the new arrangement.
 					 */
+					$lc_address_2_cols = get_field( $lc_prefix . 'location_contact_2', $lc_ctx )
+						? 'col-span-2 md:col-span-3 xl:col-start-2 xl:col-span-4'
+						: 'col-span-2 md:col-start-4 md:col-span-3 xl:col-start-6 xl:col-span-4';
 					?>
-					<div class="location__address text-brand-dark col-span-2 md:col-span-3 xl:col-start-2 xl:col-span-4">
+					<div class="location__address text-brand-dark <?php echo esc_attr( $lc_address_2_cols ); ?>">
 						<?php echo wp_kses_post( get_field( $lc_prefix . 'location_address_2', $lc_ctx ) ); ?>
 					</div>
 				<?php endif; ?>
