@@ -10,11 +10,11 @@
  *                     left empty, which is a shape it already serves on For Social
  *                     Offices & Partners.
  *   3. values-grid    module, new to this page — "Unsere Werte"
- *   4. intro-cta      with the `origin_` prefix — "Unser Ursprung". Same module as (2),
- *                     a second prefix rather than a second section.
- *   5. video-panel    module, new to this page — "Weizenkorn entdecken". The video fills
+ *   4. video-panel    module, new to this page — "Weizenkorn entdecken". The video fills
  *                     the left six columns and the text sits in 8-12, the two ending on
  *                     the same line.
+ *   5. intro-cta      with the `origin_` prefix — "Unser Ursprung". Same module as (2),
+ *                     a second prefix rather than a second section.
  *   6. craft-showcase shared module in its 'pair' variant — "So arbeiten wir". No left
  *                     image, so the paragraph and the picture sit side by side.
  *   7. quote-slider   shared module (commented out below — TEMP, launch)
@@ -64,12 +64,13 @@ if ( have_posts() ) :
 
 		get_template_part( 'template-parts/modules/values-grid' );
 
+		get_template_part( 'template-parts/modules/video-panel' );
+
 		get_template_part(
 			'template-parts/modules/intro-cta',
 			null,
 			array( 'prefix' => 'origin_' )
 		);
-		get_template_part( 'template-parts/modules/video-panel' );
 
 		get_template_part(
 			'template-parts/modules/craft-showcase',
