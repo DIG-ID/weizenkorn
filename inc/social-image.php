@@ -97,14 +97,18 @@ add_filter( 'wpseo_opengraph_image_id', 'weizenkorn_opengraph_image_id' );
 add_filter( 'wpseo_twitter_image_id', 'weizenkorn_opengraph_image_id' );
 
 /**
- * The same thing by URL rather than by attachment id.
+ * The same thing by URL.
  *
- * Both, because the id filters above went out on their own first and did nothing: every
- * page kept the site's default image, and the product pages that looked right turned out to
- * be right for another reason — they are the only post type here with a featured image, so
- * Yoast was finding that by itself and the filter never ran at all. These two are the
- * oldest and most widely used names in Yoast's image API, so they are the better bet; the
- * pair above costs nothing if it is never called.
+ * This is the one that works. The id filters above were invented — Yoast 28.5 has no
+ * wpseo_opengraph_image_id, so they never fired, and the product pages that looked correct
+ * were correct for another reason: they are the only post type here with a featured image,
+ * which Yoast finds by itself. Left in place because they cost nothing, and removed the day
+ * someone confirms no Yoast version ever had them.
+ *
+ * The real set, read from src/presenters/open-graph/image-presenter.php, is url / width /
+ * height / type, each filtered separately. Which is why swapping only the url left every
+ * hero page announcing the dimensions of whatever image Yoast had picked before — the three
+ * below put that right.
  *
  * @since 1.18.5
  *
@@ -127,3 +131,59 @@ function weizenkorn_opengraph_image_url( $image ) {
 }
 add_filter( 'wpseo_opengraph_image', 'weizenkorn_opengraph_image_url' );
 add_filter( 'wpseo_twitter_image', 'weizenkorn_opengraph_image_url' );
+
+/**
+ * Reports the hero's real dimensions and type alongside its URL.
+ *
+ * Yoast filters these three separately from the URL, so changing the URL alone leaves the
+ * numbers describing an image that is no longer there — and a network reads them before it
+ * fetches anything, so a wrong pair is a wrongly cropped card.
+ *
+ * Returns the value Yoast had whenever this page has no hero, which is what keeps the
+ * default image's own numbers intact on the pages that fall back to it.
+ *
+ * @since 1.18.5
+ *
+ * @param mixed  $value The width, height or mime type Yoast settled on.
+ * @param string $key Which of the three: 'width', 'height' or 'type'.
+ * @return mixed The hero's own value, or Yoast's.
+ */
+function weizenkorn_opengraph_image_meta( $value, $key ) {
+
+	$hero_id = weizenkorn_social_image_id();
+
+	if ( $hero_id <= 0 ) {
+		return $value;
+	}
+
+	if ( 'type' === $key ) {
+		$type = get_post_mime_type( $hero_id );
+
+		return $type ? $type : $value;
+	}
+
+	$meta = wp_get_attachment_metadata( $hero_id );
+
+	return ( is_array( $meta ) && ! empty( $meta[ $key ] ) ) ? (int) $meta[ $key ] : $value;
+}
+
+add_filter(
+	'wpseo_opengraph_image_width',
+	static function ( $value ) {
+		return weizenkorn_opengraph_image_meta( $value, 'width' );
+	}
+);
+
+add_filter(
+	'wpseo_opengraph_image_height',
+	static function ( $value ) {
+		return weizenkorn_opengraph_image_meta( $value, 'height' );
+	}
+);
+
+add_filter(
+	'wpseo_opengraph_image_type',
+	static function ( $value ) {
+		return weizenkorn_opengraph_image_meta( $value, 'type' );
+	}
+);
