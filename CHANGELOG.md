@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 ## [1.18.5] — 2026-09-14
 
 ### Added
-- The login screen shows the site's own logo — whichever one is set under Appearance → Customize → Site Identity, the same one the header uses. Setting it there is all it takes; sites that set none keep the starter's mark.
+- The login screen shows the site's own logo — the one set under Theme Options, the same one the header draws. Sites that set none keep the starter's mark.
 - Map sections take a telephone and e-mail beside each address, so a page naming two venues keeps each address with its own contact details — on a phone they now read address, contact, address, contact instead of both addresses followed by both numbers. Pages that do not fill the new fields are unchanged.
 - Supported Apprenticeships gets its own "Schaffen Perspektiven" category grid, and Supported Jobs its own "Sinnstiftend vielfältig Unsere Arbeitsstellen" one — both moved from the Open Positions archive, which no longer shows either.
 - The map/address section (`template-parts/modules/location.php`) carries an `id="location"` anchor, so a link elsewhere — even on another page, e.g. `/kontakt#location` — scrolls smoothly straight to it instead of jumping there instantly, and lands below the fixed header instead of behind it.

@@ -144,9 +144,15 @@ add_action( 'login_enqueue_scripts', 'weizenkorn_login_css', 10 );
  *
  * The stylesheet carries the agency's mark as an inline SVG, which is right for a theme
  * that starts every project — but wrong the moment a project has a client. Rather than
- * swapping one hard-coded file for another, this reads the logo already chosen in
- * Appearance → Customize → Site Identity, the same one the site header draws. Change it
- * there and the login follows, with no deploy.
+ * swapping one hard-coded file for another, this reads the logo the header already draws,
+ * so the two can never disagree and changing it needs no deploy.
+ *
+ * That logo is an ACF option, not WordPress's own Custom Logo: weizenkorn_get_logo_id()
+ * reads general.logo from the Theme Options page. The theme does declare custom-logo
+ * support and still carries weizenkorn_logo() from the starter, but nothing calls it —
+ * setting a logo under Appearance → Customize → Site Identity changes nothing anywhere on
+ * this site, which is exactly the trap this comment exists to stop the next person falling
+ * into.
  *
  * Printed as a style tag and not added to the stylesheet because the URL is not known until
  * runtime. #login outranks the .login the stylesheet uses, so no !important is needed.
@@ -158,11 +164,17 @@ add_action( 'login_enqueue_scripts', 'weizenkorn_login_css', 10 );
  */
 function weizenkorn_login_logo() {
 
-	if ( ! has_custom_logo() ) {
+	if ( ! function_exists( 'weizenkorn_get_logo_id' ) ) {
 		return;
 	}
 
-	$logo_url = wp_get_attachment_image_url( (int) get_theme_mod( 'custom_logo' ), 'full' );
+	$logo_id = weizenkorn_get_logo_id();
+
+	if ( ! $logo_id ) {
+		return;
+	}
+
+	$logo_url = wp_get_attachment_image_url( $logo_id, 'full' );
 
 	if ( ! $logo_url ) {
 		return;
