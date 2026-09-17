@@ -158,6 +158,17 @@
   &--split &__list-item &__link
     @apply md:max-w-[307px] xl:max-w-[403px]
 
+  // No cap on the disabled one. The 423 above exists to stop a text-plus-arrow row from
+  // reaching the card's edge — this link has no arrow and no destination, so there is
+  // nothing beside it to reserve room for, and the cap was breaking "Hier geht's weiter
+  // zum Händlershop (coming soon)" across two lines for a reason that was not about it.
+  //
+  // none rather than a bigger number: the card's own padding is the real edge, and a
+  // figure picked to fit today's wording would break again the day the wording changes.
+  // After the rule above, which carries the same two classes and would otherwise win.
+  &--split &__link--disabled
+    @apply md:max-w-none xl:max-w-none
+
   // The tablet frame draws this arrow smaller than the ones beside it. Not matched on
   // purpose — it would read as an inconsistency. Only the gap is the frame's.
   &--split &__submit
