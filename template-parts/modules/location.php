@@ -43,9 +43,13 @@
  *   location_address        (textarea) optional. The name and address under the map — Our
  *                           Bakery leaves it empty, its addresses being listed by the
  *                           our-locations section above.
- *   location_address_2      (textarea) optional. A second address beside the first, on the
- *                           four columns next to it. Events & Seminare names two venues;
- *                           leave it empty and the first keeps the row to itself.
+ *   location_contact        (textarea) optional. Telephone and e-mail for the first address,
+ *                           in the column beside it.
+ *   location_contact_2      (textarea) optional. The same for the second address.
+ *   location_address_2      (textarea) optional. A second venue's address, under the first
+ *                           rather than beside it — the column beside belongs to that
+ *                           venue's own contact. Events & Seminare names two venues; leave
+ *                           it empty and the first keeps the row to itself.
  *   location_schedule_text  (textarea) optional. Opening hours, where the contact page puts
  *                           them and a second address would otherwise go. One field: the
  *                           heading is whatever the editor marks up as <b>, which is the
@@ -110,6 +114,8 @@ if ( ! $lc_heading
 	&& ! $lc_pins
 	&& ! get_field( $lc_prefix . 'location_address', $lc_ctx )
 	&& ! get_field( $lc_prefix . 'location_address_2', $lc_ctx )
+	&& ! get_field( $lc_prefix . 'location_contact', $lc_ctx )
+	&& ! get_field( $lc_prefix . 'location_contact_2', $lc_ctx )
 	&& ! get_field( $lc_prefix . 'location_schedule_text', $lc_ctx ) ) {
 	return;
 }
@@ -127,7 +133,7 @@ if ( ! $lc_heading
 		}
 		?>
 
-		<?php if ( $lc_pins || get_field( $lc_prefix . 'location_address', $lc_ctx ) || get_field( $lc_prefix . 'location_address_2', $lc_ctx ) || get_field( $lc_prefix . 'location_schedule_text', $lc_ctx ) ) : ?>
+		<?php if ( $lc_pins || get_field( $lc_prefix . 'location_address', $lc_ctx ) || get_field( $lc_prefix . 'location_address_2', $lc_ctx ) || get_field( $lc_prefix . 'location_contact', $lc_ctx ) || get_field( $lc_prefix . 'location_contact_2', $lc_ctx ) || get_field( $lc_prefix . 'location_schedule_text', $lc_ctx ) ) : ?>
 			<?php
 			// The section-heading already carries part of the gap below the rule, so the row
 			// adds only what is left. The map-to-address gap is the same distance again at
@@ -150,15 +156,40 @@ if ( ! $lc_heading
 					</div>
 				<?php endif; ?>
 
+				<?php if ( get_field( $lc_prefix . 'location_contact', $lc_ctx ) ) : ?>
+					<?php
+					/*
+					 * Beside the address it belongs to, not below it, and written out here rather
+					 * than folded into one field with the other venue's — that is what makes the
+					 * mobile order come out right. Stacked, the blocks follow the source, so a
+					 * venue's address and its telephone stay together instead of every address
+					 * arriving first and every number after.
+					 */
+					?>
+					<div class="location__contact text-brand-dark col-span-2 md:col-start-4 md:col-span-3 xl:col-start-6 xl:col-span-4">
+						<?php echo wp_kses_post( get_field( $lc_prefix . 'location_contact', $lc_ctx ) ); ?>
+					</div>
+				<?php endif; ?>
+
 				<?php if ( get_field( $lc_prefix . 'location_address_2', $lc_ctx ) ) : ?>
 					<?php
 					/*
-					 * Beside the first at both breakpoints above mobile — half the container at
-					 * tablet, the next four columns at desktop. Only mobile stacks them.
+					 * Under the first address when this section carries a second venue, and its
+					 * own contact goes beside it — see location_contact_2 below.
+					 *
+					 * The right-hand column it used to take is now location_contact's. Kreativatelier
+					 * had been using this field for a telephone number, which is what that column is
+					 * for; its value moved to location_contact and it reads the same.
 					 */
 					?>
-					<div class="location__address text-brand-dark col-span-2 md:col-start-4 md:col-span-3 xl:col-start-6 xl:col-span-4">
+					<div class="location__address text-brand-dark col-span-2 md:col-span-3 xl:col-start-2 xl:col-span-4">
 						<?php echo wp_kses_post( get_field( $lc_prefix . 'location_address_2', $lc_ctx ) ); ?>
+					</div>
+				<?php endif; ?>
+
+				<?php if ( get_field( $lc_prefix . 'location_contact_2', $lc_ctx ) ) : ?>
+					<div class="location__contact text-brand-dark col-span-2 md:col-start-4 md:col-span-3 xl:col-start-6 xl:col-span-4">
+						<?php echo wp_kses_post( get_field( $lc_prefix . 'location_contact_2', $lc_ctx ) ); ?>
 					</div>
 				<?php endif; ?>
 

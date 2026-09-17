@@ -36,6 +36,22 @@
     p
       @apply mb-0
 
+  // A venue's telephone and e-mail, in the column beside its address. Same type as the
+  // address deliberately: the two read as one block about one place, and Kreativatelier's
+  // number sat in the address field until this existed, so it must not change size now
+  // that it has moved into the field that was made for it.
+  &__contact
+    @apply font-primary font-normal tracking-[0.5px]
+    @apply text-[16px] leading-[22px] md:text-[21px] md:leading-[35px] xl:text-[40px] xl:leading-[55px]
+
+    p
+      @apply mb-0
+
+    a
+      &:hover,
+      &:focus-visible
+        @apply underline underline-offset-4
+
   // The hours slot. The body scale and not the map address's display type — that contrast
   // is what tells a second address from a set of opening hours in the same column.
   //
