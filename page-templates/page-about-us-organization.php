@@ -13,10 +13,10 @@
  * and the shared cta-form module ("Kommen wir ins Gespräch?").
  *
  * "Transparency" (also button-text, prefix 'organization_transparency_' —
- * a "Mehr erfahren" button, same shape as Organigramm) is commented out
- * below at the client's own request, temporarily — its ACF fields and the
- * shared module still support it unchanged, so re-enabling it later is
- * just uncommenting the one call.
+ * a "Mehr erfahren" button, same shape as Organigramm) and "Das Weizenkorn
+ * Team" are both commented out below, temporarily — their ACF fields and
+ * the modules behind them are untouched, so re-enabling either is just
+ * uncommenting the one call.
  *
  * "Das könnte Sie auch interessieren" is the one section from the Figma
  * frame deliberately not built here — never built on any page in this
@@ -47,7 +47,8 @@ if ( have_posts() ) :
 		get_template_part( 'template-parts/modules/intro-cta', null, array( 'prefix' => 'organization_why_' ) );
 		get_template_part( 'template-parts/pages/about-us-organization/jahresbericht' );
 		get_template_part( 'template-parts/modules/button-text', null, array( 'prefix' => 'organigramm_' ) );
-		get_template_part( 'template-parts/pages/about-us-organization/team' );
+		// TEMP — LAUNCH: hidden for now. Uncomment the line below to bring it back.
+		// get_template_part( 'template-parts/pages/about-us-organization/team' );
 		// Transparency is temporarily hidden — client's own request, no date to restore it yet.
 		/* get_template_part( 'template-parts/modules/button-text', null, array( 'prefix' => 'organization_transparency_' ) ); */
 		get_template_part( 'template-parts/modules/cta-form', null, array( 'prefix' => 'organization_' ) );

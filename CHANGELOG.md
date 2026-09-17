@@ -48,7 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Treuhand page: the offer grid and the quote slider now sit above the teaser section rather than below it.
 
 ### Removed
-- A handful of sections are hidden for launch, with no content ready for them yet: Product Range — Xyloba's "Projekte & Referenzen", the Treuhand and Schreinerei pages' FAQ, Supported Apprenticeships' quote slider and FAQ, Product Range — Holzspielwaren's "Jetzt aktuell" product overview, Kreativatelier's FAQ, and About Us' quote slider.
+- A handful of sections are hidden for launch, with no content ready for them yet: Product Range — Xyloba's "Projekte & Referenzen", the Treuhand and Schreinerei pages' FAQ, Supported Apprenticeships' quote slider and FAQ, Product Range — Holzspielwaren's "Jetzt aktuell" product overview, Kreativatelier's FAQ, About Us' quote slider, and the Organization page's team grid.
 
 ### Fixed
 - Home hero: the text panel and the photo could end up different heights at some window widths, the design's title-wrap assumption having drifted from the real rendered text. The photo now always matches the text column's real height.
