@@ -50,6 +50,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - News posts: the article title runs to a narrower column at desktop, so a long headline wraps sooner instead of running most of the way across the page.
 - Work & Training's diversity slider: on mobile the caption sits below its photo instead of over it, leaving the picture unobscured. Tablet and desktop keep the caption overlaid as before.
 - Treuhand page: the offer grid and the quote slider now sit above the teaser section rather than below it.
+- Mega menu: on desktop, a short window (a small laptop screen, a browser not maximized) shows the menu links a size down, so the three columns need less vertical room.
+- Quote slider text is a size down on desktop.
 
 ### Removed
 - A handful of sections are hidden for launch, with no content ready for them yet: Product Range — Xyloba's "Projekte & Referenzen", the Treuhand and Schreinerei pages' FAQ, Supported Apprenticeships' quote slider and FAQ, Product Range — Holzspielwaren's "Jetzt aktuell" product overview, Kreativatelier's FAQ, About Us' quote slider, and the Organization page's team grid.

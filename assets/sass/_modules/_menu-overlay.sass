@@ -242,3 +242,14 @@ body.menu-open
 
     a
       @apply block text-[15px] font-bold uppercase tracking-wide text-brand-red no-underline
+
+// A short desktop window (a small laptop screen, a browser not maximized, …) needs the
+// menu text a size down — the overlay's own vertical clamp()s only shrink spacing so far
+// before the three columns would need to scroll. Desktop (xl) only: the mobile accordion
+// above already uses its own, smaller sizes.
+@media (min-width: 1280px) and (max-height: 639px)
+  .menu-overlay__col > ul > li > a
+    @apply text-[24px] leading-[27px]
+
+  .menu-overlay__col .sub-menu a
+    @apply text-[16px]
