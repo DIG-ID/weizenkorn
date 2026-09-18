@@ -21,8 +21,8 @@
 		<?php get_template_part( 'template-parts/header', 'main' ); ?>
 		<?php get_template_part( 'template-parts/menu-overlay' ); ?>
 		<?php
-		// Home only for now (Figma: "hero section_first moment on website").
-		if ( is_front_page() ) {
-			get_template_part( 'template-parts/components/sticky-cta' );
-		}
+		// TEMP — LAUNCH: hidden at the client's own request, not ready to go live yet.
+		// Uncomment to bring it back (home only for now — Figma: "hero section_first
+		// moment on website").
+		/* if ( is_front_page() ) { get_template_part( 'template-parts/components/sticky-cta' ); } */
 		?>

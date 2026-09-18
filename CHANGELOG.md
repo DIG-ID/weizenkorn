@@ -53,6 +53,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ### Removed
 - A handful of sections are hidden for launch, with no content ready for them yet: Product Range — Xyloba's "Projekte & Referenzen", the Treuhand and Schreinerei pages' FAQ, Supported Apprenticeships' quote slider and FAQ, Product Range — Holzspielwaren's "Jetzt aktuell" product overview, Kreativatelier's FAQ, About Us' quote slider, and the Organization page's team grid.
+- The sticky CTA (the wheat-mark corner box) is temporarily hidden site-wide, at the client's own request, until it is ready to go live.
 
 ### Fixed
 - Product range order sections: the reseller line — the one with no arrow, since the shop is not open yet — stays on one line instead of breaking in two.
