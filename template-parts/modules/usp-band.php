@@ -58,7 +58,7 @@ if ( ! have_rows( $usp_prefix . 'usp_band_items', $usp_ctx ) ) {
 						</span>
 					<?php endif; ?>
 					<?php if ( get_sub_field( 'label' ) ) : ?>
-						<span class="label-usp usp-band__label"><?php echo esc_html( get_sub_field( 'label' ) ); ?></span>
+						<h3 class="label-usp usp-band__label"><?php echo esc_html( get_sub_field( 'label' ) ); ?></h3>
 					<?php endif; ?>
 				</div>
 				<?php
