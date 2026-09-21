@@ -71,6 +71,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Bakery download cards sat on two different layouts at once at desktop: the first card took the page's pairing while the two after it fell back to the product range cards' narrower one, so a three-card row came out with mismatched widths and the last card starting off the left margin. Each layout now keeps to its own section.
 - Product range cards: a closed card shows its title and nothing else, at the height the design draws, on mobile and tablet alike — no extra band of cream under the title, and no sliver of the "zum Produkt" link showing through it.
 - Product range cards: a card left without a title keeps the same bar as the cards beside it — same height, and its download arrow at the right rather than sliding over to the left.
+- Job posting structured data always states an employment type now (falls back to Schema.org's own "OTHER" value rather than leaving it out), and the job location's canton is included.
+- USP band: the heading is an `<h2>` instead of an `<h3>`, fixing a skipped heading level on the pages that use it.
 
 ## [1.18.4] — 2026-09-14
 
