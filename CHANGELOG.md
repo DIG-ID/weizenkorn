@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Contact Form 7's own JS/CSS, and Google's reCAPTCHA badge, now only load on pages that actually render a form — not site-wide.
 
 ### Changed
+- Mega menu: the six menu boxes are all the same height and share the grid's own 20px gutter between rows, instead of the first row standing taller than the second with a much wider gap between them. Tablet lays them out as the same two rows of three rather than stacking each column's pair at its own height. Mobile is unchanged.
 - Open Positions archive: the job list is headed "Aktuell offene Stellen IV".
 - About Us: the "Weizenkorn entdecken" video now sits above "Unser Ursprung" rather than below it.
 - Product range cards on the home page and the products archive underline their title when the pointer is anywhere over the card, at desktop, so it reads as one link rather than only the arrow being active.
