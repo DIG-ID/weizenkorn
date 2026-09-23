@@ -17,7 +17,7 @@
   // than solving it, so the stretch never actually reaches the box. assets/js/swiper.js's
   // own equalizeQuoteBoxHeights() sidesteps that entirely: it measures every box's
   // natural height in JS and sets the tallest one explicitly, below xl (desktop's own
-  // generous xl:min-h-[650px] already reads fine on its own, no measuring needed there).
+  // generous xl:min-h-[550px] already reads fine on its own, no measuring needed there).
   //
   // .theme-grid has no row gap by design. Nothing reserves the image row: a slide
   // without an image puts its card in row 1.
@@ -67,7 +67,7 @@
   // synthesises a fake light italic from the 400 weight.
   &__text
     @apply font-primary font-light italic tracking-[0.5px]
-    @apply text-[24px] leading-[37px] md:leading-[36px] xl:text-[40px] xl:leading-[60px]
+    @apply text-[24px] leading-[37px] md:leading-[36px] xl:text-[35px] xl:leading-[50px]
 
     p
       @apply mb-6 last:mb-0

@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
-## [1.19.0] — 2026-09-21
+## [1.19.0] — 2026-09-23
 
 ### Added
 - The Schreinerei service pages get their "Eine Auswahl von unserem Angebot" section: a grid of offers, three to a row, each a photograph with the offer's name on a cream bar that grows on hover to show a short description. An offer can link anywhere, and the last row widens to fill the width whether one or two offers are left over, so adding or removing one needs no layout change. Fill it under the page's **Offer Showcase** fields.
@@ -19,9 +19,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - The same pages get a block of prose under a red rule, laid out two columns to a row with a short heading over each — fill it under the page's **Text Columns** fields. Add as many blocks as the page needs; they keep going two to a row.
 - They also carry the Service / Info / Downloads button row and the "Möchten Sie mehr wissen?" contact form, both filled in the same fields they use on the Schreinerei overview.
 - Their hero draws its title in red and a size larger than the heroes above them, which is what sets a service page apart from the section it belongs to.
-
-- A second Schreinerei service template, **Services - Schreinerei Child (Alt)**, for the one page whose offers sit two to a row instead of three. Everything else on it is the same; pick it in the page's Template dropdown.
-
 - `acf-schreinerei-child-fields.json`, ready to import under ACF → Tools → Import: every field the Schreinerei service pages need, in one group shared by all of them.
 
 ### Changed
@@ -29,10 +26,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ### Fixed
 - Cards and tiles that carry a cream bar across the bottom of a photograph no longer show a hairline of that photograph under the bar at some window widths — the story sliders ("Projekte & Referenzen"), the services cards, the "Entdecken Sie mehr" previews, the rooms bento, the process steps and the apprenticeship programmes.
+- The Service / Info / Downloads buttons keep to one row on a wide screen. A row of five used to drop its last button to a second line, and on a narrower laptop the row broke earlier than it had to; the buttons now give up a little width before they wrap.
+- Writing a post: the title is drawn at the size it will have on the site rather than at body-text size, so it no longer reads as just another paragraph.
 
 ## [1.18.5] — 2026-09-14
 
 ### Added
+- Google Tag Manager (container GTM-MNWTLNWX) loads on every page, with the usual no-JavaScript fallback.
 - The login screen shows the site's own logo — the one set under Theme Options, the same one the header draws, and the same on every language's login URL. Sites that set none keep the starter's mark.
 - Map sections take a telephone and e-mail beside each address, so a page naming two venues keeps each address with its own contact details — on a phone they now read address, contact, address, contact instead of both addresses followed by both numbers. Pages that do not fill the new fields are unchanged.
 - Supported Apprenticeships gets its own "Schaffen Perspektiven" category grid, and Supported Jobs its own "Sinnstiftend vielfältig Unsere Arbeitsstellen" one — both moved from the Open Positions archive, which no longer shows either.
@@ -43,8 +43,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - The home page's services slider advances on its own every five seconds, as the diversity slider already did.
 - Product range cards carry the same red +/- as the preview cards on tablet and mobile: tapping the card, or the +/-, opens the card's description and tapping again closes it. On a card that links to a product, "zum Produkt" is the only thing that leaves the page, so the description can be read without losing the list. Keyboard: Enter opens and closes, Escape closes.
 - Titles' `<br>` breakpoint classes gained a fourth option, `xl:inline`: a break on mobile only, joined back into one line from tablet up.
+- Contact Form 7's own JS/CSS, and Google's reCAPTCHA badge, now only load on pages that actually render a form — not site-wide.
 
 ### Changed
+- Mega menu: the six menu boxes are all the same height and share the grid's own 20px gutter between rows, instead of the first row standing taller than the second with a much wider gap between them. Tablet lays them out as the same two rows of three rather than stacking each column's pair at its own height. Mobile is unchanged.
 - Open Positions archive: the job list is headed "Aktuell offene Stellen IV".
 - About Us: the "Weizenkorn entdecken" video now sits above "Unser Ursprung" rather than below it.
 - Product range cards on the home page and the products archive underline their title when the pointer is anywhere over the card, at desktop, so it reads as one link rather than only the arrow being active.
@@ -69,6 +71,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - News posts: the article title runs to a narrower column at desktop, so a long headline wraps sooner instead of running most of the way across the page.
 - Work & Training's diversity slider: on mobile the caption sits below its photo instead of over it, leaving the picture unobscured. Tablet and desktop keep the caption overlaid as before.
 - Treuhand page: the offer grid and the quote slider now sit above the teaser section rather than below it.
+- Mega menu: on desktop, a short window (a small laptop screen, a browser not maximized) shows the menu links a size down, so the three columns need less vertical room.
+- Quote slider text is a size down on desktop.
+- Quote slider box is shorter on desktop.
 
 ### Removed
 - A handful of sections are hidden for launch, with no content ready for them yet: Product Range — Xyloba's "Projekte & Referenzen", the Treuhand and Schreinerei pages' FAQ, Supported Apprenticeships' quote slider and FAQ, Product Range — Holzspielwaren's "Jetzt aktuell" product overview, Kreativatelier's FAQ, About Us' quote slider, and the Organization page's team grid.
@@ -84,6 +89,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - Bakery download cards sat on two different layouts at once at desktop: the first card took the page's pairing while the two after it fell back to the product range cards' narrower one, so a three-card row came out with mismatched widths and the last card starting off the left margin. Each layout now keeps to its own section.
 - Product range cards: a closed card shows its title and nothing else, at the height the design draws, on mobile and tablet alike — no extra band of cream under the title, and no sliver of the "zum Produkt" link showing through it.
 - Product range cards: a card left without a title keeps the same bar as the cards beside it — same height, and its download arrow at the right rather than sliding over to the left.
+- Job posting structured data always states an employment type now (falls back to Schema.org's own "OTHER" value rather than leaving it out), and the job location's canton is included.
+- USP band: the heading is an `<h2>` instead of an `<h3>`, and each item's label is now its own `<h3>` underneath it, fixing a skipped heading level on the pages that use it.
 
 ## [1.18.4] — 2026-09-14
 

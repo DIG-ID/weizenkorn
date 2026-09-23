@@ -38,12 +38,12 @@ if ( ! have_rows( $usp_prefix . 'usp_band_items', $usp_ctx ) ) {
 <section class="usp-band bg-brand-cream text-brand-dark py-16 md:py-24 xl:py-32">
 	<div class="theme-container">
 		<div class="usp-band__title-wrap mb-8 md:mb-16 xl:mb-24">
-			<h3 class="title-usp usp-band__title text-center">
+			<h2 class="title-usp usp-band__title text-center">
 				<?php
 				// Falls back to the designed default so the band always has its heading.
 				echo esc_html( get_field( $usp_prefix . 'usp_band_title', $usp_ctx ) ? get_field( $usp_prefix . 'usp_band_title', $usp_ctx ) : __( 'Das macht uns aus', 'weizenkorn' ) );
 				?>
-			</h3>
+			</h2>
 		</div>
 
 		<div class="usp-band__items gap-12 md:gap-24 xl:gap-52 flex flex-col md:flex-row items-center justify-center">
@@ -58,7 +58,7 @@ if ( ! have_rows( $usp_prefix . 'usp_band_items', $usp_ctx ) ) {
 						</span>
 					<?php endif; ?>
 					<?php if ( get_sub_field( 'label' ) ) : ?>
-						<span class="label-usp usp-band__label"><?php echo esc_html( get_sub_field( 'label' ) ); ?></span>
+						<h3 class="label-usp usp-band__label"><?php echo esc_html( get_sub_field( 'label' ) ); ?></h3>
 					<?php endif; ?>
 				</div>
 				<?php

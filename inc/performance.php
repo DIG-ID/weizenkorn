@@ -105,3 +105,67 @@ function weizenkorn_disable_self_pingbacks( &$links ) {
 }
 
 add_action( 'pre_ping', 'weizenkorn_disable_self_pingbacks' );
+
+/**
+ * Checks whether the current request renders a Contact Form 7 form — via the shared
+ * cta-form or order-form modules, either called directly or pulled in by another module
+ * that always includes one (contact-person calls cta-form for its own form band).
+ *
+ * Checking is_page_template() alone would miss the CPT archive/single templates below —
+ * they are matched by file name (WordPress' own template hierarchy), not a selectable
+ * Page template, so is_post_type_archive()/is_singular() is what actually catches them.
+ *
+ * @return bool
+ */
+function weizenkorn_has_contact_form() {
+	$page_templates = array(
+		'page-templates/page-about-us-organization.php',
+		'page-templates/page-contact.php',
+		'page-templates/page-gastronomie-events-seminare.php',
+		'page-templates/page-gastronomie-our-bakery.php',
+		'page-templates/page-services.php',
+		'page-templates/page-services-fiduciary.php',
+		'page-templates/page-services-kreativatelier.php',
+		'page-templates/page-services-schreinerei.php',
+		'page-templates/page-work-training.php',
+		'page-templates/page-work-training-for-social-offices-and-partners.php',
+		'page-templates/page-work-training-supported-apprenticeships.php',
+		'page-templates/page-work-training-supported-jobs.php',
+		'page-templates/product-range-holzmanufaktur.php',
+		'page-templates/product-range-holzspielwaren.php',
+		'page-templates/product-range-kerzen.php',
+		'page-templates/product-range-living-collection.php',
+		'page-templates/product-range-xyloba.php',
+	);
+
+	return is_page_template( $page_templates )
+		|| is_post_type_archive( 'products' )
+		|| is_singular( 'products' )
+		|| is_post_type_archive( 'offene-stellen' );
+}
+
+/**
+ * Hides Google's reCAPTCHA badge everywhere except pages that render a Contact Form 7
+ * form — CF7 only loads reCAPTCHA where a form needs it, but the badge itself is fixed
+ * in a page corner site-wide once the API script has loaded anywhere.
+ */
+function weizenkorn_recaptcha_badge_visibility() {
+	$visibility = weizenkorn_has_contact_form() ? 'visible' : 'hidden';
+	echo '<style>.grecaptcha-badge { visibility: ' . esc_html( $visibility ) . ' !important; }</style>';
+}
+
+add_action( 'wp_head', 'weizenkorn_recaptcha_badge_visibility' );
+
+/**
+ * Loads Contact Form 7's own JS/CSS only where a form actually renders, instead of on
+ * every page site-wide.
+ *
+ * @param bool $load Whether CF7 would otherwise load its assets.
+ * @return bool
+ */
+function weizenkorn_cf7_load_assets( $load ) {
+	return $load && weizenkorn_has_contact_form();
+}
+
+add_filter( 'wpcf7_load_js', 'weizenkorn_cf7_load_assets' );
+add_filter( 'wpcf7_load_css', 'weizenkorn_cf7_load_assets' );

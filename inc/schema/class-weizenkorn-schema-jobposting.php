@@ -11,11 +11,20 @@
  * JobPosting schema for a single Open Positions post.
  *
  * Required properties Google looks for (title, description, datePosted,
- * hiringOrganization, jobLocation) are all covered; employmentType is only set when it
- * can be inferred with confidence (Ausbildungsplätze → INTERN) — offene_stellen_employment
- * is free text (e.g. "30 - 100 % Anstellung") with no reliable full/part-time signal, so
- * guessing FULL_TIME/PART_TIME from it would risk asserting something untrue rather than
- * just leaving an optional property out.
+ * hiringOrganization, jobLocation) are all covered. employmentType maps to Schema.org's
+ * enum with confidence where it can (Ausbildungsplätze → INTERN) and falls back to OTHER
+ * everywhere else — offene_stellen_employment is free text (e.g. "30 - 100 % Anstellung")
+ * with no reliable full/part-time signal, so guessing FULL_TIME/PART_TIME from it would
+ * risk asserting something untrue. OTHER is Schema.org's own catch-all for exactly this:
+ * "the property is required/recommended but the actual value doesn't fit the other
+ * enum options" — Google's docs list it as an accepted value, not a validation failure.
+ *
+ * baseSalary and validThrough are intentionally left out, not just unmapped: there is no
+ * ACF field to source either from (no per-post salary, and offene_stellen_start_date is
+ * the job's OWN start date, not an application deadline), and Google explicitly warns
+ * against a made-up validThrough — a wrong one is worse than none, since a posting that
+ * "expired" gets suppressed from Google for Jobs. Add real per-post ACF fields for these
+ * first if the client wants them in the schema; do not synthesize placeholder values.
  *
  * jobLocation uses the Stiftung's own registered address (Oetlingerstrasse 81, 4057
  * Basel — the same one in the footer) rather than the offene_stellen_standort taxonomy
@@ -62,6 +71,7 @@ class Weizenkorn_Schema_JobPosting extends \Yoast\WP\SEO\Generators\Schema\Abstr
 					'streetAddress'   => 'Oetlingerstrasse 81',
 					'postalCode'      => '4057',
 					'addressLocality' => 'Basel',
+					'addressRegion'   => 'Basel-Stadt',
 					'addressCountry'  => 'CH',
 				),
 			),
@@ -72,36 +82,29 @@ class Weizenkorn_Schema_JobPosting extends \Yoast\WP\SEO\Generators\Schema\Abstr
 			),
 		);
 
-		$employment_type = $this->get_employment_type( $post_id );
-
-		if ( $employment_type ) {
-			$data['employmentType'] = $employment_type;
-		}
+		$data['employmentType'] = $this->get_employment_type( $post_id );
 
 		return $this->helpers->schema->language->add_piece_language( $data );
 	}
 
 	/**
-	 * Maps the offene_stellen_anstellungsart taxonomy to Schema.org's employmentType enum,
-	 * where confident enough to do so.
+	 * Maps the offene_stellen_anstellungsart taxonomy to Schema.org's employmentType enum.
 	 *
 	 * @param int $post_id Post ID.
 	 *
-	 * @return string Empty when no confident mapping exists.
+	 * @return string Always a valid enum value — OTHER when no more specific one fits.
 	 */
 	private function get_employment_type( $post_id ) {
 		$terms = get_the_terms( $post_id, 'offene_stellen_anstellungsart' );
 
-		if ( ! is_array( $terms ) ) {
-			return '';
-		}
-
-		foreach ( $terms as $term ) {
-			if ( false !== stripos( $term->name, 'ausbildung' ) ) {
-				return 'INTERN';
+		if ( is_array( $terms ) ) {
+			foreach ( $terms as $term ) {
+				if ( false !== stripos( $term->name, 'ausbildung' ) ) {
+					return 'INTERN';
+				}
 			}
 		}
 
-		return '';
+		return 'OTHER';
 	}
 }
