@@ -23,7 +23,7 @@
  *     → link   (link, optional)  shows "zum Produkt" and, at desktop, makes the whole
  *                               card clickable. Below xl the card is a switch for its
  *                               own copy and only that link leaves the page — see
- *                               assets/js/product-overview.js.
+ *                               assets/js/reveal-cards.js.
  *                                A Link holds any URL, so the product PDFs go here too.
  *
  * Usage:

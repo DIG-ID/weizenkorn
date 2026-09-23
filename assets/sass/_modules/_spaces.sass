@@ -67,7 +67,10 @@
 
   // Over the photograph's bottom edge rather than under it, so the tile's height is the
   // photograph's and the row stays level.
+  // bottom: -1px and a padding-bottom a pixel deeper to match — see the note on
+  // .card__panel in _modules/_stories-references.sass. The bar keeps its 8/14px.
   &__caption
-    @apply absolute inset-x-0 bottom-0 z-10
+    @apply absolute inset-x-0 z-10
     @apply bg-brand-cream text-brand-dark title-card
-    @apply px-4 py-2 xl:px-6 xl:py-3.5
+    @apply px-4 pt-2 pb-[9px] xl:px-6 xl:pt-3.5 xl:pb-[15px]
+    bottom: -1px

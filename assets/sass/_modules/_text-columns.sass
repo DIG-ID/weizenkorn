@@ -1,0 +1,63 @@
+// Text columns — template-parts/modules/text-columns.php
+//
+// Two blocks of prose to a row, each on five of the twelve columns: 2-6 and 7-11, the same
+// pair the section-heading component's own two descriptions take. Placed on .theme-grid
+// itself with grid-column, one declaration per breakpoint — see _layout/_grid.sass.
+
+.text-columns
+
+  // The rule belongs to the row and not to either column: it runs the container's full
+  // width while the columns keep to the inset. border-t and not a border under the block
+  // above, so a section that follows something else still brings its own line. The same
+  // call _legal-content.sass makes.
+  //
+  // Under the rule: 32px at mobile, 56 at tablet, 96 at desktop — each its own frame's. The
+  // desktop one pairs with the section's own 96px above the rule, so the line has equal air
+  // either side.
+  //
+  // The row gap is the mobile frame's own 16px. Tablet takes 56, the one vertical measure
+  // that frame gives, because it runs the whole section as a single block of prose and so
+  // says nothing about the space between two of them.
+  &__row
+    @apply border-t border-brand-red
+    @apply pt-8 md:pt-14 xl:pt-24
+    @apply gap-y-4 md:gap-y-14 xl:gap-y-16
+
+  // One under the other below desktop, side by side at desktop. nth-child and not a class
+  // on the element: which column a block lands in is a property of its position in the row,
+  // and the template renders a repeater it cannot count.
+  //
+  // Five of six columns at tablet, not the full width: the tablet frame sets its prose to
+  // 579 of the container's 703, which is five columns and four gutters exactly. That frame
+  // gets there by running both blocks together as one piece with no headings; stacking them
+  // keeps the headings, and the measure it sets is what they both keep to.
+  //
+  // The colour is on the item and not on the heading: the type classes carry none, so
+  // setting it here is what the paragraphs under it inherit too.
+  &__item
+    @apply text-brand-dark
+    grid-column: 1 / span 2
+
+    @media (min-width: 768px)
+      grid-column: 1 / span 5
+
+    @media (min-width: 1280px)
+      grid-column: 2 / span 5
+
+      &:nth-child(even)
+        grid-column: 7 / span 5
+
+  // 50px under the heading at desktop, the frame's own. Below that the frames drop the
+  // headings altogether, so these two are set against the row gap above rather than
+  // measured: a heading has to sit closer to the text it names than to the block before it,
+  // or it reads as belonging to that one. 8 against a 16px gap at mobile, 24 against 56 at
+  // tablet.
+  &__title
+    @apply mb-2 md:mb-6 xl:mb-[50px]
+
+  // The frame puts a blank line between paragraphs — a full 30px at desktop against the
+  // 16px .body-text carries everywhere else. Set here rather than in the shared class,
+  // which every other section is spaced by.
+  &__text
+    p
+      @apply mb-[22px] xl:mb-[30px] last:mb-0

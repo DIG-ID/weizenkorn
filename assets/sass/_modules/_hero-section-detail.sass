@@ -1,0 +1,26 @@
+// Page hero, detail level — template-parts/modules/hero-section-detail.php
+//
+// Layout is Tailwind in the template; what lives here is the one thing that cannot be,
+// which is out-ranking a shared type class.
+
+.section-page-hero-detail
+
+  // The second-level hero draws its title red and larger than any other hero: 82/100 at the
+  // 1920 frame, against .title-hero's own 70/84. Both come from the Figma component
+  // `hero-2sd-level-desktop` itself, not from the page, so every page on this template gets
+  // them.
+  //
+  // Scoped and not changed in .title-hero: modules/hero-section.php and the home hero share
+  // that class and keep their own scale and the inherited dark.
+  //
+  // Two classes against the shared one's single, so this wins wherever the files are
+  // emitted. That matters: @tailwind utilities is emitted before these partials, so the
+  // same values written as utilities on the element would tie with .title-hero on
+  // specificity and lose to it on order.
+  //
+  // The xl step is interpolated, not measured — the frames are drawn at 1920 and give the
+  // 2xl value alone. It keeps .title-hero's own xl-to-2xl ratio (56/70 = 0.8), so the title
+  // grows across the desktop range the way every other heading in the theme does.
+  .title-hero
+    @apply text-brand-red
+    @apply xl:text-[66px] xl:leading-[80px] 2xl:text-[82px] 2xl:leading-[100px]

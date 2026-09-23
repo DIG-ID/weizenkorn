@@ -70,9 +70,13 @@ a.card-range
   // At desktop it is a bar over the image, so the vertical padding drops to the 10px
   // product-overview uses on the same kind of collapsed bar. At py-5 it read as a box
   // sitting under the image rather than a bar on it.
+  // The xl padding-bottom is a pixel deeper than the top, paired with the bottom: -1px in
+  // the desktop block below — see the note on .card__panel in _modules/_stories-references
+  // .sass for what that pixel is for. Below xl the panel sits under the image in normal
+  // flow, so there is no edge to cover and the padding stays even.
   .card__panel
     @apply flex flex-1 flex-col bg-brand-cream
-    @apply px-4 py-4 xl:px-6 xl:py-[10px]
+    @apply px-4 py-4 xl:px-6 xl:pt-[10px] xl:pb-[11px]
 
   .card__title
     @apply title-card text-brand-dark m-0
@@ -120,7 +124,8 @@ a.card-range
       aspect-ratio: auto
 
     .card__panel
-      @apply absolute inset-x-0 bottom-0 z-10 flex-none
+      @apply absolute inset-x-0 z-10 flex-none
+      bottom: -1px
 
     .card__reveal
       grid-template-rows: 0fr
@@ -141,8 +146,11 @@ a.card-range
   &__media
     @apply absolute inset-0
 
+  // bottom: -1px and a padding-bottom to match — see the note on .card__panel in
+  // _modules/_stories-references.sass. 14px either side at both widths, as before.
   &__panel
-    @apply absolute inset-x-0 bottom-0 z-10 bg-brand-cream px-4 py-3.5 xl:px-6 xl:py-[14px]
+    @apply absolute inset-x-0 z-10 bg-brand-cream px-4 pt-3.5 pb-[15px] xl:px-6
+    bottom: -1px
 
   &__head
     @apply flex items-center justify-between gap-8

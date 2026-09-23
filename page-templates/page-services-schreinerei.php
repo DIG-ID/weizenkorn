@@ -3,8 +3,7 @@
  * Template Name: Services - Schreinerei Template
  *
  * The Schreinerei overview — a child of Services, and the parent of the seven service
- * pages, which use page-services-schreinerei-child.php (six of them) and
- * page-services-schreinerei-child-alt.php (the seventh).
+ * pages, which all use page-services-schreinerei-child.php.
  *
  * SECTIONS, in order:
  *

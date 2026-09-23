@@ -137,10 +137,22 @@
 
   // The frame's expanded panel pads more at the top than this; the difference only shows
   // while the card is open, and matching it would mean animating padding as well as rows.
+  //
+  // bottom: -1px and a padding-bottom one pixel deeper, NOT bottom: 0. The card clips its
+  // own overflow, so that extra pixel is never drawn — what it buys is coverage. The card
+  // rides in a Swiper, whose track sits on a fractional translate3d, so at some widths and
+  // slide positions the card's box falls between device pixels; the panel's bottom edge and
+  // the image's then round to different ones and a hairline of photograph shows under the
+  // bar. Overhanging the clip edge leaves nothing that can show through.
+  //
+  // The bar itself does not move: its height is its content plus its padding, and `bottom`
+  // drops by exactly what padding-bottom gains, so the visible top edge stays put and the
+  // 8px under the text is still 8px.
   .card__panel
-    @apply absolute inset-x-0 bottom-0 z-10
+    @apply absolute inset-x-0 z-10
     @apply flex flex-col justify-between
-    @apply bg-brand-cream px-4 py-2
+    @apply bg-brand-cream px-4 pt-2 pb-[9px]
+    bottom: -1px
 
   .card__head
     @apply flex flex-col gap-1.5

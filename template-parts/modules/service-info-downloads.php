@@ -16,7 +16,10 @@
  * equal gaps — which is a fixed width spread with space-between, not a grid. Read as
  * columns it also breaks: two of twelve is 287 only near 1920, and at 1280 it comes out at
  * 180, narrower than the same button at tablet, with the arrow pushed out through the
- * border. So the row turns into a flex row at xl and the button keeps the frame's width.
+ * border. So the row turns into a wrapping flex row at xl, where 287 is the width a button
+ * grows up to rather than the width it starts from — a row of five is 1515 wide against an
+ * inset of 1513, so a fixed 287 would drop the last one to a second line at the very width
+ * the frame was drawn at. See _service-info-downloads.sass.
  *
  * At tablet the three are adjacent instead — two of six columns each, which fills the
  * container exactly. At mobile each one takes the full width and they stack.
@@ -37,6 +40,14 @@
  *     @type int|string $post_id Optional. ACF post id / options store to read from.
  *                               Default: the current post.
  *     @type string     $prefix  Optional. Prepended to every field name.
+ *     @type string     $icon    Optional. The arrow every button in the row draws.
+ *                               Default 'arrow-download', which is the Schreinerei
+ *                               overview's row — every entry there is a document. The
+ *                               service pages pass 'arrow-right': their rows mix pages
+ *                               ("Über uns", "Offene Stellen") in with the documents and
+ *                               their frames point all of them sideways. Pass '' to let
+ *                               the button component read the URL and choose per button,
+ *                               which is right once no link in the row is a placeholder.
  * }
  *
  * @package weizenkorn
@@ -46,6 +57,10 @@
 
 $sid_ctx    = ( ! empty( $args['post_id'] ) ) ? $args['post_id'] : get_the_ID();
 $sid_prefix = ! empty( $args['prefix'] ) ? $args['prefix'] : '';
+
+// isset and not ! empty: '' is a caller asking for no named icon at all, which hands the
+// choice back to the button component, and is a different answer from saying nothing.
+$sid_icon = isset( $args['icon'] ) ? $args['icon'] : 'arrow-download';
 
 // Not a plain get_field() — see weizenkorn_get_section_heading() for why.
 $sid_heading = weizenkorn_get_section_heading( $sid_prefix . 'service_info_downloads_', $sid_ctx );
@@ -82,21 +97,18 @@ if ( ! $sid_heading && ! have_rows( $sid_prefix . 'service_info_downloads_items'
 					?>
 					<div class="service-info-downloads__item col-span-2 md:col-span-2">
 						<?php
-						// The arrow is named rather than inferred: every button in this section
-						// fetches a document, and the component would otherwise read the URL and
-						// point right at whatever is not yet a file — a page being filled in with
-						// placeholder links draws the wrong arrow.
-						get_template_part(
-							'template-parts/components/button',
-							null,
-							array_merge(
-								$sid_link,
-								array(
-									'style' => 'secondary',
-									'icon'  => 'arrow-download',
-								)
-							)
-						);
+						// The arrow is named rather than inferred, and named once for the whole
+						// row: on the overview every entry fetches a document, and letting the
+						// component read the URL would point it sideways at whatever is not a
+						// file yet — a page being filled in with placeholder links draws the
+						// wrong arrow. Which arrow is the caller's to say; see $sid_icon.
+						$sid_button = array_merge( $sid_link, array( 'style' => 'secondary' ) );
+
+						if ( '' !== $sid_icon ) {
+							$sid_button['icon'] = $sid_icon;
+						}
+
+						get_template_part( 'template-parts/components/button', null, $sid_button );
 						?>
 					</div>
 					<?php

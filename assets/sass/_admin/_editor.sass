@@ -38,3 +38,25 @@ body#tinymce
     font-weight: 700
     font-size: 1em
     margin: 1.5em 0 0
+
+// -- Block editor: the post title ---------------------------------------------
+// The title field in the canvas is a real <h1> (core renders it with the classes
+// wp-block-post-title editor-post-title__input), and dist/css/main.css — which
+// add_editor_style() loads first — carries Tailwind's preflight:
+//
+//   h1,h2,h3,h4,h5,h6 { font-size: inherit; font-weight: inherit }
+//
+// So the title comes out at the body's size and weight and reads as a paragraph, while the
+// front end gives it .title-main. Same cause as the h3 rule above, different canvas.
+//
+// A class selector rather than `h1`: the editor scopes every theme style with
+// `:where(.editor-styles-wrapper)`, which adds no specificity, so a bare `h1` here would
+// only outrank the preflight on source order. This outranks it outright.
+//
+// The steps are .title-main's own, and they resolve against the canvas width rather than
+// the window, so the title shrinks with the editor the way it shrinks with the viewport.
+// The 2xl step (96px) is left off: the canvas is a column beside the sidebar, not the page,
+// and this is here to be read while writing.
+.editor-post-title__input
+  @apply font-primary font-medium tracking-[0.3px] xl:tracking-[0.5px]
+  @apply text-[30px] leading-[34px] md:text-[56px] md:leading-[60px] xl:text-[76px] xl:leading-[80px]

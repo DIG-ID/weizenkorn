@@ -1,0 +1,309 @@
+[
+    {
+        "key": "group_schreinerei_child",
+        "title": "Schreinerei - Service Page",
+        "fields": [
+            {
+                "key": "field_sch_hero",
+                "label": "Hero",
+                "name": "page_hero_detail",
+                "type": "group",
+                "instructions": "The page header: the panel with the title and intro, and the photograph beside it.",
+                "layout": "block",
+                "sub_fields": [
+                    {
+                        "key": "field_sch_hero_image",
+                        "label": "Image",
+                        "name": "image",
+                        "type": "image",
+                        "instructions": "Required — without it the whole hero is skipped.",
+                        "required": 1,
+                        "return_format": "id",
+                        "preview_size": "medium",
+                        "library": "all"
+                    },
+                    {
+                        "key": "field_sch_hero_title",
+                        "label": "Title",
+                        "name": "title",
+                        "type": "text",
+                        "instructions": "The page's h1. Drawn in red."
+                    },
+                    {
+                        "key": "field_sch_hero_text",
+                        "label": "Text",
+                        "name": "text",
+                        "type": "textarea",
+                        "new_lines": "wpautop",
+                        "rows": 3
+                    },
+                    {
+                        "key": "field_sch_hero_separator",
+                        "label": "Separator Logo",
+                        "name": "separator_logo",
+                        "type": "image",
+                        "instructions": "The small wheat mark centred under the hero. Optional.",
+                        "return_format": "id",
+                        "preview_size": "thumbnail",
+                        "library": "all"
+                    }
+                ]
+            },
+            {
+                "key": "field_sch_offer",
+                "label": "Offer Showcase",
+                "name": "offer_showcase",
+                "type": "group",
+                "instructions": "\"Eine Auswahl aus unserem Angebot\" — the grid of offers. Three to a row at desktop; with exactly four they fall two and two, and a single card left over on the last row takes its whole width. Both are automatic, nothing to set.",
+                "layout": "block",
+                "sub_fields": [
+                    {
+                        "key": "field_sch_offer_section_title",
+                        "label": "Section Title",
+                        "name": "section_title",
+                        "type": "clone",
+                        "clone": [
+                            "group_6a4fb434d42e9"
+                        ],
+                        "display": "group",
+                        "layout": "block",
+                        "prefix_label": 0,
+                        "prefix_name": 0
+                    },
+                    {
+                        "key": "field_sch_offer_items",
+                        "label": "Offers",
+                        "name": "items",
+                        "type": "repeater",
+                        "layout": "block",
+                        "button_label": "Add offer",
+                        "sub_fields": [
+                            {
+                                "key": "field_sch_offer_image",
+                                "label": "Image",
+                                "name": "image",
+                                "type": "image",
+                                "instructions": "Required — a row without one is skipped, and is not counted when the grid works out its last row.",
+                                "required": 1,
+                                "return_format": "id",
+                                "preview_size": "medium",
+                                "library": "all"
+                            },
+                            {
+                                "key": "field_sch_offer_title",
+                                "label": "Title",
+                                "name": "title",
+                                "type": "text",
+                                "instructions": "The name on the cream bar."
+                            },
+                            {
+                                "key": "field_sch_offer_text",
+                                "label": "Text",
+                                "name": "text",
+                                "type": "textarea",
+                                "instructions": "Revealed on hover at desktop, and on a tap below it.",
+                                "new_lines": "wpautop",
+                                "rows": 3
+                            },
+                            {
+                                "key": "field_sch_offer_link",
+                                "label": "Link",
+                                "name": "link",
+                                "type": "link",
+                                "instructions": "Optional. The card then shows \"mehr erfahren\" — type a Title on the link to say something else instead.",
+                                "return_format": "array"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "key": "field_sch_text_columns",
+                "label": "Text Columns",
+                "name": "text_columns",
+                "type": "group",
+                "instructions": "The prose under a red rule, two columns to a row at desktop and stacked below it.",
+                "layout": "block",
+                "sub_fields": [
+                    {
+                        "key": "field_sch_text_columns_items",
+                        "label": "Blocks",
+                        "name": "items",
+                        "type": "repeater",
+                        "layout": "block",
+                        "button_label": "Add block",
+                        "sub_fields": [
+                            {
+                                "key": "field_sch_text_columns_title",
+                                "label": "Title",
+                                "name": "title",
+                                "type": "text",
+                                "instructions": "Optional. Without it the block is drawn as plain prose."
+                            },
+                            {
+                                "key": "field_sch_text_columns_text",
+                                "label": "Text",
+                                "name": "text",
+                                "type": "textarea",
+                                "new_lines": "wpautop",
+                                "rows": 6
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "key": "field_sch_sid",
+                "label": "Service / Info / Downloads",
+                "name": "service_info_downloads",
+                "type": "group",
+                "instructions": "The row of outlined buttons.",
+                "layout": "block",
+                "sub_fields": [
+                    {
+                        "key": "field_sch_sid_section_title",
+                        "label": "Section Title",
+                        "name": "section_title",
+                        "type": "clone",
+                        "clone": [
+                            "group_6a4fb434d42e9"
+                        ],
+                        "display": "group",
+                        "layout": "block",
+                        "prefix_label": 0,
+                        "prefix_name": 0
+                    },
+                    {
+                        "key": "field_sch_sid_items",
+                        "label": "Buttons",
+                        "name": "items",
+                        "type": "repeater",
+                        "layout": "table",
+                        "button_label": "Add button",
+                        "sub_fields": [
+                            {
+                                "key": "field_sch_sid_link",
+                                "label": "Link",
+                                "name": "link",
+                                "type": "link",
+                                "instructions": "Required, and its Title is the button's label. A row without both is skipped.",
+                                "required": 1,
+                                "return_format": "array"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "key": "field_sch_cta",
+                "label": "CTA Form",
+                "name": "cta",
+                "type": "group",
+                "instructions": "\"Möchten Sie mehr wissen?\" — the heading and the red band with the form in it. Leave the shortcode empty to use the site-wide form set under Theme Options.",
+                "layout": "block",
+                "sub_fields": [
+                    {
+                        "key": "field_sch_cta_section_title",
+                        "label": "Section Title",
+                        "name": "section_title",
+                        "type": "clone",
+                        "clone": [
+                            "group_6a4fb434d42e9"
+                        ],
+                        "display": "group",
+                        "layout": "block",
+                        "prefix_label": 0,
+                        "prefix_name": 0
+                    },
+                    {
+                        "key": "field_sch_cta_shortcode",
+                        "label": "Form Shortcode",
+                        "name": "shortcode",
+                        "type": "text",
+                        "instructions": "Optional. Overrides the site-wide form on this page only."
+                    },
+                    {
+                        "key": "field_sch_cta_phone",
+                        "label": "Phone",
+                        "name": "phone",
+                        "type": "text",
+                        "instructions": "Optional. Shown above the band with the phone icon."
+                    },
+                    {
+                        "key": "field_sch_cta_email",
+                        "label": "Email",
+                        "name": "email",
+                        "type": "text",
+                        "instructions": "Optional. Shown above the band with the envelope icon."
+                    }
+                ]
+            },
+            {
+                "key": "field_sch_preview_cards",
+                "label": "Preview Cards",
+                "name": "preview_cards",
+                "type": "group",
+                "instructions": "\"Das könnte Sie auch interessieren\" — up to 3 cards pointing at other pages. Each featured page supplies its own card image and text under its own Preview Card fields, which already exist site-wide.",
+                "layout": "block",
+                "sub_fields": [
+                    {
+                        "key": "field_sch_preview_cards_title",
+                        "label": "Title",
+                        "name": "title",
+                        "type": "text",
+                        "instructions": "Required — without it the whole section is skipped."
+                    },
+                    {
+                        "key": "field_sch_preview_cards_pages",
+                        "label": "Pages",
+                        "name": "pages",
+                        "type": "relationship",
+                        "instructions": "Up to 3, in the order they should appear. A page with no Preview Card title or image of its own is skipped.",
+                        "post_type": [
+                            "page"
+                        ],
+                        "filters": [
+                            "search"
+                        ],
+                        "return_format": "id",
+                        "max": 3
+                    },
+                    {
+                        "key": "field_sch_preview_cards_products",
+                        "label": "Include the Products archive",
+                        "name": "include_products_archive",
+                        "type": "true_false",
+                        "instructions": "Appended after the pages above. Its card is set once under Theme Options.",
+                        "ui": 1
+                    },
+                    {
+                        "key": "field_sch_preview_cards_jobs",
+                        "label": "Include the Open Positions archive",
+                        "name": "include_offene_stellen_archive",
+                        "type": "true_false",
+                        "instructions": "Appended after the pages above. Its card is set once under Theme Options.",
+                        "ui": 1
+                    }
+                ]
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "page_template",
+                    "operator": "==",
+                    "value": "page-templates/page-services-schreinerei-child.php"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "Every section of a Schreinerei service page. One group for all of them — they share a template, so they share these fields and each page fills in its own values.",
+        "show_in_rest": 0
+    }
+]

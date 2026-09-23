@@ -44,10 +44,13 @@
   // Over the photograph's bottom edge rather than under it, so the tile's height never
   // changes when the sentence appears. 10px of padding either side of the title's line is
   // what draws the bar: 42px below 2xl (a 22px line) and the 1920 frame's 50 above it.
+  // bottom: -1px and a padding-bottom a pixel deeper to match — see the note on
+  // .card__panel in _modules/_stories-references.sass. The bar keeps its 10px either side.
   &__caption
-    @apply absolute inset-x-0 bottom-0 z-10
+    @apply absolute inset-x-0 z-10
     @apply flex flex-col bg-brand-cream text-brand-dark
-    @apply px-4 py-[10px]
+    @apply px-4 pt-[10px] pb-[11px]
+    bottom: -1px
 
   // Not .title-card: its step to 20/30 lands at xl, where this tile is only ~220px wide —
   // narrower than the same tile at mobile. Every caption wrapped to two lines there and the

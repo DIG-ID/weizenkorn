@@ -52,8 +52,21 @@
   .btn__icon svg
     @apply w-[13px] h-4 xl:w-[21px] xl:h-[26px]
 
-  // The frame's own width, kept at every desktop size rather than recomputed from columns.
+  // 287 is the frame's box, but as a ceiling the button grows up to, not the width it
+  // starts from. A fixed 287 wraps the row one button too early: the frame draws five of
+  // them across an inset of 1514, and 5 x 287 + 4 x 20 is 1515 — the design is a pixel
+  // over its own row, and the inset the page grid gives us (the container less a column
+  // and a gutter either side) is 1513, so the fifth dropped to a second line at the very
+  // width the frame was drawn at.
+  //
+  // So the basis is the narrowest the box may be and the browser breaks lines on THAT:
+  // 263 is the longest label the design has (Sicherheitshinweise, 178 at 15px) plus the
+  // frame's 27/17 padding, the 21px arrow and 20 of air. Whatever ends up on a line then
+  // grows back to the frame's 287, or to the share of the inset it can afford — five fit
+  // at 1920, four around 1600, three at 1280, and the Schreinerei overview's three keep
+  // the full 287 with justify-between opening the gaps the way the frame does.
   &__item
     @media (min-width: 1280px)
-      @apply shrink-0 grow-0
-      width: 287px
+      @apply grow shrink
+      flex-basis: 263px
+      max-width: 287px

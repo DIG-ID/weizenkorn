@@ -1,0 +1,188 @@
+// Offer showcase — template-parts/modules/offer-showcase.php
+//
+// Three cards across the ten-column inset — two when there are exactly four of them; see
+// the last block in this file. Ten does not divide into three, so the list
+// takes the inset as a span and cuts THAT into sixths — the sanctioned exception to
+// placing everything on .theme-grid itself, since the page grid has no column edge where
+// these cards need one. See _layout/_grid.sass. A card is two sixths at desktop, three at
+// tablet and the whole row at mobile.
+//
+// The sixths are also what lets a short last row fill the width without a second grid:
+// halves and wholes are both whole numbers of sixths, thirds would not be.
+//
+// The card itself is .card-story, styled in _stories-references.sass. Only what the
+// Schreinerei frames draw differently is set here.
+
+.offer-showcase
+
+  &__list
+    @apply grid grid-cols-6 gap-x-5 list-none m-0 p-0
+
+    // Rows only, and each one its frame's own: 24 at mobile, 32 at tablet, 25 at desktop.
+    // The column gutter is the grid's 20px, which is what mobile and tablet draw anyway.
+    // Desktop spaces its cards 25px apart both ways, but there the horizontal gap is not
+    // free — it is what lands the cards on the page grid's columns, and alignment wins
+    // over the 5px.
+    @apply gap-y-6 md:gap-y-8 xl:gap-y-[25px]
+
+  &__item
+    grid-column: span 6
+
+    @media (min-width: 768px)
+      grid-column: span 3
+
+    @media (min-width: 1280px)
+      grid-column: span 2
+
+  // The last row always fills the width, however many cards are left over. Each rule is a
+  // quantity query: `:nth-child(3n+1)` finds a card that starts a row, `:nth-last-child(n)`
+  // says how many remain from there, and the sibling combinator picks up the rest of that
+  // row. A count divisible by three matches neither and is left alone.
+  //
+  // Counted in CSS and not in PHP on purpose: with a PHP index the widths would be fixed
+  // when the page is built, and every card added or removed would need them rewritten.
+  //
+  // Both cases are drawn: Innenausbau's ten offers are nine in three rows and a tenth
+  // across the bottom, and Möbel's eight are two rows of three with Regale and Betten
+  // taking half the last row each.
+  @media (min-width: 1280px)
+    &__item:nth-child(3n+1):last-child
+      grid-column: span 6
+
+    &__item:nth-child(3n+1):nth-last-child(2),
+    &__item:nth-child(3n+1):nth-last-child(2) ~ &__item
+      grid-column: span 3
+
+  // Two up at tablet, so an odd count leaves the last card alone and it takes the row.
+  // Bounded at the top as well: these are min-width queries, so a plain (min-width: 768px)
+  // would still be in force at desktop and would outrank the spans above.
+  @media (min-width: 768px) and (max-width: 1279px)
+    &__item:last-child:nth-child(odd)
+      grid-column: span 6
+
+  // -- Exactly four: two and two --------------------------------------------------
+  // Four is the one count three to a row cannot seat. It would leave a single card across
+  // the whole bottom, and Für Architekten / Planer's frame draws two and two instead. Every
+  // other count the six service pages use — 3, 6, 8, 10 — already falls out of the rules
+  // above the way its frame draws it.
+  //
+  // Read off the count and not off a page, a template or a field, like every other decision
+  // in this grid: `:nth-last-child(4):first-child` matches the first card only when there
+  // are exactly four, and the sibling combinator takes the other three with it. So a
+  // seventh page needing this arrangement gets it by having four offers, and Architekten
+  // stops having it the moment a fifth is added.
+  //
+  // After the trailing-row rules above, not before: with four cards the last one is also a
+  // row-starter, so `:nth-child(3n+1):last-child` matches it too and ties on specificity.
+  // Order is what settles it.
+  @media (min-width: 1280px)
+    &__item:nth-last-child(4):first-child,
+    &__item:nth-last-child(4):first-child ~ &__item
+      grid-column: span 3
+
+  // -- The card ------------------------------------------------------------------
+  // Everything not listed here is .card-story's own, hover reveal included.
+  .card-story
+
+    // All three from their own frames: 264 at mobile, 445 at desktop, and at tablet a 6:5
+    // rectangle — 340 wide by 283 at the design's own container.
+    @apply h-[264px] md:h-[283px] xl:h-[445px]
+
+    // 16px in and 8px down is .card-story's own and the tablet frame's alike, so only
+    // desktop is overridden — there the frame pads the bar 20 and 10.
+    //
+    // pt/pb and not py: the pb carries .card-story's extra pixel, the one that pairs with
+    // its bottom: -1px and keeps a hairline of photograph from showing under the bar. A
+    // plain py-[10px] here would set both sides and quietly take that pixel back.
+    .card__panel
+      @apply xl:px-5 xl:pt-[10px] xl:pb-[11px]
+
+    // .card-story steps its type up at md; these frames hold the small scale through
+    // tablet and only step up at desktop — 14/22 on the tablet bar, 20/30 on the desktop
+    // one. Same values, one breakpoint later.
+    .card__title,
+    .card__text,
+    .card__more
+      @apply text-[14px] leading-[22px] md:text-[14px] md:leading-[22px] xl:text-[20px] xl:leading-[30px]
+
+    // No gap. A flex gap sits BETWEEN the items and not inside them, so .card-story's own
+    // 6px stayed there with the reveal collapsed to nothing — a closed bar 6px taller than
+    // the 50px the frame draws. The spacing moved into the revealed content as padding
+    // instead, where the 0fr row clips it along with everything else.
+    .card__head
+      @apply gap-0
+
+    // Title left, +/- hard right. justify-end and not justify-between: with justify-between
+    // a row left holding one child puts it at the START, which walks the icon to the left
+    // on a card with no title. Ending the row and letting the title push itself left with
+    // its own auto margin keeps the icon in place either way.
+    //
+    // The min-height is the title's own line-height at each width, so the bar stands
+    // exactly as tall whether or not the card has one.
+    .offer-showcase__head-row
+      @apply flex items-center justify-end gap-8
+      @apply min-h-[22px] xl:min-h-[30px]
+
+    .card__title
+      @apply mr-auto
+
+    // pt and not mt: padding is inside the reveal's own overflow: hidden box, so the
+    // collapsed row takes it away with the text. A margin would sit outside it and hold
+    // the closed bar open.
+    .card__text
+      @apply pt-1.5
+
+    .card__more
+      @apply pt-4
+
+    // Same red +/- as the preview and product range cards, and like them only below xl.
+    // Only the vertical bar moves, which is what turns the + into a -.
+    .offer-showcase__toggle
+      @apply shrink-0 text-brand-red
+
+      .icon-toggle__vertical
+        transition: transform var(--transition-slow), opacity var(--transition-slow)
+        transform-origin: center
+
+    &.is-open .icon-toggle__vertical
+      @apply opacity-0
+      transform: rotate(90deg)
+
+    // -- What opens the card -----------------------------------------------------
+    // _stories-references.sass opens .card-story on :hover at EVERY width, not just at
+    // desktop. A touch browser applies :hover on tap and keeps it there until the next tap
+    // elsewhere, so left alone that rule would open the card by itself below xl, the +/-
+    // would have nothing left to close, and the state would stop matching the .is-open the
+    // JS sets. The three blocks below take that decision back.
+    //
+    // Every one of them out-ranks the rule it replaces on specificity alone. That is
+    // deliberate: _stories-references.sass is imported after this file, so anything left
+    // to a tie would be decided by the import order rather than by anything written here.
+    .card__reveal
+      grid-template-rows: 0fr
+      transition: grid-template-rows var(--transition-slow)
+
+    @media (max-width: 1279px)
+      &:hover .card__reveal,
+      &:focus-visible .card__reveal
+        grid-template-rows: 0fr
+
+      &.is-open .card__reveal,
+      &.is-open:hover .card__reveal,
+      &.is-open:focus-visible .card__reveal
+        grid-template-rows: 1fr
+
+    // Desktop keeps what the frames draw: the pointer opens the copy and a click goes to
+    // the offer. No tap step, and the +/- is xl:hidden, so there is nothing to close.
+    //
+    // :focus-visible and NOT :focus-within — the card is the anchor, so a click leaves
+    // focus on it and :focus-within would hold the panel open with nothing to close it.
+    @media (min-width: 1280px)
+      &:hover .card__reveal,
+      &:focus-visible .card__reveal
+        grid-template-rows: 1fr
+
+    // The panel still opens, it just does not animate.
+    @media (prefers-reduced-motion: reduce)
+      .card__reveal
+        transition: none

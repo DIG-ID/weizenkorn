@@ -11,6 +11,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.19.0] — 2026-09-21
+
+### Added
+- The Schreinerei service pages get their "Eine Auswahl von unserem Angebot" section: a grid of offers, three to a row, each a photograph with the offer's name on a cream bar that grows on hover to show a short description. An offer can link anywhere, and the last row widens to fill the width whether one or two offers are left over, so adding or removing one needs no layout change. Fill it under the page's **Offer Showcase** fields.
+- On a phone or tablet those offer cards open on a tap instead, since there is no hover: the bar carries a + that shows the description, and a "mehr erfahren" inside it follows the link. Typing a title on the offer's link replaces that wording.
+- The same pages get a block of prose under a red rule, laid out two columns to a row with a short heading over each — fill it under the page's **Text Columns** fields. Add as many blocks as the page needs; they keep going two to a row.
+- They also carry the Service / Info / Downloads button row and the "Möchten Sie mehr wissen?" contact form, both filled in the same fields they use on the Schreinerei overview.
+- Their hero draws its title in red and a size larger than the heroes above them, which is what sets a service page apart from the section it belongs to.
+
+- A second Schreinerei service template, **Services - Schreinerei Child (Alt)**, for the one page whose offers sit two to a row instead of three. Everything else on it is the same; pick it in the page's Template dropdown.
+
+- `acf-schreinerei-child-fields.json`, ready to import under ACF → Tools → Import: every field the Schreinerei service pages need, in one group shared by all of them.
+
+### Changed
+- The Service / Info / Downloads buttons can point sideways instead of down, for a row that mixes pages in with the documents. The Schreinerei overview is unchanged.
+
+### Fixed
+- Cards and tiles that carry a cream bar across the bottom of a photograph no longer show a hairline of that photograph under the bar at some window widths — the story sliders ("Projekte & Referenzen"), the services cards, the "Entdecken Sie mehr" previews, the rooms bento, the process steps and the apprenticeship programmes.
+
 ## [1.18.5] — 2026-09-14
 
 ### Added
