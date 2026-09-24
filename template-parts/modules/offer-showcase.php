@@ -109,11 +109,14 @@ if ( ! $os_heading && ! $os_cards ) {
 ?>
 <?php
 // Adjacent siblings' vertical margins collapse, so this does not add to the previous
-// section's bottom margin — the gap is these values, not their sum. The bottom is 96px at
-// desktop and not the usual 192: the frame puts the text section's rule that far under the
-// last card, and margins collapsing means the smaller of the two is what has to give.
+// section's bottom margin — the gap is these values, not their sum.
+//
+// The bottom is not this theme's usual 96/128/192: what follows is text-columns, whose
+// rule the frame draws 32/56/96 under the last card — the same air it leaves below the
+// line. A collapse takes the LARGER of the two margins, so this one has to come down to
+// meet text-columns' own; leaving it at the usual value would simply outrank it.
 ?>
-<section class="offer-showcase mt-24 md:mt-32 xl:mt-48 mb-24 md:mb-32 xl:mb-24">
+<section class="offer-showcase mt-24 md:mt-32 xl:mt-48 mb-8 md:mb-14 xl:mb-24">
 	<div class="theme-container">
 
 		<?php

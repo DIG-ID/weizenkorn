@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.19.3] — 2026-09-24
+
+### Fixed
+- The red rule that opens the text block on a Schreinerei service page now sits the same distance under the offer cards as it does above the prose — 32px on a phone and 56 on a tablet, where it used to be 96 and 128. Desktop is unchanged.
+
 ## [1.19.2] — 2026-09-24
 
 ### Changed

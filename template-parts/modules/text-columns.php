@@ -49,11 +49,14 @@ if ( ! have_rows( $tc_prefix . 'text_columns_items', $tc_ctx ) ) {
 ?>
 <?php
 // Adjacent siblings' vertical margins collapse, so this does not add to the previous
-// section's bottom margin — the gap is these values, not their sum. 96px above the rule at
-// desktop and 96 below it, the frame's own: one rule with equal air either side, the same
-// as the section-heading component's.
+// section's bottom margin — the gap is these values, not their sum.
+//
+// Above the rule: the same 32/56/96 the row sets below it (see the pt-* in
+// _text-columns.sass), because every frame draws the line with equal air either side, not
+// only the desktop one. The module before this sets the matching bottom margin, since a
+// collapse takes the larger of the two and either one alone would win.
 ?>
-<div class="text-columns mt-24 md:mt-32 xl:mt-24 mb-24 md:mb-32 xl:mb-48">
+<div class="text-columns mt-8 md:mt-14 xl:mt-24 mb-24 md:mb-32 xl:mb-48">
 	<div class="theme-container">
 		<div class="text-columns__row theme-grid">
 			<?php
