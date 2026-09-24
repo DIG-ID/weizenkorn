@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.19.2] — 2026-09-24
+
+### Changed
+- On a tablet, the hero panel of a Schreinerei service page indents its title and text the way the main hero does. It used to keep a wider inset all the way down to the narrowest tablet, where the title and the text sitting side by side left no room for it.
+
 ## [1.19.1] — 2026-09-24
 
 ### Fixed

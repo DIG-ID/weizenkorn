@@ -53,7 +53,13 @@ $page_hero_detail_text  = get_field( 'page_hero_detail_text' );
 			</div>
 
 			<?php if ( $page_hero_detail_title || $page_hero_detail_text ) : ?>
-				<div class="border-2 border-brand-dark flex flex-col md:flex-row gap-12 md:gap-0 md:justify-between md:items-start p-8 md:px-11 md:py-12">
+				<?php
+				// The tablet padding is hero-section.php's own, so the two heroes indent their
+				// box alike: two steps rather than one, because at 768 the container is only
+				// 634 wide and the title and text side by side already take 590 of it — 44
+				// either side would not fit. The wider step comes in at lg, where it does.
+				?>
+				<div class="border-2 border-brand-dark flex flex-col md:flex-row gap-12 md:gap-0 md:justify-between md:items-start p-8 md:px-[0.8rem] md:py-6 lg:px-11 lg:py-12">
 					<?php if ( $page_hero_detail_title ) : ?>
 						<h1 class="title-hero md:w-[293px]">
 							<?php
