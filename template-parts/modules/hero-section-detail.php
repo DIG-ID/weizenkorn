@@ -10,7 +10,9 @@
  *
  * ACF fields (flat, prefixed):
  *   page_hero_detail_image           (image → return ID)
- *   page_hero_detail_title           (text)
+ *   page_hero_detail_title           (text) a <br> may be typed in to break the line,
+ *                                    with a class saying at which widths it should —
+ *                                    see the echo below.
  *   page_hero_detail_text            (textarea / wpautop)
  *   page_hero_detail_separator_logo  (image → return ID)
  *
@@ -53,7 +55,17 @@ $page_hero_detail_text  = get_field( 'page_hero_detail_text' );
 			<?php if ( $page_hero_detail_title || $page_hero_detail_text ) : ?>
 				<div class="border-2 border-brand-dark flex flex-col md:flex-row gap-12 md:gap-0 md:justify-between md:items-start p-8 md:px-11 md:py-12">
 					<?php if ( $page_hero_detail_title ) : ?>
-						<h1 class="title-hero md:w-[293px]"><?php echo esc_html( $page_hero_detail_title ); ?></h1>
+						<h1 class="title-hero md:w-[293px]">
+							<?php
+							// Not esc_html(): a title carries a <br> where the frame breaks the
+							// line, and escaping printed the tag as text. Same allowed set as
+							// hero-section.php — a <br> and nothing else, with its class kept so
+							// the break can apply at some widths only (<br class="xl:hidden">).
+							// Those utilities are safelisted in tailwind.config.js, which never
+							// scans the database.
+							echo wp_kses( $page_hero_detail_title, array( 'br' => array( 'class' => array() ) ) );
+							?>
+						</h1>
 					<?php endif; ?>
 
 					<?php if ( $page_hero_detail_text ) : ?>
@@ -71,7 +83,9 @@ $page_hero_detail_text  = get_field( 'page_hero_detail_text' );
 				<?php if ( $page_hero_detail_title || $page_hero_detail_text ) : ?>
 					<div class="col-span-5 border-2 border-brand-dark flex flex-col gap-24 xl:gap-40 px-10 py-8 xl:px-14 xl:py-[46px]">
 						<?php if ( $page_hero_detail_title ) : ?>
-							<h1 class="title-hero"><?php echo esc_html( $page_hero_detail_title ); ?></h1>
+							<h1 class="title-hero">
+								<?php echo wp_kses( $page_hero_detail_title, array( 'br' => array( 'class' => array() ) ) ); ?>
+							</h1>
 						<?php endif; ?>
 
 						<?php if ( $page_hero_detail_text ) : ?>

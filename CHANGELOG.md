@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.19.1] — 2026-09-24
+
+### Fixed
+- A line break typed into a Schreinerei service page's hero title now breaks the line, instead of printing `<br>` as text in the middle of the title. As on every other hero, the break can carry a class so the title splits at some widths and runs on at others.
+
+### Changed
+- The Schreinerei service pages' importable field file no longer carries its own "Entdecken Sie mehr" fields — that section is wired up with a shared clone instead, so every page that ends with it stays in step. Pages already filled in are unaffected.
+
 ## [1.19.0] — 2026-09-23
 
 ### Added
