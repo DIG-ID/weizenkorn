@@ -100,7 +100,15 @@ $page_hero_detail_text  = get_field( 'page_hero_detail_text' );
 					</div>
 				<?php endif; ?>
 
-				<div class="col-span-7 overflow-hidden h-[460px] 2xl:h-[512px]">
+				<?php
+				// h-full against a min-height, not the frame's height on its own: the panel
+				// beside this has no height of its own and grows with the title, so a fixed
+				// 512 left the image short of the row and a band of white under it whenever
+				// the title ran to three lines. The minimum keeps the frame's height as a
+				// floor for a short title, where the panel would otherwise drag the image
+				// below it. items-stretch on the row is what makes the pair meet.
+				?>
+				<div class="col-span-7 overflow-hidden h-full min-h-[460px] 2xl:min-h-[512px]">
 					<?php
 					echo wp_get_attachment_image(
 						$page_hero_detail_image,

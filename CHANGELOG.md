@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.19.4] — 2026-09-24
+
+### Fixed
+- On a desktop, the photograph in a Schreinerei service page's hero now reaches the bottom of the panel beside it. A title long enough to run to three lines made the panel taller than the picture, leaving a band of white under it.
+
 ## [1.19.3] — 2026-09-24
 
 ### Fixed
