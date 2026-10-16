@@ -97,8 +97,11 @@ if ( ! $vp_heading && ! $vp_image && ! $vp_video && ! $vp_vimeo && ! $vp_text ) 
 <?php
 // Adjacent siblings' vertical margins collapse, so this does not add to the previous
 // section's bottom margin — the gap is these values, not their sum.
+//
+// id="video" is the anchor the home hero's video links to (/ueber-uns/#video). One panel
+// per page, so the id stays unique; a second one on the same page would need its own.
 ?>
-<section class="video-panel mt-24 md:mt-32 xl:mt-48 mb-24 md:mb-32 xl:mb-48">
+<section id="video" class="video-panel mt-24 md:mt-32 xl:mt-48 mb-24 md:mb-32 xl:mb-48">
 	<div class="theme-container">
 
 		<?php

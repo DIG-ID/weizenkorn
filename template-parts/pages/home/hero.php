@@ -17,6 +17,11 @@
  * video starts and stays when autoplay is refused or the file will not play, and it is
  * repeated inside the element as the fallback a browser without video support draws.
  *
+ * The media column links to About Us' own video section (#video, in
+ * template-parts/modules/video-panel.php). The page is found by its template rather than
+ * a hard-coded /ueber-uns/, so the link follows a slug change and points at the right
+ * language once WPML serves more than German.
+ *
  * @package weizenkorn
  * @subpackage Section
  * @since 1.0.0
@@ -25,6 +30,18 @@
 $weizenkorn_hero_enable_video = get_field( 'hero_enable_video' );
 $weizenkorn_hero_video_mp4    = $weizenkorn_hero_enable_video ? get_field( 'hero_video_mp4' ) : null;
 $weizenkorn_hero_video_webm   = $weizenkorn_hero_enable_video ? get_field( 'hero_video_webm' ) : null;
+
+$weizenkorn_about_pages = get_pages(
+	array(
+		'meta_key'   => '_wp_page_template', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- one cached lookup, by template so the link survives a slug change.
+		'meta_value' => 'page-templates/page-about-us.php', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- same lookup as above.
+		'number'     => 1,
+	)
+);
+
+$weizenkorn_hero_media_link = $weizenkorn_about_pages
+	? get_permalink( apply_filters( 'wpml_object_id', $weizenkorn_about_pages[0]->ID, 'page', true ) ) . '#video'
+	: '';
 ?>
 <section id="section-hero" class="section-hero pb-[60px] xl:pb-[120px]">
 	<?php
@@ -98,6 +115,14 @@ $weizenkorn_hero_video_webm   = $weizenkorn_hero_enable_video ? get_field( 'hero
 			// image to fit shorter — nothing is lost, unlike in the text column.
 			?>
 			<div class="col-span-2 md:col-span-3 xl:col-span-7 section-hero__media overflow-hidden order-1 md:order-none xl:max-h-[calc(100vh-var(--header-height)-48px)] mb-4 md:mb-0">
+				<?php
+				// The link wraps whatever the column shows, video or image. A video without
+				// controls is not interactive content, so it may sit inside a link; the
+				// aria-label names it, since a poster carries no text of its own.
+				?>
+				<?php if ( $weizenkorn_hero_media_link ) : ?>
+					<a href="<?php echo esc_url( $weizenkorn_hero_media_link ); ?>" class="section-hero__media-link block w-full h-full" aria-label="<?php esc_attr_e( 'Watch the video on the About us page', 'weizenkorn' ); ?>">
+				<?php endif; ?>
 				<?php if ( $weizenkorn_hero_video_mp4 || $weizenkorn_hero_video_webm ) : ?>
 					<video
 						class="w-full h-full object-cover"
@@ -145,6 +170,9 @@ $weizenkorn_hero_video_webm   = $weizenkorn_hero_enable_video ? get_field( 'hero
 						)
 					);
 					?>
+				<?php endif; ?>
+				<?php if ( $weizenkorn_hero_media_link ) : ?>
+					</a>
 				<?php endif; ?>
 			</div>
 

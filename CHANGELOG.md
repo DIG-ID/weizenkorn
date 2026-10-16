@@ -13,6 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ## [1.19.4] — 2026-09-24
 
+### Added
+- The home page hero's video links to the video section on About Us, scrolling straight down to it.
+
+### Changed
+- The "Posts" menu is hidden from the admin, along with "Post" in the toolbar's "+ New" menu — the site's articles live under News. The toolbar's "+ New" button now opens a new News article.
+
 ### Fixed
 - On a desktop, the photograph in a Schreinerei service page's hero now reaches the bottom of the panel beside it. A title long enough to run to three lines made the panel taller than the picture, leaving a band of white under it.
 

@@ -414,6 +414,46 @@ add_action(
 	}
 );
 
+/**
+ * Hides the core "Posts" menu for every user — the site's articles live in the News post
+ * type, so the default one only invites content nobody will see.
+ *
+ * Removed by its slug, not its label, so it disappears in every admin language. The
+ * screen itself stays reachable by URL; this is a tidy-up, not a permission.
+ *
+ * @since 1.19.4
+ *
+ * @return void
+ */
+function weizenkorn_remove_posts_menu() {
+	remove_menu_page( 'edit.php' );
+}
+add_action( 'admin_menu', 'weizenkorn_remove_posts_menu' );
+
+/**
+ * Removes "Post" from the admin bar's "+ New" menu.
+ *
+ * WordPress links the "+ New" button itself to the first item in that menu, which is
+ * Post — so with Post gone the button is pointed at a new News article instead, rather
+ * than still opening the hidden Post screen.
+ *
+ * @since 1.19.4
+ *
+ * @param WP_Admin_Bar $wp_admin_bar The admin bar instance.
+ * @return void
+ */
+function weizenkorn_remove_new_post_from_admin_bar( $wp_admin_bar ) {
+	$wp_admin_bar->remove_node( 'new-post' );
+
+	$new_content = $wp_admin_bar->get_node( 'new-content' );
+
+	if ( $new_content ) {
+		$new_content->href = admin_url( 'post-new.php?post_type=news' );
+		$wp_admin_bar->add_node( $new_content );
+	}
+}
+add_action( 'admin_bar_menu', 'weizenkorn_remove_new_post_from_admin_bar', 999 );
+
 // Redirect attachment pages to the parent post or homepage.
 add_action(
 	'template_redirect',

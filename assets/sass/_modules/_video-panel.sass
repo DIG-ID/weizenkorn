@@ -1,6 +1,10 @@
 // Video panel — template-parts/modules/video-panel.php
 
 .video-panel
+  // The home hero's video links here (/ueber-uns/#video). assets/js/anchor-scroll.js
+  // handles the jump with the header offset; this is the no-JS fallback, so the fixed
+  // header never lands over the section's heading.
+  scroll-margin-top: var(--header-height)
 
   // The two stack below xl — the video across all six columns at tablet with the text
   // under it — so the row gap holds until desktop, where they share a row instead.
