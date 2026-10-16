@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 - The order section's stockist links (products archive and the product range pages) take a plain URL typed into their "link" field, which keeps anchors like `#location` intact. Links saved in the old format keep working until they are re-entered.
 
 ### Fixed
+- Job postings (Offene Stellen) open in the classic editor instead of the block editor. Their content is all custom fields, and in the block editor their text fields' "Visual" tab sometimes showed up empty even though the text was there.
 - A link to a section further down the same page now scrolls there smoothly on every page, not only on the home page, and works on the first click — before, it jumped without animation and could fail to move at all while the page was still easing from a previous scroll.
 
 ## [1.19.5] — 2026-10-16

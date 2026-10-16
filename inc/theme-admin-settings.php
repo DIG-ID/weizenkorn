@@ -454,6 +454,30 @@ function weizenkorn_remove_new_post_from_admin_bar( $wp_admin_bar ) {
 }
 add_action( 'admin_bar_menu', 'weizenkorn_remove_new_post_from_admin_bar', 999 );
 
+/**
+ * Opens Offene Stellen in the classic editor instead of the block editor.
+ *
+ * A job posting's content is all ACF fields — its body included — so the block canvas is
+ * an empty area nobody uses, and it pushes the fields into the block editor's resizable
+ * "Meta Boxes" pane. TinyMCE does not start reliably there: the WYSIWYG fields' Visual tab
+ * kept showing up blank while the Text tab held the content. In the classic screen the
+ * fields sit in the page's normal flow, where it does.
+ *
+ * @since 1.19.6
+ *
+ * @param bool   $use_block_editor Whether the post type uses the block editor.
+ * @param string $post_type        The post type being edited.
+ * @return bool
+ */
+function weizenkorn_classic_editor_for_offene_stellen( $use_block_editor, $post_type ) {
+	if ( 'offene-stellen' === $post_type ) {
+		return false;
+	}
+
+	return $use_block_editor;
+}
+add_filter( 'use_block_editor_for_post_type', 'weizenkorn_classic_editor_for_offene_stellen', 10, 2 );
+
 // Redirect attachment pages to the parent post or homepage.
 add_action(
 	'template_redirect',
