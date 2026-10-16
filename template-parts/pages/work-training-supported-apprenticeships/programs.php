@@ -29,9 +29,9 @@
  *                                   wpautop, optional), link (text, a
  *                                   plain URL, optional)
  *
- * With a link, the photo and the title each link to it rather than the
- * whole card: the card holds the +/− toggle button below xl, and a button
- * cannot sit inside a link — nor should a tap on it leave the page.
+ * With a link, the photo, the title and the text each link to it rather
+ * than the whole card: the card holds the +/− toggle button below xl, and a
+ * button cannot sit inside a link — nor should a tap on it leave the page.
  *
  * @package weizenkorn
  * @subpackage Section
@@ -110,7 +110,18 @@ if ( ! $app_title || ! have_rows( 'apprenticeships_programs_items' ) ) {
 									</div>
 
 									<div class="card-program__text" id="<?php echo esc_attr( $program_reveal_id ); ?>">
-										<div class="card-program__text-inner body-text"><?php echo wp_kses_post( $program_text ); ?></div>
+										<div class="card-program__text-inner body-text">
+											<?php
+											// The text links too — unless it already holds a link of its own, since a
+											// link inside a link is invalid. Out of the tab order like the photo, so a
+											// keyboard stops once per card (on the title), but still read out.
+											?>
+											<?php if ( $program_link && false === stripos( $program_text, '<a ' ) ) : ?>
+												<a href="<?php echo esc_url( $program_link ); ?>" class="block" tabindex="-1"><?php echo wp_kses_post( $program_text ); ?></a>
+											<?php else : ?>
+												<?php echo wp_kses_post( $program_text ); ?>
+											<?php endif; ?>
+										</div>
 									</div>
 								<?php else : ?>
 									<h3 class="title-card">

@@ -11,11 +11,16 @@ import { lenis } from './gsap.js';
  * first and lets Lenis animate back down, rather than leave the page sitting there with no
  * visible scroll at all.
  *
- * The click-triggered half stays home-only for now (the sticky-cta widget's own first
- * anchor link) — gated on the ".home" body class WordPress adds to the front page, same
- * scope as the is_front_page() check that includes sticky-cta.php in header.php. The
- * hash-on-load half runs on every page: nothing about it is home-specific, and a page like
- * Kontakt is exactly where an incoming #location link is expected to land.
+ * Both halves run on every page. Left to the browser, a same-page link jumps with no
+ * animation, and can lose to Lenis outright: if Lenis is still easing a wheel scroll when
+ * the link is clicked, it carries on to its own target and the jump appears not to happen.
+ * Handing the jump to Lenis fixes both.
+ *
+ * A "same-page" link is any link whose URL points at this page with a hash — a bare
+ * "#ausbildungen" typed into a field, or the page's own full URL with one. A hash on another
+ * page's URL is left alone: that is a normal navigation, picked up by the hash-on-load half
+ * once the next page loads. So are modified clicks and new-tab links, which the reader
+ * means for the browser.
  *
  * Offset by --header-height (assets/js/menu-overlay.js keeps it synced to the real header):
  * at rest the header sits in normal flow, but past the point where sticky-header.js shows
@@ -47,18 +52,25 @@ export function initAnchorScroll() {
     }
   }
 
-  if (!document.body.classList.contains('home')) {
-    return;
-  }
+  // "/page/" and "/page" are the same page.
+  const samePath = (a, b) => a.replace(/\/$/, '') === b.replace(/\/$/, '');
 
   document.addEventListener('click', (event) => {
-    const link = event.target.closest('a[href^="#"]');
+    const link = event.target.closest('a[href*="#"]');
 
-    if (!link || link.getAttribute('href') === '#') {
+    if (!link || !link.hash || link.hash === '#') {
       return;
     }
 
-    const target = findTarget(link.getAttribute('href'));
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.target === '_blank') {
+      return;
+    }
+
+    if (link.origin !== window.location.origin || !samePath(link.pathname, window.location.pathname)) {
+      return;
+    }
+
+    const target = findTarget(link.hash);
 
     if (!target) {
       return;
