@@ -13,8 +13,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ## [1.19.6] — 2026-10-16
 
+### Added
+- Supported Apprenticeships' programme cards can link to a page: fill in a card's new "Link" field and its photo and title lead there.
+- The training categories grid on Supported Apprenticeships has an anchor (`#ausbildungen`) so a link can jump straight to it. The anchor can be translated per language in WPML String Translation.
+
 ### Changed
 - The opening hours beside a map now read at the size of the address next to them, instead of at the smaller body size. Affects every page whose map section has opening hours filled in; the bakery's own locations box is unchanged.
+- The venue photos in the Gastronomy section (Home and Gastronomie & Hotellerie) now link to the venue's page, the same as the cards below them, with a red arrow appearing in the name bar on hover.
 
 ## [1.19.5] — 2026-10-16
 

@@ -46,6 +46,9 @@
  *                               Default: the current post.
  *     @type string     $prefix  Optional. Prepended to every field name.
  *     @type int        $columns Optional. Cards per row at desktop — 3 or 4. Default: 4.
+ *     @type string     $anchor  Optional. An id for the cards grid, so a link can jump to
+ *                               it. Set by the caller, not here: this module renders on more
+ *                               than one page, and an id must be unique to the one it is on.
  * }
  *
  * @package weizenkorn
@@ -68,6 +71,10 @@ if ( ! $cg_title ) {
 $cg_three_cols  = ! empty( $args['columns'] ) && 3 === (int) $args['columns'];
 $cg_modifier    = $cg_three_cols ? 'category-grid--cols-3' : 'category-grid--cols-4';
 $cg_item_column = $cg_three_cols ? 'xl:col-span-4' : 'xl:col-span-3';
+
+// sanitize_title() because the caller passes a translatable string: whatever a translator
+// types (spaces, capitals, umlauts) still comes out a valid id.
+$cg_anchor = ! empty( $args['anchor'] ) ? sanitize_title( $args['anchor'] ) : '';
 ?>
 <section class="category-grid <?php echo esc_attr( $cg_modifier ); ?> mt-24 md:mt-32 xl:mt-48 mb-24 md:mb-32 xl:mb-48">
 	<div class="theme-container">
@@ -105,7 +112,7 @@ $cg_item_column = $cg_three_cols ? 'xl:col-span-4' : 'xl:col-span-3';
 			 */
 			?>
 			<div class="theme-grid mt-8 md:mt-14 xl:mt-16">
-				<div class="category-grid__grid theme-grid gap-y-8 col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-10">
+				<div<?php echo $cg_anchor ? ' id="' . esc_attr( $cg_anchor ) . '"' : ''; ?> class="category-grid__grid theme-grid gap-y-8 col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-10">
 					<?php
 					while ( have_rows( $cg_prefix . 'items', $cg_ctx ) ) :
 						the_row();

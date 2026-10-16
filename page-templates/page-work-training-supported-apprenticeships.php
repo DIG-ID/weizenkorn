@@ -47,6 +47,8 @@ if ( have_posts() ) :
 			array(
 				'prefix'  => 'apprenticeships_categories_',
 				'columns' => 3,
+				// Translatable through WPML String Translation, so each language can have its own anchor.
+				'anchor'  => _x( 'ausbildungen', 'section anchor ID', 'weizenkorn' ),
 			)
 		);
 		get_template_part( 'template-parts/modules/numbered-steps', null, array( 'prefix' => 'apprenticeships_process_' ) );

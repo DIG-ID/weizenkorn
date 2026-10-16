@@ -1,5 +1,11 @@
 // Category grid — template-parts/modules/category-grid.php
 
+// The grid can carry an anchor id ($args['anchor'], e.g. #ausbildungen on Supported
+// Apprenticeships). assets/js/anchor-scroll.js handles the jump with the header offset;
+// this is the no-JS fallback, so the fixed header never covers the top of the grid.
+.category-grid__grid
+  scroll-margin-top: var(--header-height)
+
 // A trailing row of exactly two cards (the job-categories grid's own case, not the
 // training one) takes half the row each instead of a quarter — the same
 // :nth-last-child trick offer-grid.php uses for its own odd-card-out

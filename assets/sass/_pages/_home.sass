@@ -44,6 +44,21 @@
   .swiper-pagination-bullet-active
     @apply bg-brand-red
 
+// The bento tiles link to their venue's page, the same as the info cards under them. The
+// red arrow in the name bar only shows on hover or keyboard focus: at rest the bar reads
+// as a plain label, and the cards row below already shows its arrows all the time.
+//
+// a.section-gastronomy__img and not the class alone: a venue with no page set renders a
+// <div>, which leads nowhere and gets no arrow (the template leaves it out too).
+.section-gastronomy__arrow
+  @apply shrink-0 text-brand-red opacity-0 transition-opacity duration-300
+
+a.section-gastronomy__img
+  &:hover,
+  &:focus-visible
+    .section-gastronomy__arrow
+      @apply opacity-100
+
 // Tablet only (md:grid-cols-2 in the template; xl switches to grid-cols-5, where the same
 // 5 cards already fill one clean row): the trailing card sits alone in the last row, so it
 // should take the row's full width instead of stopping at half of it, matching Figma.

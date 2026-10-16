@@ -133,8 +133,11 @@ $gastro_card_order = array(
 					<?php
 					while ( have_rows( 'gastronomy_items' ) ) :
 						the_row();
-						$g_idx  = get_row_index();
-						$g_cols = isset( $gastro_bento[ $g_idx ] ) ? $gastro_bento[ $g_idx ] : '';
+						$g_idx    = get_row_index();
+						$g_cols   = isset( $gastro_bento[ $g_idx ] ) ? $gastro_bento[ $g_idx ] : '';
+						$i_link   = get_sub_field( 'page' );
+						$i_url    = ( is_array( $i_link ) && ! empty( $i_link['url'] ) ) ? $i_link['url'] : '';
+						$i_target = ( is_array( $i_link ) && ! empty( $i_link['target'] ) ) ? $i_link['target'] : '';
 						?>
 						<?php
 						// xl:max-h caps the bottom row, whose wider span would otherwise let the aspect ratio
@@ -149,8 +152,11 @@ $gastro_card_order = array(
 						// width FROM that height instead of from the grid column, which produced a box narrower
 						// than its real column and undid the split visually. An explicit width keeps width tied
 						// to the column and leaves only height for the aspect ratio to resolve.
+						//
+						// The tile links to the same page as the venue's info card below, and is a <div>
+						// when no page is set, the same rule the cards follow.
 						?>
-						<div class="section-gastronomy__img relative overflow-hidden aspect-[3/2] w-full xl:max-h-[384px] <?php echo esc_attr( $g_cols ); ?>">
+						<<?php echo $i_url ? 'a' : 'div'; ?> class="section-gastronomy__img relative block overflow-hidden aspect-[3/2] w-full xl:max-h-[384px] <?php echo esc_attr( $g_cols ); ?>"<?php echo $i_url ? ' href="' . esc_url( $i_url ) . '"' : ''; ?><?php echo ( '_blank' === $i_target ) ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>>
 							<?php if ( get_sub_field( 'image' ) ) : ?>
 								<?php
 								echo wp_get_attachment_image(
@@ -164,8 +170,13 @@ $gastro_card_order = array(
 								);
 								?>
 							<?php endif; ?>
-							<span class="section-gastronomy__name absolute inset-x-0 bottom-0 bg-brand-cream px-4 py-2 title-card"><?php echo esc_html( get_sub_field( 'title' ) ); ?></span>
-						</div>
+							<span class="section-gastronomy__name absolute inset-x-0 bottom-0 flex items-center justify-between gap-4 bg-brand-cream px-4 py-2 title-card text-brand-dark">
+								<?php echo esc_html( get_sub_field( 'title' ) ); ?>
+								<?php if ( $i_url ) : ?>
+									<span class="section-gastronomy__arrow" aria-hidden="true"><?php weizenkorn_the_svg_icon( 'arrow-right' ); ?></span>
+								<?php endif; ?>
+							</span>
+						</<?php echo $i_url ? 'a' : 'div'; ?>>
 						<?php
 					endwhile;
 					?>

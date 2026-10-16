@@ -26,7 +26,12 @@
  *   apprenticeships_programs_title (text)
  *   apprenticeships_programs_items (repeater) → image (image, ID),
  *                                   title (text), text (textarea /
- *                                   wpautop, optional)
+ *                                   wpautop, optional), link (text, a
+ *                                   plain URL, optional)
+ *
+ * With a link, the photo and the title each link to it rather than the
+ * whole card: the card holds the +/− toggle button below xl, and a button
+ * cannot sit inside a link — nor should a tap on it leave the page.
  *
  * @package weizenkorn
  * @subpackage Section
@@ -52,9 +57,15 @@ if ( ! $app_title || ! have_rows( 'apprenticeships_programs_items' ) ) {
 					continue;
 				}
 				?>
-				<?php $program_text = get_sub_field( 'text' ); ?>
+				<?php
+				$program_text = get_sub_field( 'text' );
+				$program_link = trim( (string) get_sub_field( 'link' ) );
+				?>
 				<div class="card-program js-card-program col-span-2 md:col-span-6 xl:col-span-6">
 					<div class="card-program__media">
+						<?php if ( $program_link ) : ?>
+							<a href="<?php echo esc_url( $program_link ); ?>" class="block w-full h-full" tabindex="-1" aria-hidden="true">
+						<?php endif; ?>
 						<?php
 						echo wp_get_attachment_image(
 							get_sub_field( 'image' ),
@@ -66,13 +77,22 @@ if ( ! $app_title || ! have_rows( 'apprenticeships_programs_items' ) ) {
 							)
 						);
 						?>
+						<?php if ( $program_link ) : ?>
+							</a>
+						<?php endif; ?>
 
 						<?php if ( get_sub_field( 'title' ) ) : ?>
 							<div class="card-program__caption bg-brand-cream">
 								<?php if ( $program_text ) : ?>
 									<?php $program_reveal_id = wp_unique_id( 'card-program-text-' ); ?>
 									<div class="card-program__head">
-										<h3 class="title-card card-program__title"><?php echo esc_html( get_sub_field( 'title' ) ); ?></h3>
+										<h3 class="title-card card-program__title">
+											<?php if ( $program_link ) : ?>
+												<a href="<?php echo esc_url( $program_link ); ?>"><?php echo esc_html( get_sub_field( 'title' ) ); ?></a>
+											<?php else : ?>
+												<?php echo esc_html( get_sub_field( 'title' ) ); ?>
+											<?php endif; ?>
+										</h3>
 
 										<?php
 										// xl:hidden — desktop opens on hover/focus-within instead, same as
@@ -93,7 +113,13 @@ if ( ! $app_title || ! have_rows( 'apprenticeships_programs_items' ) ) {
 										<div class="card-program__text-inner body-text"><?php echo wp_kses_post( $program_text ); ?></div>
 									</div>
 								<?php else : ?>
-									<h3 class="title-card"><?php echo esc_html( get_sub_field( 'title' ) ); ?></h3>
+									<h3 class="title-card">
+										<?php if ( $program_link ) : ?>
+											<a href="<?php echo esc_url( $program_link ); ?>"><?php echo esc_html( get_sub_field( 'title' ) ); ?></a>
+										<?php else : ?>
+											<?php echo esc_html( get_sub_field( 'title' ) ); ?>
+										<?php endif; ?>
+									</h3>
 								<?php endif; ?>
 							</div>
 						<?php endif; ?>
