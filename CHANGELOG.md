@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 ## [1.19.6] — 2026-10-16
 
 ### Added
-- Supported Apprenticeships' programme cards can link to a page: fill in a card's new "Link" field and its photo, title and text lead there.
+- Supported Apprenticeships' programme cards can link to a page: fill in a card's new "Link" field and its photo and its whole caption box lead there. The +/− button on mobile still only opens the text.
 - The training categories grid on Supported Apprenticeships has an anchor (`#ausbildungen`) so a link can jump straight to it. The anchor can be translated per language in WPML String Translation.
 
 ### Changed

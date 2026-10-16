@@ -29,9 +29,11 @@
  *                                   wpautop, optional), link (text, a
  *                                   plain URL, optional)
  *
- * With a link, the photo, the title and the text each link to it rather
- * than the whole card: the card holds the +/− toggle button below xl, and a
- * button cannot sit inside a link — nor should a tap on it leave the page.
+ * With a link, the photo and the whole caption box lead to it. Not by
+ * wrapping the card in a link: the caption holds the +/− toggle button below
+ * xl, and a button cannot sit inside a link — nor should a tap on it leave
+ * the page. The caption uses a link stretched over it instead, with the
+ * button lifted above it.
  *
  * @package weizenkorn
  * @subpackage Section
@@ -83,6 +85,16 @@ if ( ! $app_title || ! have_rows( 'apprenticeships_programs_items' ) ) {
 
 						<?php if ( get_sub_field( 'title' ) ) : ?>
 							<div class="card-program__caption bg-brand-cream">
+								<?php
+								// The whole caption box is clickable through a link stretched over it,
+								// not by wrapping it: the box holds the +/− button, which cannot sit inside
+								// a link. The button is lifted above this overlay (relative z-10) so a tap
+								// on it still only opens the text. Out of the tab order and hidden from
+								// screen readers — the title link below is the one they get.
+								?>
+								<?php if ( $program_link ) : ?>
+									<a href="<?php echo esc_url( $program_link ); ?>" class="absolute inset-0" tabindex="-1" aria-hidden="true"></a>
+								<?php endif; ?>
 								<?php if ( $program_text ) : ?>
 									<?php $program_reveal_id = wp_unique_id( 'card-program-text-' ); ?>
 									<div class="card-program__head">
@@ -100,7 +112,7 @@ if ( ! $app_title || ! have_rows( 'apprenticeships_programs_items' ) ) {
 										?>
 										<button
 											type="button"
-											class="card-program__toggle js-card-program-toggle xl:hidden"
+											class="card-program__toggle js-card-program-toggle relative z-10 xl:hidden"
 											aria-expanded="false"
 											aria-controls="<?php echo esc_attr( $program_reveal_id ); ?>"
 										>
@@ -110,18 +122,7 @@ if ( ! $app_title || ! have_rows( 'apprenticeships_programs_items' ) ) {
 									</div>
 
 									<div class="card-program__text" id="<?php echo esc_attr( $program_reveal_id ); ?>">
-										<div class="card-program__text-inner body-text">
-											<?php
-											// The text links too — unless it already holds a link of its own, since a
-											// link inside a link is invalid. Out of the tab order like the photo, so a
-											// keyboard stops once per card (on the title), but still read out.
-											?>
-											<?php if ( $program_link && false === stripos( $program_text, '<a ' ) ) : ?>
-												<a href="<?php echo esc_url( $program_link ); ?>" class="block" tabindex="-1"><?php echo wp_kses_post( $program_text ); ?></a>
-											<?php else : ?>
-												<?php echo wp_kses_post( $program_text ); ?>
-											<?php endif; ?>
-										</div>
+										<div class="card-program__text-inner body-text"><?php echo wp_kses_post( $program_text ); ?></div>
 									</div>
 								<?php else : ?>
 									<h3 class="title-card">
