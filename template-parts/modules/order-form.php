@@ -29,8 +29,9 @@
  *     → title       (text)     "Kerzen"
  *     → intro       (textarea) optional lead-in
  *     → list_title  (text)     "Endkunden kaufen unsere Kerzen in Basel:"
- *     → list_items  (repeater) → text (text), link (link, optional). Only the items with
- *                                a link become buttons and get an arrow.
+ *     → list_items  (repeater) → text (text), link (text — a plain URL, optional). Only the
+ *                                items with a link become buttons and get an arrow. link
+ *                                used to be a Link field; both forms are read, see below.
  *     → links_title (text)     "Online erhalten Sie … über folgende Vertriebspartner"
  *     → links       (repeater) → link (link)
  *
@@ -187,17 +188,35 @@ if ( ! get_field( $of_prefix . 'order_form_reseller_title', $of_ctx )
 												<?php
 												while ( have_rows( 'list_items' ) ) :
 													the_row();
-													$of_item      = get_sub_field( 'link' );
-													$of_item_url  = ( is_array( $of_item ) && ! empty( $of_item['url'] ) ) ? $of_item['url'] : '';
+													$of_item = get_sub_field( 'link' );
+
+													/*
+													 * A Text field holding a plain URL now, a Link field (an array) before.
+													 * A value saved under the old type still comes back as that array until its
+													 * row is saved again, and a field group not switched yet still is one — so
+													 * both are read. Only the array carries a title and a target.
+													 */
+													if ( is_array( $of_item ) ) {
+														$of_item_url    = ! empty( $of_item['url'] ) ? $of_item['url'] : '';
+														$of_item_title  = ! empty( $of_item['title'] ) ? $of_item['title'] : '';
+														$of_item_target = ! empty( $of_item['target'] ) ? $of_item['target'] : '';
+													} else {
+														$of_item_url    = trim( (string) $of_item );
+														$of_item_title  = '';
+														$of_item_target = '';
+													}
+
+													// No text typed: the old link's own title, or failing that the URL itself,
+													// so a link never renders with nothing to read.
 													$of_item_text = get_sub_field( 'text' );
 
-													if ( ! $of_item_text && $of_item_url && ! empty( $of_item['title'] ) ) {
-														$of_item_text = $of_item['title'];
+													if ( ! $of_item_text && $of_item_url ) {
+														$of_item_text = $of_item_title ? $of_item_title : $of_item_url;
 													}
 													?>
 													<li class="order-form__list-item">
 														<?php if ( $of_item_url ) : ?>
-															<a class="order-form__link" href="<?php echo esc_url( $of_item_url ); ?>"<?php echo ( '_blank' === ( $of_item['target'] ?? '' ) ) ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>>
+															<a class="order-form__link" href="<?php echo esc_url( $of_item_url ); ?>"<?php echo ( '_blank' === $of_item_target ) ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>>
 																<span><?php echo esc_html( $of_item_text ); ?></span>
 																<span class="order-form__link-icon" aria-hidden="true"><?php weizenkorn_the_svg_icon( 'arrow-right' ); ?></span>
 															</a>

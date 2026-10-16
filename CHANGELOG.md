@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 ### Changed
 - The opening hours beside a map now read at the size of the address next to them, instead of at the smaller body size. Affects every page whose map section has opening hours filled in; the bakery's own locations box is unchanged.
 - The venue photos in the Gastronomy section (Home and Gastronomie & Hotellerie) now link to the venue's page, the same as the cards below them, with a red arrow appearing in the name bar on hover.
+- The order section's stockist links (products archive and the product range pages) take a plain URL typed into their "link" field, which keeps anchors like `#location` intact. Links saved in the old format keep working until they are re-entered.
 
 ### Fixed
 - A link to a section further down the same page now scrolls there smoothly on every page, not only on the home page, and works on the first click — before, it jumped without animation and could fail to move at all while the page was still easing from a previous scroll.
