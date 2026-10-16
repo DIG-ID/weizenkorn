@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.19.5] — 2026-10-16
+
+### Fixed
+- A product range card shows the wording typed on its own link — "mehr", "Katalog anschauen" — instead of always saying "zum Produkt". Cards whose link has no title keep that default, so nothing changes until someone fills it in.
+
 ## [1.19.4] — 2026-09-24
 
 ### Added

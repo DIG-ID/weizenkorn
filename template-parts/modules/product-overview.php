@@ -20,7 +20,8 @@
  *     → image  (image → ID)      the card image
  *     → title  (text)            "Unikerzen", "Kerzenzubehör"
  *     → text   (textarea)        the copy the hover reveals
- *     → link   (link, optional)  shows "zum Produkt" and, at desktop, makes the whole
+ *     → link   (link, optional)  shows the link's own Title — "zum Produkt" when the
+ *                               editor leaves it empty — and, at desktop, makes the whole
  *                               card clickable. Below xl the card is a switch for its
  *                               own copy and only that link leaves the page — see
  *                               assets/js/reveal-cards.js.
@@ -86,6 +87,16 @@ if ( ! $po_heading && ! have_rows( $po_prefix . 'product_overview_items', $po_ct
 					$po_link   = get_sub_field( 'link' );
 					$po_url    = ( is_array( $po_link ) && ! empty( $po_link['url'] ) ) ? $po_link['url'] : '';
 					$po_target = ( is_array( $po_link ) && ! empty( $po_link['target'] ) ) ? $po_link['target'] : '';
+
+					/*
+					 * The label the reveal shows. The link's own Title where the editor typed
+					 * one, so a card can say something other than the default, and that default
+					 * where they did not. Same shape as offer-showcase's "mehr erfahren" — this
+					 * module is where that pattern came from, it just never read the field.
+					 */
+					$po_label = ( is_array( $po_link ) && ! empty( $po_link['title'] ) )
+						? $po_link['title']
+						: _x( 'zum Produkt', 'product overview card link', 'weizenkorn' );
 
 					// A card with a link IS the link, so the "zum Produkt" inside it is a span —
 					// an <a> inside an <a> is invalid and browsers unnest it.
@@ -226,7 +237,7 @@ if ( ! $po_heading && ! have_rows( $po_prefix . 'product_overview_items', $po_ct
 									<?php // The same bare <div> as above, and for the same reason. ?>
 									<div>
 										<span class="product-overview__link">
-											<span><?php echo esc_html_x( 'zum Produkt', 'product overview card link', 'weizenkorn' ); ?></span>
+											<span><?php echo esc_html( $po_label ); ?></span>
 											<?php
 											// Sideways for a page, downward for a file — see
 											// $po_is_download above. The modifier is only for the
