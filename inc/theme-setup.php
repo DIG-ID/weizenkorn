@@ -375,3 +375,33 @@ function weizenkorn_lower_yoast_metabox_priority() {
 }
 
 add_filter( 'wpseo_metabox_prio', 'weizenkorn_lower_yoast_metabox_priority' );
+
+/**
+ * Adds the language being viewed as a body class, e.g. "lang-de".
+ *
+ * Reads WPML's own current-language filter rather than the ICL_LANGUAGE_CODE constant:
+ * the constant is legacy, and it is undefined — a fatal, not a warning — on an install
+ * where WPML is switched off. The filter simply returns null there instead, which is
+ * what makes the fallback below possible.
+ *
+ * That fallback is WordPress's own locale, so the class is present either way. get_locale()
+ * returns a full locale ("de_CH"), and only the part before the underscore is the language.
+ *
+ * @since 1.19.7
+ *
+ * @param string[] $classes Body classes.
+ * @return string[] Body classes with the language class appended.
+ */
+function weizenkorn_body_class_language( $classes ) {
+	$language = apply_filters( 'wpml_current_language', null );
+
+	if ( ! $language ) {
+		$language = explode( '_', get_locale() )[0];
+	}
+
+	$classes[] = 'lang-' . sanitize_html_class( strtolower( $language ) );
+
+	return $classes;
+}
+
+add_filter( 'body_class', 'weizenkorn_body_class_language' );

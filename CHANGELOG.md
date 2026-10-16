@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.19.7] — 2026-10-16
+
+### Added
+- Every page carries the language being viewed as a body class (`lang-de`, and `lang-en` / `lang-fr` once those are added), so styles and scripts can key off the language. Sites without WPML fall back to the WordPress locale.
+
 ## [1.19.6] — 2026-10-16
 
 ### Added
