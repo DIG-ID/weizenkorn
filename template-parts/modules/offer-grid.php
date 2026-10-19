@@ -74,10 +74,11 @@ if ( have_rows( $og_prefix . 'offer_grid_items', $og_ctx ) ) {
 		$og_link = get_sub_field( 'link' );
 
 		$og_cards[] = array(
-			'image'        => get_sub_field( 'image' ),
-			'title'        => get_sub_field( 'title' ),
-			'text'         => get_sub_field( 'text' ),
-			'url'          => ! empty( $og_link['url'] ) ? $og_link['url'] : '',
+			'image'          => get_sub_field( 'image' ),
+			'title'          => get_sub_field( 'title' ),
+			'text'           => get_sub_field( 'text' ),
+			'url'            => ! empty( $og_link['url'] ) ? $og_link['url'] : '',
+			'target'         => ! empty( $og_link['target'] ) ? $og_link['target'] : '',
 			// The wide card is taller at tablet only; that override is in the SASS, keyed off
 			// the same selector that widens it, so nothing here has to know which card it is.
 			'media_height'   => 'h-[192px] xl:h-[400px]',

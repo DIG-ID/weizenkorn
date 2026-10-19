@@ -14,7 +14,9 @@
  *     @type string $year  Optional. e.g. "2026".
  *     @type string $title Required.
  *     @type string $text  Optional. Plain excerpt text.
- *     @type string $url   Optional. Card becomes an <a> only when set.
+ *     @type string $url    Optional. Card becomes an <a> only when set.
+ *     @type string $target Optional. '_blank' opens the card in a new tab, with the
+ *                          rel that has to come with it. Anything else is ignored.
  * }
  *
  * @package weizenkorn
@@ -28,8 +30,14 @@ if ( empty( $args['title'] ) ) {
 
 $cdp_tag  = ! empty( $args['url'] ) ? 'a' : 'div';
 $cdp_href = ! empty( $args['url'] ) ? ' href="' . esc_url( $args['url'] ) . '"' : '';
+
+// rel alongside target, never target alone: without noopener the page that opens gets a
+// handle on this one through window.opener. Only on the <a> — a <div> takes neither.
+$cdp_target = ( 'a' === $cdp_tag && '_blank' === ( isset( $args['target'] ) ? $args['target'] : '' ) )
+	? ' target="_blank" rel="noopener noreferrer"'
+	: '';
 ?>
-<?php echo '<' . esc_html( $cdp_tag ) . $cdp_href . ' class="card-donation-project border border-brand-red bg-white no-underline flex flex-col h-full">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- tag name is always 'a' or 'div', href built above with esc_url(). ?>
+<?php echo '<' . esc_html( $cdp_tag ) . $cdp_href . $cdp_target . ' class="card-donation-project border border-brand-red bg-white no-underline flex flex-col h-full">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- tag name is always 'a' or 'div', href built above with esc_url(). ?>
 
 	<?php if ( ! empty( $args['image'] ) ) : ?>
 		<div class="card-donation-project__media aspect-[490/320] overflow-hidden">

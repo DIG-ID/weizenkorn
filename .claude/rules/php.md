@@ -38,6 +38,22 @@ $title  = ( $group && ! empty( $group['title'] ) ) ? $group['title'] : 'Fallback
 $img_id = ( $group && ! empty( $group['image'] ) ) ? $group['image'] : null;
 ```
 
+**Link — ler SEMPRE o `target`.** O campo Link guarda `url`, `title` e `target`. Ler só o
+`url` deita os outros fora e **não avisa**: o editor liga o "Open link in a new tab", o
+valor fica guardado, e a página ignora-o. Já aconteceu duas vezes neste projecto.
+
+```php
+$foo_target = ( is_array( $foo_link ) && ! empty( $foo_link['target'] ) ) ? $foo_link['target'] : '';
+// Na <a>, o rel anda sempre com o target — sem noopener a página que abre fica com
+// acesso a esta pelo window.opener.
+echo '_blank' === $foo_target ? ' target="_blank" rel="noopener noreferrer"' : '';
+```
+
+Passar o array inteiro com `array_merge( $foo_link, array( 'style' => '...' ) )` ao
+`components/button.php` já faz o correcto. O erro está sempre nos templates que
+escolhem só o `url` para os `$args` de um componente de card — e um card que aceita
+`url` deve aceitar `target` ao lado, ou cada chamador tem de remontar a `<a>`.
+
 **Naming ACF:** snake_case com prefixo de contexto — `section_hero_title`, `section_hero_button`, `events_cpt_place`, `socials_instagram`.
 
 ### PHP — template parts & hooks

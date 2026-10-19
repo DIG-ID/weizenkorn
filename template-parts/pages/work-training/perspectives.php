@@ -78,6 +78,7 @@ if ( ! $wtp_title || ! have_rows( 'work_training_perspectives_items' ) ) {
 								'title'        => get_sub_field( 'title' ),
 								'text'         => get_sub_field( 'text' ),
 								'url'          => $wtp_url,
+								'target'       => ( is_array( $wtp_link ) && ! empty( $wtp_link['target'] ) ) ? $wtp_link['target'] : '',
 								'media_height' => 'h-[200px] md:h-[224px] xl:h-[400px]',
 							)
 						);

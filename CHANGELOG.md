@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.19.9] — 2026-10-19
+
+### Fixed
+- "Open link in a new tab" is honoured wherever a link field offers it. The setting was being saved and then ignored on the donation project cards (Spenden), the Schreinerei offer grid, the services overview and the Work & Training perspectives cards — a link there now opens in a new tab when the box is ticked, and in the same one when it is not. No content needs re-entering: boxes already ticked start working as soon as this is live.
+
 ## [1.19.8] — 2026-10-19
 
 ### Added

@@ -82,6 +82,7 @@ if ( ! $services_overview_title ) {
 									'title'          => get_sub_field( 'title' ),
 									'text'           => get_sub_field( 'text' ),
 									'url'            => $sc_link ? $sc_link['url'] : '',
+									'target'         => ( is_array( $sc_link ) && ! empty( $sc_link['target'] ) ) ? $sc_link['target'] : '',
 									// The default 50% cap is for card-overview's wider callers
 									// (offer-grid.php, perspectives.php's half/full-row cards) —
 									// at 1 of 3 columns this card is already narrow, so the text

@@ -13,6 +13,11 @@
  *     @type string $title
  *     @type string $text           Optional. Rich text (wpautop already applied).
  *     @type string $url            Optional. Omit for a card that links nowhere.
+ *     @type string $target         Optional. '_blank' opens the card in a new tab, with
+ *                                  the rel that has to come with it. Callers reading an
+ *                                  ACF Link must pass this through: the editor's "Open
+ *                                  link in a new tab" is stored in it, and dropping it
+ *                                  silently ignores what they asked for.
  *     @type string $media_height   Optional. Tailwind height classes for the media box.
  *                                  Default: 256px at mobile, 512px at tablet, 400px at
  *                                  desktop — the Gastronomie/Home venue bento's own values.
@@ -37,9 +42,15 @@ if ( empty( $args['image'] ) ) {
 $media_height   = ! empty( $args['media_height'] ) ? $args['media_height'] : 'h-[256px] md:h-[512px] xl:h-[400px]';
 $text_max_width = isset( $args['text_max_width'] ) ? $args['text_max_width'] : 'xl:max-w-[50%]';
 $card_url       = ! empty( $args['url'] ) ? $args['url'] : '';
+
+// rel alongside target, never target alone: without noopener the page that opens gets
+// a handle on this one through window.opener.
+$card_target = ( '_blank' === ( isset( $args['target'] ) ? $args['target'] : '' ) )
+	? ' target="_blank" rel="noopener noreferrer"'
+	: '';
 ?>
 <?php if ( $card_url ) : ?>
-<a href="<?php echo esc_url( $card_url ); ?>" class="card-overview group flex flex-col gap-3.5 md:gap-4">
+<a href="<?php echo esc_url( $card_url ); ?>"<?php echo $card_target; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed literal built above. ?> class="card-overview group flex flex-col gap-3.5 md:gap-4">
 <?php else : ?>
 <div class="card-overview flex flex-col gap-3.5 md:gap-4">
 <?php endif; ?>

@@ -46,11 +46,19 @@ while ( have_rows( 'donate_projects_items' ) ) {
 	$dp_link = get_sub_field( 'link' );
 
 	$dp_items[] = array(
-		'image' => get_sub_field( 'image' ),
-		'year'  => get_sub_field( 'year' ),
-		'title' => get_sub_field( 'title' ),
-		'text'  => get_sub_field( 'text' ),
-		'url'   => $dp_link ? $dp_link['url'] : '',
+		'image'  => get_sub_field( 'image' ),
+		'year'   => get_sub_field( 'year' ),
+		'title'  => get_sub_field( 'title' ),
+		'text'   => get_sub_field( 'text' ),
+		'url'    => $dp_link ? $dp_link['url'] : '',
+
+		/*
+		 * The Link field's own "Open link in a new tab". Carried through rather than
+		 * dropped here: these cards point at donation PDFs, and a reader who follows one
+		 * loses the page they were on unless the editor's choice actually reaches the
+		 * markup.
+		 */
+		'target' => ( is_array( $dp_link ) && ! empty( $dp_link['target'] ) ) ? $dp_link['target'] : '',
 	);
 }
 
