@@ -10,7 +10,11 @@
  *   sticky_cta_title  (text)
  *   sticky_cta_text   (textarea)
  *   sticky_cta_link   (text) a plain URL — the whole box is the link, so it needs no
- *                     title or target of its own
+ *                     title of its own
+ *   sticky_cta_new_tab (true_false) optional. Opens the link in a new tab. Absent or off
+ *                     keeps it in the same one, so the box behaves as it always did until
+ *                     someone turns it on — which is also what happens on a site where
+ *                     the field has not been created yet.
  *
  * @package weizenkorn
  * @subpackage Component
@@ -22,6 +26,11 @@ $weizenkorn_sticky_cta_title  = get_field( 'sticky_cta_title' );
 $weizenkorn_sticky_cta_text   = get_field( 'sticky_cta_text' );
 $weizenkorn_sticky_cta_link   = get_field( 'sticky_cta_link' );
 
+// get_field() on a field that does not exist returns null, which is falsy — so this is
+// safe to deploy before the ACF field is created, and the box keeps opening in the same
+// tab until it is.
+$weizenkorn_sticky_cta_new_tab = (bool) get_field( 'sticky_cta_new_tab' );
+
 if ( ! $weizenkorn_sticky_cta_active || ! $weizenkorn_sticky_cta_title || ! $weizenkorn_sticky_cta_link ) {
 	return;
 }
@@ -30,6 +39,11 @@ if ( ! $weizenkorn_sticky_cta_active || ! $weizenkorn_sticky_cta_title || ! $wei
 	href="<?php echo esc_url( $weizenkorn_sticky_cta_link ); ?>"
 	class="sticky-cta"
 	id="sticky-cta"
+	<?php
+	// rel alongside target, never target alone: without noopener the page that opens gets
+	// a handle on this one through window.opener.
+	echo $weizenkorn_sticky_cta_new_tab ? ' target="_blank" rel="noopener noreferrer"' : '';
+	?>
 >
 	<span class="sticky-cta__content">
 		<strong class="sticky-cta__title"><?php echo esc_html( $weizenkorn_sticky_cta_title ); ?></strong>

@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.19.8] — 2026-10-19
+
+### Added
+- The sticky promo box on the home page can open its link in a new tab. Switch on **Open in a new tab** beside the link; left off, it opens in the same tab as before.
+
 ## [1.19.7] — 2026-10-16
 
 ### Added
