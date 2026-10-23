@@ -214,49 +214,45 @@ a.card-range
       @apply opacity-0
       transform: rotate(90deg)
 
-// -- Job card: a red category banner over a bordered white box, title + excerpt below
-//    it. template-parts/components/card-job.php — the Open Positions single's
-//    "Weitere Stellenausschreibungen" slider, and later the archive's own job grid. ---
+// -- Job card: a location banner over a bordered white box, the employment type,
+//    title + excerpt below it. template-parts/components/card-job.php — the Open
+//    Positions single's "Weitere Stellenausschreibungen" slider and the archive's
+//    own job grid. ---
 .card-job
   @apply border border-brand-red bg-white no-underline h-full
 
-  // Not text-transform: uppercase — Figma's own label text isn't forced to caps, so
-  // this shows whatever case the editor types into the field.
-  //
-  // Transparent bg + red text at rest; solid red + white text is a hover state, not
-  // the resting one (client's own filter-implementation reference). currentColor in
-  // the arrow SVG (theme-template-tags.php) means the color utility alone flips it
-  // too, no separate rule needed. Triggered by hovering the whole card, since the
-  // card itself is the <a> — not by hovering the banner in isolation.
-  //
-  // border-b: the transparent banner needs its own line under it to read as a
-  // header bar rather than just loose text — the solid-red version didn't need one,
-  // its own background already doing that job.
-  //
-  // Desktop weight/size/tracking confirmed against Figma (node 2629:3105): regular
-  // weight (not bold) at 25px, -0.475px tracking — its own one-off scale rather than
-  // the site's usual +0.5px, kept at mobile/tablet since that frame wasn't checked.
-  &__category
-    @apply font-primary font-bold tracking-[0.5px] text-[14px] xl:font-normal xl:tracking-[-0.475px] xl:text-[25px]
-    @apply px-5 py-4 bg-transparent text-brand-red border-b border-brand-red transition-colors duration-300
+  // Figma node 6066:7129: bold 20/30 uppercase at desktop, 60px tall (py-4 + 30px
+  // line ≈ 62px). Mobile/tablet keep the old 14px, that frame wasn't checked.
+  // currentColor in the arrow SVG (theme-template-tags.php) means the color
+  // utility alone flips it too, no separate rule needed.
+  &__banner
+    @apply font-primary font-bold uppercase tracking-[0.5px] text-[14px] xl:text-[20px] xl:leading-[30px]
+    @apply px-5 py-4 border-b border-brand-red transition-colors duration-300
 
-  &:hover .card-job__category
+  // Arbeitsstellen: solid red at rest.
+  &--solid .card-job__banner
+    @apply bg-brand-red text-white
+
+  // Ausbildungsplätze: white with red text, filling solid red on hover of the whole
+  // card (the card itself is the <a>).
+  &--outline .card-job__banner
+    @apply bg-transparent text-brand-red
+
+  &--outline:hover .card-job__banner
     @apply bg-brand-red text-white
 
   &__body
     @apply px-5 py-4
 
-  // Not .title-card: Figma (node 2629:3105) draws this at 25px/1.5 regular weight and
-  // -0.475px tracking at desktop, not that shared class's bold 20/30 — its own one-off
-  // scale, same reasoning as _process-steps.sass's own title override. Mobile/tablet
-  // keep .title-card's old 14/22 values since that frame wasn't checked.
+  // Figma "Desktop/Citation Bold": 25/32 bold uppercase, +0.5px tracking. Mobile/
+  // tablet keep the old 14/22, that frame wasn't checked.
   //
   // mb-0 only, not m-0 — the template puts a conditional mt-24 on this element
-  // (only when a location line precedes it) and a same-specificity margin: 0
+  // (only when a label line precedes it) and a same-specificity margin: 0
   // here would win over it in the compiled CSS's cascade order and swallow it.
   &__title
-    @apply mb-0 font-primary font-bold tracking-[0.5px] text-[14px] leading-[22px]
-    @apply xl:font-normal xl:tracking-[-0.475px] xl:text-[25px] xl:leading-[1.5]
+    @apply mb-0 font-primary font-bold uppercase tracking-[0.5px] text-[14px] leading-[22px]
+    @apply xl:text-[25px] xl:leading-[32px]
 
   // Not .body-text: Figma sets this at 32px line-height at desktop, not that shared
   // class's 28px (font-size and tracking already matched, so only leading differs).

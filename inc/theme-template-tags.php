@@ -248,6 +248,33 @@ function weizenkorn_get_post_term_names( $post_id, $taxonomy, $glue = ', ' ) {
 }
 
 /**
+ * Picks the job card banner's fill from the post's Anstellungsart.
+ *
+ * Arbeitsstellen get the solid red banner, Ausbildungsplätze the white one
+ * with red text (Figma node 6066:7129). Matched on the term name, like
+ * Weizenkorn_Schema_JobPosting::get_employment_type(), so the two never
+ * disagree about which posts are apprenticeships.
+ *
+ * @since 1.19.11
+ *
+ * @param int $post_id Post ID.
+ * @return string 'outline' for an Ausbildungsplatz, 'solid' otherwise.
+ */
+function weizenkorn_get_job_banner_style( $post_id ) {
+	$terms = get_the_terms( $post_id, 'offene_stellen_anstellungsart' );
+
+	if ( is_array( $terms ) ) {
+		foreach ( $terms as $term ) {
+			if ( false !== stripos( $term->name, 'ausbildung' ) ) {
+				return 'outline';
+			}
+		}
+	}
+
+	return 'solid';
+}
+
+/**
  * Renders template-parts/components/card-job.php for every post in a WP_Query.
  *
  * Shared by the Open Positions archive's own SSR first page
@@ -290,6 +317,7 @@ function weizenkorn_render_job_cards( WP_Query $query ) {
 				array(
 					'category' => weizenkorn_get_post_term_names( get_the_ID(), 'offene_stellen_anstellungsart' ),
 					'location' => weizenkorn_get_post_term_names( get_the_ID(), 'offene_stellen_standort' ),
+					'banner'   => weizenkorn_get_job_banner_style( get_the_ID() ),
 					'title'    => get_the_title(),
 					'text'     => get_post()->post_excerpt,
 					'url'      => get_permalink(),
