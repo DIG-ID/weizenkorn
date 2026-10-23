@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.19.10] — 2026-10-23
+
+### Fixed
+- The promo box in the corner of the home page can be read on a phone or tablet. It starts closed there and a tap opens it, the way hovering does on a desktop; a second tap follows its link, and tapping anywhere else closes it again. Until now the first tap left the page before the text could be read, and on a tablet the box closed itself after a few seconds with no way to open it at all.
+
 ## [1.19.9] — 2026-10-19
 
 ### Fixed
