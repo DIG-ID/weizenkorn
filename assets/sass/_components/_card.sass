@@ -229,9 +229,13 @@ a.card-range
     @apply font-primary font-bold uppercase tracking-[0.5px] text-[14px] xl:text-[20px] xl:leading-[30px]
     @apply px-5 py-4 border-b border-brand-red transition-colors duration-300
 
-  // Arbeitsstellen: solid red at rest.
+  // Arbeitsstellen: solid red at rest, flipping to white with red text on hover of
+  // the whole card — the mirror of the outline variant below.
   &--solid .card-job__banner
     @apply bg-brand-red text-white
+
+  &--solid:hover .card-job__banner
+    @apply bg-white text-brand-red
 
   // Ausbildungsplätze: white with red text, filling solid red on hover of the whole
   // card (the card itself is the <a>).

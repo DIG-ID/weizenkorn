@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 ## [1.19.11] — 2026-10-23
 
 ### Changed
-- Job cards (Offene Stellen archive and the "Weitere Stellenausschreibungen" slider) show the location, e.g. DasBreiteHotel, in the top bar, with the job type (Arbeitsstellen / Ausbildungsplätze) underneath it. The bar is solid red with white text for Arbeitsstellen and white with red text for Ausbildungsplätze, and the job title is now red, bold and uppercase.
+- Job cards (Offene Stellen archive and the "Weitere Stellenausschreibungen" slider) show the location, e.g. DasBreiteHotel, in the top bar, with the job type (Arbeitsstellen / Ausbildungsplätze) underneath it. The bar is solid red with white text for Arbeitsstellen and white with red text for Ausbildungsplätze, and the job title is now red, bold and uppercase. Hovering a card swaps the bar's two colours.
 
 ## [1.19.10] — 2026-10-23
 
