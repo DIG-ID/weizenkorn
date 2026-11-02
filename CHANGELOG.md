@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.19.12] — 2026-11-02
+
+### Changed
+- Job card location banner text reduced to 18px on desktop.
+
 ## [1.19.11] — 2026-10-23
 
 ### Changed

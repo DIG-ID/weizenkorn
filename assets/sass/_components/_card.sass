@@ -221,12 +221,13 @@ a.card-range
 .card-job
   @apply border border-brand-red bg-white no-underline h-full
 
-  // Figma node 6066:7129: bold 20/30 uppercase at desktop, 60px tall (py-4 + 30px
-  // line ≈ 62px). Mobile/tablet keep the old 14px, that frame wasn't checked.
+  // Figma node 6066:7129: bold uppercase on a 30px line at desktop, 60px tall
+  // (py-4 + 30px line ≈ 62px). Size brought down from Figma's 20px to 18px at the
+  // client's request. Mobile/tablet keep the old 14px, that frame wasn't checked.
   // currentColor in the arrow SVG (theme-template-tags.php) means the color
   // utility alone flips it too, no separate rule needed.
   &__banner
-    @apply font-primary font-bold uppercase tracking-[0.5px] text-[14px] xl:text-[20px] xl:leading-[30px]
+    @apply font-primary font-bold uppercase tracking-[0.5px] text-[14px] xl:text-[18px] xl:leading-[30px]
     @apply px-5 py-4 border-b border-brand-red transition-colors duration-300
 
   // Arbeitsstellen: solid red at rest, flipping to white with red text on hover of
