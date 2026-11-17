@@ -43,7 +43,7 @@ $card_job_banner = ( ! empty( $args['banner'] ) && 'solid' === $args['banner'] )
 <a href="<?php echo esc_url( $args['url'] ); ?>" class="card-job card-job--<?php echo esc_attr( $card_job_banner ); ?> border border-brand-red no-underline flex flex-col">
 	<?php if ( ! empty( $args['company'] ) || ! empty( $args['location'] ) ) : ?>
 		<span class="card-job__banner flex items-start justify-between gap-4">
-			<span class="flex flex-col">
+			<span class="card-job__banner-text flex flex-col">
 				<?php if ( ! empty( $args['company'] ) ) : ?>
 					<span class="card-job__company"><?php echo esc_html( $args['company'] ); ?></span>
 				<?php endif; ?>

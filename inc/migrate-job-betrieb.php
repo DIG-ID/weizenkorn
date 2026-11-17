@@ -20,7 +20,10 @@
  * translatable.
  *
  * Runs on the first request after deploy, then never again (the
- * weizenkorn_job_betrieb_migrated option). The next admin page load shows a
+ * weizenkorn_job_betrieb_migrated option, which holds the run number). 1.20.1
+ * added "augst" to the keywords and bumped the run to 2, so the migration runs
+ * once more on sites that had already run it — terms moved by run 1 are no
+ * longer in Standort, so a rerun only picks up the newly matched ones. The next admin page load shows a
  * notice with what moved and what stayed, to check against the Standort list.
  *
  * @package weizenkorn
@@ -49,6 +52,7 @@ function weizenkorn_is_job_betrieb_name( $name ) {
 		'xyloba',
 		'treuhand',
 		'holzspielwaren',
+		'augst',
 	);
 
 	$normalised = strtolower( remove_accents( $name ) );
@@ -72,11 +76,11 @@ function weizenkorn_is_job_betrieb_name( $name ) {
  * @since 1.20.0
  */
 function weizenkorn_migrate_job_betrieb() {
-	if ( get_option( 'weizenkorn_job_betrieb_migrated' ) ) {
+	if ( '2' === get_option( 'weizenkorn_job_betrieb_migrated' ) ) {
 		return;
 	}
 
-	update_option( 'weizenkorn_job_betrieb_migrated', '1', true );
+	update_option( 'weizenkorn_job_betrieb_migrated', '2', true );
 
 	global $wpdb;
 

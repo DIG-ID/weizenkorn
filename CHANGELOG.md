@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.20.1] — 2026-11-17
+
+### Fixed
+- Augst is now treated as a workshop: it moves from Standort to Betrieb and shows in bold on the job card's top bar, with the towns on the line below.
+- Every job card's top bar is two lines tall, so the labels and titles line up across a row even when a card has only a workshop or only a town.
+
 ## [1.20.0] — 2026-11-17
 
 ### Added

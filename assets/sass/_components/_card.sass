@@ -235,6 +235,12 @@ a.card-range
   &__location
     @apply font-normal
 
+  // Always two lines tall, even with only a workshop or only a town, so every
+  // banner in a row is the same height and the labels and titles under them line
+  // up across the grid. lh = the banner's own line-height, at every breakpoint.
+  &__banner-text
+    @apply min-h-[2lh]
+
   // One line tall, so the arrow centres on the workshop line rather than on the
   // whole two-line banner.
   &__arrow
