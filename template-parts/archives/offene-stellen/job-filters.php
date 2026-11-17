@@ -1,10 +1,11 @@
 <?php
 /**
  * Open Positions archive — filter trigger + slide-in panel (Figma node
- * 4129:5548). Two checkbox groups built straight from the archive's own
- * taxonomies (Anstellungsart, Standort — both registered in
+ * 4129:5548). Three checkbox groups built straight from the archive's own
+ * taxonomies (Anstellungsart, Betrieb, Standort — all registered in
  * inc/theme-setup.php), each term's post count read off get_terms(), and
- * an Apply/Clear footer.
+ * an Apply/Clear footer. Betrieb before Standort, the same order as the
+ * card's banner (workshop, then town).
  *
  * Markup/styling (.filter-panel__*, _components/_filter-panel.sass) and the
  * open/close mechanics (assets/js/filter-panel.js) are shared with Das
@@ -34,6 +35,15 @@ $jf_groups = array(
 		'terms' => get_terms(
 			array(
 				'taxonomy'   => 'offene_stellen_anstellungsart',
+				'hide_empty' => true,
+			)
+		),
+	),
+	'betrieb'        => array(
+		'label' => __( 'Betrieb', 'weizenkorn' ),
+		'terms' => get_terms(
+			array(
+				'taxonomy'   => 'offene_stellen_betrieb',
 				'hide_empty' => true,
 			)
 		),

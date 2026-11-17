@@ -40,10 +40,14 @@ export function initJobFilters() {
   const moreWrap = document.querySelector('.js-job-listing-more');
   const moreBtn = moreWrap ? moreWrap.querySelector('.btn') : null;
 
-  let committed = { anstellungsart: [], standort: [] };
+  // One key per filter group — the checkboxes' data-filter and the REST params.
+  const groups = ['anstellungsart', 'betrieb', 'standort'];
+  const emptyFilters = () => Object.fromEntries(groups.map((group) => [group, []]));
+
+  let committed = emptyFilters();
 
   const checkedValues = () => {
-    const selected = { anstellungsart: [], standort: [] };
+    const selected = emptyFilters();
 
     inputs().forEach((input) => {
       if (input.checked && selected[input.dataset.filter]) {
@@ -60,8 +64,9 @@ export function initJobFilters() {
   const buildUrl = (filters, page) => {
     const params = new URLSearchParams();
 
-    filters.anstellungsart.forEach((value) => params.append('anstellungsart[]', value));
-    filters.standort.forEach((value) => params.append('standort[]', value));
+    groups.forEach((group) => {
+      filters[group].forEach((value) => params.append(`${group}[]`, value));
+    });
     params.set('page', String(page));
 
     return `${restUrl}?${params.toString()}`;
@@ -109,7 +114,7 @@ export function initJobFilters() {
       inputs().forEach((input) => {
         input.checked = false;
       });
-      committed = { anstellungsart: [], standort: [] };
+      committed = emptyFilters();
       updateBadge(0);
       load(committed, 1, false);
     });

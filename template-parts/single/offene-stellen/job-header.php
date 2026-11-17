@@ -27,9 +27,11 @@
  *   offene_stellen_hero_image  (image → ID) omit to hide it
  *   offene_stellen_employment  (text) e.g. "30 - 100 % Anstellung"
  *   offene_stellen_start_date  (text) e.g. "Ab 01. Februar 2026"
- *   offene_stellen_standort    (taxonomy → term(s)) e.g. "Schreinerei" — the
- *                              client's own workshop, also the archive's own
- *                              "Standort" filter group (inc/theme-setup.php).
+ *   offene_stellen_betrieb     (taxonomy → term(s)) e.g. "Holzmanufaktur" — the
+ *                              client's own workshop, the archive's "Betrieb"
+ *                              filter group (inc/theme-setup.php).
+ *   offene_stellen_standort    (taxonomy → term(s)) e.g. "Münchenstein" — the
+ *                              town, the archive's "Standort" filter group.
  *   offene_stellen_body        (wysiwyg)
  *
  * @package weizenkorn
@@ -40,6 +42,7 @@
 $jh_image      = get_field( 'offene_stellen_hero_image' );
 $jh_employment = get_field( 'offene_stellen_employment' );
 $jh_start_date = get_field( 'offene_stellen_start_date' );
+$jh_company    = weizenkorn_get_post_term_names( get_the_ID(), 'offene_stellen_betrieb' );
 $jh_location   = weizenkorn_get_post_term_names( get_the_ID(), 'offene_stellen_standort' );
 $jh_body       = get_field( 'offene_stellen_body' );
 ?>
@@ -91,10 +94,10 @@ $jh_body       = get_field( 'offene_stellen_body' );
 			</h1>
 		</div>
 
-		<?php if ( $jh_employment || $jh_start_date || $jh_location ) : ?>
+		<?php if ( $jh_employment || $jh_start_date || $jh_company || $jh_location ) : ?>
 			<div class="theme-grid mt-8">
 				<div class="job-header__badges col-span-2 md:col-span-6 xl:col-start-2 xl:col-span-7 flex flex-wrap gap-4">
-					<?php foreach ( array( $jh_employment, $jh_start_date, $jh_location ) as $jh_badge ) : ?>
+					<?php foreach ( array( $jh_employment, $jh_start_date, $jh_company, $jh_location ) as $jh_badge ) : ?>
 						<?php if ( $jh_badge ) : ?>
 							<span class="job-header__badge border border-brand-red text-brand-red font-primary font-bold text-[12px] xl:text-[14px] tracking-[0.5px] px-4 py-3">
 								<?php echo esc_html( $jh_badge ); ?>

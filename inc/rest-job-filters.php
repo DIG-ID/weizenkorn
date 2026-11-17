@@ -34,6 +34,12 @@ function weizenkorn_register_job_filters_route() {
 					'default'           => array(),
 					'sanitize_callback' => 'weizenkorn_sanitize_term_slugs',
 				),
+				'betrieb'        => array(
+					'type'              => 'array',
+					'items'             => array( 'type' => 'string' ),
+					'default'           => array(),
+					'sanitize_callback' => 'weizenkorn_sanitize_term_slugs',
+				),
 				'standort'       => array(
 					'type'              => 'array',
 					'items'             => array( 'type' => 'string' ),
@@ -78,22 +84,17 @@ function weizenkorn_job_filters_query( WP_REST_Request $request ) {
 
 	$tax_query = array();
 
-	$anstellungsart = $request->get_param( 'anstellungsart' );
-	if ( ! empty( $anstellungsart ) ) {
-		$tax_query[] = array(
-			'taxonomy' => 'offene_stellen_anstellungsart',
-			'field'    => 'slug',
-			'terms'    => $anstellungsart,
-		);
-	}
+	// Within a group the ticked terms are OR'd (tax_query's own IN); the groups are AND'd below.
+	foreach ( array( 'anstellungsart', 'betrieb', 'standort' ) as $param ) {
+		$slugs = $request->get_param( $param );
 
-	$standort = $request->get_param( 'standort' );
-	if ( ! empty( $standort ) ) {
-		$tax_query[] = array(
-			'taxonomy' => 'offene_stellen_standort',
-			'field'    => 'slug',
-			'terms'    => $standort,
-		);
+		if ( ! empty( $slugs ) ) {
+			$tax_query[] = array(
+				'taxonomy' => 'offene_stellen_' . $param,
+				'field'    => 'slug',
+				'terms'    => $slugs,
+			);
+		}
 	}
 
 	if ( count( $tax_query ) > 1 ) {
@@ -110,7 +111,7 @@ function weizenkorn_job_filters_query( WP_REST_Request $request ) {
 			'paged'          => $page,
 			'orderby'        => 'date',
 			'order'          => 'DESC',
-			'tax_query'      => $tax_query, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- only 2 possible clauses, on an indexed term-relationships lookup, not postmeta.
+			'tax_query'      => $tax_query, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- at most 3 clauses, on an indexed term-relationships lookup, not postmeta.
 		)
 	);
 

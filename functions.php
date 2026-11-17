@@ -31,6 +31,8 @@ require get_template_directory() . '/inc/theme-template-tags.php';
 
 require get_template_directory() . '/inc/rest-job-filters.php';
 
+require get_template_directory() . '/inc/migrate-job-betrieb.php';
+
 require get_template_directory() . '/inc/helpers.php';
 
 require get_template_directory() . '/inc/news.php';

@@ -21,7 +21,9 @@
 	<taxonomies>
 		<!-- Arbeitsstellen / Ausbildungsplätze — the red banner on a job card. -->
 		<taxonomy translate="1">offene_stellen_anstellungsart</taxonomy>
-		<!-- The client's own workshops: Schreinerei, DasBreiteHotel, and so on. -->
+		<!-- The client's own workshops: Holzmanufaktur, DasBreiteHotel, and so on. -->
+		<taxonomy translate="1">offene_stellen_betrieb</taxonomy>
+		<!-- The town a job is in: Münchenstein, Basel-Stadt, and so on. -->
 		<taxonomy translate="1">offene_stellen_standort</taxonomy>
 	</taxonomies>
 </wpml-config>

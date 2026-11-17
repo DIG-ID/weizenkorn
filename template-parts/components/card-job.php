@@ -10,15 +10,16 @@
  * "Aktuell offene Stellen" grid — the same card, the same Figma
  * component, in both places.
  *
- * Banner and label swapped in 1.19.11 (Figma node 6066:7129): the banner now
- * carries the location (e.g. "DasBreiteHotel") and the employment type
+ * The banner carries the workshop in bold (e.g. "Holzmanufaktur") over the
+ * town (e.g. "Münchenstein") since 1.20.0, and the employment type
  * (Arbeitsstellen / Ausbildungsplätze) sits under it as the label line. The
  * banner's own fill follows the employment type — see
  * weizenkorn_get_job_banner_style().
  *
  * @param array $args {
- *     @type string $location Optional. The banner's label, e.g. "DasBreiteHotel". No
- *                            banner without one.
+ *     @type string $company  Optional. The banner's first, bold line, e.g. "Holzmanufaktur".
+ *     @type string $location Optional. The banner's second line, e.g. "Münchenstein". No
+ *                            banner without either.
  *     @type string $banner   Optional. 'solid' (red fill, white text — Arbeitsstellen) or
  *                            'outline' (white fill, red text — Ausbildungsplätze, filling
  *                            red on hover). Default 'outline'.
@@ -40,10 +41,17 @@ if ( empty( $args['title'] ) || empty( $args['url'] ) ) {
 $card_job_banner = ( ! empty( $args['banner'] ) && 'solid' === $args['banner'] ) ? 'solid' : 'outline';
 ?>
 <a href="<?php echo esc_url( $args['url'] ); ?>" class="card-job card-job--<?php echo esc_attr( $card_job_banner ); ?> border border-brand-red no-underline flex flex-col">
-	<?php if ( ! empty( $args['location'] ) ) : ?>
-		<span class="card-job__banner flex items-center justify-between gap-4">
-			<?php echo esc_html( $args['location'] ); ?>
-			<span class="shrink-0" aria-hidden="true"><?php weizenkorn_the_svg_icon( 'arrow-right' ); ?></span>
+	<?php if ( ! empty( $args['company'] ) || ! empty( $args['location'] ) ) : ?>
+		<span class="card-job__banner flex items-start justify-between gap-4">
+			<span class="flex flex-col">
+				<?php if ( ! empty( $args['company'] ) ) : ?>
+					<span class="card-job__company"><?php echo esc_html( $args['company'] ); ?></span>
+				<?php endif; ?>
+				<?php if ( ! empty( $args['location'] ) ) : ?>
+					<span class="card-job__location"><?php echo esc_html( $args['location'] ); ?></span>
+				<?php endif; ?>
+			</span>
+			<span class="card-job__arrow shrink-0" aria-hidden="true"><?php weizenkorn_the_svg_icon( 'arrow-right' ); ?></span>
 		</span>
 	<?php endif; ?>
 

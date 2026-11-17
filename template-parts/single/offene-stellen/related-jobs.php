@@ -82,6 +82,7 @@ $rj_fits_xl      = ( $rj_count <= 3 );
 									null,
 									array(
 										'category' => weizenkorn_get_post_term_names( get_the_ID(), 'offene_stellen_anstellungsart' ),
+										'company'  => weizenkorn_get_post_term_names( get_the_ID(), 'offene_stellen_betrieb' ),
 										'location' => weizenkorn_get_post_term_names( get_the_ID(), 'offene_stellen_standort' ),
 										'banner'   => weizenkorn_get_job_banner_style( get_the_ID() ),
 										'title'    => get_the_title(),

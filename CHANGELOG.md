@@ -11,6 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.20.0] — 2026-11-17
+
+### Added
+- Offene Stellen can be filtered by Betrieb (the workshop, e.g. Holzmanufaktur) and by Standort (the town, e.g. Münchenstein) separately. Until now both sat in one Standort list.
+- The job cards show the workshop in bold with the town underneath, and a job's own page shows both as badges.
+
+### Changed
+- On the first visit after this update, the existing workshop terms move from Standort to the new Betrieb list on their own, translations included, so no job needs re-tagging. The next admin page shows what moved and what stayed in Standort, to check.
+
 ## [1.19.12] — 2026-11-02
 
 ### Changed

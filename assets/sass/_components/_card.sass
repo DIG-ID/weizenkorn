@@ -230,6 +230,16 @@ a.card-range
     @apply font-primary font-bold uppercase tracking-[0.5px] text-[14px] xl:text-[18px] xl:leading-[30px]
     @apply px-5 py-4 border-b border-brand-red transition-colors duration-300
 
+  // Workshop over town since 1.20.0: the banner's bold carries the workshop, the
+  // town sits under it at regular weight, same size and case.
+  &__location
+    @apply font-normal
+
+  // One line tall, so the arrow centres on the workshop line rather than on the
+  // whole two-line banner.
+  &__arrow
+    @apply flex items-center h-[1lh]
+
   // Arbeitsstellen: solid red at rest, flipping to white with red text on hover of
   // the whole card — the mirror of the outline variant below.
   &--solid .card-job__banner

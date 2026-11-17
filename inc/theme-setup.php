@@ -110,12 +110,16 @@ function weizenkorn_register_block_styles() {
 add_action( 'init', 'weizenkorn_register_block_styles' );
 
 /**
- * Registers the two taxonomies behind the Open Positions archive's filter
+ * Registers the three taxonomies behind the Open Positions archive's filter
  * (template-parts/archives/offene-stellen/job-filters.php): Anstellungsart
- * (Arbeitsstellen / Ausbildungsplätze — also the card's red category banner)
- * and Standort (the client's own workshops — Kerzenmanufaktur, Schreinerei,
- * DasBreiteHotel, …), both confirmed against the Figma filter panel
- * (node 4129:5548). Replace the CPT's old offene_stellen_type_label /
+ * (Arbeitsstellen / Ausbildungsplätze — also what colours the card's banner),
+ * Betrieb (the client's own workshops — Holzmanufaktur, DasBreiteHotel, …)
+ * and Standort (the town — Münchenstein, Basel-Stadt, …). The card's banner
+ * shows Betrieb over Standort.
+ *
+ * Betrieb was split out of Standort in 1.20.0, which until then held both
+ * workshops and towns in one list; inc/migrate-job-betrieb.php moved the
+ * existing workshop terms across. Replace the CPT's old offene_stellen_type_label /
  * offene_stellen_location free-text ACF fields, now exposed on the post as
  * ACF 'taxonomy' fields instead (acf-exports/acf-offene-stellen-single-fields.json)
  * so tax_query can filter on them.
@@ -136,6 +140,24 @@ function weizenkorn_register_offene_stellen_taxonomies() {
 			'labels'            => array(
 				'name'          => __( 'Anstellungsart', 'weizenkorn' ),
 				'singular_name' => __( 'Anstellungsart', 'weizenkorn' ),
+			),
+			'hierarchical'      => true,
+			'public'            => false,
+			'show_ui'           => true,
+			'show_in_rest'      => true,
+			'show_admin_column' => true,
+			'query_var'         => true,
+			'rewrite'           => false,
+		)
+	);
+
+	register_taxonomy(
+		'offene_stellen_betrieb',
+		'offene-stellen',
+		array(
+			'labels'            => array(
+				'name'          => __( 'Betrieb', 'weizenkorn' ),
+				'singular_name' => __( 'Betrieb', 'weizenkorn' ),
 			),
 			'hierarchical'      => true,
 			'public'            => false,
