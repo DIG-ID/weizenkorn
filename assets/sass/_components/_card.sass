@@ -246,13 +246,14 @@ a.card-range
   &__arrow
     @apply flex items-center h-[1lh]
 
-  // Arbeitsstellen: solid red at rest, flipping to white with red text on hover of
-  // the whole card — the mirror of the outline variant below.
+  // Arbeitsstellen: since 1.20.2 white with red text at rest and solid red on hover,
+  // the same as the outline variant below (client request). The modifier stays so
+  // the two job types can be told apart again from here alone.
   &--solid .card-job__banner
-    @apply bg-brand-red text-white
+    @apply bg-white text-brand-red
 
   &--solid:hover .card-job__banner
-    @apply bg-white text-brand-red
+    @apply bg-brand-red text-white
 
   // Ausbildungsplätze: white with red text, filling solid red on hover of the whole
   // card (the card itself is the <a>).

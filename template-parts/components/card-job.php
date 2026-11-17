@@ -20,9 +20,9 @@
  *     @type string $company  Optional. The banner's first, bold line, e.g. "Holzmanufaktur".
  *     @type string $location Optional. The banner's second line, e.g. "Münchenstein". No
  *                            banner without either.
- *     @type string $banner   Optional. 'solid' (red fill, white text — Arbeitsstellen) or
- *                            'outline' (white fill, red text — Ausbildungsplätze, filling
- *                            red on hover). Default 'outline'.
+ *     @type string $banner   Optional. 'solid' (Arbeitsstellen) or 'outline'
+ *                            (Ausbildungsplätze). Since 1.20.2 both are white with red
+ *                            text, filling red on hover — see _card.sass. Default 'outline'.
  *     @type string $category Optional. The smaller label under the banner, e.g.
  *                            "Arbeitsstellen".
  *     @type string $title    Required.

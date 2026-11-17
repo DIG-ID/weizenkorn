@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/) (`MAJOR.M
 
 ---
 
+## [1.20.2] — 2026-11-17
+
+### Changed
+- Job card top bars are white with red text on every job and turn red with white text on hover (Arbeitsstellen used to start red).
+
 ## [1.20.1] — 2026-11-17
 
 ### Fixed
